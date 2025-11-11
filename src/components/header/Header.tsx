@@ -343,11 +343,11 @@ const Header = () => {
                     />
                     <div className="mt-4">
                       <div className="space-y-1">
-                        <p className="text-sm font-medium text-gray-600 font-normal">Women</p>
-                        <p className="text-l font-medium text-black font-normal">25% OFF</p>
+                        <p className="text-sm  text-gray-600 font-normal">Women</p>
+                        <p className="text-l text-black font-normal">25% OFF</p>
                         <Link
                           href="/sale/25-off/women"
-                          className="inline-block text-sm font-medium underline hover:no-underline text-black font-normal"
+                          className="inline-block text-sm  underline hover:no-underline text-black font-normal"
                         >
                           Shop now
                         </Link>
