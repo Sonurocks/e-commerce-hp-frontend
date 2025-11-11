@@ -1,2 +1,126 @@
 @import "tailwindcss";
 
+:root {
+  /* Layout Variables */
+  --gutter: 1.5rem;
+  --width: 137rem;
+  --columns: 12;
+
+  /* Color Variables */
+  --color-branco: #fff;
+  --color-whiteSmoke: #f5f5f5;
+  --color-shell: #eee;
+  --color-platinum: #ddd;
+  --color-silver: #ccc;
+  --color-nimbus: #aaa;
+  --color-hina: #888;
+  --color-emperor: #555;
+  --color-preto: #222;
+  --color-red: #fd4f57;
+  --color-ouro: #c2a67d;
+  --color-ouro-light: #e3c29d;
+  --color-beige: #eeccab;
+  --color-success: #3eb46e;
+  --color-error: #e13f5a;
+  --color-warning: #f4b350;
+  --color-turquoise: #29ccbf;
+  --color-cadetBlue: #6092af;
+  --color-facebook: #4267b2;
+  --colorDark: #222;
+  --colorDarkGrey: #b6b6b6;
+  --colorDarkerGrey: #727272;
+  --colorGrey: #e6e6e6;
+  --colorLightGrey: #f5f5f5;
+  --colorWhite: #fff;
+  --colorGold: #727272;
+  --colorRed: #c41429;
+  --colorGreen: #048273;
+  --colorBronzeVeryLight: #f4dbd7;
+  --colorBronzeLight: #dd9388;
+  --colorBronzePrimary: #c54b38;
+  --colorBronzeDark: #772d22;
+  --colorSilverVeryLight: #f2f2f2;
+  --colorSilverLight: #b4b4b6;
+  --colorSilverPrimary: #76777a;
+  --colorSilverDark: #4b4c4e;
+  --colorGoldVeryLight: #f8f3ec;
+  --colorGoldLight: #d3b388;
+  --colorGoldPrimary: #a68245;
+  --colorGoldDark: #705229;
+  --colorPlatinumVeryLight: #f2f2f3;
+  --colorPlatinumLight: #a3a5a9;
+  --colorPlatinumPrimary: #54565a;
+  --colorPlatinumDark: #4a4c4f;
+  --colorPrivateClientVeryLight: #f2f2f2;
+  --colorPrivateClientLight: #8a8a8a;
+  --colorPrivateClientPrimary: #222;
+
+  /* Border Variables */
+  --borders-corner-xs: 0.2rem;
+  --borders-corner-s: 0.4rem;
+  --borders-corner-m: 0.8rem;
+  --borders-corner-l: 1.6rem;
+  --borders-corner-rounded: 100rem;
+  --borders-border-s: 0.1rem;
+  --borders-border-m: 0.2rem;
+
+  /* Button Variables */
+  --button-icon-positioning: 1.2rem;
+  --button-icon-spacing: 2.8rem;
+  --button-base-padding: 1.6rem;
+
+  /* Access Colors */
+  --colors-access-bronze-01: #c54b38;
+  --colors-access-bronze-02: #dd9388;
+  --colors-access-bronze-03: #772d22;
+  --colors-access-bronze-04: #f4dbd7;
+  --colors-access-silver-01: #76777a;
+  --colors-access-silver-02: #b4b4b6;
+  --colors-access-silver-03: #4b4c4e;
+  --colors-access-silver-04: #f2f2f2;
+  --colors-access-gold-01: #a68245;
+  --colors-access-gold-02: #d3b388;
+  --colors-access-gold-03: #705229;
+  --colors-access-gold-04: #f8f3ec;
+  --colors-access-platinum-01: #54565a;
+  --colors-access-platinum-02: #a3a5a9;
+  --colors-access-platinum-03: #4a4c4f;
+  --colors-access-platinum-04: #f2f2f3;
+  --colors-access-private-client-01: #222;
+  --colors-access-private-client-02: #8a8a8a;
+  --colors-access-private-client-03: #4d4d4d;
+  --colors-access-private-client-04: #d6d6d6;
+
+  /* Action Colors - Primary */
+  --colors-actions-primary-enabled-icon: #fff;
+  --colors-actions-primary-enabled-label: #fff;
+  --colors-actions-primary-enabled-surface: #222;
+  --colors-actions-primary-enabled-stroke: hsla(0, 0%, 100%, 0);
+  --colors-actions-primary-hover-icon: #fff;
+  --colors-actions-primary-hover-label: #fff;
+  --colors-actions-primary-hover-surface: #727272;
+  --colors-actions-primary-hover-stroke: hsla(0, 0%, 100%, 0);
+  --colors-actions-primary-selected-icon: #fff;
+  --colors-actions-primary-selected-label: #fff;
+  --colors-actions-primary-selected-surface: #222;
+  --colors-actions-primary-selected-stroke: hsla(0, 0%, 100%, 0);
+  --colors-actions-primary-active-icon: #fff;
+  --colors-actions-primary-active-label: #fff;
+  --colors-actions-primary-active-surface: #b6b6b6;
+  --colors-actions-primary-active-stroke: hsla(0, 0%, 100%, 0);
+  --colors-actions-primary-loading-icon: #fff;
+  --colors-actions-primary-loading-label: #fff;
+  --colors-actions-primary-loading-surface: #b6b6b6;
+  --colors-actions-primary-loading-stroke: hsla(0, 0%, 100%, 0);
+
+  /* Font Variables */
+  --fontNormal: 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif;
+  --fontCondensed: 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif;
+  --fontCondensedNonTranslated: 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif;
+  --fontSizeXS: 1.3rem;
+  --fontSizeS: 1.3rem;
+  --fontSizeM: 1.5rem;
+  --fontSizeMCondensed: 1.5rem;
+  --fontSizeL: 2rem;
+}
+
