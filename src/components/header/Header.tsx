@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { FaRegUser } from "react-icons/fa";
-import { promotions, primaryNavigationLinks, secondaryNavigationLinks, drawerLinks } from '../../constants/headerData';
+import { promotions, primaryNavigationLinks, secondaryNavigationLinks, headerConfig } from '../../constants';
+import Drawer from './drawer/25%off';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,18 +15,13 @@ const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
   const linkRef = useRef<HTMLDivElement>(null);
-  const [timeLeft, setTimeLeft] = useState({
-    days: 2,
-    hours: 10,
-    minutes: 43,
-    seconds: 20,
-  });
+  const [timeLeft, setTimeLeft] = useState(headerConfig.countdown.initialTime);
 
   // Rotate promotions every 3 seconds
   useEffect(() => {
     const rotationTimer = setInterval(() => {
       setCurrentPromoIndex((prev) => (prev + 1) % promotions.length);
-    }, 3000);
+    }, headerConfig.timers.promotionRotation);
 
     return () => clearInterval(rotationTimer);
   }, [promotions.length]);
@@ -55,7 +50,7 @@ const Header = () => {
         
         return { days, hours, minutes, seconds };
       });
-    }, 1000);
+    }, headerConfig.timers.countdownInterval);
 
     return () => clearInterval(timer);
   }, []);
@@ -135,7 +130,7 @@ const Header = () => {
                         {promo.text}
                       </a>
                       <span>|</span>
-                      <span>Ends in</span>
+                      <span>{headerConfig.countdown.text.endsIn}</span>
                       <span
                         data-testid="countdown"
                         className="font-semibold"
@@ -151,7 +146,7 @@ const Header = () => {
                             target="_self"
                             
                           >
-                            Shop now
+                            {headerConfig.countdown.text.shopNow}
                           </a>
                           <span>&nbsp;</span>
                         </>
@@ -193,9 +188,9 @@ const Header = () => {
 
             {/* Center - Logo */}
             <div className="flex-1 flex justify-center lg:flex-none">
-              <Link href="/">
+              <Link href={headerConfig.logo.href}>
                 <h1 className="text-4xl font-bold text-black tracking-tight uppercase w-[250px] h-[30px]">
-                  FARFETCH
+                  {headerConfig.logo.text}
                 </h1>
               </Link>
             </div>
@@ -222,7 +217,7 @@ const Header = () => {
               <button className="text-black hover:text-gray-700 transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
                 <FaRegUser className="w-6 h-6" />
                 <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                  Sign in
+                  {headerConfig.tooltips.signIn}
                 </span>
               </button>
 
@@ -230,7 +225,7 @@ const Header = () => {
               <button className="text-gray-900 hover:text-black transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
                 <GoHeart className="w-6 h-6" strokeWidth={1.0} />
                 <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                  Wishlist
+                  {headerConfig.tooltips.wishlist}
                 </span>
               </button>
 
@@ -238,7 +233,7 @@ const Header = () => {
               <button className="text-gray-900 hover:text-black transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
                 <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
                 <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                  Bag
+                  {headerConfig.tooltips.bag}
                 </span>
               </button>
 
@@ -300,7 +295,7 @@ const Header = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="What are you looking for?"
+                  placeholder={headerConfig.search.placeholder}
                   className="w-full pl-10 pr-4 py-2 border-b border-black focus:outline-none focus:border-gray-900 text-base"
                 />
               </div>
@@ -309,56 +304,11 @@ const Header = () => {
         </div>
 
         {/* Drawer - Positioned relative to header */}
-        {isDrawerOpen && (
-          <div 
-            ref={drawerRef}
-            className="absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-200 z-50"
-            onMouseEnter={() => setIsDrawerOpen(true)}
-          >
-            <div className="container mx-auto px-[72px] py-8">
-              <div className="flex gap-8">
-                {/* Left Sidebar - Categories */}
-                <div className="w-[280px] pl-8 font-normal">
-                  <h3 className="text-base text-black mb-4 font-normal uppercase">25% OFF</h3>
-                  <ul className="space-y-2">
-                    {drawerLinks.map((link, index) => (
-                      <li key={index}>
-                        <Link href={link.href} className="text-sm text-black hover:underline transition">
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Right Content - Image and Text */}
-                <div className="w-[400px] flex-shrink-0 ml-auto">
-                  <div className="w-full">
-                    <Image
-                      src="/women.jpeg"
-                      alt="25% off promotion"
-                      width={400}
-                      height={320}
-                      className="w-full h-[320px] object-cover"
-                    />
-                    <div className="mt-4">
-                      <div className="space-y-1">
-                        <p className="text-sm  text-gray-600 font-normal">Women</p>
-                        <p className="text-l text-black font-normal">25% OFF</p>
-                        <Link
-                          href="/sale/25-off/women"
-                          className="inline-block text-sm  underline hover:no-underline text-black font-normal"
-                        >
-                          Shop now
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <Drawer 
+          isDrawerOpen={isDrawerOpen}
+          drawerRef={drawerRef}
+          onMouseEnter={() => setIsDrawerOpen(true)}
+        />
       </div>
     </header>
   );
