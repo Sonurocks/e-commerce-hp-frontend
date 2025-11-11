@@ -4,15 +4,15 @@ import { FaPinterestP } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-200 text-black" style={{ maxWidth: '1540px', width: '100%', minHeight: '474px', padding: '24px 0px', margin: '0 auto', fontFamily: 'var(--fontNormal)' }}>
-      <div className="mx-auto" style={{ maxWidth: '1540px', width: '100%', paddingLeft: '60px', paddingRight: '0' }}>
+    <footer className="bg-gray-200 text-black max-w-container w-full min-h-footer py-footer mx-auto font-normal">
+      <div className="mx-auto max-w-container w-full pl-footer pr-0">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Column 1: Customer Service */}
           <div>
-            <h4 className="font-bold mb-4 text-black" style={{ fontSize: '15px' }}>
+            <h4 className="font-bold mb-4 text-black text-footer-heading">
               Customer Service
             </h4>
-            <ul className="space-y-2" style={{ fontSize: '15px' }}>
+            <ul className="space-y-2 text-footer-heading">
               <li>
               <a
                 href="#"
@@ -82,10 +82,10 @@ const Footer = () => {
 
           {/* Column 2: About FARFETCH */}
           <div>
-            <h4 className="font-bold mb-4 text-black" style={{ fontSize: '15px' }}>
+            <h4 className="font-bold mb-4 text-black text-footer-heading">
               About FARFETCH
             </h4>
-            <ul className="space-y-2" style={{ fontSize: '15px' }}>
+            <ul className="space-y-2 text-footer-heading">
               <li>
                 <a
                   href="#"
@@ -139,10 +139,10 @@ const Footer = () => {
 
           {/* Column 3: Discounts and membership */}
           <div>
-            <h4 className="font-bold mb-4 text-black" style={{ fontSize: '15px' }}>
+            <h4 className="font-bold mb-4 text-black text-footer-heading">
               Discounts and membership
             </h4>
-            <ul className="space-y-2 mb-8" style={{ fontSize: '15px' }}>
+            <ul className="space-y-2 mb-8 text-footer-heading">
               <li>
                 <a
                   href="#"
@@ -187,7 +187,7 @@ const Footer = () => {
 
             {/* Social Media Section */}
             <div>
-            <h4 className="font-bold mb-4 text-black" style={{ fontSize: '15px' }}>
+            <h4 className="font-bold mb-4 text-black text-footer-heading">
               Follow us
             </h4>
               <div className="flex space-x-4">
@@ -265,7 +265,7 @@ const Footer = () => {
         {/* Bottom Section: Legal and Copyright */}
         <div className="border-t border-white pt-8 mt-8">
           <div className="flex flex-col space-y-4">
-            <div className="flex flex-wrap gap-6" style={{ fontSize: '15px' }}>
+            <div className="flex flex-wrap gap-6 text-footer-heading">
               <a
                 href="#"
                 className="underline transition text-black"
@@ -285,7 +285,7 @@ const Footer = () => {
                 Accessibility
               </a>
             </div>
-            <div className="text-black" style={{ fontSize: '13px' }}>
+            <div className="text-black text-footer-text">
               <p className="mb-2">
                 &apos;FARFETCH&apos; and the &apos;FARFETCH&apos; logo are trade marks of FARFETCH UK Limited and are registered in numerous jurisdictions around the world.
               </p>

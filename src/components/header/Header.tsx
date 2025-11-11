@@ -1,38 +1,26 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { FaRegUser } from "react-icons/fa";
+import { promotions, primaryNavigationLinks, secondaryNavigationLinks, drawerLinks } from '../../constants/headerData';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const linkRef = useRef<HTMLDivElement>(null);
   const [timeLeft, setTimeLeft] = useState({
     days: 2,
     hours: 10,
     minutes: 43,
     seconds: 20,
   });
-
-  // Promotional messages array
-  const promotions = [
-    {
-      type: 'promotion',
-      text: 'Enjoy 25% off the new season',
-      link: '/promotions/women/promo-event',
-      showCountdown: true,
-      showShopNow: true,
-    },
-    {
-      type: 'generic',
-      text: 'New pieces added daily',
-      link: 'https://www.farfetch.com/sets/new-in-this-week-eu-women.aspx',
-      showCountdown: false,
-      showShopNow: false,
-    },
-  ];
 
   // Rotate promotions every 3 seconds
   useEffect(() => {
@@ -72,19 +60,54 @@ const Header = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Click outside to close drawer
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      
+      // If click is outside both drawer and link wrapper, close drawer
+      if (
+        drawerRef.current && 
+        !drawerRef.current.contains(target) && 
+        linkRef.current && 
+        !linkRef.current.contains(target)
+      ) {
+        setIsDrawerOpen(false);
+      }
+    };
+
+    if (isDrawerOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDrawerOpen]);
+
   // Get current promotion for background color
   const currentPromo = promotions[currentPromoIndex];
 
   return (
-    <header className="bg-white sticky top-0 z-50" style={{ fontFamily: "var(--fontNormal)" }}>
+    <header className="bg-white sticky top-0 z-50 font-normal">
       {/* Top Promotional Bar */}
       <div
-        className={`text-[13px] py-[6px] px-[36px] transition-colors duration-500 ${
+        className={`text-[13px] py-[6px] px-[36px] transition-all duration-300 font-normal ${
           currentPromo.type === 'generic'
             ? 'bg-gray-200'
             : 'bg-black'
-        }`}
-        style={{ fontFamily: "var(--fontNormal)" }}
+        } ${isScrolled ? 'hidden' : ''}`}
       >
         <div className="container mx-auto px-4">
           <ul className="flex items-center justify-center relative h-6">
@@ -151,30 +174,21 @@ const Header = () => {
       </div>
 
       {/* Main Header */}
-      <div>
+      <div className={`relative ${isScrolled ? 'border-b border-gray-300' : ''}`}>
         <div className="container mx-auto py-0 px-[36px]">
           {/* First Row - Primary Navigation */}
           <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
             {/* Left - Primary Categories */}
             <div className="hidden lg:flex items-center space-x-6">
-              <Link
-                href="/womenswear"
-                className="text-gray-700 hover:text-gray-900 font-bold text-sm transition px-3 py-1.5 rounded hover:bg-gray-100"
-              >
-                Womenswear
-              </Link>
-              <Link
-                href="/menswear"
-                className="text-gray-700 hover:text-gray-900 font-medium text-sm transition px-3 py-1.5 rounded hover:bg-gray-100"
-              >
-                Menswear
-              </Link>
-              <Link
-                href="/kidswear"
-                className="text-gray-700 hover:text-gray-900 font-medium text-sm transition px-3 py-1.5 rounded hover:bg-gray-100"
-              >
-                Kidswear
-              </Link>
+              {primaryNavigationLinks.map((link, index) => (
+                <Link
+                  key={index}
+                  href={link.href}
+                  className={link.className}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
 
             {/* Center - Logo */}
@@ -236,78 +250,34 @@ const Header = () => {
           <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
             {/* Left - Categories */}
             <div className="hidden lg:flex items-center space-x-6 overflow-x-auto">
-              <Link
-                href="/sale/25-off"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                25% off
-              </Link>
-              <Link
-                href="/new-in"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                New in
-              </Link>
-              <Link
-                href="/holiday-season"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                Holiday season
-              </Link>
-              <Link
-                href="/brands"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                Brands
-              </Link>
-              <Link
-                href="/clothing"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                Clothing
-              </Link>
-              <Link
-                href="/shoes"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                Shoes
-              </Link>
-              <Link
-                href="/bags"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                Bags
-              </Link>
-              <Link
-                href="/accessories"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                Accessories
-              </Link>
-              <Link
-                href="/jewellery"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                Jewellery
-              </Link>
-              <Link
-                href="/homeware"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                Homeware
-              </Link>
-              <Link
-                href="/pre-owned"
-                className="text-gray-700 hover:text-gray-900 text-sm whitespace-nowrap transition"
-              >
-                Pre-owned
-              </Link>
-              <Link
-                href="/sale"
-                className="text-red-600 hover:text-red-700 text-sm whitespace-nowrap font-medium transition"
-              >
-                Sale
-              </Link>
+              {secondaryNavigationLinks.map((link, index) => {
+                if (link.hasDrawer) {
+                  return (
+                    <div
+                      key={index}
+                      ref={linkRef}
+                      className="relative"
+                      onMouseEnter={() => setIsDrawerOpen(true)}
+                    >
+                      <Link
+                        href={link.href}
+                        className={link.className}
+                      >
+                        {link.label}
+                      </Link>
+                    </div>
+                  );
+                }
+                return (
+                  <Link
+                    key={index}
+                    href={link.href}
+                    className={link.className}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Right - Search Bar */}
@@ -337,11 +307,62 @@ const Header = () => {
             </div>
           </div>
         </div>
-      </div>
 
-      
+        {/* Drawer - Positioned relative to header */}
+        {isDrawerOpen && (
+          <div 
+            ref={drawerRef}
+            className="absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-200 z-50"
+            onMouseEnter={() => setIsDrawerOpen(true)}
+          >
+            <div className="container mx-auto px-[72px] py-8">
+              <div className="flex gap-8">
+                {/* Left Sidebar - Categories */}
+                <div className="w-[280px] pl-8 font-normal">
+                  <h3 className="text-base text-black mb-4 font-normal uppercase">25% OFF</h3>
+                  <ul className="space-y-2">
+                    {drawerLinks.map((link, index) => (
+                      <li key={index}>
+                        <Link href={link.href} className="text-sm text-black hover:underline transition">
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Right Content - Image and Text */}
+                <div className="w-[400px] flex-shrink-0 ml-auto">
+                  <div className="w-full">
+                    <Image
+                      src="/women.jpeg"
+                      alt="25% off promotion"
+                      width={400}
+                      height={320}
+                      className="w-full h-[320px] object-cover"
+                    />
+                    <div className="mt-4">
+                      <div className="space-y-1">
+                        <p className="text-sm font-medium text-gray-600 font-normal">Women</p>
+                        <p className="text-l font-medium text-black font-normal">25% OFF</p>
+                        <Link
+                          href="/sale/25-off/women"
+                          className="inline-block text-sm font-medium underline hover:no-underline text-black font-normal"
+                        >
+                          Shop now
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
 };
 
 export default Header;
+

@@ -93,25 +93,20 @@
 
   /* Action Colors - Primary */
   --colors-actions-primary-enabled-icon: #fff;
-  --colors-actions-primary-enabled-label: #fff;
+ 
   --colors-actions-primary-enabled-surface: #222;
   --colors-actions-primary-enabled-stroke: hsla(0, 0%, 100%, 0);
-  --colors-actions-primary-hover-icon: #fff;
-  --colors-actions-primary-hover-label: #fff;
+
+
   --colors-actions-primary-hover-surface: #727272;
   --colors-actions-primary-hover-stroke: hsla(0, 0%, 100%, 0);
-  --colors-actions-primary-selected-icon: #fff;
-  --colors-actions-primary-selected-label: #fff;
-  --colors-actions-primary-selected-surface: #222;
-  --colors-actions-primary-selected-stroke: hsla(0, 0%, 100%, 0);
-  --colors-actions-primary-active-icon: #fff;
-  --colors-actions-primary-active-label: #fff;
+ 
+  
+
+ 
   --colors-actions-primary-active-surface: #b6b6b6;
   --colors-actions-primary-active-stroke: hsla(0, 0%, 100%, 0);
-  --colors-actions-primary-loading-icon: #fff;
-  --colors-actions-primary-loading-label: #fff;
-  --colors-actions-primary-loading-surface: #b6b6b6;
-  --colors-actions-primary-loading-stroke: hsla(0, 0%, 100%, 0);
+ 
 
   /* Font Variables */
   --fontNormal: 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif;
@@ -123,4 +118,42 @@
   --fontSizeMCondensed: 1.5rem;
   --fontSizeL: 2rem;
 }
+@theme {
+  --text-big: 35rem;
+  --color-gray-mum: #ff9933;
+  --max-width-container: 96.25rem;
+  --min-height-footer: 29.625rem;
+  --padding-footer-vertical: 1.5rem;
+  --padding-footer-left: 3.75rem;
+  --font-size-footer-heading: 0.9375rem;
+  --font-size-footer-text: 0.8125rem;
+}
 
+.font-normal {
+  font-family: var(--fontNormal);
+}
+
+.max-w-container {
+  max-width: var(--max-width-container);
+}
+
+.min-h-footer {
+  min-height: var(--min-height-footer);
+}
+
+.py-footer {
+  padding-top: var(--padding-footer-vertical);
+  padding-bottom: var(--padding-footer-vertical);
+}
+
+.pl-footer {
+  padding-left: var(--padding-footer-left);
+}
+
+.text-footer-heading {
+  font-size: var(--font-size-footer-heading);
+}
+
+.text-footer-text {
+  font-size: var(--font-size-footer-text);
+}
