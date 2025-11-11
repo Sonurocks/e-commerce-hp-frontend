@@ -124,7 +124,7 @@
   --max-width-container: 96.25rem;
   --min-height-footer: 29.625rem;
   --padding-footer-vertical: 1.5rem;
-  --padding-footer-left: 3.75rem;
+  --padding-footer-left: 6rem;
   --font-size-footer-heading: 0.9375rem;
   --font-size-footer-text: 0.8125rem;
 }
@@ -148,6 +148,10 @@
 
 .pl-footer {
   padding-left: var(--padding-footer-left);
+}
+
+.pr-footer {
+  padding-right: var(--padding-footer-left);
 }
 
 .text-footer-heading {

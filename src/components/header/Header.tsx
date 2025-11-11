@@ -7,14 +7,47 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { FaRegUser } from "react-icons/fa";
 import { promotions, primaryNavigationLinks, secondaryNavigationLinks, headerConfig } from '../../constants';
 import Drawer from './drawer/25%off';
+import NewInDrawer from './drawer/NewIn';
+import HolidaySeasonDrawer from './drawer/HolidaySeason';
+import BrandsDrawer from './drawer/Brands';
+import ClothingDrawer from './drawer/Clothing';
+import ShoesDrawer from './drawer/Shoes';
+import BagsDrawer from './drawer/Bags';
+import AccessoriesDrawer from './drawer/Accessories';
+import JewelleryDrawer from './drawer/Jewellery';
+import HomewareDrawer from './drawer/Homeware';
+import PreOwnedDrawer from './drawer/PreOwned';
+import SaleDrawer from './drawer/Sale';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const drawerRef = useRef<HTMLDivElement>(null);
-  const linkRef = useRef<HTMLDivElement>(null);
+  const [activeDrawer, setActiveDrawer] = useState<'25off' | 'newIn' | 'holidaySeason' | 'brands' | 'clothing' | 'shoes' | 'bags' | 'accessories' | 'jewellery' | 'homeware' | 'preOwned' | 'sale' | null>(null);
+  const drawer25OffRef = useRef<HTMLDivElement>(null);
+  const drawerNewInRef = useRef<HTMLDivElement>(null);
+  const drawerHolidaySeasonRef = useRef<HTMLDivElement>(null);
+  const drawerBrandsRef = useRef<HTMLDivElement>(null);
+  const drawerClothingRef = useRef<HTMLDivElement>(null);
+  const drawerShoesRef = useRef<HTMLDivElement>(null);
+  const drawerBagsRef = useRef<HTMLDivElement>(null);
+  const drawerAccessoriesRef = useRef<HTMLDivElement>(null);
+  const drawerJewelleryRef = useRef<HTMLDivElement>(null);
+  const drawerHomewareRef = useRef<HTMLDivElement>(null);
+  const drawerPreOwnedRef = useRef<HTMLDivElement>(null);
+  const drawerSaleRef = useRef<HTMLDivElement>(null);
+  const link25OffRef = useRef<HTMLDivElement>(null);
+  const linkNewInRef = useRef<HTMLDivElement>(null);
+  const linkHolidaySeasonRef = useRef<HTMLDivElement>(null);
+  const linkBrandsRef = useRef<HTMLDivElement>(null);
+  const linkClothingRef = useRef<HTMLDivElement>(null);
+  const linkShoesRef = useRef<HTMLDivElement>(null);
+  const linkBagsRef = useRef<HTMLDivElement>(null);
+  const linkAccessoriesRef = useRef<HTMLDivElement>(null);
+  const linkJewelleryRef = useRef<HTMLDivElement>(null);
+  const linkHomewareRef = useRef<HTMLDivElement>(null);
+  const linkPreOwnedRef = useRef<HTMLDivElement>(null);
+  const linkSaleRef = useRef<HTMLDivElement>(null);
   const [timeLeft, setTimeLeft] = useState(headerConfig.countdown.initialTime);
 
   // Rotate promotions every 3 seconds
@@ -71,25 +104,159 @@ const Header = () => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
       
-      // If click is outside both drawer and link wrapper, close drawer
-      if (
-        drawerRef.current && 
-        !drawerRef.current.contains(target) && 
-        linkRef.current && 
-        !linkRef.current.contains(target)
-      ) {
-        setIsDrawerOpen(false);
+      // Check for 25% off drawer
+      if (activeDrawer === '25off') {
+        if (
+          drawer25OffRef.current && 
+          !drawer25OffRef.current.contains(target) && 
+          link25OffRef.current && 
+          !link25OffRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for New In drawer
+      if (activeDrawer === 'newIn') {
+        if (
+          drawerNewInRef.current && 
+          !drawerNewInRef.current.contains(target) && 
+          linkNewInRef.current && 
+          !linkNewInRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for Holiday Season drawer
+      if (activeDrawer === 'holidaySeason') {
+        if (
+          drawerHolidaySeasonRef.current && 
+          !drawerHolidaySeasonRef.current.contains(target) && 
+          linkHolidaySeasonRef.current && 
+          !linkHolidaySeasonRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for Brands drawer
+      if (activeDrawer === 'brands') {
+        if (
+          drawerBrandsRef.current && 
+          !drawerBrandsRef.current.contains(target) && 
+          linkBrandsRef.current && 
+          !linkBrandsRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for Clothing drawer
+      if (activeDrawer === 'clothing') {
+        if (
+          drawerClothingRef.current && 
+          !drawerClothingRef.current.contains(target) && 
+          linkClothingRef.current && 
+          !linkClothingRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for Shoes drawer
+      if (activeDrawer === 'shoes') {
+        if (
+          drawerShoesRef.current && 
+          !drawerShoesRef.current.contains(target) && 
+          linkShoesRef.current && 
+          !linkShoesRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for Bags drawer
+      if (activeDrawer === 'bags') {
+        if (
+          drawerBagsRef.current && 
+          !drawerBagsRef.current.contains(target) && 
+          linkBagsRef.current && 
+          !linkBagsRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for Accessories drawer
+      if (activeDrawer === 'accessories') {
+        if (
+          drawerAccessoriesRef.current && 
+          !drawerAccessoriesRef.current.contains(target) && 
+          linkAccessoriesRef.current && 
+          !linkAccessoriesRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for Jewellery drawer
+      if (activeDrawer === 'jewellery') {
+        if (
+          drawerJewelleryRef.current && 
+          !drawerJewelleryRef.current.contains(target) && 
+          linkJewelleryRef.current && 
+          !linkJewelleryRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for Homeware drawer
+      if (activeDrawer === 'homeware') {
+        if (
+          drawerHomewareRef.current && 
+          !drawerHomewareRef.current.contains(target) && 
+          linkHomewareRef.current && 
+          !linkHomewareRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for Pre-owned drawer
+      if (activeDrawer === 'preOwned') {
+        if (
+          drawerPreOwnedRef.current && 
+          !drawerPreOwnedRef.current.contains(target) && 
+          linkPreOwnedRef.current && 
+          !linkPreOwnedRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
+      }
+      
+      // Check for Sale drawer
+      if (activeDrawer === 'sale') {
+        if (
+          drawerSaleRef.current && 
+          !drawerSaleRef.current.contains(target) && 
+          linkSaleRef.current && 
+          !linkSaleRef.current.contains(target)
+        ) {
+          setActiveDrawer(null);
+        }
       }
     };
 
-    if (isDrawerOpen) {
+    if (activeDrawer) {
       document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isDrawerOpen]);
+  }, [activeDrawer]);
 
   // Get current promotion for background color
   const currentPromo = promotions[currentPromoIndex];
@@ -117,7 +284,7 @@ const Header = () => {
               >
                 <span
                   className={`flex items-center justify-center space-x-2 ${
-                    promo.type === 'generic' ? 'text-black' : 'text-white'
+                    promo.type === 'generic' ? 'text-[var(--color-preto)]' : 'text-white'
                   }`}
                 >
                   {promo.type === 'promotion' && promo.showCountdown ? (
@@ -187,9 +354,9 @@ const Header = () => {
             </div>
 
             {/* Center - Logo */}
-            <div className="flex-1 flex justify-center lg:flex-none">
+            <div className="flex-1 flex justify-center items-center">
               <Link href={headerConfig.logo.href}>
-                <h1 className="text-4xl font-bold text-black tracking-tight uppercase w-[250px] h-[30px]">
+                <h1 className="text-3xl font-extrabold text-[var(--color-preto)] tracking-tight uppercase w-[290px] h-[26px]">
                   {headerConfig.logo.text}
                 </h1>
               </Link>
@@ -214,7 +381,7 @@ const Header = () => {
               </button>
 
               {/* Profile */}
-              <button className="text-black hover:text-gray-700 transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
+              <button className="text-[var(--color-preto)] hover:text-gray-700 transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
                 <FaRegUser className="w-6 h-6" />
                 <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   {headerConfig.tooltips.signIn}
@@ -222,7 +389,7 @@ const Header = () => {
               </button>
 
               {/* Wishlist */}
-              <button className="text-gray-900 hover:text-black transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
+              <button className="text-gray-900 hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
                 <GoHeart className="w-6 h-6" strokeWidth={1.0} />
                 <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   {headerConfig.tooltips.wishlist}
@@ -230,7 +397,7 @@ const Header = () => {
               </button>
 
               {/* Shopping Bag */}
-              <button className="text-gray-900 hover:text-black transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
+              <button className="text-gray-900 hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
                 <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
                 <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   {headerConfig.tooltips.bag}
@@ -247,27 +414,72 @@ const Header = () => {
             <div className="hidden lg:flex items-center space-x-6 overflow-x-auto">
               {secondaryNavigationLinks.map((link, index) => {
                 if (link.hasDrawer) {
+                  const drawerType = link.drawerType as '25off' | 'newIn' | 'holidaySeason' | 'brands' | 'clothing' | 'shoes' | 'bags' | 'accessories' | 'jewellery' | 'homeware' | 'preOwned' | 'sale';
+                  const linkRef = drawerType === '25off' 
+                    ? link25OffRef 
+                    : drawerType === 'newIn' 
+                    ? linkNewInRef 
+                    : drawerType === 'holidaySeason'
+                    ? linkHolidaySeasonRef
+                    : drawerType === 'brands'
+                    ? linkBrandsRef
+                    : drawerType === 'clothing'
+                    ? linkClothingRef
+                    : drawerType === 'shoes'
+                    ? linkShoesRef
+                    : drawerType === 'bags'
+                    ? linkBagsRef
+                    : drawerType === 'accessories'
+                    ? linkAccessoriesRef
+                    : drawerType === 'jewellery'
+                    ? linkJewelleryRef
+                    : drawerType === 'homeware'
+                    ? linkHomewareRef
+                    : drawerType === 'preOwned'
+                    ? linkPreOwnedRef
+                    : linkSaleRef;
+                  
+                  const isActive = activeDrawer === drawerType;
+                  const shouldBeGray = activeDrawer !== null && !isActive;
+                  let linkClassName = link.className;
+                  if (shouldBeGray) {
+                    if (linkClassName.includes('text-[var(--color-preto)]')) {
+                      linkClassName = linkClassName.replace('text-[var(--color-preto)]', 'text-gray-500');
+                    } else if (linkClassName.includes('text-red-600')) {
+                      linkClassName = linkClassName.replace('text-red-600', 'text-gray-500');
+                    }
+                  }
+                  
                   return (
                     <div
                       key={index}
                       ref={linkRef}
                       className="relative"
-                      onMouseEnter={() => setIsDrawerOpen(true)}
+                      onMouseEnter={() => setActiveDrawer(drawerType)}
                     >
                       <Link
                         href={link.href}
-                        className={link.className}
+                        className={linkClassName}
                       >
                         {link.label}
                       </Link>
                     </div>
                   );
                 }
+                const shouldBeGray = activeDrawer !== null;
+                let linkClassName = link.className;
+                if (shouldBeGray) {
+                  if (linkClassName.includes('text-[var(--color-preto)]')) {
+                    linkClassName = linkClassName.replace('text-[var(--color-preto)]', 'text-gray-500');
+                  } else if (linkClassName.includes('text-red-600')) {
+                    linkClassName = linkClassName.replace('text-red-600', 'text-gray-500');
+                  }
+                }
                 return (
                   <Link
                     key={index}
                     href={link.href}
-                    className={link.className}
+                    className={linkClassName}
                   >
                     {link.label}
                   </Link>
@@ -296,18 +508,73 @@ const Header = () => {
                 <input
                   type="text"
                   placeholder={headerConfig.search.placeholder}
-                  className="w-full pl-10 pr-4 py-2 border-b border-black focus:outline-none focus:border-gray-900 text-base"
+                  className="w-full pl-10 pr-4 py-2 border-b border-[var(--color-preto)] focus:outline-none focus:border-gray-900 text-base"
                 />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Drawer - Positioned relative to header */}
+        {/* Drawers - Positioned relative to header */}
         <Drawer 
-          isDrawerOpen={isDrawerOpen}
-          drawerRef={drawerRef}
-          onMouseEnter={() => setIsDrawerOpen(true)}
+          isDrawerOpen={activeDrawer === '25off'}
+          drawerRef={drawer25OffRef}
+          onMouseEnter={() => setActiveDrawer('25off')}
+        />
+        <NewInDrawer 
+          isDrawerOpen={activeDrawer === 'newIn'}
+          drawerRef={drawerNewInRef}
+          onMouseEnter={() => setActiveDrawer('newIn')}
+        />
+        <HolidaySeasonDrawer 
+          isDrawerOpen={activeDrawer === 'holidaySeason'}
+          drawerRef={drawerHolidaySeasonRef}
+          onMouseEnter={() => setActiveDrawer('holidaySeason')}
+        />
+        <BrandsDrawer 
+          isDrawerOpen={activeDrawer === 'brands'}
+          drawerRef={drawerBrandsRef}
+          onMouseEnter={() => setActiveDrawer('brands')}
+        />
+        <ClothingDrawer 
+          isDrawerOpen={activeDrawer === 'clothing'}
+          drawerRef={drawerClothingRef}
+          onMouseEnter={() => setActiveDrawer('clothing')}
+        />
+        <ShoesDrawer 
+          isDrawerOpen={activeDrawer === 'shoes'}
+          drawerRef={drawerShoesRef}
+          onMouseEnter={() => setActiveDrawer('shoes')}
+        />
+        <BagsDrawer 
+          isDrawerOpen={activeDrawer === 'bags'}
+          drawerRef={drawerBagsRef}
+          onMouseEnter={() => setActiveDrawer('bags')}
+        />
+        <AccessoriesDrawer 
+          isDrawerOpen={activeDrawer === 'accessories'}
+          drawerRef={drawerAccessoriesRef}
+          onMouseEnter={() => setActiveDrawer('accessories')}
+        />
+        <JewelleryDrawer 
+          isDrawerOpen={activeDrawer === 'jewellery'}
+          drawerRef={drawerJewelleryRef}
+          onMouseEnter={() => setActiveDrawer('jewellery')}
+        />
+        <HomewareDrawer 
+          isDrawerOpen={activeDrawer === 'homeware'}
+          drawerRef={drawerHomewareRef}
+          onMouseEnter={() => setActiveDrawer('homeware')}
+        />
+        <PreOwnedDrawer 
+          isDrawerOpen={activeDrawer === 'preOwned'}
+          drawerRef={drawerPreOwnedRef}
+          onMouseEnter={() => setActiveDrawer('preOwned')}
+        />
+        <SaleDrawer 
+          isDrawerOpen={activeDrawer === 'sale'}
+          drawerRef={drawerSaleRef}
+          onMouseEnter={() => setActiveDrawer('sale')}
         />
       </div>
     </header>

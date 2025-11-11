@@ -5,12 +5,12 @@ import { footerSections, socialMediaLinks, legalLinks } from '../../constants';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-200 text-black max-w-container w-full min-h-footer py-footer mx-auto font-normal">
-      <div className="mx-auto max-w-container w-full pl-footer pr-0">
+    <footer className="bg-gray-200 text-[var(--color-preto)] max-w-container w-full min-h-footer py-footer mx-auto font-normal">
+      <div className="mx-auto max-w-container w-full pl-footer pr-footer">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {footerSections.map((section, sectionIndex) => (
             <div key={sectionIndex}>
-              <h4 className="font-bold mb-4 text-black text-footer-heading">
+              <h4 className="font-semibold mb-4 text-[var(--color-preto)] text-footer-heading">
                 {section.title}
               </h4>
               <ul className={`space-y-2 text-footer-heading ${sectionIndex === 2 ? 'mb-8' : ''}`}>
@@ -18,7 +18,7 @@ const Footer = () => {
                   <li key={linkIndex}>
                     <a
                       href={link.href}
-                      className="text-black hover:underline transition"
+                      className="text-[var(--color-preto)] hover:underline transition font-light"
                     >
                       {link.label}
                     </a>
@@ -27,7 +27,7 @@ const Footer = () => {
               </ul>
               {sectionIndex === 2 && (
                 <div>
-                  <h4 className="font-bold mb-4 text-black text-footer-heading">
+                  <h4 className="font-semibold mb-4 text-[var(--color-preto)] text-footer-heading">
                     Follow us
                   </h4>
               <div className="flex space-x-4">
@@ -35,7 +35,7 @@ const Footer = () => {
                   <a
                     key={index}
                     href={social.href}
-                    className="text-black hover:text-gray-900 transition"
+                    className="text-[var(--color-preto)] hover:text-gray-900 transition"
                     aria-label={social.ariaLabel}
                   >
                     {social.iconType === 'instagram' && (
@@ -97,13 +97,13 @@ const Footer = () => {
                 <a
                   key={index}
                   href={link.href}
-                  className="underline transition text-black"
+                  className="underline transition text-[var(--color-preto)]"
                 >
                   {link.label}
                 </a>
               ))}
             </div>
-            <div className="text-black text-footer-text">
+            <div className="text-[var(--color-preto)] text-footer-text">
               <p className="mb-2">
                 &apos;FARFETCH&apos; and the &apos;FARFETCH&apos; logo are trade marks of FARFETCH UK Limited and are registered in numerous jurisdictions around the world.
               </p>
