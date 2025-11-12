@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { drawerLinks } from '../../../constants';
-import { womenJpeg } from '../../../../assets';
+import { Women } from '@/assets';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
@@ -41,7 +41,7 @@ const Drawer: React.FC<DrawerProps> = ({ isDrawerOpen, drawerRef, onMouseEnter }
           <div className="w-[400px] flex-shrink-0 ml-auto">
             <div className="w-full">
               <Image
-                src={womenJpeg}
+                src={Women}
                 alt="25% off promotion"
                 width={400}
                 height={320}
