@@ -10,6 +10,17 @@ import homewarePng from './header/homeware.png';
 import preOwnedPng from './header/pre-owned.png';
 import salePng from './header/sale.png';
 import twentyFiveOffPng from './header/25off.png';
+import Jhumka from './jhumka.jpg';
+
+import Belt from './belt.jpg';
+import kidswear from './kidswear.png';
+import Skirt from './womesskirt.jpg';
+import bag from './womensbag.jpg';
+import necklace from './womesnecklace.jpg';
+import Shoes from './shoes.webp';
+import Wallet from './wallet.webp';
+import Shirt from './shirt.jpeg';
+
 
 export { 
     womenJpeg, 
@@ -23,6 +34,11 @@ export {
     homewarePng,
     preOwnedPng,
     salePng,
-    twentyFiveOffPng
+    twentyFiveOffPng,
+     Jhumka,  Belt,kidswear,Skirt,bag,necklace, Shoes, Wallet, Shirt
 };
+
+
+
+
 
