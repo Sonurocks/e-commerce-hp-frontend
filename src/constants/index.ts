@@ -120,6 +120,141 @@ export const secondaryNavigationLinks = [
   },
 ];
 
+export const menswearSecondaryNavigationLinks = [
+  {
+    href: '/sale/25-off',
+    label: '25% off',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: '25off',
+  },
+  {
+    href: '/new-in',
+    label: 'New in',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'newIn',
+  },
+  {
+    href: '/holiday-season',
+    label: 'Holiday season',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'holidaySeason',
+  },
+  {
+    href: '/brands',
+    label: 'Brands',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'brands',
+  },
+  {
+    href: '/clothing',
+    label: 'Clothing',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'clothing',
+  },
+  {
+    href: '/shoes',
+    label: 'Shoes',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'shoes',
+  },
+  {
+    href: '/bags',
+    label: 'Bags',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'bags',
+  },
+  {
+    href: '/accessories',
+    label: 'Accessories',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'accessories',
+  },
+  {
+    href: '/watches',
+    label: 'Watches',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: false,
+  },
+  {
+    href: '/homeware',
+    label: 'Homeware',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'homeware',
+  },
+  {
+    href: '/sale',
+    label: 'Sale',
+    className: 'text-red-600 hover:text-[#222] text-[15px] whitespace-nowrap font-normal transition',
+    hasDrawer: true,
+    drawerType: 'sale',
+  },
+];
+
+export const kidswearSecondaryNavigationLinks = [
+  {
+    href: '/sale/25-off',
+    label: '25% off',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: '25off',
+  },
+  {
+    href: '/new-in',
+    label: 'New in',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'newIn',
+  },
+  {
+    href: '/holiday-season',
+    label: 'Holiday season',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'holidaySeason',
+  },
+  {
+    href: '/brands',
+    label: 'Brands',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: true,
+    drawerType: 'brands',
+  },
+  {
+    href: '/kidswear/baby',
+    label: 'Baby (0-36mth)',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: false,
+  },
+  {
+    href: '/kidswear/kids',
+    label: 'Kids (2-12 yrs)',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: false,
+  },
+  {
+    href: '/kidswear/teens',
+    label: 'Teens (13-16 yrs)',
+    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
+    hasDrawer: false,
+  },
+  {
+    href: '/sale',
+    label: 'Sale',
+    className: 'text-red-600 hover:text-[#222] text-[15px] whitespace-nowrap font-normal transition',
+    hasDrawer: true,
+    drawerType: 'sale',
+  },
+];
+
 export const drawerLinks = [
   {
     href: '/sale/25-off/all',

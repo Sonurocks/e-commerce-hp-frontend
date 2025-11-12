@@ -1,6 +1,7 @@
 import React from 'react';
 import { Jhumka } from '@/assets';
 
+
 export default function HeroBanner({ image }: { image: { src: string } }) {
 	return (
 		<section className="my-12">

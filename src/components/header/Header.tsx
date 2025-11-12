@@ -2,25 +2,27 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { FaRegUser } from "react-icons/fa";
-import { promotions, primaryNavigationLinks, secondaryNavigationLinks, headerConfig } from '../../constants';
-import Drawer from './drawer/25%off';
-import NewInDrawer from './drawer/NewIn';
-import HolidaySeasonDrawer from './drawer/HolidaySeason';
-import BrandsDrawer from './drawer/Brands';
-import ClothingDrawer from './drawer/Clothing';
-import ShoesDrawer from './drawer/Shoes';
-import BagsDrawer from './drawer/Bags';
-import AccessoriesDrawer from './drawer/Accessories';
-import JewelleryDrawer from './drawer/Jewellery';
-import HomewareDrawer from './drawer/Homeware';
-import PreOwnedDrawer from './drawer/PreOwned';
-import SaleDrawer from './drawer/Sale';
+import { promotions, primaryNavigationLinks, secondaryNavigationLinks, menswearSecondaryNavigationLinks, kidswearSecondaryNavigationLinks, headerConfig } from '../../constants';
+import { DepartmentKey } from '../../constants/department';
+import GenericDrawer from './drawer/GenericDrawer';
 import SearchDrawer from './drawer/SearchDrawer';
 
 const Header = () => {
+  const pathname = usePathname();
+  const isKidswearPage = pathname?.startsWith('/kidswear');
+  const isMenswearPage = pathname?.startsWith('/menswear');
+  
+  // Determine current department
+  const currentDepartment: DepartmentKey = isKidswearPage 
+    ? 'kidswear' 
+    : isMenswearPage 
+    ? 'menswear' 
+    : 'womenswear';
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,18 +30,14 @@ const Header = () => {
   const [isSearchDrawerOpen, setIsSearchDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const searchDrawerRef = useRef<HTMLDivElement>(null);
-  const drawer25OffRef = useRef<HTMLDivElement>(null);
-  const drawerNewInRef = useRef<HTMLDivElement>(null);
-  const drawerHolidaySeasonRef = useRef<HTMLDivElement>(null);
-  const drawerBrandsRef = useRef<HTMLDivElement>(null);
-  const drawerClothingRef = useRef<HTMLDivElement>(null);
-  const drawerShoesRef = useRef<HTMLDivElement>(null);
-  const drawerBagsRef = useRef<HTMLDivElement>(null);
-  const drawerAccessoriesRef = useRef<HTMLDivElement>(null);
-  const drawerJewelleryRef = useRef<HTMLDivElement>(null);
-  const drawerHomewareRef = useRef<HTMLDivElement>(null);
-  const drawerPreOwnedRef = useRef<HTMLDivElement>(null);
-  const drawerSaleRef = useRef<HTMLDivElement>(null);
+  const navigationLinks = isKidswearPage 
+    ? kidswearSecondaryNavigationLinks 
+    : isMenswearPage 
+    ? menswearSecondaryNavigationLinks 
+    : secondaryNavigationLinks;
+  // Single ref for the generic drawer
+  const drawerRef = useRef<HTMLDivElement>(null);
+  // Map of link refs for click outside detection
   const link25OffRef = useRef<HTMLDivElement>(null);
   const linkNewInRef = useRef<HTMLDivElement>(null);
   const linkHolidaySeasonRef = useRef<HTMLDivElement>(null);
@@ -52,6 +50,21 @@ const Header = () => {
   const linkHomewareRef = useRef<HTMLDivElement>(null);
   const linkPreOwnedRef = useRef<HTMLDivElement>(null);
   const linkSaleRef = useRef<HTMLDivElement>(null);
+  
+  const linkRefs: Record<string, React.RefObject<HTMLDivElement | null>> = {
+    '25off': link25OffRef,
+    'newIn': linkNewInRef,
+    'holidaySeason': linkHolidaySeasonRef,
+    'brands': linkBrandsRef,
+    'clothing': linkClothingRef,
+    'shoes': linkShoesRef,
+    'bags': linkBagsRef,
+    'accessories': linkAccessoriesRef,
+    'jewellery': linkJewelleryRef,
+    'homeware': linkHomewareRef,
+    'preOwned': linkPreOwnedRef,
+    'sale': linkSaleRef,
+  };
   const [timeLeft, setTimeLeft] = useState(headerConfig.countdown.initialTime);
 
   // Rotate promotions every 3 seconds
@@ -134,150 +147,18 @@ const Header = () => {
   // Click outside to close drawer
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      if (!activeDrawer) return;
+      
       const target = event.target as Node;
+      const currentLinkRef = linkRefs[activeDrawer];
       
-      // Check for 25% off drawer
-      if (activeDrawer === '25off') {
-        if (
-          drawer25OffRef.current && 
-          !drawer25OffRef.current.contains(target) && 
-          link25OffRef.current && 
-          !link25OffRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for New In drawer
-      if (activeDrawer === 'newIn') {
-        if (
-          drawerNewInRef.current && 
-          !drawerNewInRef.current.contains(target) && 
-          linkNewInRef.current && 
-          !linkNewInRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for Holiday Season drawer
-      if (activeDrawer === 'holidaySeason') {
-        if (
-          drawerHolidaySeasonRef.current && 
-          !drawerHolidaySeasonRef.current.contains(target) && 
-          linkHolidaySeasonRef.current && 
-          !linkHolidaySeasonRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for Brands drawer
-      if (activeDrawer === 'brands') {
-        if (
-          drawerBrandsRef.current && 
-          !drawerBrandsRef.current.contains(target) && 
-          linkBrandsRef.current && 
-          !linkBrandsRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for Clothing drawer
-      if (activeDrawer === 'clothing') {
-        if (
-          drawerClothingRef.current && 
-          !drawerClothingRef.current.contains(target) && 
-          linkClothingRef.current && 
-          !linkClothingRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for Shoes drawer
-      if (activeDrawer === 'shoes') {
-        if (
-          drawerShoesRef.current && 
-          !drawerShoesRef.current.contains(target) && 
-          linkShoesRef.current && 
-          !linkShoesRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for Bags drawer
-      if (activeDrawer === 'bags') {
-        if (
-          drawerBagsRef.current && 
-          !drawerBagsRef.current.contains(target) && 
-          linkBagsRef.current && 
-          !linkBagsRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for Accessories drawer
-      if (activeDrawer === 'accessories') {
-        if (
-          drawerAccessoriesRef.current && 
-          !drawerAccessoriesRef.current.contains(target) && 
-          linkAccessoriesRef.current && 
-          !linkAccessoriesRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for Jewellery drawer
-      if (activeDrawer === 'jewellery') {
-        if (
-          drawerJewelleryRef.current && 
-          !drawerJewelleryRef.current.contains(target) && 
-          linkJewelleryRef.current && 
-          !linkJewelleryRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for Homeware drawer
-      if (activeDrawer === 'homeware') {
-        if (
-          drawerHomewareRef.current && 
-          !drawerHomewareRef.current.contains(target) && 
-          linkHomewareRef.current && 
-          !linkHomewareRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for Pre-owned drawer
-      if (activeDrawer === 'preOwned') {
-        if (
-          drawerPreOwnedRef.current && 
-          !drawerPreOwnedRef.current.contains(target) && 
-          linkPreOwnedRef.current && 
-          !linkPreOwnedRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
-      }
-      
-      // Check for Sale drawer
-      if (activeDrawer === 'sale') {
-        if (
-          drawerSaleRef.current && 
-          !drawerSaleRef.current.contains(target) && 
-          linkSaleRef.current && 
-          !linkSaleRef.current.contains(target)
-        ) {
-          setActiveDrawer(null);
-        }
+      if (
+        drawerRef.current && 
+        !drawerRef.current.contains(target) && 
+        currentLinkRef?.current && 
+        !currentLinkRef.current.contains(target)
+      ) {
+        setActiveDrawer(null);
       }
     };
 
@@ -454,32 +335,10 @@ const Header = () => {
           <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
             {/* Left - Categories */}
             <div className="hidden lg:flex items-center space-x-6 overflow-x-auto">
-              {secondaryNavigationLinks.map((link, index) => {
+              {navigationLinks.map((link, index) => {
                 if (link.hasDrawer) {
                   const drawerType = link.drawerType as '25off' | 'newIn' | 'holidaySeason' | 'brands' | 'clothing' | 'shoes' | 'bags' | 'accessories' | 'jewellery' | 'homeware' | 'preOwned' | 'sale';
-                  const linkRef = drawerType === '25off' 
-                    ? link25OffRef 
-                    : drawerType === 'newIn' 
-                    ? linkNewInRef 
-                    : drawerType === 'holidaySeason'
-                    ? linkHolidaySeasonRef
-                    : drawerType === 'brands'
-                    ? linkBrandsRef
-                    : drawerType === 'clothing'
-                    ? linkClothingRef
-                    : drawerType === 'shoes'
-                    ? linkShoesRef
-                    : drawerType === 'bags'
-                    ? linkBagsRef
-                    : drawerType === 'accessories'
-                    ? linkAccessoriesRef
-                    : drawerType === 'jewellery'
-                    ? linkJewelleryRef
-                    : drawerType === 'homeware'
-                    ? linkHomewareRef
-                    : drawerType === 'preOwned'
-                    ? linkPreOwnedRef
-                    : linkSaleRef;
+                  const linkRef = linkRefs[drawerType];
                   
                   const isActive = activeDrawer === drawerType;
                   const shouldBeGray = activeDrawer !== null && !isActive;
@@ -560,66 +419,15 @@ const Header = () => {
         </div>
 
         {/* Drawers - Positioned relative to header */}
-        <Drawer 
-          isDrawerOpen={activeDrawer === '25off'}
-          drawerRef={drawer25OffRef}
-          onMouseEnter={() => setActiveDrawer('25off')}
-        />
-        <NewInDrawer 
-          isDrawerOpen={activeDrawer === 'newIn'}
-          drawerRef={drawerNewInRef}
-          onMouseEnter={() => setActiveDrawer('newIn')}
-        />
-        <HolidaySeasonDrawer 
-          isDrawerOpen={activeDrawer === 'holidaySeason'}
-          drawerRef={drawerHolidaySeasonRef}
-          onMouseEnter={() => setActiveDrawer('holidaySeason')}
-        />
-        <BrandsDrawer 
-          isDrawerOpen={activeDrawer === 'brands'}
-          drawerRef={drawerBrandsRef}
-          onMouseEnter={() => setActiveDrawer('brands')}
-        />
-        <ClothingDrawer 
-          isDrawerOpen={activeDrawer === 'clothing'}
-          drawerRef={drawerClothingRef}
-          onMouseEnter={() => setActiveDrawer('clothing')}
-        />
-        <ShoesDrawer 
-          isDrawerOpen={activeDrawer === 'shoes'}
-          drawerRef={drawerShoesRef}
-          onMouseEnter={() => setActiveDrawer('shoes')}
-        />
-        <BagsDrawer 
-          isDrawerOpen={activeDrawer === 'bags'}
-          drawerRef={drawerBagsRef}
-          onMouseEnter={() => setActiveDrawer('bags')}
-        />
-        <AccessoriesDrawer 
-          isDrawerOpen={activeDrawer === 'accessories'}
-          drawerRef={drawerAccessoriesRef}
-          onMouseEnter={() => setActiveDrawer('accessories')}
-        />
-        <JewelleryDrawer 
-          isDrawerOpen={activeDrawer === 'jewellery'}
-          drawerRef={drawerJewelleryRef}
-          onMouseEnter={() => setActiveDrawer('jewellery')}
-        />
-        <HomewareDrawer 
-          isDrawerOpen={activeDrawer === 'homeware'}
-          drawerRef={drawerHomewareRef}
-          onMouseEnter={() => setActiveDrawer('homeware')}
-        />
-        <PreOwnedDrawer 
-          isDrawerOpen={activeDrawer === 'preOwned'}
-          drawerRef={drawerPreOwnedRef}
-          onMouseEnter={() => setActiveDrawer('preOwned')}
-        />
-        <SaleDrawer 
-          isDrawerOpen={activeDrawer === 'sale'}
-          drawerRef={drawerSaleRef}
-          onMouseEnter={() => setActiveDrawer('sale')}
-        />
+        {activeDrawer && (
+          <GenericDrawer
+            isDrawerOpen={true}
+            drawerRef={drawerRef}
+            onMouseEnter={() => setActiveDrawer(activeDrawer)}
+            drawerType={activeDrawer}
+            department={currentDepartment}
+          />
+        )}
       </div>
     </header>
 

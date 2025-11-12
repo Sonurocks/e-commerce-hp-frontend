@@ -19,8 +19,8 @@ const Wishlist = () => {
         <div className="mb-24 max-w-2xl">
           <h1 className="text-4xl font-base text-[var(--color-preto)] mb-3">
             Wishlist
-          </h1>
-          <p className="text-base text-[var(--color-preto)] mb-4 font-base leading-relaxed">
+          </h1>text-[var(--color-preto)]
+          <p className="text-base  mb-4 font-base leading-relaxed">
             Add your favourite items to your wishlist and they&apos;ll appear here
           </p>
           <Link
