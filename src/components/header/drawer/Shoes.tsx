@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { shoesDrawerLinks } from '../../../constants';
-import { shoesPng } from '../../../../assets';
+import { shoesPng } from '../../../assets';
 
 interface ShoesDrawerProps {
   isDrawerOpen: boolean;

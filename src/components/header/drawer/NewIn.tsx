@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { newInDrawerLinks } from '../../../constants';
-import { womenJpeg } from '../../../../assets';
+import { womenJpeg } from '../../../assets';
 
 interface NewInDrawerProps {
   isDrawerOpen: boolean;

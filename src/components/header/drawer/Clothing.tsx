@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { clothingDrawerLinks } from '../../../constants';
-import { clothingPng } from '../../../../assets';
+import { clothingPng } from '../../../assets';
 
 interface ClothingDrawerProps {
   isDrawerOpen: boolean;

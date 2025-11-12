@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { holidaySeasonDrawerLinks } from '../../../constants';
-import { holidaySeasonPng } from '../../../../assets';
+import { holidaySeasonPng } from '../../../assets';
 
 interface HolidaySeasonDrawerProps {
   isDrawerOpen: boolean;

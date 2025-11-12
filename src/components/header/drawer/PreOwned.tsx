@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { preOwnedDrawerLinks } from '../../../constants';
-import { preOwnedPng } from '../../../../assets';
+import { preOwnedPng } from '../../../assets';
 
 interface PreOwnedDrawerProps {
   isDrawerOpen: boolean;

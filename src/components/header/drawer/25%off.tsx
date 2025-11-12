@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { drawerLinks } from '../../../constants';
-import { twentyFiveOffPng } from '../../../../assets';
+import { twentyFiveOffPng } from '../../../assets';
 
 interface DrawerProps {
   isDrawerOpen: boolean;

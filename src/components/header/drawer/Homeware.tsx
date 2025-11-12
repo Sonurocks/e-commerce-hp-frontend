@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { homewareDrawerLinks } from '../../../constants';
-import { homewarePng } from '../../../../assets';
+import { homewarePng } from '../../../assets';
 
 interface HomewareDrawerProps {
   isDrawerOpen: boolean;

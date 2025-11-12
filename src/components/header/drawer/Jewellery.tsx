@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { jewelleryDrawerLinks } from '../../../constants';
-import { jewelleryPng } from '../../../../assets';
+import { jewelleryPng } from '../../../assets';
 
 interface JewelleryDrawerProps {
   isDrawerOpen: boolean;

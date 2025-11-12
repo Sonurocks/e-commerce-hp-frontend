@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { saleDrawerLinks } from '../../../constants';
-import { salePng } from '../../../../assets';
+import { salePng } from '../../../assets';
 
 interface SaleDrawerProps {
   isDrawerOpen: boolean;

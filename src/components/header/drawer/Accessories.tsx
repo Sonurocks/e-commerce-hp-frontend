@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { accessoriesDrawerLinks } from '../../../constants';
-import { accessoriesPng } from '../../../../assets';
+import { accessoriesPng } from '../../../assets';
 
 interface AccessoriesDrawerProps {
   isDrawerOpen: boolean;

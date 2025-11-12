@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { brandsDrawerLinks } from '../../../constants';
-import { brandsPng } from '../../../../assets';
+import { brandsPng } from '../../../assets';
 
 interface BrandsDrawerProps {
   isDrawerOpen: boolean;

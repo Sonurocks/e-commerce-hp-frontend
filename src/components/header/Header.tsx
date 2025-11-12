@@ -18,12 +18,16 @@ import JewelleryDrawer from './drawer/Jewellery';
 import HomewareDrawer from './drawer/Homeware';
 import PreOwnedDrawer from './drawer/PreOwned';
 import SaleDrawer from './drawer/Sale';
+import SearchDrawer from './drawer/SearchDrawer';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDrawer, setActiveDrawer] = useState<'25off' | 'newIn' | 'holidaySeason' | 'brands' | 'clothing' | 'shoes' | 'bags' | 'accessories' | 'jewellery' | 'homeware' | 'preOwned' | 'sale' | null>(null);
+  const [isSearchDrawerOpen, setIsSearchDrawerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchDrawerRef = useRef<HTMLDivElement>(null);
   const drawer25OffRef = useRef<HTMLDivElement>(null);
   const drawerNewInRef = useRef<HTMLDivElement>(null);
   const drawerHolidaySeasonRef = useRef<HTMLDivElement>(null);
@@ -98,6 +102,34 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close search drawer when clicking outside
+  useEffect(() => {
+    const handleClickOutsideSearch = (event: MouseEvent) => {
+      const target = event.target as Node;
+      
+      if (
+        isSearchDrawerOpen &&
+        searchDrawerRef.current &&
+        !searchDrawerRef.current.contains(target)
+      ) {
+        // Don't close if clicking on the search input in the header
+        const searchInput = document.querySelector('input[type="text"][placeholder*="looking"]');
+        if (searchInput && searchInput.contains(target)) {
+          return;
+        }
+        setIsSearchDrawerOpen(false);
+      }
+    };
+
+    if (isSearchDrawerOpen) {
+      document.addEventListener('mousedown', handleClickOutsideSearch);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideSearch);
+    };
+  }, [isSearchDrawerOpen]);
 
   // Click outside to close drawer
   useEffect(() => {
@@ -261,8 +293,18 @@ const Header = () => {
   // Get current promotion for background color
   const currentPromo = promotions[currentPromoIndex];
 
+  const handleSearchInputClick = () => {
+    setIsSearchDrawerOpen(true);
+  };
+
+  const handleSearchDrawerClose = () => {
+    setIsSearchDrawerOpen(false);
+    setSearchQuery('');
+  };
+
   return (
-    <header className="bg-white sticky top-0 z-50 font-normal">
+    <>
+      <header className={`bg-white sticky top-0 z-50 font-normal ${isSearchDrawerOpen ? 'hidden' : ''}`}>
       {/* Top Promotional Bar */}
       <div
         className={`text-[13px] py-[6px] px-[36px] transition-all duration-300 font-normal ${
@@ -389,20 +431,20 @@ const Header = () => {
               </button>
 
               {/* Wishlist */}
-              <button className="text-gray-900 hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
+              <Link href="/wishlist" className="text-gray-900 hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
                 <GoHeart className="w-6 h-6" strokeWidth={1.0} />
                 <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   {headerConfig.tooltips.wishlist}
                 </span>
-              </button>
+              </Link>
 
               {/* Shopping Bag */}
-              <button className="text-gray-900 hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
+              <Link href="/cart" className="text-gray-900 hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
                 <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
                 <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   {headerConfig.tooltips.bag}
                 </span>
-              </button>
+              </Link>
 
              
             </div>
@@ -508,7 +550,9 @@ const Header = () => {
                 <input
                   type="text"
                   placeholder={headerConfig.search.placeholder}
-                  className="w-full pl-10 pr-4 py-2 border-b border-[var(--color-preto)] focus:outline-none focus:border-gray-900 text-base"
+                  className="w-full pl-10 pr-4 py-2 border-b border-[var(--color-preto)] focus:outline-none focus:border-gray-900 text-base cursor-pointer"
+                  onClick={handleSearchInputClick}
+                  readOnly
                 />
               </div>
             </div>
@@ -578,6 +622,16 @@ const Header = () => {
         />
       </div>
     </header>
+
+    {/* Search Drawer */}
+    <SearchDrawer
+      isDrawerOpen={isSearchDrawerOpen}
+      drawerRef={searchDrawerRef as React.Ref<HTMLDivElement>}
+      onClose={handleSearchDrawerClose}
+      searchQuery={searchQuery}
+      onSearchChange={setSearchQuery}
+    />
+    </>
   );
 };
 
