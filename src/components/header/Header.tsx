@@ -26,7 +26,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeDrawer, setActiveDrawer] = useState<'25off' | 'newIn' | 'holidaySeason' | 'brands' | 'clothing' | 'shoes' | 'bags' | 'accessories' | 'jewellery' | 'homeware' | 'preOwned' | 'sale' | null>(null);
+  const [activeDrawer, setActiveDrawer] = useState<'25off' | 'newIn' | 'holidaySeason' | 'brands' | 'clothing' | 'shoes' | 'bags' | 'accessories' | 'jewellery' | 'watches' | 'homeware' | 'preOwned' | 'sale' | '0-36months' | '0-12months' | 'teens' | null>(null);
   const [isSearchDrawerOpen, setIsSearchDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const searchDrawerRef = useRef<HTMLDivElement>(null);
@@ -47,9 +47,13 @@ const Header = () => {
   const linkBagsRef = useRef<HTMLDivElement>(null);
   const linkAccessoriesRef = useRef<HTMLDivElement>(null);
   const linkJewelleryRef = useRef<HTMLDivElement>(null);
+  const linkWatchesRef = useRef<HTMLDivElement>(null);
   const linkHomewareRef = useRef<HTMLDivElement>(null);
   const linkPreOwnedRef = useRef<HTMLDivElement>(null);
   const linkSaleRef = useRef<HTMLDivElement>(null);
+  const linkZeroThreeMonthsRef = useRef<HTMLDivElement>(null);
+  const linkZeroTwelveMonthsRef = useRef<HTMLDivElement>(null);
+  const linkTeensRef = useRef<HTMLDivElement>(null);
   
   const linkRefs: Record<string, React.RefObject<HTMLDivElement | null>> = {
     '25off': link25OffRef,
@@ -61,9 +65,13 @@ const Header = () => {
     'bags': linkBagsRef,
     'accessories': linkAccessoriesRef,
     'jewellery': linkJewelleryRef,
+    'watches': linkWatchesRef,
     'homeware': linkHomewareRef,
     'preOwned': linkPreOwnedRef,
     'sale': linkSaleRef,
+    '0-36months': linkZeroThreeMonthsRef,
+    '0-12months': linkZeroTwelveMonthsRef,
+    'teens': linkTeensRef,
   };
   const [timeLeft, setTimeLeft] = useState(headerConfig.countdown.initialTime);
 
@@ -337,7 +345,7 @@ const Header = () => {
             <div className="hidden lg:flex items-center space-x-6 overflow-x-auto">
               {navigationLinks.map((link, index) => {
                 if (link.hasDrawer) {
-                  const drawerType = link.drawerType as '25off' | 'newIn' | 'holidaySeason' | 'brands' | 'clothing' | 'shoes' | 'bags' | 'accessories' | 'jewellery' | 'homeware' | 'preOwned' | 'sale';
+                  const drawerType = link.drawerType as '25off' | 'newIn' | 'holidaySeason' | 'brands' | 'clothing' | 'shoes' | 'bags' | 'accessories' | 'jewellery' | 'watches' | 'homeware' | 'preOwned' | 'sale' | '0-36months' | '0-12months' | 'teens';
                   const linkRef = linkRefs[drawerType];
                   
                   const isActive = activeDrawer === drawerType;

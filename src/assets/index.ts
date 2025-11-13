@@ -1,18 +1,31 @@
 import womenJpeg from './header/women.jpeg';
 import holidaySeasonPng from './header/holdiay season.png';
 import holidaySeasonMen from './header/holiday seasonmen.png';
+import holidaySeasonKids from './header/holidayseasonkids.png';
 import brandsPng from './header/brands.png';
 import brandMen from './header/brandmen.png';
+import brandKids from './header/brandkids.png';
 import clothingPng from './header/clothing.png';
+import clothingMen from './header/clothingmen.png';
 import shoesPng from './header/shoes.png';
+import shoesMen from './header/shoesmen.png';
 import bagsPng from './header/bags.png';
+import bagsMen from './header/bagsmen.png';
 import accessoriesPng from './header/accessories.png';
+import accessoriesMen from './header/accessoriesmen.png';
 import jewelleryPng from './header/jewellery.png';
+import watchMen from './header/watchmen.png';
 import homewarePng from './header/homeware.png';
+import homewareMen from './header/homewaremen.png';
 import preOwnedPng from './header/pre-owned.png';
 import salePng from './header/sale.png';
+import saleKidsPng from './header/salekids.png';
 import twentyFiveOffPng from './header/25off.png';
 import newInMenHeader from './header/newin menn.png';
+import newInKidsHeader from './header/newsinkids.png';
+import zeroThreeKids from './header/03kids.png';
+import twelveKids from './header/12kids.png';
+import shoesKids from './header/shoeskids.png';
 import Jhumka from './jhumka.jpg';
 
 import Belt from './belt.jpg';
@@ -87,20 +100,33 @@ export {
     womenJpeg, 
     holidaySeasonPng,
     holidaySeasonMen,
+    holidaySeasonKids,
     partypinkwatch1,
     partypinkwatch2,
     brandsPng,
     brandMen,
+    brandKids,
     clothingPng,
+    clothingMen,
     shoesPng,
+    shoesMen,
     bagsPng,
+    bagsMen,
     accessoriesPng,
+    accessoriesMen,
     jewelleryPng,
+    watchMen,
     homewarePng,
+    homewareMen,
     preOwnedPng,
     salePng,
+    saleKidsPng,
     twentyFiveOffPng,
     newInMenHeader,
+    newInKidsHeader,
+    zeroThreeKids,
+    twelveKids,
+    shoesKids,
 
      Jhumka, 
       Belt,

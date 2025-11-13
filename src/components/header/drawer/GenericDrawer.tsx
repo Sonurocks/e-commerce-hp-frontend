@@ -115,7 +115,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
 
   // Determine title font class
   const getTitleClass = () => {
-    if (drawerType === 'bags' || drawerType === 'accessories' || drawerType === 'jewellery' || drawerType === 'homeware' || drawerType === 'preOwned') {
+    if (drawerType === 'bags' || drawerType === 'accessories' || drawerType === 'jewellery' || drawerType === 'homeware' || drawerType === 'preOwned' || drawerType === 'watches' || drawerType === 'shoes') {
       return 'text-base text-[var(--color-preto)] mb-4 font-thin uppercase whitespace-nowrap';
     }
     return 'text-base text-[var(--color-preto)] mb-4 font-normal uppercase';
@@ -123,7 +123,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
 
   // Determine link class
   const getLinkClass = () => {
-    if (drawerType === 'bags' || drawerType === 'accessories' || drawerType === 'jewellery' || drawerType === 'homeware' || drawerType === 'preOwned') {
+    if (drawerType === 'bags' || drawerType === 'accessories' || drawerType === 'jewellery' || drawerType === 'homeware' || drawerType === 'preOwned' || drawerType === 'watches' || drawerType === 'shoes') {
       return 'text-base text-[var(--color-preto)] hover:underline transition font-light whitespace-nowrap';
     }
     return 'text-base text-[var(--color-preto)] hover:underline transition font-light';

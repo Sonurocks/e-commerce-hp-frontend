@@ -172,3 +172,42 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* Dropdown option styling - gray background on hover/select (override blue) */
+/* Note: Browser native select dropdown options have very limited CSS support.
+   The blue highlight is often OS-controlled and cannot be fully overridden with CSS alone. */
+
+/* Target all select elements */
+select,
+select * {
+  color: #222;
+}
+
+/* Style options */
+select option {
+  background-color: white !important;
+  color: #222 !important;
+  padding: 8px !important;
+}
+
+/* Override blue selection color with gray */
+select option:checked,
+select option:hover,
+select option:focus,
+select:focus option:checked,
+select option[selected],
+select option:active,
+select:focus option:hover {
+  background-color: #f3f4f6 !important;
+  background: #f3f4f6 !important;
+  background-image: none !important;
+  color: #222 !important;
+}
+
+/* Remove any gradient or blue tints */
+select option:checked {
+  background: #f3f4f6 !important;
+  background-color: #f3f4f6 !important;
+  background-image: linear-gradient(to bottom, #f3f4f6, #f3f4f6) !important;
+  color: #222 !important;
+}

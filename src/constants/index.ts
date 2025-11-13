@@ -181,7 +181,8 @@ export const menswearSecondaryNavigationLinks = [
     href: '/watches',
     label: 'Watches',
     className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
-    hasDrawer: false,
+    hasDrawer: true,
+    drawerType: 'watches',
   },
   {
     href: '/homeware',
@@ -200,13 +201,6 @@ export const menswearSecondaryNavigationLinks = [
 ];
 
 export const kidswearSecondaryNavigationLinks = [
-  {
-    href: '/sale/25-off',
-    label: '25% off',
-    className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
-    hasDrawer: true,
-    drawerType: '25off',
-  },
   {
     href: '/new-in',
     label: 'New in',
@@ -232,19 +226,22 @@ export const kidswearSecondaryNavigationLinks = [
     href: '/kidswear/baby',
     label: 'Baby (0-36mth)',
     className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
-    hasDrawer: false,
+    hasDrawer: true,
+    drawerType: '0-36months',
   },
   {
     href: '/kidswear/kids',
     label: 'Kids (2-12 yrs)',
     className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
-    hasDrawer: false,
+    hasDrawer: true,
+    drawerType: '0-12months',
   },
   {
     href: '/kidswear/teens',
     label: 'Teens (13-16 yrs)',
     className: 'text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition',
-    hasDrawer: false,
+    hasDrawer: true,
+    drawerType: 'teens',
   },
   {
     href: '/sale',
@@ -1175,7 +1172,7 @@ export const footerSections = [
   {
     title: 'Customer Service',
     links: [
-      { href: '#', label: 'Contact us' },
+      { href: '/contact-us', label: 'Contact us' },
       { href: '#', label: 'FAQs' },
       { href: '#', label: 'Orders and delivery' },
       { href: '#', label: 'Returns and refunds' },
