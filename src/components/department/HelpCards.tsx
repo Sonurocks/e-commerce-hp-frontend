@@ -15,7 +15,7 @@ export default function HelpCards() {
 						<h3 className="text-base font-base uppercase text-[var(--color-preto)] mb-1">
 							HOW TO SHOP
 						</h3>
-						<p className="text-normal font-base text-black">
+						<p className="text-normal font-base text-(--color-preto)">
 							Your guide to shopping and placing orders
 						</p>
 					</div>
@@ -25,10 +25,10 @@ export default function HelpCards() {
 						<div className="mb-2">
 							<IoMdHelpCircleOutline className="text-black" size={28} />
 						</div>
-						<h3 className="text-base font-base uppercase text-[var(--color-preto)] mb-1">
+						<h3 className="text-base font-base uppercase text-(--color-preto) mb-1">
 							FAQS
 						</h3>
-						<p className="text-normal font-base text-[var(--color-preto)]">
+						<p className="text-normal font-base text-(--color-preto)">
 							Your questions answered
 						</p>
 					</div>
@@ -50,10 +50,10 @@ export default function HelpCards() {
 								<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
 							</svg>
 						</div>
-						<h3 className="text-base font-base uppercase  text-[var(--color-preto)] mb-1">
+						<h3 className="text-base font-base uppercase  text-(--color-preto) mb-1">
 							NEED HELP?
 						</h3>
-						<p className="text-normal font-base  text-[var(--color-preto)]">
+						<p className="text-normal font-base  text-(--color-preto)">
 							Contact our global Customer Service team
 						</p>
 					</div>

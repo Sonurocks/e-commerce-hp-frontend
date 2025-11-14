@@ -27,7 +27,7 @@ export default function ProductCard({ product, showBadge = false }: { product: P
 					aria-label="Add to wishlist"
 				>
 					<GoHeart 
-						className={`w-5 h-5 ${isWishlisted ? 'fill-black text-black' : 'text-black'}`} 
+						className={`w-5 h-5 ${isWishlisted ? 'fill-black text-[var(--color-preto)]"' : 'text-(--color-preto)'}`} 
 						strokeWidth={1.0}
 					/>
 				</button>
@@ -50,9 +50,9 @@ export default function ProductCard({ product, showBadge = false }: { product: P
 						<p className="text-[15px] text-gray-500">{product.badge}</p>
 					)}
 				</div>
-				<h3 className="text-m text-[var(--color-preto)] font-semibold">{product.title}</h3>
-				{product.subtitle && <p className="text-sm text-[var(--color-preto)]">{product.subtitle}</p>}
-				{product.price && <p className="text-sm text-[var(--color-preto)] mt-3">{product.price}</p>}
+				<h3 className="text-m text-(--color-preto) font-semibold">{product.title}</h3>
+				{product.subtitle && <p className="text-sm text-(--color-preto)">{product.subtitle}</p>}
+				{product.price && <p className="text-sm text-(--color-preto) mt-3">{product.price}</p>}
 			</div>
 		</article>
 	);

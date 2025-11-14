@@ -6,10 +6,12 @@ import { usePathname } from 'next/navigation';
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { FaRegUser } from "react-icons/fa";
+import { SlidersHorizontal } from "lucide-react";
 import { promotions, primaryNavigationLinks, secondaryNavigationLinks, menswearSecondaryNavigationLinks, kidswearSecondaryNavigationLinks, headerConfig } from '../../constants';
 import { DepartmentKey } from '../../constants/department';
 import GenericDrawer from './drawer/GenericDrawer';
 import SearchDrawer from './drawer/SearchDrawer';
+import ThemeSettingsDrawer from '../theme/ThemeSettingsDrawer';
 
 const Header = () => {
   const pathname = usePathname();
@@ -29,6 +31,7 @@ const Header = () => {
   const [activeDrawer, setActiveDrawer] = useState<'25off' | 'newIn' | 'holidaySeason' | 'brands' | 'clothing' | 'shoes' | 'bags' | 'accessories' | 'jewellery' | 'watches' | 'homeware' | 'preOwned' | 'sale' | '0-36months' | '0-12months' | 'teens' | null>(null);
   const [isSearchDrawerOpen, setIsSearchDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isThemeDrawerOpen, setIsThemeDrawerOpen] = useState(false);
   const searchDrawerRef = useRef<HTMLDivElement>(null);
   const navigationLinks = isKidswearPage 
     ? kidswearSecondaryNavigationLinks 
@@ -193,13 +196,13 @@ const Header = () => {
 
   return (
     <>
-      <header className={`bg-white sticky top-0 z-50 font-normal ${isSearchDrawerOpen ? 'hidden' : ''}`}>
+      <header className={`bg-white dark:bg-[var(--colorWhite)] sticky top-0 z-50 font-normal ${isSearchDrawerOpen ? 'hidden' : ''}`}>
       {/* Top Promotional Bar */}
       <div
         className={`text-[13px] py-[6px] px-[36px] transition-all duration-300 font-normal ${
           currentPromo.type === 'generic'
-            ? 'bg-gray-200'
-            : 'bg-black'
+            ? 'bg-gray-200 dark:bg-[var(--colorLightGrey)]'
+            : 'bg-black dark:bg-black'
         } ${isScrolled ? 'hidden' : ''}`}
       >
         <div className="container mx-auto px-4">
@@ -215,7 +218,7 @@ const Header = () => {
               >
                 <span
                   className={`flex items-center justify-center space-x-2 ${
-                    promo.type === 'generic' ? 'text-[var(--color-preto)]' : 'text-white'
+                    promo.type === 'generic' ? 'text-(--color-preto) dark:text-[var(--color-preto)]' : 'text-white dark:text-white'
                   }`}
                 >
                   {promo.type === 'promotion' && promo.showCountdown ? (
@@ -267,7 +270,7 @@ const Header = () => {
       </div>
 
       {/* Main Header */}
-      <div className={`relative ${isScrolled ? 'border-b border-gray-300' : ''}`}>
+      <div className={`relative ${isScrolled ? 'border-b border-gray-300 dark:border-[var(--color-platinum)]' : ''}`}>
         <div className="container mx-auto py-0 px-[36px]">
           {/* First Row - Primary Navigation */}
           <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
@@ -287,7 +290,7 @@ const Header = () => {
             {/* Center - Logo */}
             <div className="flex-1 flex justify-center items-center">
               <Link href={headerConfig.logo.href}>
-                <h1 className="text-3xl font-extrabold text-[var(--color-preto)] tracking-tight uppercase w-[290px] h-[26px]">
+                <h1 className="text-3xl font-extrabold text-(--color-preto) dark:text-[var(--color-preto)] tracking-tight uppercase w-[290px] h-[26px]">
                   {headerConfig.logo.text}
                 </h1>
               </Link>
@@ -296,7 +299,7 @@ const Header = () => {
             {/* Right - User Icons */}
             <div className="flex items-center space-x-4">
               {/* Country Flag */}
-              <button className="hidden md:block w-6 h-6 rounded-full overflow-hidden border border-gray-300 hover:border-gray-400 transition">
+              <button className="hidden md:block w-6 h-6 rounded-full overflow-hidden border border-gray-300 dark:border-[var(--color-platinum)] hover:border-gray-400 dark:hover:border-[var(--color-silver)] transition">
                 <svg
                   viewBox="0 0 24 24"
                   className="w-full h-full"
@@ -311,26 +314,34 @@ const Header = () => {
                 </svg>
               </button>
 
+              {/* Adjustments Icon */}
+              <button 
+                onClick={() => setIsThemeDrawerOpen(true)}
+                className="hidden md:block text-[var(--color-preto)] dark:text-[var(--color-preto)] hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-[var(--colorGrey)]"
+              >
+                <SlidersHorizontal className="w-6 h-6" />
+              </button>
+
               {/* Profile */}
-              <button className="text-[var(--color-preto)] hover:text-gray-700 transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
+              <button className="text-(--color-preto) dark:text-[var(--color-preto)] hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-[var(--colorGrey)]">
                 <FaRegUser className="w-6 h-6" />
-                <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-[var(--color-preto)] text-xs border border-gray-400 dark:border-[var(--color-platinum)] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   {headerConfig.tooltips.signIn}
                 </span>
               </button>
 
               {/* Wishlist */}
-              <Link href="/wishlist" className="text-gray-900 hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
+              <Link href="/wishlist" className="text-(--color-preto) dark:text-[var(--color-preto)] hover:text-(--color-preto) dark:hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-[var(--colorGrey)]">
                 <GoHeart className="w-6 h-6" strokeWidth={1.0} />
-                <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-[var(--color-preto)] text-xs border border-gray-400 dark:border-[var(--color-platinum)] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   {headerConfig.tooltips.wishlist}
                 </span>
               </Link>
 
               {/* Shopping Bag */}
-              <Link href="/cart" className="text-gray-900 hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100">
+              <Link href="/cart" className="text-(--color-preto) dark:text-[var(--color-preto)] hover:text-(--color-preto) dark:hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-[var(--colorGrey)]">
                 <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
-                <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 text-white text-xs border border-gray-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-[var(--color-preto)] text-xs border border-gray-400 dark:border-[var(--color-platinum)] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                   {headerConfig.tooltips.bag}
                 </span>
               </Link>
@@ -401,7 +412,7 @@ const Header = () => {
               <div className="relative w-[270px] h-[44px]">
                 <div className="absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">
                   <svg
-                    className="w-5 h-5 text-gray-500"
+                    className="w-5 h-5 text-gray-500 dark:text-[var(--color-hina)]"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -417,7 +428,7 @@ const Header = () => {
                 <input
                   type="text"
                   placeholder={headerConfig.search.placeholder}
-                  className="w-full pl-10 pr-4 py-2 border-b border-[var(--color-preto)] focus:outline-none focus:border-gray-900 text-base cursor-pointer"
+                  className="w-full pl-10 pr-4 py-2 border-b border-[var(--color-preto)] dark:border-[var(--color-preto)] focus:outline-none focus:border-gray-900 dark:focus:border-[var(--color-preto)] text-base dark:text-[var(--color-preto)] dark:bg-transparent cursor-pointer"
                   onClick={handleSearchInputClick}
                   readOnly
                 />
@@ -446,6 +457,12 @@ const Header = () => {
       onClose={handleSearchDrawerClose}
       searchQuery={searchQuery}
       onSearchChange={setSearchQuery}
+    />
+
+    {/* Theme Settings Drawer */}
+    <ThemeSettingsDrawer
+      isOpen={isThemeDrawerOpen}
+      onClose={() => setIsThemeDrawerOpen(false)}
     />
     </>
   );

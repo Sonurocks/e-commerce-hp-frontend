@@ -1173,7 +1173,7 @@ export const footerSections = [
     title: 'Customer Service',
     links: [
       { href: '/contact-us', label: 'Contact us' },
-      { href: '#', label: 'FAQs' },
+      { href: '/faq', label: 'FAQs' },
       { href: '#', label: 'Orders and delivery' },
       { href: '#', label: 'Returns and refunds' },
       { href: '#', label: 'Payment and pricing' },
