@@ -9,6 +9,7 @@ interface ThemeContextType {
   colorTheme: ColorTheme;
   fontTheme: FontTheme;
   setColorTheme: (theme: ColorTheme) => void;
+  setBgTheme: (theme: ColorTheme) => void;
   setFontTheme: (theme: FontTheme) => void;
 }
 
@@ -28,6 +29,7 @@ interface ThemeSettingsProviderProps {
 
 export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({ children }) => {
   const [colorTheme, setColorThemeState] = useState<ColorTheme>('default');
+  const [bgTheme, setBgTheme] = useState<string>('default')
   const [fontTheme, setFontThemeState] = useState<FontTheme>('default');
 
   // Load preferences from localStorage on mount
@@ -77,7 +79,7 @@ export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({ ch
 
   // Helper function to get text color (white or black) based on background
   const getTextColor = (hex: string): string => {
-    const rgb = hexToRgb(hex);
+    const rgb = hexToRgb(hex);7
     if (!rgb) return '#ffffff';
     // Calculate relative luminance
     const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
@@ -178,8 +180,7 @@ export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({ ch
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute('data-font-theme', fontTheme);
-    
-    switch (fontTheme) {
+        switch (fontTheme) {
       case 'lato':
         root.style.setProperty('--font-theme', 'var(--font-lato), sans-serif');
         break;
@@ -198,10 +199,16 @@ export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({ ch
     }
   }, [fontTheme]);
 
+  useEffect(()=>{
+    const root = document.documentElement;
+      root.style.setProperty('--theme-bg', bgTheme);
+  },[bgTheme])
+
   const setColorTheme = (theme: ColorTheme) => {
     setColorThemeState(theme);
     localStorage.setItem('colorTheme', theme);
   };
+
 
   const setFontTheme = (theme: FontTheme) => {
     setFontThemeState(theme);
@@ -209,7 +216,7 @@ export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({ ch
   };
 
   return (
-    <ThemeContext.Provider value={{ colorTheme, fontTheme, setColorTheme, setFontTheme }}>
+    <ThemeContext.Provider value={{ colorTheme, fontTheme, setBgTheme, setColorTheme, setFontTheme }}>
       {children}
     </ThemeContext.Provider>
   );

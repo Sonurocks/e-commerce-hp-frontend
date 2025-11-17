@@ -12,18 +12,63 @@ interface ThemeSettingsDrawerProps {
 
 const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({ isOpen, onClose }) => {
   const { theme, setTheme } = useTheme();
-  const { colorTheme, fontTheme, setColorTheme, setFontTheme } = useThemeSettings();
+  const { colorTheme, fontTheme, setColorTheme, setBgTheme, setFontTheme } = useThemeSettings();
 
-  const colorThemes: { name: string; value: ColorTheme; color: string }[] = [
-    { name: 'Aubergine', value: 'aubergine', color: '#4A148C' },
-    { name: 'Clementine', value: 'clementine', color: '#FF6B35' },
-    { name: 'Banana', value: 'banana', color: '#FFD700' },
-    { name: 'Jade', value: 'jade', color: '#00A86B' },
-    { name: 'Lagoon', value: 'lagoon', color: '#00CED1' },
-    { name: 'Barbra', value: 'barbra', color: '#8B0000' },
-    { name: 'Gray', value: 'gray', color: '#808080' },
-    { name: 'Mood Indigo', value: 'mood-indigo', color: '#4B0082' },
-  ];
+const colorThemes: {
+  name: string;
+  value: string;
+  color: string;
+  bgColor: string;
+}[] = [
+  {
+    name: "Aubergine",
+    value: "aubergine",
+    color: "#4A148C",        // deep purple
+    bgColor: "#EDE7F6",      // soft lavender background
+  },
+  {
+    name: "Clementine",
+    value: "clementine",
+    color: "#FF6B35",        // bright orange
+    bgColor: "#FFF1E6",      // pale peach / warm neutral
+  },
+  {
+    name: "Banana",
+    value: "banana",
+    color: "#FFD700",        // golden yellow
+    bgColor: "#FFFBEA",      // off-white / buttery cream
+  },
+  {
+    name: "Jade",
+    value: "jade",
+    color: "#00A86B",        // vibrant green
+    bgColor: "#E6F7EE",      // very light mint
+  },
+  {
+    name: "Lagoon",
+    value: "lagoon",
+    color: "#00CED1",        // aqua blue
+    bgColor: "#E0FBFC",      // icy blue background
+  },
+  {
+    name: "Barbra",
+    value: "barbra",
+    color: "#8B0000",        // deep red
+    bgColor: "#FDECEA",      // soft rose background
+  },
+  {
+    name: "Gray",
+    value: "gray",
+    color: "#808080",        // neutral gray
+    bgColor: "#F5F5F5",      // very light gray / neutral white
+  },
+  {
+    name: "Mood Indigo",
+    value: "mood-indigo",
+    color: "#4B0082",        // dark indigo
+    bgColor: "#ECE4F9",      // soft lilac background
+  },
+];
 
   const fonts: { name: string; value: FontTheme; label: string }[] = [
     { name: 'Default', value: 'default', label: 'Default (Farfetch Basis)' },
@@ -37,8 +82,18 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({ isOpen, onClo
 
   return (
     <>
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-black/50 z-40"
+        onClick={onClose}
+      />
       {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-96 bg-white dark:bg-white shadow-xl z-50 transform transition-transform overflow-y-auto">
+      <div 
+        className="fixed right-0 top-0 h-full w-96 shadow-xl z-50 transform transition-transform overflow-y-auto"
+        style={{ 
+          backgroundColor: theme === 'dark' ? '#111827' : '#ffffff' 
+        }}
+      >
         <div className="p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
@@ -163,7 +218,10 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({ isOpen, onClo
               {colorThemes.map((color) => (
                 <button
                   key={color.value}
-                  onClick={() => setColorTheme(color.value)}
+                  onClick={() => {
+                    setColorTheme(color.value)
+                    setBgTheme(color.bgColor)
+                  }}
                   className={`flex flex-col items-center p-3 border-2 rounded-lg transition ${
                     colorTheme === color.value
                       ? 'border-gray-800 bg-gray-50 dark:bg-blue-900/20'
@@ -187,14 +245,16 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({ isOpen, onClo
             <h3 className="text-base font-semibold text-(--color-preto) dark:text-(--color-preto) mb-2">
               Font
             </h3>
-            <div className="relative">
+            <div className="relative text-[var(--theme-text)] ">
               <select
                 value={fontTheme}
                 onChange={(e) => setFontTheme(e.target.value as FontTheme)}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-200 rounded-lg bg-white dark:bg-gray-200 text-(--color-preto) dark:text-white focus:outline-none focus:border-(--color-preto)  appearance-none cursor-pointer"
+                className="w-full px-4 py-2 border border-[var(--theme-border)] rounded-lg bg-[var(--theme-bg)]  focus:outline-none focus:border-(--color-preto)  appearance-none cursor-pointer"
               >
                 {fonts.map((font) => (
-                  <option key={font.value} value={font.value}>
+                  <option
+                  className="bg-[var(--theme-bg)] text-[var(--theme-text)]"
+                  key={font.value} value={font.value}>
                     {font.label}
                   </option>
                 ))}

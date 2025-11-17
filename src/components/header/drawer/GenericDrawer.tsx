@@ -14,6 +14,19 @@ interface GenericDrawerProps {
   department: DepartmentKey;
 }
 
+const drawerStyles: React.CSSProperties & { [key: string]: string } = {
+  backgroundColor: '#ffffff',
+  color: '#222222',
+  '--color-preto': '#222222',
+  '--colorWhite': '#ffffff',
+  '--color-branco': '#ffffff',
+  '--theme-primary': '#222222',
+  '--theme-secondary': '#222222',
+  '--theme-text': '#222222',
+  '--theme-link': '#222222',
+  '--theme-link-hover': '#111111',
+};
+
 const GenericDrawer: React.FC<GenericDrawerProps> = ({
   isDrawerOpen,
   drawerRef,
@@ -132,10 +145,11 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
   return (
     <div
       ref={drawerRef}
-      className="absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-200 z-50"
+      className="absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-200 z-[100]"
       onMouseEnter={onMouseEnter}
+      style={drawerStyles}
     >
-      <div className="container mx-auto px-[72px] py-8">
+      <div className="container mx-auto px-[72px] py-8 bg-white" style={drawerStyles}>
         <div className="flex gap-8">
           {/* Left Sidebar - Categories */}
           <div className={getLeftContainerClass()}>
@@ -172,12 +186,12 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
                   {spotlight.topText && (
                     <p className="text-sm text-gray-600 font-normal">{spotlight.topText}</p>
                   )}
-                  <p className={`text-sm ${spotlight.topText ? 'text-preto font-thin' : 'font-thin text-[var(--color-preto)]'}`}>
+                  <p className={`text-sm ${spotlight.topText ? 'text-preto font-thin' : 'font-thin text-(--color-preto)'}`}>
                     {spotlight.title}
                   </p>
                   <Link
                     href={spotlight.link}
-                    className="inline-block text-sm underline hover:no-underline text-[var(--color-preto)] font-normal"
+                    className="inline-block text-sm underline hover:no-underline text-(--color-preto) font-normal"
                   >
                     {spotlight.linkText}
                   </Link>

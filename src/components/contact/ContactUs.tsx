@@ -9,6 +9,14 @@ import * as Yup from 'yup';
 import ReCAPTCHA from 'react-google-recaptcha';
 import DownloadAppBanner from '@/components/department/DownloadAppBanner';
 
+const pageStyles: React.CSSProperties & { [key: string]: string } = {
+  fontFamily:
+    "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)",
+  color: '#222',
+  '--fontNormal': "'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif",
+  '--color-preto': '#222',
+};
+
 // Validation schema
 const contactFormSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
@@ -679,7 +687,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white font-normal">
+    <div className="min-h-screen bg-white font-normal" style={pageStyles}>
       <div className="container mx-auto px-[48px] py-16 max-w-[1440px]">
         
 
@@ -702,27 +710,27 @@ const ContactUs = () => {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-base text-[var(--color-preto)] underline font-normal">
+                <Link href="/orders-and-delivery" className="text-base text-[var(--color-preto)] underline font-normal">
                   Orders and delivery
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-base text-[var(--color-preto)] underline font-normal">
+                <Link href="/payment-and-pricing" className="text-base text-[var(--color-preto)] underline font-normal">
                   Payment and pricing
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-base text-[var(--color-preto)] underline font-normal">
+                <Link href="/cryptocurrency-payments" className="text-base text-[var(--color-preto)] underline font-normal">
                   Cryptocurrency Payments
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-base text-[var(--color-preto)] underline font-normal">
+                <Link href="/returns-and-refunds" className="text-base text-[var(--color-preto)] underline font-normal">
                   Returns and refunds
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-base text-[var(--color-preto)] underline font-normal">
+                <Link href="/faq" className="text-base text-[var(--color-preto)] underline font-normal">
                   FAQs
                 </Link>
               </li>
@@ -742,7 +750,7 @@ const ContactUs = () => {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-base text-[var(--color-preto)] underline font-normal">
+                <Link href="/accessibility" className="text-base text-[var(--color-preto)] underline font-normal">
                   Accessibility
                 </Link>
               </li>
@@ -752,7 +760,7 @@ const ContactUs = () => {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-base text-[var(--color-preto)] underline font-normal">
+                <Link href="/promotions-terms-and-conditions" className="text-base text-[var(--color-preto)] underline font-normal">
                   Promotions terms &amp; conditions
                 </Link>
               </li>

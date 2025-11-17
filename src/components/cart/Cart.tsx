@@ -5,6 +5,14 @@ import Link from 'next/link';
 import { FaEnvelope } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa";
 
+const pageStyles: React.CSSProperties & { [key: string]: string } = {
+  fontFamily:
+    "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)",
+  color: '#222',
+  '--fontNormal': "'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif",
+  '--color-preto': '#222',
+};
+
 const Cart = () => {
   const [email, setEmail] = useState('supriya2002arora@gmail.com');
 
@@ -15,19 +23,19 @@ const Cart = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={pageStyles}>
       <div className="container mx-auto px-[48px] py-16 max-w-[1440px]">
         {/* Shopping Bag Section - Left Aligned */}
         <div className="mb-24 max-w-2xl">
-          <h1 className="text-4xl font-base text-[var(--color-preto)] mb-3">
+          <h1 className="text-4xl font-base text-(--color-preto) mb-3">
             Shopping Bag
           </h1>
-          <p className="text-base text-[var(--color-preto)] mb-4 font-base leading-relaxed">
+          <p className="text-base text-(--color-preto) mb-4 font-base leading-relaxed">
             There&apos;s nothing in your bag yet...
           </p>
           <Link
             href="/"
-            className="inline-block bg-[var(--color-preto)] text-white px-5 py-2.5 rounded-md hover:bg-gray-800 transition-colors font-normal text-sm"
+            className="inline-block bg-(--theme-bg) border border-(--theme-border)  text-(--theme-text) px-5 py-2.5 rounded-md transition-colors font-normal text-sm"
           >
             Shop Women
           </Link>
@@ -58,13 +66,13 @@ const Cart = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full max-w-sm px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[var(--color-preto)] text-base bg-white font-normal"
+                    className="w-full max-w-sm px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[var(--color-preto)] text-base  font-normal"
                     required
                   />
                 </div>
                 <button
                   type="submit"
-                  className="bg-[var(--color-preto)] text-white px-6 py-3 rounded-md hover:bg-gray-800 transition-colors font-normal text-base"
+                  className="bg-[var(--theme-bg)] text-[var(--theme-text)] border border-[var(--theme-border)] px-6 py-3 rounded-md transition-colors font-normal text-base"
                 >
                   Sign Up
                 </button>
@@ -89,7 +97,7 @@ const Cart = () => {
           </h2>
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Left Column - Email Contact */}
-            <div className="flex-1 bg-white border border-gray-300 rounded-md p-4">
+            <div className="flex-1  border border-[var(--theme-border)] rounded-md p-4">
               <div className="mb-2">
                 <FaEnvelope className="w-6 h-6 text-[var(--color-preto)]" />
               </div>
@@ -108,7 +116,7 @@ const Cart = () => {
             </div>
 
             {/* Right Column - Phone Contact */}
-            <div className="flex-1 bg-white border border-gray-300 rounded-md p-4">
+            <div className="flex-1  border border-[var(--theme-border)] rounded-md p-4">
               <div className="mb-2">
                 <FaPhone className="w-6 h-6 text-[var(--color-preto)]" />
               </div>

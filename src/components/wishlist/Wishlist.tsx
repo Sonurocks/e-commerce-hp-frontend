@@ -3,6 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
+const pageStyles: React.CSSProperties & { [key: string]: string } = {
+  fontFamily:
+    "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)",
+  color: '#222',
+  '--fontNormal': "'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif",
+  '--color-preto': '#222',
+};
+
 const Wishlist = () => {
   const [email, setEmail] = useState('supriya2002arora@gmail.com');
 
@@ -13,19 +21,19 @@ const Wishlist = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={pageStyles}>
       <div className="container mx-auto px-[48px] py-16 max-w-[1440px]">
         {/* Wishlist Section - Left Aligned */}
         <div className="mb-24 max-w-2xl">
           <h1 className="text-4xl font-base text-(--color-preto) mb-3">
             Wishlist
-          </h1>text-[var(--color-preto)]
+          </h1>
           <p className="text-base  mb-4 font-base leading-relaxed">
             Add your favourite items to your wishlist and they&apos;ll appear here
           </p>
           <Link
             href="/"
-            className="inline-block bg-(--color-preto) text-white px-5 py-2.5 rounded-md hover:bg-gray-800 transition-colors font-normal text-sm"
+            className="inline-block  bg-[var(--theme-bg)] border border-[var(--theme-border)]  text-[var(--theme-text)]  px-5 py-2.5 rounded-md transition-colors font-normal text-sm"
           >
             Shop Now
           </Link>
@@ -56,13 +64,13 @@ const Wishlist = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full max-w-sm px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-(--color-preto) text-base bg-white font-normal"
+                    className="w-full max-w-sm px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-(--color-preto) text-base  font-normal"
                     required
                   />
                 </div>
                 <button
                   type="submit"
-                  className="bg-(--color-preto) text-white px-6 py-3 rounded-md hover:bg-gray-800 transition-colors font-normal text-base"
+                  className=" bg-[var(--theme-bg)] border border-[var(--theme-border)]  text-[var(--theme-text)] px-6 py-3 rounded-md transition-colors font-normal text-base"
                 >
                   Sign Up
                 </button>

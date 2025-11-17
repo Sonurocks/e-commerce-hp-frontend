@@ -20,10 +20,10 @@ export default function ProductCard({ product, showBadge = false }: { product: P
 
 	return (
 		<article className="group">
-			<div className="relative bg-gray w-full h-[400px] flex items-center justify-center">
+			<div className="relative bg-gray w-full h-[400px] flex items-center justify-center bg-[#efefef]">
 				<button
 					onClick={handleWishlistClick}
-					className="absolute top-2 right-2 z-10 p-2 bg-white/80 hover:bg-white rounded-full transition-colors"
+					className="absolute top-2 right-2 z-10 p-2 rounded-full transition-colors"
 					aria-label="Add to wishlist"
 				>
 					<GoHeart 
@@ -33,7 +33,7 @@ export default function ProductCard({ product, showBadge = false }: { product: P
 				</button>
 				{showBadge && isImageBadge && (
 					<div className="absolute top-2 left-2 z-10">
-						<p className="text-[15px] text-gray-500 bg-white/80 px-2 py-1">{product.badge}</p>
+						<p className="text-[15px] text-gray-500  px-2 py-1">{product.badge}</p>
 					</div>
 				)}
 				<img 

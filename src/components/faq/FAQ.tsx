@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import DownloadAppBanner from '@/components/department/DownloadAppBanner';
 
 interface FAQCategory {
   title: string;
@@ -21,7 +22,7 @@ const faqCategories: FAQCategory[] = [
         question: 'Do I need an account to place an order?',
         answer: (
           <>
-            No, all you need is an email address to place and track orders. To checkout faster, access your wishlist and order updates, we recommend setting up a <strong>FARFETCH account</strong>. If you create a <strong>FARFETCH account</strong> and place an order, you'll be automatically enrolled in our loyalty programme, <strong>Access</strong>. Every piece you buy takes you one step closer to unlocking exclusive rewards – from early sale access and priority customer care to unlimited free shipping and a dedicated personal stylist.
+            No, all you need is an email address to place and track orders. To checkout faster, access your wishlist and order updates, we recommend setting up a <strong>FARFETCH account</strong>. If you create a <strong>FARFETCH account</strong> and place an order, you will be automatically enrolled in our loyalty programme, <strong>Access</strong>. Every piece you buy takes you one step closer to unlocking exclusive rewards – from early sale access and priority customer care to unlimited free shipping and a dedicated personal stylist.
             <p className="mt-2">
               <Link href="#" className="underline">Learn more about our Access loyalty programme</Link>
             </p>
@@ -32,7 +33,7 @@ const faqCategories: FAQCategory[] = [
         question: 'I\'ve forgotten my password, what should I do?',
         answer: (
           <>
-            Follow the <strong>forgot your password</strong> link on our Sign In page and enter your email address. You'll then receive an email to reset your password.
+            Follow the <strong>forgot your password</strong> link on our Sign In page and enter your email address. You will then receive an email to reset your password.
           </>
         ),
       },
@@ -88,7 +89,7 @@ const faqCategories: FAQCategory[] = [
         question: 'Why is FARFETCH pricing different?',
         answer: (
           <>
-            It's down to our unique business model. At FARFETCH, you're shopping items from our luxury brands and partner boutiques worldwide. Prices are determined by each FARFETCH brand and partner boutique, so the price of the same item may vary depending on where it's coming from and your location. That's also why placing an item in your shopping bag or wishlist won't reserve it at a particular price. Although we don't have any control over price variation, we'll always offer you the best price available to your destination when you place your order. To view the most accurate prices, select your delivery destination on our website.
+            It is down to our unique business model. At FARFETCH, you are shopping items from our luxury brands and partner boutiques worldwide. Prices are determined by each FARFETCH brand and partner boutique, so the price of the same item may vary depending on where it is coming from and your location. That is also why placing an item in your shopping bag or wishlist wont reserve it at a particular price. Although we do not have any control over price variation, we will always offer you the best price available to your destination when you place your order. To view the most accurate prices, select your delivery destination on our website.
           </>
         ),
       },
@@ -177,7 +178,7 @@ const faqCategories: FAQCategory[] = [
         question: 'Can I reserve an item to buy later?',
         answer: (
           <>
-            We aim to provide a fair opportunity to shop our most in-demand styles and as items are often limited, we don't offer reservations.
+            We aim to provide a fair opportunity to shop our most in-demand styles and as items are often limited, we do not offer reservations.
           </>
         ),
       },
@@ -288,7 +289,7 @@ const faqCategories: FAQCategory[] = [
               To start a return, go to <strong>Orders & Returns</strong> in your account, or if you placed your order as a guest, <Link href="#" className="underline">enter your guest order details here</Link>.
             </p>
             <p className="mt-2">
-              It's best to book your collection within 7 days of delivery — this is to make sure your package arrives within the required time frame. We are unable to process exchanges and all returned items must be unworn, undamaged and unused, with all tags attached. All designer boxes or cases that came with your order must be included with your return. If anything is damaged or missing from your return, you may not receive your refund. <Link href="#" className="underline">Read the full Returns Policy here</Link>.
+              It is best to book your collection within 7 days of delivery — this is to make sure your package arrives within the required time frame. We are unable to process exchanges and all returned items must be unworn, undamaged and unused, with all tags attached. All designer boxes or cases that came with your order must be included with your return. If anything is damaged or missing from your return, you may not receive your refund. <Link href="#" className="underline">Read the full Returns Policy here</Link>.
             </p>
           </>
         ),
@@ -299,7 +300,7 @@ const faqCategories: FAQCategory[] = [
           <>
             To request a return, go to <strong>Orders & Returns</strong> if you have an account, or if you placed your order as a guest, <Link href="#" className="underline">enter your guest order details here</Link>.
             <p className="mt-2">
-              For our <strong>Free Collection service</strong>, select courier collection and choose a collection date. We'll then send you a confirmation email with the next steps. Need to reschedule your collection? You can also do this in <strong>Orders & Returns</strong> in your account.
+              For our <strong>Free Collection service</strong>, select courier collection and choose a collection date. We will then send you a confirmation email with the next steps. Need to reschedule your collection? You can also do this in <strong>Orders & Returns</strong> in your account.
             </p>
             <p className="mt-2">
               If you would prefer to drop off your return, select drop-off instead. Prepare your package with the return documents and take it to your chosen location along with your return confirmation email.
@@ -311,7 +312,7 @@ const faqCategories: FAQCategory[] = [
         question: 'How do I return my item?',
         answer: (
           <>
-            <strong>Here's what you need to do:</strong>
+            <strong>Here is what you need to do:</strong>
             <p className="mt-2">
               Go to <strong>Orders & Returns</strong> if you have an account. If you placed your order as a guest, <Link href="#" className="underline">enter your guest order details here</Link>.
             </p>
@@ -361,7 +362,7 @@ const faqCategories: FAQCategory[] = [
               We recommend returning your item in the reusable FARFETCH package provided, but if you re unable to do that, please find a suitable box so that items are returned in perfect condition. Items must be returned undamaged and unused, with all tags attached, including original packaging and branded boxes.
             </p>
             <p className="mt-2">
-              Yes, your courier may be able to collect multiple packages. If you re returning items to multiple FARFETCH brands or partner boutiques, you'll still need to request a separate collection for each package in your account. If you placed your order as a guest, <Link href="#" className="underline">enter your guest order details here</Link>.
+              Yes, your courier may be able to collect multiple packages. If you re returning items to multiple FARFETCH brands or partner boutiques, you will still need to request a separate collection for each package in your account. If you placed your order as a guest, <Link href="#" className="underline">enter your guest order details here</Link>.
             </p>
           </>
         ),
@@ -370,7 +371,7 @@ const faqCategories: FAQCategory[] = [
         question: 'When will I receive my refund?',
         answer: (
           <>
-            You can track your return by using the tracking number assigned to your Return Label. Once your return has been received by our brand or partner boutique, it can take up to 6 calendar days to process. As soon as it's accepted, we'll send you a confirmation email.
+            You can track your return by using the tracking number assigned to your Return Label. Once your return has been received by our brand or partner boutique, it can take up to 6 calendar days to process. As soon as it is accepted, we will send you a confirmation email.
             <p className="mt-2">
               Your refund will be processed to your original payment method. This can take up to 14 days to show in your account, depending on your payment provider.
             </p>
@@ -378,7 +379,7 @@ const faqCategories: FAQCategory[] = [
               <strong>I want to return my order but I need my invoice for customs clearance. Will it still be included in my order?</strong>
             </p>
             <p className="mt-2">
-              Yes – invoices for customs clearance will still be included in your FARFETCH order. When you're preparing your return, you'll need to include the Return Note outside the FARFETCH package.
+              Yes – invoices for customs clearance will still be included in your FARFETCH order. When you are preparing your return, you will need to include the Return Note outside the FARFETCH package.
             </p>
           </>
         ),
@@ -405,8 +406,57 @@ const faqCategories: FAQCategory[] = [
     title: 'PRE-ORDER',
     questions: [
       {
-        question: 'How does pre-ordering work?',
-        answer: 'Pre-order allows you to reserve items that are not yet available. You\'ll be charged when the item ships, and you\'ll receive an estimated delivery date at checkout.',
+        question: 'What does pre-order mean?',
+        answer: 'You can get early access to next season\'s most wanted pieces before they\'re released.',
+      },
+      {
+        question: 'When will my pre-order item arrive?',
+        answer: 'As soon as your item has been released and is ready to be sent, you\'ll receive an email with the estimated delivery date.',
+      },
+      {
+        question: 'When do I have to pay?',
+        answer: 'Pre-order items require full payment at checkout.',
+      },
+      {
+        question: 'Can I cancel a pre-order?',
+        answer: (
+          <>
+            Some of our brands and partner boutiques allow you to cancel an item before we prepare your order.
+            <p className="mt-2">
+              <strong>To cancel your order:</strong>
+            </p>
+            <ol className="list-decimal list-inside mt-2 space-y-2 ml-4">
+              <li>
+                Go to <strong>Orders & Returns</strong> if you have an account. If you placed an order as a guest, <Link href="#" className="underline">enter your guest order number and email address here</Link>.
+              </li>
+              <li>Select the items you want to cancel and your reason for cancellation.</li>
+              <li>We will email you confirmation of your cancelled order.</li>
+            </ol>
+            <p className="mt-2">
+              If your order has already been prepared, we can not cancel your order — but we do offer a Free Returns service.
+            </p>
+          </>
+        ),
+      },
+      {
+        question: 'Can I change my delivery address?',
+        answer: 'Go to Order Details in your FARFETCH account to check if you can change your address. You may not be able to if your item has already been sent.',
+      },
+      {
+        question: 'Are pre-order items refundable?',
+        answer: (
+          <>
+            Yes, just make sure items meet the conditions of our <Link href="#" className="underline">Returns Policy</Link>.
+          </>
+        ),
+      },
+      {
+        question: 'Will pre-order items be delivered with my other orders?',
+        answer: 'No, they will be delivered separately according to the expected release date.',
+      },
+      {
+        question: 'Is there a limit on purchasing pre-order items?',
+        answer: 'There may be order limits on some pre-order items. This is so everyone has a chance to get the items they love.',
       },
     ],
   },
@@ -414,12 +464,40 @@ const faqCategories: FAQCategory[] = [
     title: 'SIZE AND FIT',
     questions: [
       {
-        question: 'What is your size guide?',
-        answer: 'We provide detailed size guides for each product category. You can find size charts on individual product pages. If you need assistance finding the right size, our customer service team is happy to help.',
+        question: 'Where can I find size conversion charts?',
+        answer: (
+          <>
+            View our size conversion charts by selecting <strong>Size Guide</strong>, which you can find above the select size menu, on the product information page.
+          </>
+        ),
       },
       {
-        question: 'What if an item doesn\'t fit?',
-        answer: 'If an item doesn\'t fit, you can return it within 30 days of delivery. Items must be unworn and in original condition with tags attached.',
+        question: 'How can I get a better understanding on how a piece will fit?',
+        answer: (
+          <>
+            Go to the product information page and select the <strong>Size & Fit</strong> tab to view the size, fit, cut and model measurements. You can find the material composition and care instructions on <strong>The Details</strong> tab.
+          </>
+        ),
+      },
+      {
+        question: 'What\'s the difference between size, fit, cut and material?',
+        answer: (
+          <>
+            The size of an item refers to the designer size on the label, fit describes how the item will fit on the body, cut is the silhouette and the material describes what the item is made from. To find this information, go to the product information page and view <strong>The Details</strong> and <strong>Size & Fit</strong> tab.
+          </>
+        ),
+      },
+      {
+        question: 'Why do designer sizes vary?',
+        answer: 'International sizes are slightly different when converted and some designers fit larger or smaller than others. That\'s why we provide specific information for each item.',
+      },
+      {
+        question: 'What if my item doesn\'t fit?',
+        answer: (
+          <>
+            If your item does not fit, you can return it with our free returns service. If you like to place another order, you can do this online or contact our global <Link href="#" className="underline">Customer Service team</Link>.
+          </>
+        ),
       },
     ],
   },
@@ -427,12 +505,56 @@ const faqCategories: FAQCategory[] = [
     title: 'PROMOTIONS',
     questions: [
       {
-        question: 'How do I use a promotion code?',
-        answer: 'Enter your promotion code at checkout in the designated field. The discount will be applied to your order before you complete payment.',
+        question: 'How do I find out about the latest promotions?',
+        answer: (
+          <>
+            To stay updated on exclusive promotions, new in and early sale access, <Link href="#" className="underline">sign up to our emails</Link>.
+          </>
+        ),
       },
       {
-        question: 'Do you offer student discounts?',
-        answer: 'Yes, we offer student discounts through our partnership with UNIDAYS. Students can verify their status and receive exclusive discounts on eligible items.',
+        question: 'What different types of promotions are there?',
+        answer: (
+          <>
+            You can view all our promotions on the <Link href="#" className="underline">Promotion Terms & Conditions page</Link>. Or if you are an Access member, check your Access dashboard for promotional rewards in your account.
+          </>
+        ),
+      },
+      {
+        question: 'How do I apply a promo code?',
+        answer: (
+          <>
+            All you need to do is add your eligible items to your shopping bag. Depending on the promo code, it will either be automatically applied, or you may have to manually enter it at checkout. If you have any questions, <Link href="#" className="underline">contact our global Customer Service team</Link>.
+          </>
+        ),
+      },
+      {
+        question: 'Are there any brands excluded from promotional discounts?',
+        answer: (
+          <>
+            Yes, promotional discounts can only be redeemed on selected brands and items. As each FARFETCH promotion is different, we are unable to provide a list of excluded brands and items. However, items that are labelled or added to the promotions page may be eligible for a promotional discount. For more information, <Link href="#" className="underline">view the Promotion Terms & Conditions page</Link>.
+          </>
+        ),
+      },
+      {
+        question: 'How do I know if my item is eligible for a promotion?',
+        answer: (
+          <>
+            Items that are labelled or added to the promotions page may be eligible for a promotion. If a minimum spend applies, this must be spent in a single transaction. For more information, <Link href="#" className="underline">view the Promotion Terms & Conditions page</Link>.
+          </>
+        ),
+      },
+      {
+        question: 'The item I want is part of the promotion but my size isn\'t discounted. Why does this happen?',
+        answer: 'At FARFETCH, you are shopping items from our worldwide selection of luxury brands and partner boutiques. If the size you want is from a brand or partner boutique that isn\'t participating in our FARFETCH promotion, it will not be discounted.',
+      },
+      {
+        question: 'My promo code has expired. Can I request another one?',
+        answer: 'Our Customer Service team are unable to reactivate any promotional discounts. Promotional discounts and promotional codes are also non-transferable and have no cash alternative.',
+      },
+      {
+        question: 'Can I combine two promotions simultaneously?',
+        answer: 'Some FARFETCH promotions cannot be used simultaneously. If there are two promotional offers available, you\'ll have to choose which promotion you\'d like to apply. If there\'s a live campaign that\'s automatically applied at checkout, all you need to do is add your promo code of choice at checkout to overwrite it.',
       },
     ],
   },
@@ -440,8 +562,36 @@ const faqCategories: FAQCategory[] = [
     title: 'EUROPEAN UNION DIGITAL SERVICES ACT ("DSA")',
     questions: [
       {
-        question: 'What is the DSA?',
-        answer: 'The Digital Services Act (DSA) is EU legislation that sets out rules for digital services. FARFETCH complies with all DSA requirements.',
+        question: 'Who is the FARFETCH Legal Representative for the purposes of the DSA?',
+        answer: (
+          <>
+            Farfetch Portugal Unipessoal, Lda is the appointed legal representative, pursuant to Article 13 of the EU DSA. Customers, Member States competent authorities, the European Commission, and the European Board for Digital Services can address their communications in relation to the DSA:
+            <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+              <li>by email to dsa@farfetch.com</li>
+              <li>by post to Farfetch at Rua da Lionesa, n°446, Edifício G12 4465-671, Leça do Balio, Porto - Portugal</li>
+              <li>by phone at +351 220430530</li>
+            </ul>
+            <p className="mt-2">
+              Please ensure that you clearly indicate your communication relates to the DSA and, if possible, kindly provide an English translation if the primary language used is not English. If your query is urgent, the quickest way to contact us is by email.
+            </p>
+          </>
+        ),
+      },
+      {
+        question: 'What is the average number of active recipients of services on the FARFETCH Marketplace in the EEA?',
+        answer: (
+          <>
+            Over the past 6 months, the average number of active recipients of services on the FARFETCH Marketplace in the EEA is:
+            <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+              <li>Website: Below 15 million</li>
+              <li>App: Below 5 million</li>
+            </ul>
+          </>
+        ),
+      },
+      {
+        question: 'Compliance with all laws',
+        answer: 'FARFETCH upholds the highest standard of integrity, which includes requiring that sellers on the FARFETCH Marketplace offer products that comply with rules of applicable European Union laws on product safety and product compliance.',
       },
     ],
   },
@@ -449,8 +599,8 @@ const faqCategories: FAQCategory[] = [
     title: 'TAX STRATEGY',
     questions: [
       {
-        question: 'What is FARFETCH\'s tax strategy?',
-        answer: 'FARFETCH is committed to responsible tax practices and compliance with all applicable tax laws in the jurisdictions where we operate.',
+        question: '?',
+        answer: 'you can consult our tax startegy here.',
       },
     ],
   },
@@ -458,8 +608,44 @@ const faqCategories: FAQCategory[] = [
     title: 'FASHION CONCIERGE',
     questions: [
       {
-        question: 'What is Fashion Concierge?',
-        answer: 'Fashion Concierge is our personalized shopping service that connects you with a dedicated stylist who can help you find the perfect pieces for your wardrobe.',
+        question: 'What is Fashion Concierge On Demand?',
+        answer: 'Fashion Concierge On Demand is an exclusive service for our premium Farfetch customers. It allows you to request assistance in finding rare, unique, or sold-out fashion items, ranging from elusive jewellery to limited-edition designer pieces. You can access Fashion Concierge through the Membership section on your Farfetch profile.',
+      },
+      {
+        question: 'How does Fashion Concierge work?',
+        answer: 'Our dedicated teams in the US, UK, HK, France, and the Middle East work tirelessly to source the items you desire. Depending on your location, you may experience shorter waiting times and more attractive prices. The service caters to a global clientele, ensuring that you can find even the most elusive pieces. All the communication will be made through email after receiving the request.',
+      },
+      {
+        question: 'How is pricing determined?',
+        answer: 'Pricing is influenced by the supplier\'s location. Import taxes and partnerships with luxury brands like Hermès, Chanel, and Goyard may lead to variations in price. While we strive to offer the best value, please be aware that the cost can sometimes exceed the retail price due to these factors.',
+      },
+      {
+        question: 'What is the delivery time for Fashion Concierge orders?',
+        answer: 'All items undergo a thorough inspection before delivery, impacting the processing time. The delivery duration depends on the location of the item and the customer. Please expect a longer wait time than usual, as we prioritize the quality and condition of each sourced item.',
+      },
+      {
+        question: 'What is the returns policy for Fashion Concierge orders?',
+        answer: 'Returns policies vary based on the brand, supplier, and location. Customers are notified in advance via email about the final sale status of items. It\'s crucial to read and reply to the communication to confirm agreement. If no response is received, Fashion Concierge will not proceed with the purchase.',
+      },
+      {
+        question: 'Can I place pre-orders through Fashion Concierge?',
+        answer: 'Yes, clients can place pre-orders by paying the full amount upfront. Detailed information, including estimated time of arrival, return policy, and price, will be provided before confirming the pre-order.',
+      },
+      {
+        question: 'Is there a minimum order value for Fashion Concierge?',
+        answer: 'Fashion Concierge focuses on rare and exceptional pieces with a minimum order value of $1,000. If your request does not meet this criterion, we recommend exploring our exclusive Fashion Concierge edit for a curated collection of exceptional items (available for Platinum, Gold & Private Client tiers).',
+      },
+      {
+        question: 'Are there restrictions on perfumes or fragrances?',
+        answer: 'Unfortunately, we cannot fulfill requests for perfumes due to their classification as dangerous, flammable liquids. Courier services often restrict or prohibit the transportation of such items.',
+      },
+      {
+        question: 'What about items made from exotic leathers?',
+        answer: 'Items made from exotic leathers require special export documentation, which can take a few weeks. Customs clearance may involve some risk and potential delays, but we handle all necessary procedures to ensure a smooth process.',
+      },
+      {
+        question: 'Can items be held for purchase at a later time?',
+        answer: 'No, we are unable to hold any items. To secure your desired pieces, we recommend acting quickly as availability is not guaranteed throughout the sourcing process.',
       },
     ],
   },
@@ -469,17 +655,25 @@ const navigationLinks = [
   { href: '/contact-us', label: 'Contact us' },
   { href: '#', label: 'How to shop' },
   { href: '#', label: 'Orders and delivery' },
-  { href: '#', label: 'Payment and pricing' },
-  { href: '#', label: 'Cryptocurrency Payments' },
-  { href: '#', label: 'Returns and refunds' },
+  { href: '/payment-and-pricing', label: 'Payment and pricing' },
+  { href: '/cryptocurrency-payments', label: 'Cryptocurrency Payments' },
+  { href: '/returns-and-refunds', label: 'Returns and refunds' },
   { href: '/faq', label: 'FAQs' },
   { href: '#', label: 'Terms and conditions' },
   { href: '#', label: 'Privacy policy' },
   { href: '#', label: 'Modern slavery statement' },
-  { href: '#', label: 'Accessibility' },
+  { href: '/accessibility', label: 'Accessibility' },
   { href: '#', label: 'Cookie preferences' },
-  { href: '#', label: 'Promotions terms & conditions' },
+  { href: '/promotions-terms-and-conditions', label: 'Promotions terms & conditions' },
 ];
+
+const pageStyles: React.CSSProperties & { [key: string]: string } = {
+  fontFamily:
+    "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)",
+  color: '#222',
+  '--fontNormal': "'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif",
+  '--color-preto': '#222',
+};
 
 const FAQ = () => {
   const pathname = usePathname();
@@ -491,7 +685,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-(--color-preto)">
+    <div className="min-h-screen bg-white text-(--color-preto)" style={pageStyles}>
       <div className="max-w-[137rem] mx-auto px-[1.5rem] py-12">
         <div className="flex flex-col lg:flex-row gap-12 lg:pl-16">
           {/* Left Navigation Menu */}
@@ -569,7 +763,7 @@ const FAQ = () => {
             </div>
 
             {/* Feedback Section */}
-            <div className="mt-12 pt-8 border-t border-gray-200">
+            <div className="mt-13 pt-8 ">
               <div className="mb-4">
                 <p className="text-xs font-base text-(--color-preto) mb-2">
                   Tell us what you think
@@ -591,10 +785,10 @@ const FAQ = () => {
                 </button>
                 <button
                   onClick={() => setFeedbackHelpful(false)}
-                  className={`px-6 py-2 text-sm  font-semibold border border-[var(--color-preto)] transition-colors ${
+                  className={`px-6 py-2 text-sm  font-semibold border border-(--color-preto) transition-colors ${
                     feedbackHelpful === false
-                      ? 'bg-[var(--color-preto)] text-white'
-                      : 'bg-white text-[var(--color-preto)] hover:bg-gray-50'
+                      ? 'bg-(--color-preto) text-white'
+                      : 'bg-white text-(--color-preto) hover:bg-gray-50'
                   }`}
                 >
                   Not really
@@ -602,6 +796,15 @@ const FAQ = () => {
               </div>
             </div>
           </main>
+
+          
+        </div>
+
+        {/* Download App Banner Section - Full Width */}
+        <div className="w-full lg:pl-8 mt-4">
+          <div className="w-full lg:ml-4">
+            <DownloadAppBanner />
+          </div>
         </div>
       </div>
     </div>

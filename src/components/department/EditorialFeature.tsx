@@ -18,8 +18,8 @@ export default function EditorialFeature({
 	return (
 		<section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center my-16">
 			<div>
-				<h3 className="text-[18px] text-gray-900 mb-3">{title || defaultTitle}</h3>
-				<p className="text-sm text-gray-600 mb-4">
+				<h3 className="text-[18px] text-[var(--theme-text)] mb-3">{title || defaultTitle}</h3>
+				<p className="text-sm text-[var(--theme-text)] mb-4">
 					{description || defaultDescription}
 				</p>
 				<Link href="#" className="text-xs border border-gray-300 px-4 py-1.5 rounded hover:bg-gray-50">

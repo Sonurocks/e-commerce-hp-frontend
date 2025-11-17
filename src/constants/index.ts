@@ -1174,11 +1174,11 @@ export const footerSections = [
     links: [
       { href: '/contact-us', label: 'Contact us' },
       { href: '/faq', label: 'FAQs' },
-      { href: '#', label: 'Orders and delivery' },
-      { href: '#', label: 'Returns and refunds' },
-      { href: '#', label: 'Payment and pricing' },
-      { href: '#', label: 'Cryptocurrency payments' },
-      { href: '#', label: 'Promotion terms and conditions' },
+      { href: '/orders-and-delivery', label: 'Orders and delivery' },
+      { href: '/returns-and-refunds', label: 'Returns and refunds' },
+      { href: '/payment-and-pricing', label: 'Payment and pricing' },
+      { href: '/cryptocurrency-payments', label: 'Cryptocurrency payments' },
+      { href: '/promotions-terms-and-conditions', label: 'Promotion terms and conditions' },
       { href: '#', label: 'FARFETCH Customer Promise' },
     ],
   },
@@ -1247,7 +1247,7 @@ export const socialMediaLinks = [
 export const legalLinks = [
   { href: '#', label: 'Privacy policy' },
   { href: '#', label: 'Terms and conditions' },
-  { href: '#', label: 'Accessibility' },
+  { href: '/accessibility', label: 'Accessibility' },
 ];
 
 // Header Constants

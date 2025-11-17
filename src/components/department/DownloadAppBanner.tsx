@@ -3,8 +3,8 @@ import { BsQrCode } from "react-icons/bs";
 
 export default function DownloadAppBanner() {
 	return (
-		<section className="bg-white py-12 px-2">
-			<div className="max-w-12xl mx-auto">
+		<section className=" py-12 px-2">
+			<div className="w-full">
 				<div className="grid grid-cols-1 md:grid-cols-12 gap-20">
 					{/* Left Section: DOWNLOAD THE FARFETCH APP */}
 					<div className="flex flex-col md:col-span-6">
@@ -35,11 +35,11 @@ export default function DownloadAppBanner() {
 								<input
 									type="email"
 									placeholder="Email address"
-									className="w-full max-w-[320px] border border-black rounded px-4 py-3 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-black"
+									className="w-full max-w-[320px] border border-[var(--theme-border)] rounded px-4 py-3 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-black"
 								/>
 								<button 
 									type="button" 
-									className="self-start bg-black text-white rounded-lg px-5 py-3 text-sm font-normal hover:bg-gray-800 transition-colors"
+									className="self-start border-[var(--theme-border)] bg-black text-white rounded-lg px-5 py-3 text-sm font-normal hover:bg-gray-800 transition-colors"
 								>
 									Send
 								</button>
