@@ -1,4 +1,4 @@
-import WelcomeEmail from "../../components/emailtemplate/welcomeemailpreview";
+import { WelcomeEmail } from "@/components";
 
 export default function EmailPreviewPage() {
   return (

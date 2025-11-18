@@ -1,8 +1,7 @@
-import Cryptocurrency from '@/components/cryptocurrency/Cryptocurrency';
+import { Cryptocurrency } from "@/components";
 
 const CryptocurrencyPaymentsPage = () => {
   return <Cryptocurrency />;
 };
 
 export default CryptocurrencyPaymentsPage;
-

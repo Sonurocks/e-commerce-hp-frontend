@@ -1,9 +1,8 @@
-import React from 'react';
-import OrdersAndDelivery from '@/components/orders-and-delivery/OrdersAndDelivery';
+import React from "react";
+import { OrdersAndDelivery } from "@/components";
 
 const OrdersAndDeliveryPage = () => {
   return <OrdersAndDelivery />;
 };
 
 export default OrdersAndDeliveryPage;
-

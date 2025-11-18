@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useRef, useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { primaryNavigationLinks, headerConfig } from '../../../constants';
+import React, { useRef, useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { primaryNavigationLinks, headerConfig } from "../../../constants";
 
 interface SearchDrawerProps {
   isDrawerOpen: boolean;
@@ -15,11 +15,11 @@ interface SearchDrawerProps {
 
 // Trending products data
 const trendingProducts = [
-  { id: 1, name: 'UGG Sneakers', image: '/api/placeholder/200/250' },
-  { id: 2, name: 'Longchamp Bag', image: '/api/placeholder/200/250' },
-  { id: 3, name: 'Moon Boot', image: '/api/placeholder/200/250' },
-  { id: 4, name: 'UGG Slippers', image: '/api/placeholder/200/250' },
-  { id: 5, name: 'Handbag', image: '/api/placeholder/200/250' },
+  { id: 1, name: "UGG Sneakers", image: "/api/placeholder/200/250" },
+  { id: 2, name: "Longchamp Bag", image: "/api/placeholder/200/250" },
+  { id: 3, name: "Moon Boot", image: "/api/placeholder/200/250" },
+  { id: 4, name: "UGG Slippers", image: "/api/placeholder/200/250" },
+  { id: 5, name: "Handbag", image: "/api/placeholder/200/250" },
 ];
 
 const SearchDrawer: React.FC<SearchDrawerProps> = ({
@@ -41,20 +41,20 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
   // Handle ESC key to close drawer
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isDrawerOpen) {
+      if (event.key === "Escape" && isDrawerOpen) {
         onClose();
       }
     };
 
     if (isDrawerOpen) {
-      document.addEventListener('keydown', handleEscKey);
+      document.addEventListener("keydown", handleEscKey);
       // Prevent body scroll when drawer is open
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscKey);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener("keydown", handleEscKey);
+      document.body.style.overflow = "unset";
     };
   }, [isDrawerOpen, onClose]);
 
@@ -67,12 +67,12 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
           onClick={onClose}
         />
       )}
-      
+
       {/* Search Drawer */}
       <div
         ref={drawerRef}
         className={`fixed top-0 left-0 right-0 bg-white z-[100] transition-transform duration-300 ease-in-out ${
-          isDrawerOpen ? 'translate-y-0' : '-translate-y-full'
+          isDrawerOpen ? "translate-y-0" : "-translate-y-full"
         } shadow-lg max-h-screen overflow-y-auto`}
       >
         {/* Top Header Row */}
@@ -80,7 +80,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
           {/* Logo - Top Center */}
           <div className="flex justify-center items-center py-4">
             <Link href={headerConfig.logo.href}>
-              <h1 className="text-3xl font-extrabold text-[var(--color-preto)] tracking-tight uppercase">
+              <h1 className="text-3xl font-extraboldtext-(--color-preto) tracking-tight uppercase">
                 {headerConfig.logo.text}
               </h1>
             </Link>
@@ -98,8 +98,8 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
                   onMouseEnter={() => setActiveLink(index)}
                   className={`text-sm font-normal transition ${
                     activeLink === index
-                      ? 'text-[var(--color-preto)]'
-                      : 'text-gray-500 hover:text-gray-700'
+                      ? "text-[var(--color-preto)]"
+                      : "text-gray-500 hover:text-gray-700"
                   }`}
                 >
                   {link.label.toUpperCase()}
@@ -108,7 +108,10 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
             </div>
 
             {/* Half-width Border Line - aligned with image container end */}
-            <div className="absolute bottom-0 left-[56px] h-px bg-gray-200" style={{ width: 'calc(50% - 56px)' }}></div>
+            <div
+              className="absolute bottom-0 left-[56px] h-px bg-gray-200"
+              style={{ width: "calc(50% - 56px)" }}
+            ></div>
 
             {/* Right - Search Bar and Close Button */}
             <div className="flex items-center space-x-4">
@@ -167,17 +170,18 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
         <div className="container mx-auto px-[36px] py-8">
           <div className="px-[48px]" id="trending-container">
             {/* Trending Heading */}
-            <h2 className="text-base text-gray-600 font-normal mb-6">Trending</h2>
-            
+            <h2 className="text-base text-gray-600 font-normal mb-6">
+              Trending
+            </h2>
+
             {/* Trending Products - Horizontal Scroll */}
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-2 px-2">
               {trendingProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="flex-shrink-0 w-[200px]"
-                >
+                <div key={product.id} className="flex-shrink-0 w-[200px]">
                   <div className="w-full h-[250px] bg-gray-100 rounded flex items-center justify-center">
-                    <span className="text-gray-400 text-sm">{product.name}</span>
+                    <span className="text-gray-400 text-sm">
+                      {product.name}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -200,4 +204,3 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
 };
 
 export default SearchDrawer;
-

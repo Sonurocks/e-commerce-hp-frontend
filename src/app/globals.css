@@ -93,31 +93,28 @@
 
   /* Action Colors - Primary */
   --colors-actions-primary-enabled-icon: #fff;
- 
+
   --colors-actions-primary-enabled-surface: #222;
   --colors-actions-primary-enabled-stroke: hsla(0, 0%, 100%, 0);
 
-
   --colors-actions-primary-hover-surface: #727272;
   --colors-actions-primary-hover-stroke: hsla(0, 0%, 100%, 0);
- 
-  
 
- 
   --colors-actions-primary-active-surface: #b6b6b6;
   --colors-actions-primary-active-stroke: hsla(0, 0%, 100%, 0);
- 
 
   /* Font Variables */
-  --fontNormal: 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif;
-  --fontCondensed: 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif;
-  --fontCondensedNonTranslated: 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif;
+
+  --fontNormal: "Farfetch Basis", "Helvetica Neue", Arial, sans-serif;
+  --fontCondensed: "Farfetch Basis", "Helvetica Neue", Arial, sans-serif;
+  --fontCondensedNonTranslated:
+    "Farfetch Basis", "Helvetica Neue", Arial, sans-serif;
   --fontSizeXS: 1.3rem;
   --fontSizeS: 1.3rem;
   --fontSizeM: 1.5rem;
   --fontSizeMCondensed: 1.5rem;
   --fontSizeL: 2rem;
-  
+
   /* Theme Variables */
   --theme-primary: var(--color-preto);
   --theme-secondary: var(--color-preto);
@@ -165,7 +162,8 @@ html[data-color-theme]:not([data-color-theme="default"]) h5,
 html[data-color-theme]:not([data-color-theme="default"]) h6,
 html[data-color-theme]:not([data-color-theme="default"]) p,
 html[data-color-theme]:not([data-color-theme="default"]) span,
-html[data-color-theme]:not([data-color-theme="default"]) div:not([class*="bg-white"]):not([class*="bg-gray"]),
+html[data-color-theme]:not([data-color-theme="default"])
+  div:not([class*="bg-white"]):not([class*="bg-gray"]),
 html[data-color-theme]:not([data-color-theme="default"]) label {
   color: var(--theme-text);
   transition: color 0.3s ease;
@@ -182,44 +180,61 @@ html[data-color-theme]:not([data-color-theme="default"]) a:hover {
 }
 
 /* Theme colors for buttons */
-html[data-color-theme]:not([data-color-theme="default"]) button.bg-\[var\(--color-preto\)\],
-html[data-color-theme]:not([data-color-theme="default"]) button[class*="bg-\[var\(--color-preto\)\]"],
-html[data-color-theme]:not([data-color-theme="default"]) button[style*="background-color"] {
+html[data-color-theme]:not([data-color-theme="default"])
+  button.bg-\[var\(--color-preto\)\],
+html[data-color-theme]:not([data-color-theme="default"])
+  button[class*="bg-\[var\(--color-preto\)\]"],
+html[data-color-theme]:not([data-color-theme="default"])
+  button[style*="background-color"] {
   background-color: var(--theme-button-bg) !important;
   color: var(--theme-button-text) !important;
   border-color: var(--theme-button-bg) !important;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
-html[data-color-theme]:not([data-color-theme="default"]) button.bg-\[var\(--color-preto\)\]:hover,
-html[data-color-theme]:not([data-color-theme="default"]) button[class*="bg-\[var\(--color-preto\)\]"]:hover,
-html[data-color-theme]:not([data-color-theme="default"]) button[style*="background-color"]:hover,
-html[data-color-theme]:not([data-color-theme="default"]) button.bg-\[var\(--color-preto\)\].hover\:bg-gray-800:hover {
+html[data-color-theme]:not([data-color-theme="default"])
+  button.bg-\[var\(--color-preto\)\]:hover,
+html[data-color-theme]:not([data-color-theme="default"])
+  button[class*="bg-\[var\(--color-preto\)\]"]:hover,
+html[data-color-theme]:not([data-color-theme="default"])
+  button[style*="background-color"]:hover,
+html[data-color-theme]:not([data-color-theme="default"])
+  button.bg-\[var\(--color-preto\)\].hover\:bg-gray-800:hover {
   background-color: var(--theme-button-hover) !important;
   border-color: var(--theme-button-hover) !important;
 }
 
 /* Theme colors for buttons with border */
 html[data-color-theme]:not([data-color-theme="default"]) button.border-black,
-html[data-color-theme]:not([data-color-theme="default"]) button[class*="border-"] {
+html[data-color-theme]:not([data-color-theme="default"])
+  button[class*="border-"] {
   border-color: var(--theme-border) !important;
   color: var(--theme-text) !important;
 }
 
-html[data-color-theme]:not([data-color-theme="default"]) button.border-black:hover,
-html[data-color-theme]:not([data-color-theme="default"]) button[class*="border-"]:hover {
+html[data-color-theme]:not([data-color-theme="default"])
+  button.border-black:hover,
+html[data-color-theme]:not([data-color-theme="default"])
+  button[class*="border-"]:hover {
   border-color: var(--theme-primary) !important;
   background-color: var(--theme-hover) !important;
 }
 
 /* Theme colors for input fields and form elements */
-html[data-color-theme]:not([data-color-theme="default"]) input:not([type="file"]),
+html[data-color-theme]:not([data-color-theme="default"])
+  input:not([type="file"]),
 html[data-color-theme]:not([data-color-theme="default"]) textarea,
 html[data-color-theme]:not([data-color-theme="default"]) select {
   color: var(--theme-text) !important;
   border-color: var(--theme-border) !important;
   background-color: var(--theme-bg) !important;
-  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 html[data-color-theme]:not([data-color-theme="default"]) input:focus,
@@ -242,7 +257,8 @@ html[data-color-theme]:not([data-color-theme="default"]) .border-gray-300 {
 }
 
 /* Theme colors for focus states */
-html[data-color-theme]:not([data-color-theme="default"]) .focus\:border-\[var\(--color-preto\)\]:focus,
+html[data-color-theme]:not([data-color-theme="default"])
+  .focus\:border-\[var\(--color-preto\)\]:focus,
 html[data-color-theme]:not([data-color-theme="default"]) input:focus,
 html[data-color-theme]:not([data-color-theme="default"]) textarea:focus,
 html[data-color-theme]:not([data-color-theme="default"]) select:focus {
@@ -251,9 +267,12 @@ html[data-color-theme]:not([data-color-theme="default"]) select:focus {
 }
 
 /* Theme colors for hover states */
-html[data-color-theme]:not([data-color-theme="default"]) .hover\:bg-gray-50:hover,
-html[data-color-theme]:not([data-color-theme="default"]) .hover\:bg-gray-100:hover,
-html[data-color-theme]:not([data-color-theme="default"]) .hover\:bg-gray-800:hover {
+html[data-color-theme]:not([data-color-theme="default"])
+  .hover\:bg-gray-50:hover,
+html[data-color-theme]:not([data-color-theme="default"])
+  .hover\:bg-gray-100:hover,
+html[data-color-theme]:not([data-color-theme="default"])
+  .hover\:bg-gray-800:hover {
   background-color: var(--theme-hover) !important;
 }
 
@@ -268,7 +287,9 @@ html[data-color-theme]:not([data-color-theme="default"]) .absolute.bg-white {
   border-color: var(--theme-border) !important;
 }
 
-html[data-color-theme]:not([data-color-theme="default"]) .absolute.bg-white button:hover {
+html[data-color-theme]:not([data-color-theme="default"])
+  .absolute.bg-white
+  button:hover {
   background-color: var(--theme-hover) !important;
   color: var(--theme-text) !important;
 }
@@ -280,7 +301,10 @@ html[data-color-theme]:not([data-color-theme="default"]) .bg-white {
 
 /* Smooth transitions for theme color changes */
 html[data-color-theme] * {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 /* Dark mode support for header and footer navigation links */
@@ -378,11 +402,9 @@ footer div {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
-
-
 
 /* Target all select elements */
 select,
@@ -417,4 +439,30 @@ select option:checked {
   background-color: #f3f4f6 !important;
   background-image: linear-gradient(to bottom, #f3f4f6, #f3f4f6) !important;
   color: #222 !important;
+}
+
+/* Drawer styles */
+.drawer-styles {
+  background-color: #ffffff;
+  color: #222222;
+  --color-preto: #222222;
+  --colorWhite: #ffffff;
+  --color-branco: #ffffff;
+  --theme-primary: #222222;
+  --theme-secondary: #222222;
+  --theme-text: #222222;
+  --theme-link: #222222;
+  --theme-link-hover: #111111;
+}
+
+/* About page drawer animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

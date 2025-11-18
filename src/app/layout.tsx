@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Lato, Inter, Roboto } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
 import { ThemeProvider } from "next-themes";
-import { ThemeSettingsProvider } from "@/components/theme/ThemeContext";
+import { Footer, ConditionalHeader, ThemeSettingsProvider } from "@/components";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,7 +49,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ThemeSettingsProvider>
-            <Header />
+            <ConditionalHeader />
             <main className="min-h-screen">{children}</main>
             <Footer />
           </ThemeSettingsProvider>

@@ -1,19 +1,19 @@
-declare module 'react-google-recaptcha' {
-  import { Component } from 'react';
+declare module "react-google-recaptcha" {
+  import { Component } from "react";
 
   export interface ReCAPTCHAProps {
     sitekey: string;
     onChange?: (token: string | null) => void;
-    theme?: 'light' | 'dark';
-    type?: 'image' | 'audio';
+    theme?: "light" | "dark";
+    type?: "image" | "audio";
     tabindex?: number;
     onExpired?: () => void;
     onErrored?: () => void;
     onLoad?: () => void;
-    size?: 'compact' | 'normal' | 'invisible';
+    size?: "compact" | "normal" | "invisible";
     stoken?: string;
     hl?: string;
-    badge?: 'bottomright' | 'bottomleft' | 'inline';
+    badge?: "bottomright" | "bottomleft" | "inline";
     isolated?: boolean;
   }
 
@@ -24,4 +24,3 @@ declare module 'react-google-recaptcha' {
     getValue(): string | null;
   }
 }
-
