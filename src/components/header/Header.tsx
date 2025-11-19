@@ -338,7 +338,7 @@ const Header = () => {
                 {/* Adjustments Icon */}
                 <button
                   onClick={() => setIsThemeDrawerOpen(true)}
-                  className="hidden md:blocktext-(--color-preto) dark:text-[var(--color-preto)] hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-[var(--colorGrey)]"
+                  className="hidden md:block text-(--color-preto) dark:text-[var(--color-preto)] hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-[var(--colorGrey)]"
                 >
                   <SlidersHorizontal className="w-6 h-6" />
                 </button>

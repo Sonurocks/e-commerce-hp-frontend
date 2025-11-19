@@ -325,30 +325,30 @@ html[data-color-theme] * {
   background-color: var(--colorGrey) !important;
 }
 
-/* Footer background - gray in light mode, black in dark mode */
-footer {
+/* Default footer background - gray in light mode, black in dark mode */
+.site-footer {
   background-color: #e5e7eb !important; /* bg-gray-200 */
   color: #222 !important; /* dark text in light mode */
 }
 
-footer h4,
-footer a,
-footer p,
-footer span,
-footer div {
+.site-footer h4,
+.site-footer a,
+.site-footer p,
+.site-footer span,
+.site-footer div {
   color: #222 !important; /* dark text in light mode */
 }
 
-.dark footer {
+.dark .site-footer {
   background-color: #000000 !important; /* black */
   color: #ffffff !important; /* white text in dark mode */
 }
 
-.dark footer h4,
-.dark footer a,
-.dark footer p,
-.dark footer span,
-.dark footer div {
+.dark .site-footer h4,
+.dark .site-footer a,
+.dark .site-footer p,
+.dark .site-footer span,
+.dark .site-footer div {
   color: #ffffff !important; /* white text in dark mode */
 }
 @theme {

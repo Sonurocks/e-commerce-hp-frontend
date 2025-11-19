@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Lato, Inter, Roboto } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { Footer, ConditionalHeader, ThemeSettingsProvider } from "@/components";
+import {
+  ConditionalFooter,
+  ConditionalHeader,
+  ThemeSettingsProvider,
+} from "@/components";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,7 +55,7 @@ export default function RootLayout({
           <ThemeSettingsProvider>
             <ConditionalHeader />
             <main className="min-h-screen">{children}</main>
-            <Footer />
+            <ConditionalFooter />
           </ThemeSettingsProvider>
         </ThemeProvider>
       </body>

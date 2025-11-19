@@ -9,53 +9,69 @@ type ContactAboutProps = {
 
 const ContactAbout = ({ onBack }: ContactAboutProps) => {
   return (
-    <div style={styles.outerContainer}>
+    <div className="w-full bg-[#f5f5f5] min-h-screen py-5 px-5 pb-[60px] box-border" style={{ position: 'relative', zIndex: 1, marginTop: 0 }}>
       {/* Home Link - Outside white template */}
-      <div style={styles.homeLinkContainer}>
+      <div className="text-center mb-[30px]">
         {onBack ? (
-          <button onClick={onBack} style={styles.homeLink}>
+          <button
+            onClick={onBack}
+            className="text-[#222] text-sm no-underline cursor-pointer transition-colors duration-200 bg-transparent border-0 p-0 font-inherit"
+          >
             Home
           </button>
         ) : (
-          <Link href="/" style={styles.homeLink}>
+          <Link
+            href="/"
+            className="text-[#222] text-base no-underline cursor-pointer transition-colors duration-200"
+          >
             Home
           </Link>
         )}
       </div>
-
-      <div style={styles.container}>
+   <div className="w-full max-w-[900px] mx-auto bg-white font-['Helvetica_Neue',Arial,sans-serif] py-10 px-10 pb-[60px] box-border">
+       
+      <div className="w-full max-w-[900px] bg-white justify-center font-['Helvetica_Neue',Arial,sans-serif] mt-[10px] box-border">
         {/* Main Title */}
-        <h1 style={styles.title}>CONTACT US</h1>
+        <h1 className="text-center text-[36px] font-bold text-[#222] uppercase tracking-[0.05em] mt-0 font-['Helvetica_Neue',Arial,sans-serif]">
+          CONTACT US
+        </h1>
       </div>
-
-      {/* Banner Image - Outside white container to extend beyond */}
-      <div style={styles.bannerContainer}>
+      
+      {/* Banner Image - Extends from left to right edges of white container */}
+      <div className="mb-[77px] relative -mx-25">
         <Image
           src={contactUsImage}
           alt="Farfetch contact banner"
           width={1200}
           height={600}
-          style={styles.bannerImage}
+          className="w-full h-auto object-cover block"
           priority
         />
       </div>
 
-      <div style={styles.container}>
-        {/* Contact Information */}
-        <div style={styles.contactInfo}>
-          <p style={styles.thankYouText}>
+      
+
+    {/* Contact Information */}
+        <div className="text-center max-w-[800px] mx-auto text-[#222]">
+          <p className="text-sm font-light mb-5 text-[#222] leading-relaxed">
             Thank you for your interest in Farfetch!
           </p>
-          <p style={styles.contactText}>
+          <p className="text-sm font-light mb-[15px] text-[#222] leading-relaxed">
             For general enquiries and customer service, please contact us through{' '}
-            <Link href="https://farfetch.com" style={styles.link}>
+            <Link
+              href="https://farfetch.com"
+              className="text-[#222] underline cursor-pointer transition-colors duration-200"
+            >
               farfetch.com
             </Link>
             .
           </p>
-          <p style={styles.contactText}>
+          <p className="text-sm font-light mb-[15px] text-[#222] leading-relaxed">
             For media requests, send us an email to{' '}
-            <Link href="mailto:press@farfetch.com" style={styles.link}>
+            <Link
+              href="mailto:press@farfetch.com"
+              className="text-[#222] underline cursor-pointer transition-colors duration-200"
+            >
               press@farfetch.com
             </Link>
             .
@@ -66,87 +82,4 @@ const ContactAbout = ({ onBack }: ContactAboutProps) => {
   )
 }
 
-const styles: Record<string, React.CSSProperties> = {
-  outerContainer: {
-    width: '100%',
-    backgroundColor: '#f5f5f5',
-    minHeight: '100vh',
-    padding: '40px 20px 60px',
-    boxSizing: 'border-box',
-  },
-  container: {
-    width: '100%',
-    maxWidth: '900px',
-    margin: '0 auto',
-    backgroundColor: '#fff',
-    fontFamily: "'Helvetica Neue', Arial, sans-serif",
-    padding: '40px 40px 60px',
-    boxSizing: 'border-box',
-  },
-  homeLinkContainer: {
-    textAlign: 'center',
-    marginBottom: '30px',
-  },
-  homeLink: {
-    color: '#222',
-    fontSize: '16px',
-    textDecoration: 'none',
-    cursor: 'pointer',
-    transition: 'color 0.2s ease',
-    background: 'none',
-    border: 'none',
-    padding: 0,
-    fontFamily: 'inherit',
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: '36px',
-    fontWeight: 700,
-    color: '#222',
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em',
-    margin: '0 0 0 0',
-    fontFamily: "'Helvetica Neue', Arial, sans-serif",
-  },
-  bannerContainer: {
-    width: '70vw',
-    maxWidth: '1100px',
-    margin: '0 auto 0',
-    position: 'relative',
-  },
-  bannerImage: {
-    width: '100%',
-    height: 'auto',
-    objectFit: 'cover',
-    display: 'block',
-  },
-  contactInfo: {
-    textAlign: 'center',
-    maxWidth: '800px',
-    margin: '0 auto',
-    color: '#222',
-  },
-  thankYouText: {
-    fontSize: '14px',
-    fontWeight: 300,
-    margin: '0 0 20px 0',
-    color: '#222',
-    lineHeight: 1.6,
-  },
-  contactText: {
-    fontSize: '14px',
-    fontWeight: 300,
-    margin: '0 0 15px 0',
-    color: '#222',
-    lineHeight: 1.6,
-  },
-  link: {
-    color: '#222',
-    textDecoration: 'underline',
-    cursor: 'pointer',
-    transition: 'color 0.2s ease',
-  },
-}
-
 export default ContactAbout
-

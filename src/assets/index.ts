@@ -72,6 +72,26 @@ import womensection2a from "./editional features/womensection2a.png";
 import womensection2b from "./editional features/womensection2b.png";
 import kidsection2 from "./editional features/kidsection2.png";
 import contactUsImage from "./about/conatctus.png";
+import aboutAddImage from "./about/add.png";
+import aboutAllImage from "./about/all.png";
+import aboutFoodImage from "./about/food.png";
+import aboutHomeImage from "./about/home.png";
+import aboutHumanImage from "./about/human.png";
+import aboutLaptopImage from "./about/laptop.png";
+import aboutPhoneOneImage from "./about/phone1.png";
+import aboutPhoneTwoImage from "./about/phone2.png";
+import aboutShoesImage from "./about/shoes.png";
+import aboutShowcaseImage from "./about/showcase.png";
+import footerFlowerImage from "./footer/flower.png";
+import footerBrownImage from "./footer/brownm.png";
+import footerBlackWhiteImage from "./footer/blackwhite.png";
+import footer400m2Image from "./footer/400m2.png";
+import footer58mImage from "./footer/58m.png";
+import footerAmrImage from "./footer/amr.png";
+import footerAngeloImage from "./footer/angelo.png";
+import footerAplusImage from "./footer/aplus.png";
+import footerAbseitsImage from "./footer/abesit.png";
+import footerActualImage from "./footer/actual.png";
 
 const kidswear = editorialKidswear;
 import partyDress1 from "./party/dress1.png";
@@ -245,4 +265,24 @@ export {
   trendingTeddykid,
   trendingKidssuit,
   contactUsImage,
+  aboutAddImage,
+  aboutAllImage,
+  aboutFoodImage,
+  aboutShoesImage,
+  aboutHomeImage,
+  aboutHumanImage,
+  aboutLaptopImage,
+  aboutPhoneOneImage,
+  aboutPhoneTwoImage,
+  aboutShowcaseImage,
+  footerFlowerImage,
+  footerBrownImage,
+  footerBlackWhiteImage,
+  footer400m2Image,
+  footer58mImage,
+  footerAmrImage,
+  footerAngeloImage,
+  footerAplusImage,
+  footerAbseitsImage,
+  footerActualImage,
 };

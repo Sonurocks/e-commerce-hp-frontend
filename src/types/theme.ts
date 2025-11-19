@@ -17,7 +17,7 @@ export interface ThemeContextType {
   colorTheme: ColorTheme;
   fontTheme: FontTheme;
   setColorTheme: (theme: ColorTheme) => void;
-  setBgTheme: (theme: ColorTheme) => void;
+  setBgTheme: (theme: string) => void;
   setFontTheme: (theme: FontTheme) => void;
 }
 

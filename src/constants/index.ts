@@ -1222,7 +1222,7 @@ export const footerSections = [
     title: "About FARFETCH",
     links: [
       { href: "/about", label: "About us" },
-      { href: "#", label: "FARFETCH partner boutiques" },
+      { href: "/farfetch-partner-boutiques", label: "FARFETCH partner boutiques" },
       { href: "#", label: "Careers" },
       { href: "#", label: "FARFETCH app" },
       { href: "#", label: "Modern slavery statement" },

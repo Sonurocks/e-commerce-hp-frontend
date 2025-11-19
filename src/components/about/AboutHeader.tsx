@@ -36,7 +36,8 @@ const AboutHeader = () => {
       setShowContactPage(true)
       setActiveItem(null)
     } else {
-      setShowContactPage(false)
+      // Don't close ContactAbout on click - just open drawer
+      // User can still navigate by clicking, but drawer should work on hover too
       setActiveItem(item)
     }
   }
@@ -56,55 +57,75 @@ const AboutHeader = () => {
               key={item}
               style={{
                 ...styles.navItem,
-                ...(activeItem === item ? styles.navItemActive : {}),
+                ...(activeItem === item || (item === 'Contact' && showContactPage) ? styles.navItemActive : {}),
               }}
               onMouseEnter={() => {
-                if (item !== 'Contact') {
-                  setActiveItem(item)
-                }
+                setActiveItem(item)
               }}
               onFocus={() => {
-                if (item !== 'Contact') {
-                  setActiveItem(item)
+                setActiveItem(item)
+              }}
+              onMouseLeave={() => {
+                // Only clear if not on Contact page and item is Contact
+                if (item === 'Contact' && !showContactPage) {
+                  setActiveItem(null)
+                } else if (item !== 'Contact') {
+                  // For other items, clear on mouse leave (drawer will handle its own)
+                  // Don't clear here to avoid flickering
                 }
               }}
-              onClick={() => handleItemClick(item)}
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                handleItemClick(item)
+                // Set activeItem on click
+                setActiveItem(item)
+              }}
             >
               {item}
-              {activeItem === item && <span style={styles.navItemUnderline} />}
+              {(activeItem === item || (item === 'Contact' && showContactPage)) && <span style={styles.navItemUnderline} />}
             </button>
           ))}
         </nav>
-      </header>
-      {showContactPage ? (
-        <ContactAbout onBack={() => setShowContactPage(false)} />
-      ) : activeItem ? (
-        <div style={styles.drawer} onMouseLeave={() => setActiveItem(null)}>
-          <div style={styles.drawerContent}>
-            {activeItem === 'Ethics' ? (
-              ethicsLinks.map((item) => (
-                <span key={item} style={styles.drawerLink}>
-                  {item}
-                </span>
-              ))
-            ) : activeItem === 'Media' ? (
-              mediaLinks.map((item) => (
-                <span key={item} style={styles.drawerLink}>
-                  {item}
-                </span>
-              ))
-            ) : activeItem === 'Careers' ? (
-              careersLinks.map((item) => (
-                <span key={item} style={styles.drawerLink}>
-                  {item}
-                </span>
-              ))
-            ) : (
-              <p style={styles.drawerText}>Farfetch</p>
-            )}
+        {/* Drawer - positioned relative to header */}
+        {activeItem && (
+          <div 
+            style={styles.drawer} 
+            onMouseEnter={() => setActiveItem(activeItem)}
+            onMouseLeave={() => setActiveItem(null)}
+          >
+            <div style={styles.drawerContent}>
+              {activeItem === 'Ethics' ? (
+                ethicsLinks.map((item) => (
+                  <span key={item} style={styles.drawerLink}>
+                    {item}
+                  </span>
+                ))
+              ) : activeItem === 'Media' ? (
+                mediaLinks.map((item) => (
+                  <span key={item} style={styles.drawerLink}>
+                    {item}
+                  </span>
+                ))
+              ) : activeItem === 'Careers' ? (
+                careersLinks.map((item) => (
+                  <span key={item} style={styles.drawerLink}>
+                    {item}
+                  </span>
+                ))
+              ) : (
+                <p style={styles.drawerText}>Farfetch</p>
+              )}
+            </div>
           </div>
+        )}
+      </header>
+      {/* ContactAbout - shows below header/drawer */}
+      {showContactPage && (
+        <div style={{ position: 'relative', zIndex: 1, marginTop: 0, paddingTop: 0 }}>
+          <ContactAbout onBack={() => setShowContactPage(false)} />
         </div>
-      ) : null}
+      )}
     </div>
   )
 }
@@ -113,6 +134,7 @@ const styles: Record<string, React.CSSProperties> = {
   container: {
     position: 'relative',
     width: '100%',
+    zIndex: 1000,
   },
   wrapper: {
     width: '100%',
@@ -124,8 +146,11 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
-    position: 'relative',
-    zIndex: 1000,
+    position: 'sticky',
+    top: 0,
+    zIndex: 1002,
+    pointerEvents: 'auto',
+    isolation: 'isolate',
   },
   topRow: {
     display: 'flex',
@@ -157,6 +182,9 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: '16px',
     fontWeight: 400,
     color: '#222',
+    position: 'relative',
+    zIndex: 1003,
+    pointerEvents: 'auto',
   },
   navItem: {
     position: 'relative',
@@ -167,6 +195,8 @@ const styles: Record<string, React.CSSProperties> = {
     padding: '0 8px 12px',
     color: '#999',
     fontSize: '16px',
+    zIndex: 1003,
+    pointerEvents: 'auto',
   },
   navItemActive: {
     color: '#111',
@@ -188,8 +218,9 @@ const styles: Record<string, React.CSSProperties> = {
     backgroundColor: '#fff',
     borderBottom: '1px solid #f5f5f5',
     boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-    zIndex: 999,
+    zIndex: 1003,
     animation: 'slideDown 0.3s ease-out',
+    pointerEvents: 'auto',
   },
   drawerContent: {
     display: 'flex',

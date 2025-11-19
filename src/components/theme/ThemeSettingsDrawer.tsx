@@ -21,7 +21,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
 
   const colorThemes: {
     name: string;
-    value: string;
+    value: ColorTheme;
     color: string;
     bgColor: string;
   }[] = [

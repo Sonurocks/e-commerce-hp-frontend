@@ -14,7 +14,9 @@ export { default as TrendingGrid } from "./department/TrendingGrid";
 
 export { default as WelcomeEmail } from "./emailtemplate/welcomeemailpreview";
 export { default as FAQ } from "./navigation-links/FAQ";
+export { default as FarfetchPartnerBoutiques } from "./navigation-links/FarfetchPartnerBoutiques";
 export { default as Footer } from "./footer/Footer";
+export { default as ConditionalFooter } from "./footer/ConditionalFooter";
 export { default as Header } from "./header/Header";
 export { default as ConditionalHeader } from "./header/ConditionalHeader";
 export { default as GenericDrawer } from "./header/drawer/GenericDrawer";
