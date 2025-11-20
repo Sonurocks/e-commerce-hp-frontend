@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { FiMenu, FiX } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa";
 import { SlidersHorizontal } from "lucide-react";
 import {
@@ -221,20 +222,24 @@ const Header = () => {
     setSearchQuery("");
   };
 
+  const handleMobileLinkClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
       <header
-        className={`bg-white dark:bg-[var(--colorWhite)] sticky top-0 z-50 font-normal ${isSearchDrawerOpen ? "hidden" : ""}`}
+        className={`bg-white dark:bg-(--colorWhite) sticky top-0 z-50 font-normal ${isSearchDrawerOpen ? "hidden" : ""}`}
       >
         {/* Top Promotional Bar */}
         <div
-          className={`text-[13px] py-[6px] px-[36px] transition-all duration-300 font-normal ${
+          className={`text-[13px] py-2 px-4 sm:px-6 xl:py-[6px] xl:px-[36px] transition-all duration-300 font-normal ${
             currentPromo.type === "generic"
-              ? "bg-gray-200 dark:bg-[var(--colorLightGrey)]"
+              ? "bg-gray-200 dark:bg-(--colorLightGrey)"
               : "bg-black dark:bg-black"
           } ${isScrolled ? "hidden" : ""}`}
         >
-          <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-screen-2xl px-2 sm:px-4">
             <ul className="flex items-center justify-center relative h-6">
               {promotions.map((promo, index) => (
                 <li
@@ -248,7 +253,7 @@ const Header = () => {
                   <span
                     className={`flex items-center justify-center space-x-2 ${
                       promo.type === "generic"
-                        ? "text-(--color-preto) dark:text-[var(--color-preto)]"
+                        ? "text-(--color-preto) dark:text-(--color-preto)"
                         : "text-white dark:text-white"
                     }`}
                   >
@@ -294,114 +299,145 @@ const Header = () => {
 
         {/* Main Header */}
         <div
-          className={`relative ${isScrolled ? "border-b border-gray-300 dark:border-[var(--color-platinum)]" : ""}`}
+          className={`relative ${isScrolled ? "border-b border-gray-300 dark:border-(--color-platinum)" : ""}`}
         >
-          <div className="container mx-auto py-0 px-[36px]">
-            {/* First Row - Primary Navigation */}
-            <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
-              {/* Left - Primary Categories */}
-              <div className="hidden lg:flex items-center space-x-6">
-                {primaryNavigationLinks.map((link, index) => (
-                  <Link key={index} href={link.href} className={link.className}>
-                    {link.label}
+          <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 xl:px-10">
+            {/* Desktop Layout */}
+            <div className="hidden xl:block">
+              {/* First Row - Primary Navigation */}
+              <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
+                {/* Left - Primary Categories */}
+                <div className="hidden lg:flex items-center space-x-6">
+                  {primaryNavigationLinks.map((link, index) => (
+                    <Link key={index} href={link.href} className={link.className}>
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Center - Logo */}
+                <div className="flex-1 flex justify-center items-center">
+                  <Link href={headerConfig.logo.href}>
+                    <h1 className="text-3xl font-extrabold text-(--color-preto) dark:text-(--color-preto) tracking-tight uppercase w-[290px] h-[26px]">
+                      {headerConfig.logo.text}
+                    </h1>
                   </Link>
-                ))}
-              </div>
+                </div>
 
-              {/* Center - Logo */}
-              <div className="flex-1 flex justify-center items-center">
-                <Link href={headerConfig.logo.href}>
-                  <h1 className="text-3xl font-extrabold text-(--color-preto) dark:text-[var(--color-preto)] tracking-tight uppercase w-[290px] h-[26px]">
-                    {headerConfig.logo.text}
-                  </h1>
-                </Link>
-              </div>
+                {/* Right - User Icons */}
+                <div className="flex items-center space-x-4">
+                  {/* Country Flag */}
+                  <button className="hidden md:block w-6 h-6 rounded-full overflow-hidden border border-gray-300 dark:border-(--color-platinum) hover:border-gray-400 dark:hover:border-[var(--color-silver)] transition">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-full h-full"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      {/* India Flag */}
+                      <rect width="24" height="8" fill="#FF9933" />
+                      <rect y="8" width="24" height="8" fill="#FFFFFF" />
+                      <rect y="16" width="24" height="8" fill="#138808" />
+                      <circle cx="12" cy="12" r="2.5" fill="#000080" />
+                    </svg>
+                  </button>
 
-              {/* Right - User Icons */}
-              <div className="flex items-center space-x-4">
-                {/* Country Flag */}
-                <button className="hidden md:block w-6 h-6 rounded-full overflow-hidden border border-gray-300 dark:border-[var(--color-platinum)] hover:border-gray-400 dark:hover:border-[var(--color-silver)] transition">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="w-full h-full"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  {/* Adjustments Icon */}
+                  <button
+                    onClick={() => setIsThemeDrawerOpen(true)}
+                    className="hidden md:block text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
-                    {/* India Flag */}
-                    <rect width="24" height="8" fill="#FF9933" />
-                    <rect y="8" width="24" height="8" fill="#FFFFFF" />
-                    <rect y="16" width="24" height="8" fill="#138808" />
-                    <circle cx="12" cy="12" r="2.5" fill="#000080" />
-                  </svg>
-                </button>
+                    <SlidersHorizontal className="w-6 h-6" />
+                  </button>
 
-                {/* Adjustments Icon */}
-                <button
-                  onClick={() => setIsThemeDrawerOpen(true)}
-                  className="hidden md:block text-(--color-preto) dark:text-[var(--color-preto)] hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-[var(--colorGrey)]"
-                >
-                  <SlidersHorizontal className="w-6 h-6" />
-                </button>
+                  {/* Profile */}
+                  <button className="text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)">
+                    <FaRegUser className="w-6 h-6" />
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                      {headerConfig.tooltips.signIn}
+                    </span>
+                  </button>
 
-                {/* Profile */}
-                <button className="text-(--color-preto) dark:text-[var(--color-preto)] hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-[var(--colorGrey)]">
-                  <FaRegUser className="w-6 h-6" />
-                  <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-[var(--color-preto)] text-xs border border-gray-400 dark:border-[var(--color-platinum)] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                    {headerConfig.tooltips.signIn}
-                  </span>
-                </button>
+                  {/* Wishlist */}
+                  <Link
+                    href="/wishlist"
+                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
+                  >
+                    <GoHeart className="w-6 h-6" strokeWidth={1.0} />
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                      {headerConfig.tooltips.wishlist}
+                    </span>
+                  </Link>
 
-                {/* Wishlist */}
-                <Link
-                  href="/wishlist"
-                  className="text-(--color-preto) dark:text-[var(--color-preto)] hover:text-(--color-preto) dark:hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-[var(--colorGrey)]"
-                >
-                  <GoHeart className="w-6 h-6" strokeWidth={1.0} />
-                  <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-[var(--color-preto)] text-xs border border-gray-400 dark:border-[var(--color-platinum)] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                    {headerConfig.tooltips.wishlist}
-                  </span>
-                </Link>
-
-                {/* Shopping Bag */}
-                <Link
-                  href="/cart"
-                  className="text-(--color-preto) dark:text-[var(--color-preto)] hover:text-(--color-preto) dark:hover:text-[var(--color-preto)] transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-[var(--colorGrey)]"
-                >
-                  <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
-                  <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-[var(--color-preto)] text-xs border border-gray-400 dark:border-[var(--color-platinum)] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                    {headerConfig.tooltips.bag}
-                  </span>
-                </Link>
+                  {/* Shopping Bag */}
+                  <Link
+                    href="/cart"
+                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
+                  >
+                    <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                      {headerConfig.tooltips.bag}
+                    </span>
+                  </Link>
+                </div>
               </div>
-            </div>
 
-            {/* Second Row - Secondary Navigation and Search */}
-            <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
-              {/* Left - Categories */}
-              <div className="hidden lg:flex items-center space-x-6 overflow-x-auto">
-                {navigationLinks.map((link, index) => {
-                  if (link.hasDrawer) {
-                    const drawerType = link.drawerType as
-                      | "25off"
-                      | "newIn"
-                      | "holidaySeason"
-                      | "brands"
-                      | "clothing"
-                      | "shoes"
-                      | "bags"
-                      | "accessories"
-                      | "jewellery"
-                      | "watches"
-                      | "homeware"
-                      | "preOwned"
-                      | "sale"
-                      | "0-36months"
-                      | "0-12months"
-                      | "teens";
-                    const linkRef = linkRefs[drawerType];
+              {/* Second Row - Secondary Navigation and Search */}
+              <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
+                {/* Left - Categories */}
+                <div className="hidden lg:flex items-center space-x-6 overflow-x-auto">
+                  {navigationLinks.map((link, index) => {
+                    if (link.hasDrawer) {
+                      const drawerType = link.drawerType as
+                        | "25off"
+                        | "newIn"
+                        | "holidaySeason"
+                        | "brands"
+                        | "clothing"
+                        | "shoes"
+                        | "bags"
+                        | "accessories"
+                        | "jewellery"
+                        | "watches"
+                        | "homeware"
+                        | "preOwned"
+                        | "sale"
+                        | "0-36months"
+                        | "0-12months"
+                        | "teens";
+                      const linkRef = linkRefs[drawerType];
 
-                    const isActive = activeDrawer === drawerType;
-                    const shouldBeGray = activeDrawer !== null && !isActive;
+                      const isActive = activeDrawer === drawerType;
+                      const shouldBeGray = activeDrawer !== null && !isActive;
+                      let linkClassName = link.className;
+                      if (shouldBeGray) {
+                        if (linkClassName.includes("text-[var(--color-preto)]")) {
+                          linkClassName = linkClassName.replace(
+                            "text-[var(--color-preto)]",
+                            "text-gray-500",
+                          );
+                        } else if (linkClassName.includes("text-red-600")) {
+                          linkClassName = linkClassName.replace(
+                            "text-red-600",
+                            "text-gray-500",
+                          );
+                        }
+                      }
+
+                      return (
+                        <div
+                          key={index}
+                          ref={linkRef}
+                          className="relative"
+                          onMouseEnter={() => setActiveDrawer(drawerType)}
+                        >
+                          <Link href={link.href} className={linkClassName}>
+                            {link.label}
+                          </Link>
+                        </div>
+                      );
+                    }
+                    const shouldBeGray = activeDrawer !== null;
                     let linkClassName = link.className;
                     if (shouldBeGray) {
                       if (linkClassName.includes("text-[var(--color-preto)]")) {
@@ -416,74 +452,197 @@ const Header = () => {
                         );
                       }
                     }
-
                     return (
-                      <div
+                      <Link
                         key={index}
-                        ref={linkRef}
-                        className="relative"
-                        onMouseEnter={() => setActiveDrawer(drawerType)}
+                        href={link.href}
+                        className={link.className}
                       >
-                        <Link href={link.href} className={linkClassName}>
-                          {link.label}
-                        </Link>
-                      </div>
+                        {link.label}
+                      </Link>
                     );
-                  }
-                  const shouldBeGray = activeDrawer !== null;
-                  let linkClassName = link.className;
-                  if (shouldBeGray) {
-                    if (linkClassName.includes("text-[var(--color-preto)]")) {
-                      linkClassName = linkClassName.replace(
-                        "text-[var(--color-preto)]",
-                        "text-gray-500",
-                      );
-                    } else if (linkClassName.includes("text-red-600")) {
-                      linkClassName = linkClassName.replace(
-                        "text-red-600",
-                        "text-gray-500",
-                      );
-                    }
-                  }
-                  return (
+                  })}
+                </div>
+
+                {/* Right - Search Bar */}
+                <div className="flex-1 lg:flex-none lg:ml-4 flex justify-end">
+                  <div className="relative w-[270px] h-[44px]">
+                    <div className="absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                      <svg
+                        className="w-5 h-5 text-gray-500 dark:text-(--color-hina)"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder={headerConfig.search.placeholder}
+                      className="w-full pl-10 pr-4 py-2 border-b border-(--color-preto) dark:border-(--color-preto) focus:outline-none focus:border-gray-900 dark:focus:border-(--color-preto) text-base dark:text-(--color-preto) dark:bg-transparent cursor-pointer"
+                      onClick={handleSearchInputClick}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile & Tablet Layout */}
+            <div className="xl:hidden">
+              {/* First Row - Primary Navigation */}
+              <div className="flex w-full flex-wrap items-center gap-3 py-4">
+                <div className="flex flex-1 items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsMenuOpen((prev) => !prev)}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 text-gray-700 transition hover:border-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[var(--color-platinum)] dark:text-[var(--color-preto)] dark:hover:border-[var(--color-silver)]"
+                    aria-label={`${isMenuOpen ? "Close" : "Open"} navigation menu`}
+                  >
+                    {isMenuOpen ? (
+                      <FiX className="h-5 w-5" />
+                    ) : (
+                      <FiMenu className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+
+                {/* Center - Logo */}
+                <div className="flex flex-1 justify-center">
+                  <Link href={headerConfig.logo.href}>
+                    <h1 className="text-2xl sm:text-3xl font-extrabold text-(--color-preto) dark:text-(--color-preto) tracking-tight uppercase">
+                      {headerConfig.logo.text}
+                    </h1>
+                  </Link>
+                </div>
+
+                {/* Right - User Icons */}
+                <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
+                  <button className="text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)">
+                    <FaRegUser className="w-6 h-6" />
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                      {headerConfig.tooltips.signIn}
+                    </span>
+                  </button>
+                  <Link
+                    href="/wishlist"
+                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
+                  >
+                    <GoHeart className="w-6 h-6" strokeWidth={1.0} />
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                      {headerConfig.tooltips.wishlist}
+                    </span>
+                  </Link>
+                  <Link
+                    href="/cart"
+                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
+                  >
+                    <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                      {headerConfig.tooltips.bag}
+                    </span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Secondary Navigation and Search */}
+              <div className="flex flex-col gap-4 border-t border-gray-200 py-4 dark:border-(--color-platinum)">
+                <div className="flex items-center gap-4 overflow-x-auto text-sm text-(--color-preto) dark:text-(--color-preto)">
+                  {navigationLinks.map((link, index) => (
                     <Link
-                      key={index}
+                      key={`mobile-${index}`}
                       href={link.href}
-                      className={linkClassName}
+                      onClick={handleMobileLinkClick}
+                      className="whitespace-nowrap font-medium"
                     >
                       {link.label}
                     </Link>
-                  );
-                })}
-              </div>
+                  ))}
+                </div>
 
-              {/* Right - Search Bar */}
-              <div className="flex-1 lg:flex-none lg:ml-4">
-                <div className="relative w-[270px] h-[44px]">
-                  <div className="absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <svg
-                      className="w-5 h-5 text-gray-500 dark:text-[var(--color-hina)]"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
+                <div className="w-full">
+                  <div className="relative h-11 w-full">
+                    <div className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2">
+                      <svg
+                        className="w-5 h-5 text-gray-500 dark:text-(--color-hina)"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder={headerConfig.search.placeholder}
+                      className="w-full pl-10 pr-4 py-2 border-b border-(--color-preto) dark:border-(--color-preto) focus:outline-none focus:border-gray-900 dark:focus:border-(--color-preto) text-base dark:text-(--color-preto) dark:bg-transparent cursor-pointer"
+                      onClick={handleSearchInputClick}
+                      readOnly
+                    />
                   </div>
-                  <input
-                    type="text"
-                    placeholder={headerConfig.search.placeholder}
-                    className="w-full pl-10 pr-4 py-2 border-b border-[var(--color-preto)] dark:border-[var(--color-preto)] focus:outline-none focus:border-gray-900 dark:focus:border-[var(--color-preto)] text-base dark:text-[var(--color-preto)] dark:bg-transparent cursor-pointer"
-                    onClick={handleSearchInputClick}
-                    readOnly
-                  />
                 </div>
               </div>
+
+              {/* Mobile Menu Drawer */}
+              {isMenuOpen && (
+                <div className="border-t border-gray-200 py-4 dark:border-(--color-platinum)">
+                  <div className="space-y-6">
+                    <div className="flex flex-col gap-3 text-base font-medium">
+                      {primaryNavigationLinks.map((link, index) => (
+                        <Link
+                          key={`primary-mobile-${index}`}
+                          href={link.href}
+                          className="text-(--color-preto) dark:text-(--color-preto)"
+                          onClick={handleMobileLinkClick}
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      {navigationLinks.map((link, index) => (
+                        <Link
+                          key={`secondary-mobile-${index}`}
+                          href={link.href}
+                          className="rounded border border-gray-200 px-3 py-2 text-(--color-preto) dark:border-(--color-platinum) dark:text-(--color-preto)"
+                          onClick={handleMobileLinkClick}
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="flex flex-wrap items-center gap-4 border-t border-gray-200 pt-4 dark:border-(--color-platinum) text-sm">
+                      <Link
+                        href="/wishlist"
+                        className="flex items-center gap-2 text-(--color-preto) dark:text-(--color-preto)"
+                        onClick={handleMobileLinkClick}
+                      >
+                        <GoHeart className="h-4 w-4" />
+                        {headerConfig.tooltips.wishlist}
+                      </Link>
+                      <Link
+                        href="/cart"
+                        className="flex items-center gap-2 text-(--color-preto) dark:text-(--color-preto)"
+                        onClick={handleMobileLinkClick}
+                      >
+                        <HiOutlineShoppingBag className="h-4 w-4" />
+                        {headerConfig.tooltips.bag}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

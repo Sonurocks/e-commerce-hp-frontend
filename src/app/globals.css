@@ -104,8 +104,8 @@
   --colors-actions-primary-active-stroke: hsla(0, 0%, 100%, 0);
 
   /* Font Variables */
-
   --fontNormal: "Farfetch Basis", "Helvetica Neue", Arial, sans-serif;
+
   --fontCondensed: "Farfetch Basis", "Helvetica Neue", Arial, sans-serif;
   --fontCondensedNonTranslated:
     "Farfetch Basis", "Helvetica Neue", Arial, sans-serif;
@@ -466,3 +466,4 @@ select option:checked {
     opacity: 1;
   }
 }
+
