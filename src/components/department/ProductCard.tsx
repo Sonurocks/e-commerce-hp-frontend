@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { Product } from "@/constants/department";
 import { GoHeart } from "react-icons/go";
 
@@ -29,6 +30,7 @@ export default function ProductCard({
   const isTextBadge = product.badge && product.badge !== "Extra 25% off";
 
   return (
+    <Link href={`/product-detail/${product.id}`} className="block">
     <article className="group" style={{ fontFamily: fontStack }}>
       <div className="relative w-full h-[400px] flex items-center justify-center bg-[#efefef]">
         <button
@@ -73,5 +75,6 @@ export default function ProductCard({
         )}
       </div>
     </article>
+    </Link>
   );
 }

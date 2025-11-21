@@ -136,12 +136,31 @@ import pinkmen1 from "./25off/pinkmen1.png";
 import pinkmen2 from "./25off/pinkmen2.png";
 import sgirl1 from "./25off/sgirl1.png";
 import sgirl2 from "./25off/sgirl2.png";
+import sgirl3 from "./25off/sgirl3.png";
+import sgirl4 from "./25off/sgirl4.png";
+import sgirl5 from "./25off/sgirl5.png";
 import girlbelt1 from "./25off/girlbelt1.png";
 import girlbelt2 from "./25off/girlbelt2.png";
 import jeangirl1 from "./25off/jeangirl1.png";
 import jeangirl2 from "./25off/jeangirl2.png";
 import bootgirl1 from "./25off/bootgirl1.png";
 import bootgirl2 from "./25off/bootgirl2.png";
+import bestsellerRedbag1 from "./bestseller/redbag1.png";
+import bestsellerRedbag2 from "./bestseller/redbag2.png";
+import bestsellerSpoon1 from "./bestseller/spoon1.png";
+import bestsellerSpoon2 from "./bestseller/spoon2.png";
+import bestsellerHand1 from "./bestseller/hand1.png";
+import bestsellerHand2 from "./bestseller/hand2.png";
+import bestsellerBlacks1 from "./bestseller/blacks1.png";
+import bestsellerBlacks2 from "./bestseller/blacks2.png";
+import bestsellerWhiteb1 from "./bestseller/whiteb1.png";
+import bestsellerWhiteb2 from "./bestseller/whiteb2.png";
+import bestsellerMenb1 from "./bestseller/menb1.png";
+import bestsellerMenb2 from "./bestseller/menb2.png";
+import bestsellerBrownb1 from "./bestseller/brownb1.png";
+import bestsellerBrownb2 from "./bestseller/brownb2.png";
+import bestsellerPen1 from "./bestseller/pen1.png";
+import bestsellerPen2 from "./bestseller/pen2.png";
 
 export {
   womenJpeg,
@@ -239,12 +258,31 @@ export {
   pinkmen2,
   sgirl1,
   sgirl2,
+  sgirl3,
+  sgirl4,
+  sgirl5,
   girlbelt1,
   girlbelt2,
   jeangirl1,
   jeangirl2,
   bootgirl1,
   bootgirl2,
+  bestsellerRedbag1,
+  bestsellerRedbag2,
+  bestsellerSpoon1,
+  bestsellerSpoon2,
+  bestsellerHand1,
+  bestsellerHand2,
+  bestsellerBlacks1,
+  bestsellerBlacks2,
+  bestsellerWhiteb1,
+  bestsellerWhiteb2,
+  bestsellerMenb1,
+  bestsellerMenb2,
+  bestsellerBrownb1,
+  bestsellerBrownb2,
+  bestsellerPen1,
+  bestsellerPen2,
   editorialMenswear,
   editorialKidswear,
   kidswear,

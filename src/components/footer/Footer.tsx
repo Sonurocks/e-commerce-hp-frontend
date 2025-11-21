@@ -5,7 +5,7 @@ import { footerSections, socialMediaLinks, legalLinks } from "../../constants";
 
 const Footer = () => {
   return (
-    <footer className="site-footer bg-gray-200 dark:bg-blacktext-(--color-preto) dark:text-white max-w-container w-full min-h-footer py-footer mx-auto font-normal">
+    <footer className="site-footer bg-gray-200 dark:bg-blacktext-(--color-preto) dark:text-white max-w-container w-full min-h-footer min-w-full  py-footer mx-auto font-normal">
       <div className="mx-auto max-w-container w-full pl-footer pr-footer">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {footerSections.map((section, sectionIndex) => (
