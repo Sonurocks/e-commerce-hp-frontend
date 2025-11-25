@@ -46,7 +46,7 @@ export default function WhyFarfetchSection() {
         {benefits.map(({ id, Icon, eyebrow, title, ctaLabel, link }) => (
           <article
             key={id}
-            className="border border-gray-400 rounded-lg p-4 flex flex-col gap-2 bg-white"
+            className="border border-gray-400 rounded-lg p-4 flex flex-col gap-2 "
           >
             <Icon className="w-4 h-4 text-(--color-preto)" aria-hidden="true" />
             <div>

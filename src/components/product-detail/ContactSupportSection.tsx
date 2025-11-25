@@ -42,7 +42,7 @@ export default function ContactSupportSection() {
         {contactMethods.map(({ id, Icon, label, description, actionHref, actionLabel }) => (
           <article
             key={id}
-            className="border border-gray-400 rounded-lg p-4 bg-white flex flex-col gap-2"
+            className="border border-gray-400 rounded-lg p-4  flex flex-col gap-2"
           >
             <Icon className="w-5 h-5 text-(--color-preto)" aria-hidden="true" />
             <div>

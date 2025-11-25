@@ -114,8 +114,8 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         onBlur={handleBlur}
         className={`w-full px-3 py-2 border ${
           error && touched ? "border-red-500" : "border-gray-300"
-        } rounded focus:outline-none focus:border-[var(--color-preto)] text-base bg-white font-normal text-left flex items-center justify-between ${
-          isPlaceholder ? "text-gray-500" : "text-[var(--color-preto)]"
+        } rounded focus:outline-none focus:border-preto text-base bg-white font-normal text-left flex items-center justify-between ${
+          isPlaceholder ? "text-gray-500" : "text-preto"
         }`}
       >
         <span>{displayText}</span>
@@ -421,7 +421,7 @@ const ContactForm = () => {
                   errors.message && touched.message
                     ? "border-red-500"
                     : "border-gray-300"
-                } rounded focus:outline-none focus:border-[var(--color-preto)] text-base bg-white font-normal resize-y`}
+                } rounded focus:outline-none focus:border-preto text-base bg-white font-normal resize-y`}
               />
               <ErrorMessage
                 name="message"
@@ -484,7 +484,7 @@ const ContactForm = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full md:w-auto bg-[var(--color-preto)] text-white px-8 py-3 rounded text-base font-normal hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full md:w-auto bg-preto text-white px-8 py-3 rounded text-base font-normal hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Send
               </button>

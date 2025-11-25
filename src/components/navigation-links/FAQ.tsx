@@ -1019,7 +1019,7 @@ const navigationLinks: SupportNavLink[] = [
   { href: "/faq", label: "FAQs" },
   { href: "#", label: "Terms and conditions" },
   { href: "#", label: "Privacy policy" },
-  { href: "#", label: "Modern slavery statement" },
+  { href: "/modern-slavery-statement", label: "Modern slavery statement" },
   { href: "/accessibility", label: "Accessibility" },
   { href: "#", label: "Cookie preferences" },
   {
@@ -1112,8 +1112,8 @@ const FAQ = () => {
               onFeedbackChange={handleFeedbackChange}
               containerClassName="mt-13 pt-8"
               titleClassName="text-xs font-base text-(--color-preto) mb-2"
-              buttonClassName="px-6 py-2 text-sm font-semibold border border-[var(--color-preto)] transition-colors"
-              activeButtonClassName="bg-[var(--color-preto)] text-white"
+              buttonClassName="px-6 py-2 text-sm font-semibold border border-preto transition-colors"
+              activeButtonClassName="bg-preto text-white"
               inactiveButtonClassName="bg-whitetext-(--color-preto) hover:bg-gray-50"
             />
           </main>

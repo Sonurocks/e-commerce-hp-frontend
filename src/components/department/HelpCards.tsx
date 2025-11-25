@@ -11,7 +11,7 @@ export default function HelpCards() {
           <div className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start">
             <div className="mb-2">
               <PiCoatHangerBold
-                className="text-[var(--theme-text)]"
+                className="text-(--theme-text)"
                 size={28}
               />
             </div>
@@ -27,7 +27,7 @@ export default function HelpCards() {
           <div className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start">
             <div className="mb-2">
               <IoMdHelpCircleOutline
-                className="text-[var(--theme-text)]"
+                className="text-(--theme-text)"
                 size={28}
               />
             </div>
@@ -51,7 +51,7 @@ export default function HelpCards() {
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="text-[var(--theme-text)]"
+                className="text-(--theme-text)"
               >
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>

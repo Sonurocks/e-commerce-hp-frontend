@@ -161,6 +161,82 @@ import bestsellerBrownb1 from "./bestseller/brownb1.png";
 import bestsellerBrownb2 from "./bestseller/brownb2.png";
 import bestsellerPen1 from "./bestseller/pen1.png";
 import bestsellerPen2 from "./bestseller/pen2.png";
+import bestsellerCottont1 from "./bestseller/cottont1.png";
+import bestsellerCottont2 from "./bestseller/cottont2.png";
+import bestsellerTeen1 from "./bestseller/teen1.png";
+import bestsellerTeen2 from "./bestseller/teen2.png";
+import bestsellerCap1 from "./bestseller/cap1.png";
+import bestsellerCap2 from "./bestseller/cap2.png";
+import bestsellerCool1 from "./bestseller/cool1.png";
+import bestsellerCool2 from "./bestseller/cool2.png";
+import bestsellerShorts1 from "./bestseller/shorts1.png";
+import bestsellerShorts2 from "./bestseller/shorts2.png";
+import featuredDolcegabana1 from "./featured/dolcegabana.png";
+import featuredDolcegabana2 from "./featured/dolcegabana1.png";
+import featuredDress1 from "./featured/dress1.png";
+import featuredDress2 from "./featured/dress2.png";
+import featuredGrayzipped1 from "./featured/grayzipped.png";
+import featuredGrayzipped2 from "./featured/grayzipped1.png";
+import featuredLola1 from "./featured/lola1.png";
+import featuredLola2 from "./featured/lola2.png";
+import featuredKnitpolo1 from "./featured/knitpolo1.png";
+import featuredKnitpolo2 from "./featured/knitpolo2.png";
+import featuredLogo1 from "./featured/logo1.png";
+import featuredLogo2 from "./featured/logo2.png";
+import featuredPaulshark1 from "./featured/paulshark1.png";
+import featuredPaulshark2 from "./featured/paulshark2.png";
+import featuredPocket1 from "./featured/pocket1.png";
+import featuredPocket2 from "./featured/pocket2.png";
+import featuredRev1 from "./featured/rev1.png";
+import featuredRev2 from "./featured/rev2.png";
+import featuredSweater1 from "./featured/sweater1.png";
+import featuredSweater2 from "./featured/sweater2.png";
+import featuredCopy1 from "./featured/copy1.png";
+import featuredCopy2 from "./featured/copy2.png";
+import featuredFloral1 from "./featured/floral.png";
+import featuredFloral2 from "./featured/floral1.png";
+import featuredMarni1 from "./featured/tee1.png";
+import featuredMarni2 from "./featured/tee2.png";
+import featuredBomber1 from "./featured/floral.png";
+import featuredBomber2 from "./featured/floral1.png";
+import featuredPolo1 from "./featured/pant1.png";
+import featuredPolo2 from "./featured/pant2.png";
+import recommendationGanni1 from "./recommdation/ganni1.png";
+import recommendationGanni2 from "./recommdation/ganni2.png";
+import recommendationLeopard1 from "./recommdation/leopard1.png";
+import recommendationLeopard2 from "./recommdation/leopard2.png";
+import recommendationAnimalprint1 from "./recommdation/animalprint1.png";
+import recommendationAnimalprint2 from "./recommdation/animalprint2.png";
+import recommendationSatin1 from "./recommdation/satin1.png";
+import recommendationSatin2 from "./recommdation/satin2.png";
+import recommendationSleevetop1 from "./recommdation/sleevetop1.png";
+import recommendationSleevetop2 from "./recommdation/sleevetop2.png";
+import recommendationLongsleeve1 from "./recommdation/longsleeve1.png";
+import recommendationLongsleeve2 from "./recommdation/longsleeve2.png";
+import recommendationZipup1 from "./recommdation/zipup1.png";
+import recommendationZipup2 from "./recommdation/zipup2.png";
+import recommendationBomber1 from "./recommdation/bomber1.png";
+import recommendationBomber2 from "./recommdation/bomber2.png";
+import recommendationButton1 from "./recommdation/button1.png";
+import recommendationButton2 from "./recommdation/button2.png";
+import recommendationCardigan1 from "./recommdation/cardigan1.png";
+import recommendationCardigan2 from "./recommdation/cardigan2.png";
+import recommendationCotton1 from "./recommdation/cotton1.png";
+import recommendationCotton2 from "./recommdation/cotton2.png";
+import recommendationChecked1 from "./recommdation/checked1.png";
+import recommendationChecked2 from "./recommdation/checked2.png";
+import recommendationElbow1 from "./recommdation/elbow1.png";
+import recommendationElbow2 from "./recommdation/elbow2.png";
+import recommendationDiamond1 from "./recommdation/dimaond1.png";
+import recommendationDiamond2 from "./recommdation/diamond2.png";
+import recommendationPatch1 from "./recommdation/patch1.png";
+import recommendationPatch2 from "./recommdation/patch2.png";
+import completeLookBlack1 from "./completethelook/black1.png";
+import completeLookBlack2 from "./completethelook/black2.png";
+import completeLookFf1 from "./completethelook/ff1.png";
+import completeLookFf2 from "./completethelook/ff2.png";
+import completeLookLogojean1 from "./completethelook/logojean1.png";
+import completeLookLogojean2 from "./completethelook/logojean2.png";
 
 export {
   womenJpeg,
@@ -283,6 +359,82 @@ export {
   bestsellerBrownb2,
   bestsellerPen1,
   bestsellerPen2,
+  bestsellerCottont1,
+  bestsellerCottont2,
+  bestsellerTeen1,
+  bestsellerTeen2,
+  bestsellerCap1,
+  bestsellerCap2,
+  bestsellerCool1,
+  bestsellerCool2,
+  bestsellerShorts1,
+  bestsellerShorts2,
+  featuredDolcegabana1,
+  featuredDolcegabana2,
+  featuredDress1,
+  featuredDress2,
+  featuredGrayzipped1,
+  featuredGrayzipped2,
+  featuredLola1,
+  featuredLola2,
+  featuredKnitpolo1,
+  featuredKnitpolo2,
+  featuredLogo1,
+  featuredLogo2,
+  featuredPaulshark1,
+  featuredPaulshark2,
+  featuredPocket1,
+  featuredPocket2,
+  featuredRev1,
+  featuredRev2,
+  featuredSweater1,
+  featuredSweater2,
+  featuredCopy1,
+  featuredCopy2,
+  featuredFloral1,
+  featuredFloral2,
+  featuredMarni1,
+  featuredMarni2,
+  featuredBomber1,
+  featuredBomber2,
+  featuredPolo1,
+  featuredPolo2,
+  recommendationGanni1,
+  recommendationGanni2,
+  recommendationLeopard1,
+  recommendationLeopard2,
+  recommendationAnimalprint1,
+  recommendationAnimalprint2,
+  recommendationSatin1,
+  recommendationSatin2,
+  recommendationSleevetop1,
+  recommendationSleevetop2,
+  recommendationLongsleeve1,
+  recommendationLongsleeve2,
+  recommendationZipup1,
+  recommendationZipup2,
+  recommendationBomber1,
+  recommendationBomber2,
+  recommendationButton1,
+  recommendationButton2,
+  recommendationCardigan1,
+  recommendationCardigan2,
+  recommendationCotton1,
+  recommendationCotton2,
+  recommendationChecked1,
+  recommendationChecked2,
+  recommendationElbow1,
+  recommendationElbow2,
+  recommendationDiamond1,
+  recommendationDiamond2,
+  recommendationPatch1,
+  recommendationPatch2,
+  completeLookBlack1,
+  completeLookBlack2,
+  completeLookFf1,
+  completeLookFf2,
+  completeLookLogojean1,
+  completeLookLogojean2,
   editorialMenswear,
   editorialKidswear,
   kidswear,

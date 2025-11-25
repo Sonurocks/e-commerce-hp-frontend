@@ -61,7 +61,7 @@ const Cart = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full max-w-sm px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-[var(--color-preto)] text-base  font-normal"
+                    className="w-full max-w-sm px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-preto text-base  font-normal"
                     required
                   />
                 </div>

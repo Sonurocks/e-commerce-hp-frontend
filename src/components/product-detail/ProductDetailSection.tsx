@@ -10,6 +10,7 @@ import ProductDetailAdditionalSection from "./ProductDetailAdditionalSection";
 import WhyFarfetchSection from "./WhyFarfetchSection";
 import DownloadAppBanner from "@/components/department/DownloadAppBanner";
 import ContactSupportSection from "./ContactSupportSection";
+import ImageZoom, { ZoomedImageView } from "./ImageZoom";
 const fontStack =
   "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)";
 
@@ -21,6 +22,8 @@ export default function ProductDetailSection({
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [hoveredZoomImage, setHoveredZoomImage] = useState<{ src: string } | null>(null);
+  const [zoomPosition, setZoomPosition] = useState<{ x: number; y: number } | null>(null);
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState<boolean>(false);
   const [openSections, setOpenSections] = useState<{
     details: boolean;
@@ -50,6 +53,32 @@ export default function ProductDetailSection({
   };
 
   const sizeDropdownRef = useRef<HTMLDivElement>(null);
+  const zoomLevel = 2.5;
+  const magnifierSize = 150;
+
+  const createHoverHandler =
+    (imageData: { src: string }) =>
+    (isHovered: boolean) => {
+      setHoveredZoomImage((current) => {
+        if (isHovered) {
+          return imageData;
+        }
+        return current?.src === imageData.src ? null : current;
+      });
+    };
+
+  const createPositionHandler =
+    (imageData: { src: string }) =>
+    (position: { x: number; y: number } | null) => {
+      setZoomPosition(position);
+      if (!position) {
+        setHoveredZoomImage((current) =>
+          current?.src === imageData.src ? null : current
+        );
+      } else {
+        setHoveredZoomImage(imageData);
+      }
+    };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -77,19 +106,28 @@ export default function ProductDetailSection({
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left Side - Product Images */}
         <div className="flex-[2] ml-16">
-        {/* Main Images - Side by Side (Product Shot and Model Shot) */}
+        {/* Main Images - Side by Side (Product Shot and Model Shot/Zoomed View) */}
         <div className="grid grid-cols-2 gap-4 mb-4">
-          {/* Product Shot (Left) */}
-          <div className="relative w-full h-[480px] flex items-center justify-center bg-white overflow-hidden group cursor-pointer">
-            <Image
-              src={product.image.src}
+          {/* Main Image with Zoom Feature */}
+          <div>
+            <ImageZoom
+              image={product.image}
               alt={product.title}
-              fill
-              className="object-contain transition-transform duration-300 ease-in-out group-hover:scale-110"
+              zoomLevel={zoomLevel}
+              magnifierSize={magnifierSize}
+              onHoverChange={createHoverHandler(product.image)}
+              onPositionChange={createPositionHandler(product.image)}
             />
           </div>
-          {/* Model Shot (Right) */}
-          {product.hoverImage && (
+          
+          {/* Zoomed View (when hovering) or Model Shot (when not hovering) */}
+          {hoveredZoomImage && zoomPosition ? (
+            <ZoomedImageView
+              image={hoveredZoomImage}
+              zoomLevel={zoomLevel}
+              position={zoomPosition}
+            />
+          ) : product.hoverImage ? (
             <div className="relative w-full h-[480px] flex items-center justify-center bg-white overflow-hidden group cursor-pointer">
               <Image
                 src={product.hoverImage.src}
@@ -98,7 +136,7 @@ export default function ProductDetailSection({
                 className="object-contain transition-transform duration-300 ease-in-out group-hover:scale-110"
               />
             </div>
-          )}
+          ) : null}
         </div>
 
         {/* Three Bottom Images - Dynamic from product.images */}
@@ -113,17 +151,16 @@ export default function ProductDetailSection({
             return (
               <div className="grid grid-cols-3 gap-4 mt-1">
                 {detailImages.map((image, index) => (
-                  <div
+                  <ImageZoom
                     key={`detail-${index}`}
-                    className="relative w-full h-[280px] flex items-center justify-center bg-white overflow-hidden group cursor-pointer"
-                  >
-                    <Image
-                      src={image.src}
-                      alt={`${product.title} detail ${index + 1}`}
-                      fill
-                      className="object-contain transition-transform duration-300 ease-in-out group-hover:scale-110"
-                    />
-                  </div>
+                    image={image}
+                    alt={`${product.title} detail ${index + 1}`}
+                    zoomLevel={zoomLevel}
+                    magnifierSize={magnifierSize}
+                    heightClass="h-[280px]"
+                    onHoverChange={createHoverHandler(image)}
+                    onPositionChange={createPositionHandler(image)}
+                  />
                 ))}
               </div>
             );
@@ -140,17 +177,16 @@ export default function ProductDetailSection({
           return (
             <div className="grid grid-cols-3 gap-4 mt-1">
               {fallbackImages.map((image, index) => (
-                <div
+                <ImageZoom
                   key={`fallback-detail-${index}`}
-                  className="relative w-full h-[280px] flex items-center justify-center bg-white overflow-hidden group cursor-pointer"
-                >
-                  <Image
-                    src={image.src}
-                    alt={`${product.title} detail ${index + 1}`}
-                    fill
-                    className="object-contain transition-transform duration-300 ease-in-out group-hover:scale-110"
-                  />
-                </div>
+                  image={image}
+                  alt={`${product.title} detail ${index + 1}`}
+                  zoomLevel={zoomLevel}
+                  magnifierSize={magnifierSize}
+                  heightClass="h-[280px]"
+                  onHoverChange={createHoverHandler(image)}
+                  onPositionChange={createPositionHandler(image)}
+                />
               ))}
             </div>
           );
@@ -278,7 +314,7 @@ export default function ProductDetailSection({
           </button>
           <button
             onClick={handleWishlistClick}
-            className="flex-[1] bg-white text-(--color-preto) border-2 border-[#222] rounded-lg py-2 px-4 font-semibold text-[15px] hover:bg-[#f5f5f5] transition-colors flex items-center justify-center gap-2"
+            className="flex-[1]  text-preto border-2 border-[#222] rounded-lg py-2 px-4 font-semibold text-[15px] hover:bg-[#f5f5f5] transition-colors flex items-center justify-center gap-2"
           >
             <GoHeart
               className={`w-5 h-5 ${isWishlisted ? "fill-[#222]" : ""}`}

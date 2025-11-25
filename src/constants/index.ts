@@ -20,19 +20,19 @@ export const primaryNavigationLinks = [
     href: "/womenswear",
     label: "Womenswear",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 font-semibold text-sm transition px-3 py-1.5 rounded hover:bg-gray-100",
+      "text-preto hover:text-gray-900 font-semibold text-sm transition px-3 py-1.5 rounded hover:bg-gray-100",
   },
   {
     href: "/menswear",
     label: "Menswear",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 font-normal text-sm transition px-3 py-1.5 rounded hover:bg-gray-100",
+      "text-preto hover:text-gray-900 font-normal text-sm transition px-3 py-1.5 rounded hover:bg-gray-100",
   },
   {
     href: "/kidswear",
     label: "Kidswear",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 font-normal text-sm transition px-3 py-1.5 rounded hover:bg-gray-100",
+      "text-preto hover:text-gray-900 font-normal text-sm transition px-3 py-1.5 rounded hover:bg-gray-100",
   },
 ];
 
@@ -41,7 +41,7 @@ export const secondaryNavigationLinks = [
     href: "/sale/25-off",
     label: "25% off",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "25off",
   },
@@ -49,7 +49,7 @@ export const secondaryNavigationLinks = [
     href: "/new-in",
     label: "New in",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "newIn",
   },
@@ -57,7 +57,7 @@ export const secondaryNavigationLinks = [
     href: "/holiday-season",
     label: "Holiday season",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "holidaySeason",
   },
@@ -65,7 +65,7 @@ export const secondaryNavigationLinks = [
     href: "/brands",
     label: "Brands",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "brands",
   },
@@ -73,7 +73,7 @@ export const secondaryNavigationLinks = [
     href: "/clothing",
     label: "Clothing",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "clothing",
   },
@@ -81,7 +81,7 @@ export const secondaryNavigationLinks = [
     href: "/shoes",
     label: "Shoes",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "shoes",
   },
@@ -89,7 +89,7 @@ export const secondaryNavigationLinks = [
     href: "/bags",
     label: "Bags",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "bags",
   },
@@ -97,7 +97,7 @@ export const secondaryNavigationLinks = [
     href: "/accessories",
     label: "Accessories",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "accessories",
   },
@@ -105,7 +105,7 @@ export const secondaryNavigationLinks = [
     href: "/jewellery",
     label: "Jewellery",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "jewellery",
   },
@@ -113,7 +113,7 @@ export const secondaryNavigationLinks = [
     href: "/homeware",
     label: "Homeware",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "homeware",
   },
@@ -121,7 +121,7 @@ export const secondaryNavigationLinks = [
     href: "/pre-owned",
     label: "Pre-owned",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "preOwned",
   },
@@ -140,7 +140,7 @@ export const menswearSecondaryNavigationLinks = [
     href: "/sale/25-off",
     label: "25% off",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "25off",
   },
@@ -148,7 +148,7 @@ export const menswearSecondaryNavigationLinks = [
     href: "/new-in",
     label: "New in",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "newIn",
   },
@@ -156,7 +156,7 @@ export const menswearSecondaryNavigationLinks = [
     href: "/holiday-season",
     label: "Holiday season",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "holidaySeason",
   },
@@ -164,7 +164,7 @@ export const menswearSecondaryNavigationLinks = [
     href: "/brands",
     label: "Brands",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "brands",
   },
@@ -172,7 +172,7 @@ export const menswearSecondaryNavigationLinks = [
     href: "/clothing",
     label: "Clothing",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "clothing",
   },
@@ -180,7 +180,7 @@ export const menswearSecondaryNavigationLinks = [
     href: "/shoes",
     label: "Shoes",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "shoes",
   },
@@ -188,7 +188,7 @@ export const menswearSecondaryNavigationLinks = [
     href: "/bags",
     label: "Bags",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "bags",
   },
@@ -196,7 +196,7 @@ export const menswearSecondaryNavigationLinks = [
     href: "/accessories",
     label: "Accessories",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "accessories",
   },
@@ -204,7 +204,7 @@ export const menswearSecondaryNavigationLinks = [
     href: "/watches",
     label: "Watches",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "watches",
   },
@@ -212,7 +212,7 @@ export const menswearSecondaryNavigationLinks = [
     href: "/homeware",
     label: "Homeware",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "homeware",
   },
@@ -231,7 +231,7 @@ export const kidswearSecondaryNavigationLinks = [
     href: "/new-in",
     label: "New in",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "newIn",
   },
@@ -239,7 +239,7 @@ export const kidswearSecondaryNavigationLinks = [
     href: "/holiday-season",
     label: "Holiday season",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "holidaySeason",
   },
@@ -247,7 +247,7 @@ export const kidswearSecondaryNavigationLinks = [
     href: "/brands",
     label: "Brands",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "brands",
   },
@@ -255,7 +255,7 @@ export const kidswearSecondaryNavigationLinks = [
     href: "/kidswear/baby",
     label: "Baby (0-36mth)",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "0-36months",
   },
@@ -263,7 +263,7 @@ export const kidswearSecondaryNavigationLinks = [
     href: "/kidswear/kids",
     label: "Kids (2-12 yrs)",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "0-12months",
   },
@@ -271,7 +271,7 @@ export const kidswearSecondaryNavigationLinks = [
     href: "/kidswear/teens",
     label: "Teens (13-16 yrs)",
     className:
-      "text-[var(--color-preto)] hover:text-gray-900 text-[15px] whitespace-nowrap transition",
+      "text-preto hover:text-gray-900 text-[15px] whitespace-nowrap transition",
     hasDrawer: true,
     drawerType: "teens",
   },
@@ -1225,7 +1225,7 @@ export const footerSections = [
       { href: "/farfetch-partner-boutiques", label: "FARFETCH partner boutiques" },
       { href: "/about?view=career", label: "Careers" },
       { href: "#", label: "FARFETCH app" },
-      { href: "#", label: "Modern slavery statement" },
+      { href: "/modern-slavery-statement", label: "Modern slavery statement" },
       { href: "#", label: "FARFETCH Advertising" },
     ],
   },
@@ -1283,6 +1283,7 @@ export const socialMediaLinks = [
 export const legalLinks = [
   { href: "#", label: "Privacy policy" },
   { href: "#", label: "Terms and conditions" },
+  { href: "/modern-slavery-statement", label: "Modern slavery statement" },
   { href: "/accessibility", label: "Accessibility" },
 ];
 

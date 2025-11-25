@@ -21,6 +21,7 @@ export { default as Header } from "./header/Header";
 export { default as ConditionalHeader } from "./header/ConditionalHeader";
 export { default as GenericDrawer } from "./header/drawer/GenericDrawer";
 export { default as SearchDrawer } from "./header/drawer/SearchDrawer";
+export { default as ModernSlavery } from "./navigation-links/ModernSlavery";
 export { default as OrdersAndDelivery } from "./navigation-links/OrdersAndDelivery";
 export { default as PaymentAndPricing } from "./navigation-links/PaymentAndPricing";
 export { default as PromotionsTermsAndConditions } from "./navigation-links/PromotionsTermsAndConditions";

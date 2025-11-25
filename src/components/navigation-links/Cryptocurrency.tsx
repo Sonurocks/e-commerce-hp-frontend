@@ -21,7 +21,7 @@ const navigationLinks: SupportNavLink[] = [
   { href: "/faq", label: "FAQs" },
   { href: "#", label: "Terms and conditions" },
   { href: "#", label: "Privacy policy" },
-  { href: "#", label: "Modern slavery statement" },
+  { href: "/modern-slavery-statement", label: "Modern slavery statement" },
   { href: "/accessibility", label: "Accessibility" },
   { href: "#", label: "Cookie preferences" },
   {

@@ -327,7 +327,7 @@ const Header = () => {
                 {/* Right - User Icons */}
                 <div className="flex items-center space-x-4">
                   {/* Country Flag */}
-                  <button className="hidden md:block w-6 h-6 rounded-full overflow-hidden border border-gray-300 dark:border-(--color-platinum) hover:border-gray-400 dark:hover:border-[var(--color-silver)] transition">
+                  <button className="hidden md:block w-6 h-6 rounded-full overflow-hidden border border-gray-300 dark:border-platinum hover:border-gray-400 dark:hover:border-silver transition">
                     <svg
                       viewBox="0 0 24 24"
                       className="w-full h-full"
@@ -411,11 +411,8 @@ const Header = () => {
                       const shouldBeGray = activeDrawer !== null && !isActive;
                       let linkClassName = link.className;
                       if (shouldBeGray) {
-                        if (linkClassName.includes("text-[var(--color-preto)]")) {
-                          linkClassName = linkClassName.replace(
-                            "text-[var(--color-preto)]",
-                            "text-gray-500",
-                          );
+                      if (linkClassName.includes("text-preto")) {
+                        linkClassName = linkClassName.replace("text-preto", "text-gray-500");
                         } else if (linkClassName.includes("text-red-600")) {
                           linkClassName = linkClassName.replace(
                             "text-red-600",
@@ -440,11 +437,8 @@ const Header = () => {
                     const shouldBeGray = activeDrawer !== null;
                     let linkClassName = link.className;
                     if (shouldBeGray) {
-                      if (linkClassName.includes("text-[var(--color-preto)]")) {
-                        linkClassName = linkClassName.replace(
-                          "text-[var(--color-preto)]",
-                          "text-gray-500",
-                        );
+                      if (linkClassName.includes("text-preto")) {
+                        linkClassName = linkClassName.replace("text-preto", "text-gray-500");
                       } else if (linkClassName.includes("text-red-600")) {
                         linkClassName = linkClassName.replace(
                           "text-red-600",
@@ -502,7 +496,7 @@ const Header = () => {
                   <button
                     type="button"
                     onClick={() => setIsMenuOpen((prev) => !prev)}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 text-gray-700 transition hover:border-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-[var(--color-platinum)] dark:text-[var(--color-preto)] dark:hover:border-[var(--color-silver)]"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 text-gray-700 transition hover:border-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-platinum dark:text-preto dark:hover:border-silver"
                     aria-label={`${isMenuOpen ? "Close" : "Open"} navigation menu`}
                   >
                     {isMenuOpen ? (

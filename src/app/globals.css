@@ -121,6 +121,47 @@
   --font-theme: var(--fontNormal);
 }
 
+/* Utility classes for color tokens */
+.text-preto {
+  color: var(--color-preto) !important;
+}
+
+.bg-preto {
+  background-color: var(--color-preto) !important;
+}
+
+.border-preto {
+  border-color: var(--color-preto) !important;
+}
+
+.border-platinum {
+  border-color: var(--color-platinum) !important;
+}
+
+.border-silver {
+  border-color: var(--color-silver) !important;
+}
+
+.focus\:border-preto:focus {
+  border-color: var(--color-preto) !important;
+}
+
+.dark .dark\:text-preto {
+  color: var(--color-preto) !important;
+}
+
+.dark .dark\:border-platinum {
+  border-color: var(--color-platinum) !important;
+}
+
+.dark .dark\:border-silver {
+  border-color: var(--color-silver) !important;
+}
+
+.dark .dark\:hover\:border-silver:hover {
+  border-color: var(--color-silver) !important;
+}
+
 /* Dark mode support */
 .dark {
   --color-branco: #1a1a1a;
@@ -140,6 +181,10 @@
 /* Apply theme font */
 body {
   font-family: var(--font-theme);
+}
+
+.download-app-banner {
+  font-family: var(--fontNormal);
 }
 
 /* Apply theme colors to primary elements with smooth transitions */

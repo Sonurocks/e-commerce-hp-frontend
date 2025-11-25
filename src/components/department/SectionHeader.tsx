@@ -10,13 +10,13 @@ export default function SectionHeader({
 }) {
   return (
     <div className="flex items-center justify-between mb-5">
-      <h2 className="text-[18px] font-medium text-[var(--theme-text)]">
+      <h2 className="text-[18px] font-medium text-(--theme-text)">
         {title}
       </h2>
       {cta && (
         <Link
           href={cta.href}
-          className="border bg-[var(--theme-bg)] border-[var(--theme-border)]text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors"
+          className="border bg-(--theme-bg) border-[var(--theme-border)]text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors"
         >
           {cta.label}
         </Link>

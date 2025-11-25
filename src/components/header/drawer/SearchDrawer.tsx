@@ -97,9 +97,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
                   onClick={() => setActiveLink(index)}
                   onMouseEnter={() => setActiveLink(index)}
                   className={`text-sm font-normal transition ${
-                    activeLink === index
-                      ? "text-[var(--color-preto)]"
-                      : "text-gray-500 hover:text-gray-700"
+                    activeLink === index ? "text-preto" : "text-gray-500 hover:text-gray-700"
                   }`}
                 >
                   {link.label.toUpperCase()}
@@ -138,14 +136,14 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
                   value={searchQuery}
                   onChange={(e) => onSearchChange(e.target.value)}
                   placeholder={headerConfig.search.placeholder}
-                  className="w-full pl-10 pr-4 py-2 border-b border-[var(--color-preto)] focus:outline-none focus:border-gray-900 text-base bg-transparent"
+                  className="w-full pl-10 pr-4 py-2 border-b border-preto focus:outline-none focus:border-gray-900 text-base bg-transparent"
                 />
               </div>
 
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="text-[var(--color-preto)] hover:text-gray-700 transition p-2 rounded hover:bg-gray-100"
+                className="text-preto hover:text-gray-700 transition p-2 rounded hover:bg-gray-100"
                 aria-label="Close search"
               >
                 <svg
