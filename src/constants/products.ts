@@ -6,17 +6,9 @@ import {
   Product,
   DepartmentKey,
 } from "./department";
-
-export type ProductDetail = Product & {
-  originalPrice?: string;
-  discountedPrice?: string;
-  discountPercentage?: string;
-  sizes?: string[];
-  description?: string;
-  estimatedDelivery?: string;
-  images?: { src: string }[];
-  completeTheLook?: string[]; // Array of product IDs for "Complete the look" section
-};
+import { ProductDetail } from "@/types/productDetail";
+export type { ProductDetail } from "@/types/productDetail";
+import { additionalProductDetails } from "./productDetailExtras";
 
 // Collect all products from all sections
 const getAllProducts = (): Product[] => {
@@ -45,6 +37,11 @@ const getAllProducts = (): Product[] => {
     allProducts.push(...trendingNowByDept[dept]);
   });
   
+  // Include custom additional products used in recommendation sections
+  additionalProductDetails.forEach((product) => {
+    allProducts.push(product);
+  });
+
   return allProducts;
 };
 

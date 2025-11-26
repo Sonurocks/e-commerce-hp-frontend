@@ -1,0 +1,521 @@
+"use client";
+
+import React, { useRef, useEffect, useState } from "react";
+import Link from "next/link";
+import { FiX } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
+import { FaApple, FaFacebookF } from "react-icons/fa";
+
+interface ProfileModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  userName?: string;
+}
+
+const ProfileModal: React.FC<ProfileModalProps> = ({
+  isOpen,
+  onClose,
+  userName = "user",
+}) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  // Email validation function
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Password validation function
+  const validatePassword = (password: string): boolean => {
+    if (password.length < 6 || password.length > 12) {
+      return false;
+    }
+    if (!/[A-Z]/.test(password)) {
+      return false;
+    }
+    if (!/[@$!%*?&#]/.test(password)) {
+      return false;
+    }
+    return true;
+  };
+
+  
+  useEffect(() => {
+    if (!isOpen) {
+      setActiveTab("signin");
+      setEmail("");
+      setPassword("");
+      setEmailError("");
+      setPasswordError("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+    
+      const originalOverflow = document.body.style.overflow;
+    
+      document.body.style.overflow = "hidden";
+
+      return () => {
+        // Restore the original overflow value when modal closes
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
+  // Close on ESC key
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscKey);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [isOpen, onClose]);
+
+  // Close on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {  
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      // Small delay to prevent immediate close when opening
+      const timeoutId = setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+      }, 100);
+
+      return () => {
+        clearTimeout(timeoutId);
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <>
+      {/* Dark overlay */}
+      <div className="fixed inset-0 bg-black/50 z-[99]" />
+
+      {/* Profile Modal */}
+      <div
+        ref={modalRef}
+        className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-16 pb-6"
+      >
+        <div
+          className="w-full max-w-[420px] max-h-[90vh] flex flex-col rounded-2xl bg-(--colorWhite) shadow-2xl border border-(--colorGrey) overflow-hidden"
+        >
+          {/* Header - Fixed */}
+          <div className="flex-shrink-0 bg-(--colorWhite)">
+            <div className="flex items-start justify-between px-8 pt-8 pb-6">
+              <div>
+                <p className="text-[24px] leading-8 font-normal text-preto">
+                  Come on in
+                </p>
+                
+              </div>
+              <button
+                onClick={onClose}
+                aria-label="Close profile modal"
+                className="text-preto hover:text-preto transition rounded-full p-2 hover:bg-(--colorLightGrey)"
+              >
+                <FiX className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Tabs - Fixed */}
+            <div className="px-8 border-b border-(--colorGrey)">
+              <div className="flex text-sm font-normal tracking-wide">
+                <button 
+                  onClick={() => setActiveTab("signin")}
+                  className={`pb-3 relative transition ${
+                    activeTab === "signin" 
+                      ? "text-preto" 
+                      : "text-(--color-hina) hover:text-preto"
+                  }`}
+                >
+                  SIGN IN
+                  {activeTab === "signin" && (
+                    <span className="absolute left-0 right-0 bottom-0 h-0.5 z-10 bg-(--color-preto)" />
+                  )}
+                </button>
+                <button 
+                  onClick={() => setActiveTab("signup")}
+                  className={`ml-6 pb-3 relative transition ${
+                    activeTab === "signup" 
+                      ? "text-preto" 
+                      : "text-(--color-hina) hover:text-preto"
+                  }`}
+                >
+                  I m NEW HERE
+                  {activeTab === "signup" && (
+                    <span className="absolute left-0 right-0 bottom-0 h-0.5 z-10 bg-(--color-preto)" />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Body - Scrollable */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="px-8 py-5 space-y-4">
+              {activeTab === "signin" ? (
+                <>
+                  <form 
+                    className="space-y-2"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      let isValid = true;
+                      
+                      if (!validateEmail(email)) {
+                        setEmailError("Please enter a valid email address");
+                        isValid = false;
+                      } else {
+                        setEmailError("");
+                      }
+                      
+                      if (!validatePassword(password)) {
+                        setPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
+                        isValid = false;
+                      } else {
+                        setPasswordError("");
+                      }
+                      
+                      if (isValid) {
+                        // Proceed with sign in
+                        console.log("Sign in successful");
+                      }
+                    }}
+                  >
+                    <label className="block text-xs font-normal text-preto">
+                      Email address
+                      <input
+                        type="email"
+                        value={email || ""}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          if (emailError) {
+                            setEmailError("");
+                          }
+                        }}
+                        onBlur={() => {
+                          if (email && !validateEmail(email)) {
+                            setEmailError("Please enter a valid email address");
+                          } else {
+                            setEmailError("");
+                          }
+                        }}
+                        className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
+                          emailError ? "border-red-500" : "border-preto focus:border-(--color-preto)"
+                        }`}
+                        placeholder="you@example.com"
+                      />
+                      {emailError && (
+                        <p className="mt-1 text-xs text-red-500">{emailError}</p>
+                      )}
+                    </label>
+                    <label className="block text-xs font-normal text-preto">
+                      Password
+                      <input
+                        type="password"
+                        value={password || ""}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                          if (passwordError) {
+                            setPasswordError("");
+                          }
+                        }}
+                        onBlur={() => {
+                          if (password && !validatePassword(password)) {
+                            setPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
+                          } else {
+                            setPasswordError("");
+                          }
+                        }}
+                        className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
+                          passwordError ? "border-red-500" : "border-preto focus:border-(--color-preto)"
+                        }`}
+                        placeholder="Enter password"
+                      />
+                      {passwordError && (
+                        <p className="mt-1 text-xs text-red-500">{passwordError}</p>
+                      )}
+                    </label>
+                    <div className="text-left">
+                      <Link
+                        href="/forgot-password"
+                        onClick={onClose}
+                        className="text-xs font-thin text-preto  underline hover:text-preto underline-offset-2 hover:underline"
+                      >
+                        Forgot your password ?
+                      </Link>
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full rounded-xl bg-black text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition"
+                    >
+                      Sign In
+                    </button>
+                    <button
+                      type="button"
+                      disabled
+                      className="w-full rounded-xl bg-(--colorLightGrey) text-(--colorDarkGrey) font-semibold py-3 text-base cursor-not-allowed"
+                    >
+                      Continue With One-Time Code
+                    </button>
+                  </form>
+
+                  <div className="flex items-center gap-3">
+                    <span className="flex-1 " />
+                    <span className="text-base font-thin text-preto">
+                      OR
+                    </span>
+                    <span className=" flex-1 " />
+                  </div>
+
+                  <div className="space-y-2">
+                    <button
+                      type="button"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                    >
+                      <FcGoogle className="text-xl" />
+                      Continue With Google
+                    </button>
+                    <button
+                      type="button"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                    >
+                      <FaApple className="text-xl text-preto" />
+                      Continue With Apple
+                    </button>
+                    <button
+                      type="button"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                    >
+                      <FaFacebookF
+                        className="text-xl text-(--color-facebook)"
+                      />
+                      Continue With Facebook
+                    </button>
+                  </div>
+
+                  <div className="text-center">
+                    <p className="text-sm font-normal text-preto">
+                      New to FARFETCH?{" "}
+                      <Link
+                        href="/register"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setActiveTab("signup");
+                        }}
+                        className="underline hover:text-preto"
+                      >
+                        Register.
+                      </Link>
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <form 
+                    className="space-y-2"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      let isValid = true;
+                      
+                      if (!validateEmail(email)) {
+                        setEmailError("Please enter a valid email address");
+                        isValid = false;
+                      } else {
+                        setEmailError("");
+                      }
+                      
+                      if (!validatePassword(password)) {
+                        setPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
+                        isValid = false;
+                      } else {
+                        setPasswordError("");
+                      }
+                      
+                      if (isValid) {
+                        // Proceed with registration
+                        console.log("Registration successful");
+                      }
+                    }}
+                  >
+                    <label className="block text-xs font-normal text-preto">
+                      Name
+                      <input
+                        type="text"
+                        className="mt-2 w-full rounded-xl border border-preto px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none focus:border-(--color-preto)"
+                        placeholder="Enter your name"
+                      />
+                    </label>
+                    <label className="block text-xs font-normal text-preto">
+                      Email address
+                      <input
+                        type="email"
+                        value={email || ""}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          if (emailError) {
+                            setEmailError("");
+                          }
+                        }}
+                        onBlur={() => {
+                          if (email && !validateEmail(email)) {
+                            setEmailError("Please enter a valid email address");
+                          } else {
+                            setEmailError("");
+                          }
+                        }}
+                        className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
+                          emailError ? "border-red-500" : "border-preto focus:border-(--color-preto)"
+                        }`}
+                        placeholder="you@example.com"
+                      />
+                      {emailError && (
+                        <p className="mt-1 text-xs text-red-500">{emailError}</p>
+                      )}
+                    </label>
+                    <label className="block text-xs font-normal text-preto">
+                      Password
+                      <input
+                        type="password"
+                        value={password || ""}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                          if (passwordError) {
+                            setPasswordError("");
+                          }
+                        }}
+                        onBlur={() => {
+                          if (password && !validatePassword(password)) {
+                            setPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
+                          } else {
+                            setPasswordError("");
+                          }
+                        }}
+                        className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
+                          passwordError ? "border-red-500" : "border-preto focus:border-(--color-preto)"
+                        }`}
+                        placeholder="Enter password"
+                      />
+                      {passwordError && (
+                        <p className="mt-1 text-xs text-red-500">{passwordError}</p>
+                      )}
+                    </label>
+                    <p className="text-xs font-normal text-preto">
+                      By registering, you agree to our{" "}
+                      <Link
+                        href="/terms"
+                        className="underline hover:text-preto"
+                      >
+                        Terms & Conditions
+                      </Link>
+                      ,{" "}
+                      <Link
+                        href="/privacy"
+                        className="underline hover:text-preto"
+                      >
+                        Privacy and Cookie Policy
+                      </Link>
+                      , and to join our loyalty programme.
+                    </p>
+                    <div className="flex items-start gap-2">
+                      <input
+                        type="checkbox"
+                        id="marketing"
+                        className="mt-1 w-4 h-4 rounded border-preto text-preto focus:ring-preto"
+                        defaultChecked
+                      />
+                      <label
+                        htmlFor="marketing"
+                        className="text-xs font-normal text-preto"
+                      >
+                        Sign up and never miss out on exclusive member rewards,
+                        tailored new arrivals and new launches. Unsubscribe at
+                        the bottom of our emails.{" "}
+                        <Link
+                          href="/more-info"
+                          className="underline hover:text-preto"
+                        >
+                          Find out more
+                        </Link>
+                      </label>
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full rounded-xl bg-black text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition"
+                    >
+                      Register
+                    </button>
+                  </form>
+
+                  <div className="flex items-center gap-3">
+                    <span className="flex-1 " />
+                    <span className="text-base font-thin text-preto">
+                      OR
+                    </span>
+                    <span className=" flex-1 " />
+                  </div>
+
+                  <div className="space-y-2">
+                    <button
+                      type="button"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                    >
+                      <FcGoogle className="text-xl" />
+                      Continue With Google
+                    </button>
+                    <button
+                      type="button"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                    >
+                      <FaApple className="text-xl text-preto" />
+                      Continue With Apple
+                    </button>
+                    <button
+                      type="button"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                    >
+                      <FaFacebookF
+                        className="text-xl text-(--color-facebook)"
+                      />
+                      Continue With Facebook
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ProfileModal;
+

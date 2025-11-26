@@ -20,6 +20,7 @@ import { DepartmentKey } from "../../constants/department";
 import GenericDrawer from "./drawer/GenericDrawer";
 import SearchDrawer from "./drawer/SearchDrawer";
 import ThemeSettingsDrawer from "../theme/ThemeSettingsDrawer";
+import ProfileModal from "../profile/ProfileModal";
 
 const Header = () => {
   const pathname = usePathname();
@@ -58,6 +59,7 @@ const Header = () => {
   const [isSearchDrawerOpen, setIsSearchDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isThemeDrawerOpen, setIsThemeDrawerOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const searchDrawerRef = useRef<HTMLDivElement>(null);
   const navigationLinks = isKidswearPage
     ? kidswearSecondaryNavigationLinks
@@ -345,13 +347,16 @@ const Header = () => {
                   {/* Adjustments Icon */}
                   <button
                     onClick={() => setIsThemeDrawerOpen(true)}
-                    className="hidden md:block text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
+                    className="hidden md:block text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
                   >
                     <SlidersHorizontal className="w-6 h-6" />
                   </button>
 
                   {/* Profile */}
-                  <button className="text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)">
+                  <button
+                    onClick={() => setIsProfileModalOpen(true)}
+                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
+                  >
                     <FaRegUser className="w-6 h-6" />
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                       {headerConfig.tooltips.signIn}
@@ -518,7 +523,10 @@ const Header = () => {
 
                 {/* Right - User Icons */}
                 <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
-                  <button className="text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)">
+                  <button
+                    onClick={() => setIsProfileModalOpen(true)}
+                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
+                  >
                     <FaRegUser className="w-6 h-6" />
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                       {headerConfig.tooltips.signIn}
@@ -666,6 +674,12 @@ const Header = () => {
       <ThemeSettingsDrawer
         isOpen={isThemeDrawerOpen}
         onClose={() => setIsThemeDrawerOpen(false)}
+      />
+
+      {/* Profile Modal */}
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
       />
     </>
   );

@@ -104,7 +104,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-(--color-preto) transition"
+              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-(--color-preto) transition cursor-pointer"
             >
               <X className="w-6 h-6" />
             </button>
@@ -122,7 +122,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
             <div className="flex gap-3">
               <button
                 onClick={() => setTheme("light")}
-                className={`flex-1 flex flex-col items-center justify-center p-4 border-2 rounded-lg transition ${
+                className={`flex-1 flex flex-col items-center justify-center p-4 border-2 rounded-lg transition cursor-pointer ${
                   theme === "light"
                     ? "border-gray-800 bg-gray-50 dark:bg-blue-900/20"
                     : "border-gray-300 dark:border-gray-700 hover:border-gray-400"
@@ -148,7 +148,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
 
               <button
                 onClick={() => setTheme("dark")}
-                className={`flex-1 flex flex-col items-center justify-center p-4 border-2 rounded-lg transition ${
+                className={`flex-1 flex flex-col items-center justify-center p-4 border-2 rounded-lg transition cursor-pointer ${
                   theme === "dark"
                     ? "border-gray-800 bg-gray-50 dark:bg-blue-900/20"
                     : "border-gray-300 dark:border-gray-700 hover:border-gray-400"
@@ -174,7 +174,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
 
               <button
                 onClick={() => setTheme("system")}
-                className={`flex-1 flex flex-col items-center justify-center p-4 border-2 rounded-lg transition ${
+                className={`flex-1 flex flex-col items-center justify-center p-4 border-2 rounded-lg transition cursor-pointer ${
                   theme === "system"
                     ? "border-gray-800 bg-gray-50 dark:bg-blue-900/20"
                     : "border-gray-300 dark:border-gray-700 hover:border-gray-400"
@@ -213,7 +213,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
             <div className="grid grid-cols-3 gap-3">
               <button
                 onClick={() => setColorTheme("default")}
-                className={`flex flex-col items-center p-3 border-2 rounded-lg transition ${
+                className={`flex flex-col items-center p-3 border-2 rounded-lg transition cursor-pointer ${
                   colorTheme === "default"
                     ? "border-gray-800 bg-gray-50 dark:bg-blue-900/20"
                     : "border-gray-300 dark:border-gray-700 hover:border-gray-400"
@@ -231,7 +231,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
                     setColorTheme(color.value);
                     setBgTheme(color.bgColor);
                   }}
-                  className={`flex flex-col items-center p-3 border-2 rounded-lg transition ${
+                  className={`flex flex-col items-center p-3 border-2 rounded-lg transition cursor-pointer ${
                     colorTheme === color.value
                       ? "border-gray-800 bg-gray-50 dark:bg-blue-900/20"
                       : "border-gray-300 dark:border-gray-700 hover:border-gray-400"

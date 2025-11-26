@@ -53,6 +53,41 @@ export default function ImageZoom({
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
+const latestPositionCallback = useRef<typeof onPositionChange | null>(null);
+  const lastEmittedPosition = useRef<{ x: number; y: number } | null>(null);
+  useEffect(() => {
+    latestPositionCallback.current = onPositionChange;
+  }, [onPositionChange]);
+
+  const emitPosition = (position: { x: number; y: number } | null) => {
+    const last = lastEmittedPosition.current;
+    const isSame =
+      (last === null && position === null) ||
+      (last !== null &&
+        position !== null &&
+        last.x === position.x &&
+        last.y === position.y);
+    if (isSame) {
+      return;
+    }
+    lastEmittedPosition.current = position ? { ...position } : null;
+    latestPositionCallback.current?.(position);
+  };
+
+  const getZoomedImagePosition = (x: number, y: number) => {
+    if (!containerDimensions.width || !containerDimensions.height) {
+      return { x: 0, y: 0 };
+    }
+
+    const percentX = (x / containerDimensions.width) * 100;
+    const percentY = (y / containerDimensions.height) * 100;
+
+    return {
+      x: Math.min(100, Math.max(0, percentX)),
+      y: Math.min(100, Math.max(0, percentY)),
+    };
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
 
@@ -60,18 +95,27 @@ export default function ImageZoom({
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Constrain magnifier position within image bounds
+    // Keep highlight inside the container but allow zoom to reach the edges
     const halfMagnifier = magnifierSize / 2;
-    const constrainedX = Math.max(
+    const overlayX = Math.max(
       halfMagnifier,
-      Math.min(x, containerDimensions.width - halfMagnifier)
+      Math.min(x, Math.max(halfMagnifier, containerDimensions.width - halfMagnifier))
     );
-    const constrainedY = Math.max(
+    const overlayY = Math.max(
       halfMagnifier,
-      Math.min(y, containerDimensions.height - halfMagnifier)
+      Math.min(y, Math.max(halfMagnifier, containerDimensions.height - halfMagnifier))
     );
+    const clampedX = Math.max(0, Math.min(x, containerDimensions.width));
+    const clampedY = Math.max(0, Math.min(y, containerDimensions.height));
 
-    setMousePosition({ x: constrainedX, y: constrainedY });
+    setMousePosition((prev) => {
+      if (prev.x === overlayX && prev.y === overlayY) {
+        return prev;
+      }
+      return { x: overlayX, y: overlayY };
+    });
+
+    emitPosition(getZoomedImagePosition(clampedX, clampedY));
   };
 
   const handleMouseEnter = () => {
@@ -82,31 +126,8 @@ export default function ImageZoom({
   const handleMouseLeave = () => {
     setIsHovered(false);
     onHoverChange?.(false);
+    emitPosition(null);
   };
-
-  // Calculate the background position for the zoomed image
-  const getZoomedImagePosition = () => {
-    if (!containerDimensions.width || !containerDimensions.height) {
-      return { x: 0, y: 0 };
-    }
-
-    // Calculate the percentage position of the magnifier
-    const percentX = (mousePosition.x / containerDimensions.width) * 100;
-    const percentY = (mousePosition.y / containerDimensions.height) * 100;
-
-    // Calculate the background position to center the zoomed area
-    const bgX = percentX - (50 / zoomLevel);
-    const bgY = percentY - (50 / zoomLevel);
-
-    return { x: bgX, y: bgY };
-  };
-
-  const zoomedPosition = getZoomedImagePosition();
-
-  // Notify parent of position changes
-  useEffect(() => {
-    onPositionChange?.(isHovered ? zoomedPosition : null);
-  }, [isHovered, zoomedPosition, onPositionChange]);
 
   return (
     <div 
@@ -147,19 +168,21 @@ export default function ImageZoom({
 }
 
 // Export a component for the zoomed view
-export function ZoomedImageView({ 
-  image, 
-  zoomLevel = 2.5, 
-  position 
-}: { 
-  image: { src: string }; 
-  zoomLevel?: number; 
+export function ZoomedImageView({
+  image,
+  zoomLevel = 2.5,
+  position,
+  heightClass = "h-[480px]",
+}: {
+  image: { src: string };
+  zoomLevel?: number;
   position: { x: number; y: number } | null;
+  heightClass?: string;
 }) {
   if (!position) return null;
 
   return (
-    <div className="relative w-full h-[480px] bg-white border border-gray-200 overflow-hidden">
+    <div className={`relative w-full ${heightClass} bg-white border border-gray-200 overflow-hidden`}>
       <div
         className="absolute inset-0"
         style={{

@@ -15,13 +15,13 @@ const sections: SupportSection[] = [
     title: "FARFETCH MODERN SLAVERY STATEMENT 2022",
     content: (
       <>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           This statement is made by FARFETCH UK Limited (hereinafter referred to
           as the “Company” or “FARFETCH”) pursuant to Section 54 of the Modern
           Slavery Act 2015 and comprises the Company’s slavery and human
           trafficking statement for the financial year ending 31 December 2022.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           At FARFETCH, our values are at the heart of everything we do and we use
           them as a guide to make decisions about what feels right for our
           business, our people, our customers and the partners we work with. One
@@ -32,11 +32,11 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           FARFETCH Marketplace
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our mission is to be the global platform for good in luxury fashion,
           connecting creators, curators and consumers.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           The FARFETCH Marketplace is the first and largest application built on
           our platform. As of the end of Q1 2022, the FARFETCH Marketplace
           connected consumers in 190 countries to nearly 1,400 luxury sellers.
@@ -47,14 +47,14 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Positively FARFETCH
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           In December 2020, we launched our long-term 2030 sustainability goals.
           These build on 2019’s ‘Positively FARFETCH’ strategy and the host of
           initiatives launched under that program, including ‘The Conscious
           Collection’, ‘Fashion Footprint Tool’, the ‘FARFETCH Second Life’ and
           ‘FARFETCH Refresh’.
         </p>
-        <p className="mb-4">Our 2030 goals focus on four key areas:</p>
+        <p className="mb-3 text-base">Our 2030 goals focus on four key areas:</p>
         <ul className="list-disc list-inside space-y-2 ml-6 mb-4">
           <li>
             <strong>POSITIVELY CLEANER:</strong> To be ‘Climate Positive’: By
@@ -86,19 +86,19 @@ const sections: SupportSection[] = [
             inclusivity efforts.
           </li>
         </ul>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Together with our partner brands and boutiques, we want to revolutionise
           and reinvent the fashion industry for the future. And we strongly
           believe that the future for the fashion industry is positively cleaner,
           conscious, circular, and inclusive.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           You can see our full 2021 ESG Report{" "}
           <Link href="#" className="underline font-medium">
             here
           </Link>
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           In 2020 we formed an Environmental, Social and Governance (ESG)
           Committee (the “Committee”) of the FARFETCH Board of Directors. The
           Committee is chaired by Stephanie Horton and also includes José Neves
@@ -116,7 +116,7 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Partner brands and Boutiques
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           At the core of our business are our partnerships with brands and
           boutiques and we take a collaborative approach to identifying risks and
           areas where we can work with our partners to build appropriate and
@@ -125,7 +125,7 @@ const sections: SupportSection[] = [
           placed to lead, encourage and support ethical purchasing practices in
           our partner brands and boutiques.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Since 2019, FARFETCH has collaborated with Good on You, the leading
           sustainability rating platform for fashion, to identify more conscious
           brands on our platform through a credible and robust approach. Good on
@@ -154,7 +154,7 @@ const sections: SupportSection[] = [
             brand uses leather, or traces their animal materials to source.
           </li>
         </ul>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           We prioritise the rating of all our direct partner brands - and
           reassess the performance of all brands included in our conscious
           collection every 18 months. By applying rigorous,
@@ -162,7 +162,7 @@ const sections: SupportSection[] = [
           able to be transparent about the impact of brands and products on the
           environment, society and animal welfare.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           As of December 2022, over 270 brands sold on the Farfetch Marketplace
           achieved a high rating on Good on You, earning the Conscious label for
           all their products, an increase of 23% YoY. We also partnered with Good
@@ -176,13 +176,13 @@ const sections: SupportSection[] = [
           systems, and transparent information included in the Good On You
           methodology.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our aim is to leverage these tools and related data to see trends in
           our portfolio and, most importantly, to provide strong guidance to our
           brands on how to improve their impact - whatever their size or stage of
           their ESG journey.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           By the end of 2022, 56 brands (30% of invited brands) had already
           activated their access and feedback has been positive. In 2023, we aim
           to increase the engagement with the tool to at least 300 brand
@@ -191,12 +191,12 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Business Operations and ‘Non-Stock’ Procurement
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           We have numerous suppliers who support the running of our various
           business units including (but not limited to) logistics, office
           management, marketing, and technology.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           One key tool for supporting our suppliers is our ongoing partnership
           with EcoVadis. EcoVadis assesses suppliers’ strengths and opportunities
           across four key areas of ESG: labour and human rights, environmental
@@ -208,7 +208,7 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Company Policies and Codes
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our Global Code of Business Conduct and Ethics (“Code”) is embedded
           with certain policies relating to human rights. This is communicated to
           all employees by FARFETCH (translated as necessary) and forms part of
@@ -226,7 +226,7 @@ const sections: SupportSection[] = [
           questions. This ensures a clear and, where legally permitted,
           confidential route for reporting any violations of the Code.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           We have a Vendor Code of Conduct (“Vendor Code”). Based on
           internationally recognised standards and principles, our Vendor Code
           sets forth the behaviours, standards and practices we expect from our
@@ -236,7 +236,7 @@ const sections: SupportSection[] = [
           Vendor Creation Process requires all suppliers set up via an external
           online form to agree and accept our Vendor Code.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our Ethical Sourcing Policy outlines our expectations for all our
           partners and other suppliers to consistently provide an environment
           which protects their employees&apos; health and safety and basic human
@@ -250,7 +250,7 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Assessing Our Risks
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           We completed an ethics and compliance focused risk assessment in order
           to assess program effectiveness, identify gaps, and improve our
           program. The scope of this risk assessment included, among other
@@ -273,13 +273,13 @@ const sections: SupportSection[] = [
     title: "FARFETCH MODERN SLAVERY STATEMENT 2021",
     content: (
       <>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           This statement is made by FARFETCH UK Limited (hereinafter referred to
           as the “Company” or “FARFETCH”) pursuant to section 54 of the Modern
           Slavery Act 2015 and comprises the Company’s slavery and human
           trafficking statement for the financial year ending 31 December 2021.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           At FARFETCH, our values are at the heart of everything we do and we use
           them as a guide to make decisions about what feels right for our
           business, our people, our customers and the partners we work with. One
@@ -290,11 +290,11 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           FARFETCH Marketplace
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our mission is to be the global platform for good in luxury fashion,
           connecting creators, curators and consumers.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           The FARFETCH Marketplace is the first and largest application built on
           our platform. As of the end of Q1 2021, the FARFETCH Marketplace
           connected consumers in 190 countries to nearly 1,400 luxury sellers.
@@ -302,10 +302,10 @@ const sections: SupportSection[] = [
           to build and nurture relationships with hundreds of brands and
           boutiques from across the world.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-xs font-semibold text-(--color-preto) mb-4">
           Positively FARFETCH
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           In December 2020, we launched our long-term 2030 sustainability goals.
           These build on 2019’s ‘Positively FARFETCH’ strategy and the host of
           initiatives launched under that program, including ‘The Conscious
@@ -313,23 +313,23 @@ const sections: SupportSection[] = [
           the ‘FARFETCH Second Life’, ‘FARFETCH Donate’, and ‘FARFETCH Fix’
           service propositions.
         </p>
-        <p className="mb-4">Our 2030 goals focus on four key areas:</p>
+        <p className="mb-3">Our 2030 goals focus on four key areas:</p>
         <ul className="list-disc list-inside space-y-2 ml-6 mb-4">
           <li>
-            <strong>POSITIVELY CLEANER:</strong> To be ‘Climate Positive’:
+          <strong> POSITIVELY CLEANER:</strong>  To be ‘Climate Positive’:
             Achieving Net Zero emissions by reducing our footprint in line with
             Science Based Targets, offsetting unavoidable emissions, and
             supporting our wider value chain (outside of our footprint boundary)
             to achieve additional carbon reductions.
           </li>
           <li>
-            <strong>POSITIVELY CONSCIOUS:</strong> To sell 100% ‘Conscious’
+           <strong>POSITIVELY CONSCIOUS:</strong>  To sell 100% ‘Conscious’
             products: Driving all revenues from products that are independently
             recognised or certified as being better for people, the planet or
             animals, and from services that enable positive change.
           </li>
           <li>
-            <strong>POSITIVELY CIRCULAR:</strong> To be more ‘Circular’ than
+           <strong> POSITIVELY CIRCULAR:</strong>  To be more ‘Circular’ than
             ‘Linear’: Selling more circular, low waste products or uses of
             circular services, than sales of products made in traditional, linear
             ways.
@@ -343,19 +343,19 @@ const sections: SupportSection[] = [
             inclusivity efforts.
           </li>
         </ul>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Together with our partner brands and boutiques, we want to revolutionise
           and reinvent the fashion industry for the future. And we strongly
           believe that the future for the fashion industry is positively cleaner,
           conscious, circular, and inclusive.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           You can see our full 2021 ESG Report{" "}
           <Link href="#" className="underline font-medium">
             here
           </Link>
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           In 2020 we formed an Environmental, Social and Governance (ESG)
           Committee (the “Committee”) of the FARFETCH Board of Directors. The
           Committee is chaired by Stephanie Horton and also includes José Neves
@@ -373,7 +373,7 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Partner brands and Boutiques
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           At the core of our business are our partnerships with brands and
           boutiques and we take a collaborative approach to identifying risks and
           areas where we can work with our partners to build appropriate and
@@ -382,7 +382,7 @@ const sections: SupportSection[] = [
           placed to lead, encourage and support ethical purchasing practices in
           our partner brands and boutiques.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Since 2019, FARFETCH has collaborated with Good on You, the leading
           sustainability rating platform for fashion, to identify conscious
           brands on our platform through a credible and robust approach. Good on
@@ -411,7 +411,7 @@ const sections: SupportSection[] = [
             brand uses leather, or traces their animal materials to source.
           </li>
         </ul>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           We prioritise the rating of all our direct partner brands - and
           reassess the performance of all brands included in our conscious
           collection every 18 months. By applying rigorous,
@@ -419,11 +419,11 @@ const sections: SupportSection[] = [
           able to be transparent about the impact of brands and products on the
           environment, society and animal welfare.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           We are pleased that in 2021, over 1200 brands available on the FARFETCH
           Marketplace were rated using the Good On You methodology.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Throughout 2021, we also partnered with Good On You to develop two tools
           that we believe will help both our brands partners and the whole
           Industry drive progress towards a more Conscious future. The first tool
@@ -438,7 +438,7 @@ const sections: SupportSection[] = [
           systems, and transparent information included in the Good On You
           methodology.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our aim is to leverage these tools and related data to see trends in
           our portfolio and, most importantly, to provide strong guidance to our
           brands on how to improve their impact - whatever their size or stage of
@@ -447,12 +447,12 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Business Operations and ‘Non-Stock’ Procurement
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           We have numerous suppliers who support the running of our various
           business units including (but not limited to) logistics, office
           management, marketing, and technology.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 tetx-base">
           One key tool for supporting our suppliers is our ongoing partnership
           with EcoVadis. EcoVadis assesses suppliers’ strengths and opportunities
           across four key areas of ESG: labour and human rights, environmental
@@ -462,7 +462,7 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Company Policies and Codes
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our Global Code of Business Conduct and Ethics (“Code”) is embedded
           with certain policies relating to human rights. This is communicated to
           all employees by FARFETCH (translated as necessary) and forms part of
@@ -480,7 +480,7 @@ const sections: SupportSection[] = [
           questions. This ensures a clear and, where legally permitted,
           confidential route for reporting any violations of the Code.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           We have a Vendor Code of Conduct (“Vendor Code”). Based on
           internationally recognised standards and principles, our Vendor Code
           sets forth the behaviours, standards and practices we expect from our
@@ -490,7 +490,7 @@ const sections: SupportSection[] = [
           Vendor Creation Process requires all suppliers set up via an external
           online form to agree and accept our Vendor Code.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our Ethical Sourcing Policy outlines our expectations for all our
           partners and other suppliers to consistently provide an environment
           which protects their employees&apos; health and safety and basic human
@@ -504,7 +504,7 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Assessing Our Risks
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           In 2021, as part of our Enterprise Risk Management (ERM) framework, a
           new risk assessment cycle was conducted across FARFETCH to evaluate
           Company practices and identify any new risks or material changes in
@@ -521,7 +521,7 @@ const sections: SupportSection[] = [
           verifying and monitoring risks on a bi-annual basis prior to Audit
           Committee review.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           In addition, we began scoping an ethics and compliance focused risk
           assessment in order to assess program effectiveness, identify gaps, and
           improve our program. The scope of this risk assessment includes, among
@@ -541,13 +541,13 @@ const sections: SupportSection[] = [
     title: "FARFETCH MODERN SLAVERY STATEMENT 2020",
     content: (
       <>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           This statement is made by FARFETCH UK Limited (hereinafter referred to
           as the “Company” or “FARFETCH”) pursuant to section 54 of the Modern
           Slavery Act 2015 and comprises the Company’s slavery and human
           trafficking statement for the financial year ending 31 December 2020.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           At FARFETCH, our values are at the heart of everything we do and we use
           them as a guide to make decisions about what feels right for our
           business, our people, our customers and the partners we work with. One
@@ -558,11 +558,11 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           FARFETCH Marketplace
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our mission is to be the global platform for good in luxury fashion,
           connecting creators, curators and consumers.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           The FARFETCH Marketplace is the first and largest application built on
           our platform. As of the end of Q1 2021, the FARFETCH Marketplace
           connected consumers in 190 countries to nearly 1,400 luxury sellers.
@@ -573,14 +573,14 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Positively FARFETCH
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           In December 2020, we launched our long-term 2030 sustainability goals.
           These build on 2019’s ‘Positively FARFETCH’ strategy and the host of
           initiatives launched under that program, including ‘The Conscious Edit’,
           ‘Fashion Footprint Tool’, ‘Climate Conscious Delivery’ and the
           ‘FARFETCH Second Life’ and ‘FARFETCH Donate’ service propositions.
         </p>
-        <p className="mb-4">Our 2030 goals focus on four key areas:</p>
+        <p className="mb-3">Our 2030 goals focus on four key areas:</p>
         <ul className="list-disc list-inside space-y-2 ml-6 mb-4">
           <li>
             <strong>POSITIVELY CLEANER:</strong> To be ‘Climate Positive’:
@@ -610,13 +610,13 @@ const sections: SupportSection[] = [
             inclusivity efforts.
           </li>
         </ul>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Together with our partner brands and boutiques, we want to revolutionise
           and reinvent the fashion industry for the future. And we strongly
           believe that the future for the fashion industry is positively cleaner,
           conscious, circular, and inclusive.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           You can see the progress we made in 2020{" "}
           <Link href="#" className="underline font-medium">
             here
@@ -970,7 +970,7 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Company Policies and Codes
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our Employee Code of Conduct (“Employee Code”) has been updated in
           order to embed certain policies relating to human rights. This will be
           communicated to all employees, consultants and freelancers that have
@@ -981,7 +981,7 @@ const sections: SupportSection[] = [
           vendors and suppliers) to ensure a clear and, where possible,
           confidential route for reporting any violations of the Code.
         </p>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           We are currently in the process of rolling out our Supplier Code of
           Conduct (“Supplier Code”). Based on internationally recognised
           standards and principles, our Supplier Code will set forth the
@@ -991,7 +991,7 @@ const sections: SupportSection[] = [
         <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
           Assessing Our Risks
         </h2>
-        <p className="mb-4">
+        <p className="mb-3 text-base">
           Our Risk Oversight Group (“ROG”) classifies and monitors risk across
           Farfetch Group and allocates mitigation activities to the relevant
           teams. This process is undertaken with the participation of the

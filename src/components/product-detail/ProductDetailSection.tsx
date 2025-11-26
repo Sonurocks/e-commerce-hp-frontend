@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { ProductDetail } from "@/constants/products";
 import { GoHeart } from "react-icons/go";
 import { FaToggleOn } from "react-icons/fa";
@@ -45,8 +45,21 @@ export default function ProductDetailSection({
     { size: "XL", price: "£232", available: true },
   ];
 
-  const currentImage = product.images?.[selectedImageIndex] || product.image;
-  const hasMultipleImages = product.images && product.images.length > 1;
+  const galleryImages = useMemo(() => {
+    const uniqueImages: { src: string }[] = [];
+    const pushUnique = (image?: { src: string }) => {
+      if (!image) return;
+      if (!uniqueImages.some((img) => img.src === image.src)) {
+        uniqueImages.push(image);
+      }
+    };
+    pushUnique(product.image);
+    pushUnique(product.hoverImage);
+    product.images?.forEach(pushUnique);
+    return uniqueImages.length > 0 ? uniqueImages : [product.image];
+  }, [product]);
+
+  const selectedImage = galleryImages[selectedImageIndex] || galleryImages[0] || product.image;
 
   const handleWishlistClick = () => {
     setIsWishlisted(!isWishlisted);
@@ -55,6 +68,56 @@ export default function ProductDetailSection({
   const sizeDropdownRef = useRef<HTMLDivElement>(null);
   const zoomLevel = 2.5;
   const magnifierSize = 150;
+
+  useEffect(() => {
+    setSelectedImageIndex(0);
+  }, [galleryImages]);
+
+  useEffect(() => {
+    setHoveredZoomImage(null);
+    setZoomPosition(null);
+  }, [selectedImageIndex]);
+
+  const handleImageSelect = (index: number) => {
+    if (index < 0 || index >= galleryImages.length) return;
+    setSelectedImageIndex(index);
+  };
+
+  const thumbnailImages = useMemo(() => {
+    if (galleryImages.length === 0) return [];
+
+    const base = galleryImages.map((image, sourceIndex) => ({
+      image,
+      sourceIndex,
+      key: `thumb-${sourceIndex}`,
+    }));
+
+    if (base.length >= 5) {
+      return base.slice(0, 5);
+    }
+
+    const extended = [...base];
+    let pointer = 0;
+    while (extended.length < 5 && base.length > 0) {
+      extended.push({
+        ...base[pointer % base.length],
+        key: `thumb-repeat-${extended.length}`,
+      });
+      pointer += 1;
+    }
+
+    return extended;
+  }, [galleryImages]);
+
+  const handleThumbnailKeyDown = (
+    event: React.KeyboardEvent<HTMLElement>,
+    index: number
+  ) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleImageSelect(index);
+    }
+  };
 
   const createHoverHandler =
     (imageData: { src: string }) =>
@@ -103,108 +166,77 @@ export default function ProductDetailSection({
   return (
     <div style={{ fontFamily: fontStack }}>
       {/* Images and Product Info Section */}
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-6 lg:items-start">
         {/* Left Side - Product Images */}
-        <div className="flex-[2] ml-16">
-        {/* Main Images - Side by Side (Product Shot and Model Shot/Zoomed View) */}
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="flex-[1.6] lg:ml-6">
           {/* Main Image with Zoom Feature */}
-          <div>
+          <div className="relative mb-6">
             <ImageZoom
-              image={product.image}
+              key={selectedImage?.src || "selected-image"}
+              image={selectedImage}
               alt={product.title}
               zoomLevel={zoomLevel}
               magnifierSize={magnifierSize}
-              onHoverChange={createHoverHandler(product.image)}
-              onPositionChange={createPositionHandler(product.image)}
+              heightClass="h-[380px]"
+              onHoverChange={createHoverHandler(selectedImage)}
+              onPositionChange={createPositionHandler(selectedImage)}
             />
           </div>
-          
-          {/* Zoomed View (when hovering) or Model Shot (when not hovering) */}
-          {hoveredZoomImage && zoomPosition ? (
+
+          {/* Bottom Thumbnails */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {thumbnailImages.map(({ image, sourceIndex, key }, idx) => (
+              <button
+                key={`${key}-${image?.src || idx}`}
+                type="button"
+                onClick={() => handleImageSelect(sourceIndex)}
+                onKeyDown={(event) => handleThumbnailKeyDown(event, sourceIndex)}
+                className={`relative border-2 rounded-lg overflow-hidden focus:outline-none focus-visible:border-black h-[120px] ${
+                  selectedImageIndex === sourceIndex ? "border-black" : "border-gray-200"
+                }`}
+              >
+                {image ? (
+                  <Image
+                    src={image.src}
+                    alt={`${product.title} detail ${sourceIndex + 1}`}
+                    fill
+                    sizes="150px"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-100" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+      {/* Right Side - Product Information */}
+      <div className="flex-[1.2] max-w-lg sticky top-8 self-start lg:ml-4 relative min-h-[420px]">
+        {hoveredZoomImage && zoomPosition && (
+          <div className="absolute inset-0 z-20 bg-white flex items-center justify-center shadow-lg">
             <ZoomedImageView
               image={hoveredZoomImage}
               zoomLevel={zoomLevel}
               position={zoomPosition}
+              heightClass="h-full"
             />
-          ) : product.hoverImage ? (
-            <div className="relative w-full h-[480px] flex items-center justify-center bg-white overflow-hidden group cursor-pointer">
-              <Image
-                src={product.hoverImage.src}
-                alt={`${product.title} on model`}
-                fill
-                className="object-contain transition-transform duration-300 ease-in-out group-hover:scale-110"
-              />
-            </div>
-          ) : null}
-        </div>
-
-        {/* Three Bottom Images - Dynamic from product.images */}
-        {(() => {
-          // Get detail images (images beyond the first 2: main and hover)
-          const detailImages = product.images && product.images.length > 2 
-            ? product.images.slice(2, 5) 
-            : [];
-          
-          // If we have detail images, show them
-          if (detailImages.length > 0) {
-            return (
-              <div className="grid grid-cols-3 gap-4 mt-1">
-                {detailImages.map((image, index) => (
-                  <ImageZoom
-                    key={`detail-${index}`}
-                    image={image}
-                    alt={`${product.title} detail ${index + 1}`}
-                    zoomLevel={zoomLevel}
-                    magnifierSize={magnifierSize}
-                    heightClass="h-[280px]"
-                    onHoverChange={createHoverHandler(image)}
-                    onPositionChange={createPositionHandler(image)}
-                  />
-                ))}
-              </div>
-            );
-          }
-          
-          // Fallback: If no detail images, show main/hover images to maintain layout
-          // This ensures the section always displays (matching original behavior)
-          const fallbackImages = [
-            product.image,
-            product.hoverImage || product.image,
-            product.image
-          ].slice(0, 3);
-          
-          return (
-            <div className="grid grid-cols-3 gap-4 mt-1">
-              {fallbackImages.map((image, index) => (
-                <ImageZoom
-                  key={`fallback-detail-${index}`}
-                  image={image}
-                  alt={`${product.title} detail ${index + 1}`}
-                  zoomLevel={zoomLevel}
-                  magnifierSize={magnifierSize}
-                  heightClass="h-[280px]"
-                  onHoverChange={createHoverHandler(image)}
-                  onPositionChange={createPositionHandler(image)}
-                />
-              ))}
-            </div>
-          );
-        })()}
-
-        </div>
-
-      {/* Right Side - Product Information */}
-      <div className="flex-1 max-w-md sticky top-8 self-start">
-        {/* Brand and Product Name */}
-        <div className="mb-6">
-          <h1 className="text-[22px] font-nromal text-(--color-preto) mb-1 leading-tight">
-            {product.title}
-          </h1>
-          {product.subtitle && (
-            <p className="text-[12px] text-(--color-preto) font-thin">{product.subtitle}</p>
-          )}
-        </div>
+          </div>
+        )}
+        <div
+          className={`transition-opacity ${
+            hoveredZoomImage && zoomPosition ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+        >
+          {/* Brand and Product Name */}
+          <div className="mb-6">
+            <h1 className="text-[22px] font-nromal text-(--color-preto) mb-1 leading-tight">
+              {product.title}
+            </h1>
+            {product.subtitle && (
+              <p className="text-[12px] text-(--color-preto) font-thin">{product.subtitle}</p>
+            )}
+          </div>
 
         {/* Price */}
         <div className="mb-6">
@@ -330,6 +362,7 @@ export default function ProductDetailSection({
             Estimated delivery {product.estimatedDelivery}
           </div>
         )}
+        </div>
       </div>
       </div>
 
