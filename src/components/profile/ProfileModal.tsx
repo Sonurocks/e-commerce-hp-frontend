@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FiX } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaFacebookF } from "react-icons/fa";
+import ForgotPassword from "./ForgotPassword";
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -19,10 +20,12 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   // Email validation function
   const validateEmail = (email: string): boolean => {
@@ -50,8 +53,10 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
       setActiveTab("signin");
       setEmail("");
       setPassword("");
+      setName("");
       setEmailError("");
       setPasswordError("");
+      setShowForgotPassword(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
@@ -75,7 +80,11 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) {
-        onClose();
+        if (showForgotPassword) {
+          setShowForgotPassword(false);
+        } else {
+          onClose();
+        }
       }
     };
 
@@ -86,7 +95,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
     return () => {
       document.removeEventListener("keydown", handleEscKey);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, showForgotPassword]);
 
   // Close on click outside
   useEffect(() => {
@@ -99,7 +108,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
       }
     };
 
-    if (isOpen) {
+    if (isOpen && !showForgotPassword) {
       // Small delay to prevent immediate close when opening
       const timeoutId = setTimeout(() => {
         document.addEventListener("mousedown", handleClickOutside);
@@ -110,20 +119,23 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, showForgotPassword]);
 
   if (!isOpen) return null;
 
   return (
     <>
-      {/* Dark overlay */}
-      <div className="fixed inset-0 bg-black/50 z-[99]" />
+      {/* Main Profile Modal - Only show when forgot password modal is not open */}
+      {!showForgotPassword && (
+        <>
+          {/* Dark overlay */}
+          <div className="fixed inset-0 bg-black/50 z-[99]" />
 
-      {/* Profile Modal */}
-      <div
-        ref={modalRef}
-        className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-16 pb-6"
-      >
+          {/* Profile Modal */}
+          <div
+            ref={modalRef}
+            className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-16 pb-6"
+          >
         <div
           className="w-full max-w-[420px] max-h-[90vh] flex flex-col rounded-2xl bg-(--colorWhite) shadow-2xl border border-(--colorGrey) overflow-hidden"
         >
@@ -139,7 +151,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
               <button
                 onClick={onClose}
                 aria-label="Close profile modal"
-                className="text-preto hover:text-preto transition rounded-full p-2 hover:bg-(--colorLightGrey)"
+                className="text-preto hover:text-preto transition rounded-full p-2 hover:bg-(--colorLightGrey) cursor-pointer"
               >
                 <FiX className="w-5 h-5" />
               </button>
@@ -150,7 +162,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
               <div className="flex text-sm font-normal tracking-wide">
                 <button 
                   onClick={() => setActiveTab("signin")}
-                  className={`pb-3 relative transition ${
+                  className={`pb-3 relative transition cursor-pointer ${
                     activeTab === "signin" 
                       ? "text-preto" 
                       : "text-(--color-hina) hover:text-preto"
@@ -163,7 +175,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                 </button>
                 <button 
                   onClick={() => setActiveTab("signup")}
-                  className={`ml-6 pb-3 relative transition ${
+                  className={`ml-6 pb-3 relative transition cursor-pointer ${
                     activeTab === "signup" 
                       ? "text-preto" 
                       : "text-(--color-hina) hover:text-preto"
@@ -213,7 +225,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                       Email address
                       <input
                         type="email"
-                        value={email || ""}
+                        value={email}
                         onChange={(e) => {
                           setEmail(e.target.value);
                           if (emailError) {
@@ -240,7 +252,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                       Password
                       <input
                         type="password"
-                        value={password || ""}
+                        value={password}
                         onChange={(e) => {
                           setPassword(e.target.value);
                           if (passwordError) {
@@ -264,17 +276,17 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                       )}
                     </label>
                     <div className="text-left">
-                      <Link
-                        href="/forgot-password"
-                        onClick={onClose}
-                        className="text-xs font-thin text-preto  underline hover:text-preto underline-offset-2 hover:underline"
+                      <button
+                        type="button"
+                        onClick={() => setShowForgotPassword(true)}
+                        className="text-xs font-thin text-preto underline hover:text-preto underline-offset-2 hover:underline cursor-pointer"
                       >
                         Forgot your password ?
-                      </Link>
+                      </button>
                     </div>
                     <button
                       type="submit"
-                      className="w-full rounded-xl bg-black text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition"
+                      className="w-full rounded-xl bg-black text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition cursor-pointer"
                     >
                       Sign In
                     </button>
@@ -298,21 +310,21 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                   <div className="space-y-2">
                     <button
                       type="button"
-                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                     >
                       <FcGoogle className="text-xl" />
                       Continue With Google
                     </button>
                     <button
                       type="button"
-                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                     >
                       <FaApple className="text-xl text-preto" />
                       Continue With Apple
                     </button>
                     <button
                       type="button"
-                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                     >
                       <FaFacebookF
                         className="text-xl text-(--color-facebook)"
@@ -369,6 +381,8 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                       Name
                       <input
                         type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         className="mt-2 w-full rounded-xl border border-preto px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none focus:border-(--color-preto)"
                         placeholder="Enter your name"
                       />
@@ -377,7 +391,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                       Email address
                       <input
                         type="email"
-                        value={email || ""}
+                        value={email}
                         onChange={(e) => {
                           setEmail(e.target.value);
                           if (emailError) {
@@ -404,7 +418,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                       Password
                       <input
                         type="password"
-                        value={password || ""}
+                        value={password}
                         onChange={(e) => {
                           setPassword(e.target.value);
                           if (passwordError) {
@@ -468,7 +482,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                     </div>
                     <button
                       type="submit"
-                      className="w-full rounded-xl bg-black text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition"
+                      className="w-full rounded-xl bg-black text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition cursor-pointer"
                     >
                       Register
                     </button>
@@ -485,21 +499,21 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                   <div className="space-y-2">
                     <button
                       type="button"
-                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                     >
                       <FcGoogle className="text-xl" />
                       Continue With Google
                     </button>
                     <button
                       type="button"
-                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                     >
                       <FaApple className="text-xl text-preto" />
                       Continue With Apple
                     </button>
                     <button
                       type="button"
-                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition"
+                      className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                     >
                       <FaFacebookF
                         className="text-xl text-(--color-facebook)"
@@ -513,6 +527,14 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
           </div>
         </div>
       </div>
+        </>
+      )}
+
+      {/* Forgot Password Modal */}
+      <ForgotPassword
+        isOpen={showForgotPassword}
+        onClose={() => setShowForgotPassword(false)}
+      />
     </>
   );
 };

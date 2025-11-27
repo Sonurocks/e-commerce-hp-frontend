@@ -16,11 +16,16 @@ import {
   kidswearSecondaryNavigationLinks,
   headerConfig,
 } from "../../constants";
+import { useLanguage } from "@/context/LanguageContext";
+import { NavigationSection } from "@/lib/i18n";
 import { DepartmentKey } from "../../constants/department";
 import GenericDrawer from "./drawer/GenericDrawer";
 import SearchDrawer from "./drawer/SearchDrawer";
 import ThemeSettingsDrawer from "../theme/ThemeSettingsDrawer";
 import ProfileModal from "../profile/ProfileModal";
+import LanguageModal from "../language/LanguageModal";
+import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 const Header = () => {
   const pathname = usePathname();
@@ -34,6 +39,8 @@ const Header = () => {
       ? "menswear"
       : "womenswear";
 
+  const { translations: languageStrings } = useLanguage();
+  const headerCopy = languageStrings.header;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -60,12 +67,25 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isThemeDrawerOpen, setIsThemeDrawerOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
+  const { cartItems } = useCart();
+  const { wishlistCount } = useWishlist();
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const searchDrawerRef = useRef<HTMLDivElement>(null);
-  const navigationLinks = isKidswearPage
-    ? kidswearSecondaryNavigationLinks
+  const flagButtonRefDesktop = useRef<HTMLButtonElement>(null);
+  const flagButtonRefMobile = useRef<HTMLButtonElement>(null);
+  const navigationSectionKey: NavigationSection = isKidswearPage
+    ? "kidswearSecondary"
     : isMenswearPage
-      ? menswearSecondaryNavigationLinks
-      : secondaryNavigationLinks;
+      ? "menswearSecondary"
+      : "secondary";
+
+  const navigationLinks =
+    navigationSectionKey === "kidswearSecondary"
+      ? kidswearSecondaryNavigationLinks
+      : navigationSectionKey === "menswearSecondary"
+        ? menswearSecondaryNavigationLinks
+        : secondaryNavigationLinks;
   // Single ref for the generic drawer
   const drawerRef = useRef<HTMLDivElement>(null);
   // Map of link refs for click outside detection
@@ -212,6 +232,12 @@ const Header = () => {
     };
   }, [activeDrawer]);
 
+  const getNavLabel = (
+    section: NavigationSection,
+    linkId: string,
+    fallback: string,
+  ) => headerCopy.navigation[section]?.[linkId] ?? fallback;
+
   // Get current promotion for background color
   const currentPromo = promotions[currentPromoIndex];
 
@@ -266,10 +292,10 @@ const Header = () => {
                           target="_self"
                           className="underline hover:no-underline"
                         >
-                          {promo.text}
+                          {headerCopy.promotions[promo.id] ?? promo.text}
                         </a>
                         <span>|</span>
-                        <span>{headerConfig.countdown.text.endsIn}</span>
+                        <span>{headerCopy.countdown.endsIn}</span>
                         <span data-testid="countdown" className="font-semibold">
                           {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
                           {timeLeft.seconds}s
@@ -278,7 +304,7 @@ const Header = () => {
                           <>
                             <span>|</span>
                             <a href={promo.link} target="_self">
-                              {headerConfig.countdown.text.shopNow}
+                              {headerCopy.countdown.shopNow}
                             </a>
                           </>
                         )}
@@ -289,7 +315,7 @@ const Header = () => {
                         target="_self"
                         className="underline hover:no-underline"
                       >
-                        {promo.text}
+                        {headerCopy.promotions[promo.id] ?? promo.text}
                       </a>
                     )}
                   </span>
@@ -310,9 +336,9 @@ const Header = () => {
               <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
                 {/* Left - Primary Categories */}
                 <div className="hidden lg:flex items-center space-x-6">
-                  {primaryNavigationLinks.map((link, index) => (
-                    <Link key={index} href={link.href} className={link.className}>
-                      {link.label}
+                  {primaryNavigationLinks.map((link) => (
+                    <Link key={link.id} href={link.href} className={link.className}>
+                      {getNavLabel("primary", link.id, link.label)}
                     </Link>
                   ))}
                 </div>
@@ -321,7 +347,7 @@ const Header = () => {
                 <div className="flex-1 flex justify-center items-center">
                   <Link href={headerConfig.logo.href}>
                     <h1 className="text-3xl font-extrabold text-(--color-preto) dark:text-(--color-preto) tracking-tight uppercase w-[290px] h-[26px]">
-                      {headerConfig.logo.text}
+                      {headerCopy.logoText}
                     </h1>
                   </Link>
                 </div>
@@ -329,7 +355,12 @@ const Header = () => {
                 {/* Right - User Icons */}
                 <div className="flex items-center space-x-4">
                   {/* Country Flag */}
-                  <button className="hidden md:block w-6 h-6 rounded-full overflow-hidden border border-gray-300 dark:border-platinum hover:border-gray-400 dark:hover:border-silver transition">
+                  <button
+                    ref={flagButtonRefDesktop}
+                    onClick={() => setIsLanguageModalOpen(true)}
+                    className="hidden md:block w-6 h-6 rounded-full overflow-hidden border border-gray-300 dark:border-platinum hover:border-gray-400 dark:hover:border-silver transition cursor-pointer relative"
+                    aria-label="Select language"
+                  >
                     <svg
                       viewBox="0 0 24 24"
                       className="w-full h-full"
@@ -359,7 +390,7 @@ const Header = () => {
                   >
                     <FaRegUser className="w-6 h-6" />
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                      {headerConfig.tooltips.signIn}
+                      {headerCopy.tooltips.signIn}
                     </span>
                   </button>
 
@@ -369,8 +400,13 @@ const Header = () => {
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
                     <GoHeart className="w-6 h-6" strokeWidth={1.0} />
+                    {wishlistCount > 0 && (
+                      <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-white text-xs font-semibold flex items-center justify-center">
+                        {wishlistCount}
+                      </span>
+                    )}
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                      {headerConfig.tooltips.wishlist}
+                      {headerCopy.tooltips.wishlist}
                     </span>
                   </Link>
 
@@ -380,8 +416,13 @@ const Header = () => {
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
                     <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
+                    {cartCount > 0 && (
+                      <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-white text-xs font-semibold flex items-center justify-center">
+                        {cartCount}
+                      </span>
+                    )}
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                      {headerConfig.tooltips.bag}
+                      {headerCopy.tooltips.bag}
                     </span>
                   </Link>
                 </div>
@@ -392,6 +433,11 @@ const Header = () => {
                 {/* Left - Categories */}
                 <div className="hidden lg:flex items-center space-x-6 overflow-x-auto">
                   {navigationLinks.map((link, index) => {
+                    const translatedLabel = getNavLabel(
+                      navigationSectionKey,
+                      link.id,
+                      link.label,
+                    );
                     if (link.hasDrawer) {
                       const drawerType = link.drawerType as
                         | "25off"
@@ -428,13 +474,13 @@ const Header = () => {
 
                       return (
                         <div
-                          key={index}
+                          key={link.id ?? index}
                           ref={linkRef}
                           className="relative"
                           onMouseEnter={() => setActiveDrawer(drawerType)}
                         >
                           <Link href={link.href} className={linkClassName}>
-                            {link.label}
+                            {translatedLabel}
                           </Link>
                         </div>
                       );
@@ -453,11 +499,11 @@ const Header = () => {
                     }
                     return (
                       <Link
-                        key={index}
+                        key={link.id ?? index}
                         href={link.href}
                         className={link.className}
                       >
-                        {link.label}
+                        {translatedLabel}
                       </Link>
                     );
                   })}
@@ -483,7 +529,7 @@ const Header = () => {
                     </div>
                     <input
                       type="text"
-                      placeholder={headerConfig.search.placeholder}
+                      placeholder={headerCopy.searchPlaceholder}
                       className="w-full pl-10 pr-4 py-2 border-b border-(--color-preto) dark:border-(--color-preto) focus:outline-none focus:border-gray-900 dark:focus:border-(--color-preto) text-base dark:text-(--color-preto) dark:bg-transparent cursor-pointer"
                       onClick={handleSearchInputClick}
                       readOnly
@@ -516,20 +562,40 @@ const Header = () => {
                 <div className="flex flex-1 justify-center">
                   <Link href={headerConfig.logo.href}>
                     <h1 className="text-2xl sm:text-3xl font-extrabold text-(--color-preto) dark:text-(--color-preto) tracking-tight uppercase">
-                      {headerConfig.logo.text}
+                      {headerCopy.logoText}
                     </h1>
                   </Link>
                 </div>
 
                 {/* Right - User Icons */}
                 <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
+                  {/* Country Flag */}
+                  <button
+                    ref={flagButtonRefMobile}
+                    onClick={() => setIsLanguageModalOpen(true)}
+                    className="w-6 h-6 rounded-full overflow-hidden border border-gray-300 dark:border-platinum hover:border-gray-400 dark:hover:border-silver transition cursor-pointer relative"
+                    aria-label="Select language"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-full h-full"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      {/* India Flag */}
+                      <rect width="24" height="8" fill="#FF9933" />
+                      <rect y="8" width="24" height="8" fill="#FFFFFF" />
+                      <rect y="16" width="24" height="8" fill="#138808" />
+                      <circle cx="12" cy="12" r="2.5" fill="#000080" />
+                    </svg>
+                  </button>
                   <button
                     onClick={() => setIsProfileModalOpen(true)}
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
                   >
                     <FaRegUser className="w-6 h-6" />
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                      {headerConfig.tooltips.signIn}
+                      {headerCopy.tooltips.signIn}
                     </span>
                   </button>
                   <Link
@@ -537,8 +603,13 @@ const Header = () => {
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
                     <GoHeart className="w-6 h-6" strokeWidth={1.0} />
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-white text-xs font-semibold flex items-center justify-center">
+                      {wishlistCount}
+                    </span>
+                  )}
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                      {headerConfig.tooltips.wishlist}
+                      {headerCopy.tooltips.wishlist}
                     </span>
                   </Link>
                   <Link
@@ -547,7 +618,7 @@ const Header = () => {
                   >
                     <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                      {headerConfig.tooltips.bag}
+                      {headerCopy.tooltips.bag}
                     </span>
                   </Link>
                 </div>
@@ -556,14 +627,18 @@ const Header = () => {
               {/* Secondary Navigation and Search */}
               <div className="flex flex-col gap-4 border-t border-gray-200 py-4 dark:border-(--color-platinum)">
                 <div className="flex items-center gap-4 overflow-x-auto text-sm text-(--color-preto) dark:text-(--color-preto)">
-                  {navigationLinks.map((link, index) => (
+                  {navigationLinks.map((link) => (
                     <Link
-                      key={`mobile-${index}`}
+                      key={`mobile-${link.id}`}
                       href={link.href}
                       onClick={handleMobileLinkClick}
                       className="whitespace-nowrap font-medium"
                     >
-                      {link.label}
+                      {getNavLabel(
+                        navigationSectionKey,
+                        link.id,
+                        link.label,
+                      )}
                     </Link>
                   ))}
                 </div>
@@ -587,7 +662,7 @@ const Header = () => {
                     </div>
                     <input
                       type="text"
-                      placeholder={headerConfig.search.placeholder}
+                      placeholder={headerCopy.searchPlaceholder}
                       className="w-full pl-10 pr-4 py-2 border-b border-(--color-preto) dark:border-(--color-preto) focus:outline-none focus:border-gray-900 dark:focus:border-(--color-preto) text-base dark:text-(--color-preto) dark:bg-transparent cursor-pointer"
                       onClick={handleSearchInputClick}
                       readOnly
@@ -601,26 +676,30 @@ const Header = () => {
                 <div className="border-t border-gray-200 py-4 dark:border-(--color-platinum)">
                   <div className="space-y-6">
                     <div className="flex flex-col gap-3 text-base font-medium">
-                      {primaryNavigationLinks.map((link, index) => (
+                      {primaryNavigationLinks.map((link) => (
                         <Link
-                          key={`primary-mobile-${index}`}
+                          key={`primary-mobile-${link.id}`}
                           href={link.href}
                           className="text-(--color-preto) dark:text-(--color-preto)"
                           onClick={handleMobileLinkClick}
                         >
-                          {link.label}
+                          {getNavLabel("primary", link.id, link.label)}
                         </Link>
                       ))}
                     </div>
                     <div className="grid grid-cols-2 gap-3 text-sm">
-                      {navigationLinks.map((link, index) => (
+                      {navigationLinks.map((link) => (
                         <Link
-                          key={`secondary-mobile-${index}`}
+                          key={`secondary-mobile-${link.id}`}
                           href={link.href}
                           className="rounded border border-gray-200 px-3 py-2 text-(--color-preto) dark:border-(--color-platinum) dark:text-(--color-preto)"
                           onClick={handleMobileLinkClick}
                         >
-                          {link.label}
+                          {getNavLabel(
+                            navigationSectionKey,
+                            link.id,
+                            link.label,
+                          )}
                         </Link>
                       ))}
                     </div>
@@ -630,16 +709,30 @@ const Header = () => {
                         className="flex items-center gap-2 text-(--color-preto) dark:text-(--color-preto)"
                         onClick={handleMobileLinkClick}
                       >
+                      <div className="relative">
                         <GoHeart className="h-4 w-4" />
-                        {headerConfig.tooltips.wishlist}
+                        {wishlistCount > 0 && (
+                          <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-white text-[10px] font-semibold flex items-center justify-center">
+                            {wishlistCount}
+                          </span>
+                        )}
+                      </div>
+                        {headerCopy.tooltips.wishlist}
                       </Link>
                       <Link
                         href="/cart"
                         className="flex items-center gap-2 text-(--color-preto) dark:text-(--color-preto)"
                         onClick={handleMobileLinkClick}
                       >
-                        <HiOutlineShoppingBag className="h-4 w-4" />
-                        {headerConfig.tooltips.bag}
+                        <div className="relative">
+                          <HiOutlineShoppingBag className="h-4 w-4" />
+                          {cartCount > 0 && (
+                            <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-white text-[10px] font-semibold flex items-center justify-center">
+                              {cartCount}
+                            </span>
+                          )}
+                        </div>
+                        {headerCopy.tooltips.bag}
                       </Link>
                     </div>
                   </div>
@@ -681,6 +774,21 @@ const Header = () => {
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
       />
+
+      {/* Language Modal */}
+      {isLanguageModalOpen && (
+        <LanguageModal
+          isOpen={isLanguageModalOpen}
+          onClose={() => setIsLanguageModalOpen(false)}
+          buttonRef={
+            flagButtonRefDesktop.current
+              ? flagButtonRefDesktop
+              : flagButtonRefMobile.current
+                ? flagButtonRefMobile
+                : undefined
+          }
+        />
+      )}
     </>
   );
 };

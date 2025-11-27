@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { DepartmentKey } from "../../../constants/department";
 import { drawerContentByDepartment } from "../../../constants/drawerContent";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface GenericDrawerProps {
   isDrawerOpen: boolean;
@@ -21,6 +22,10 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
   drawerType,
   department,
 }) => {
+  const { translations } = useLanguage();
+  const translate = (text?: string) =>
+    text ? translations.productCopy[text] ?? text : text;
+
   if (!isDrawerOpen) return null;
 
   const drawerContent = drawerContentByDepartment[department]?.[drawerType];
@@ -57,7 +62,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
     return (
       <div className="ml-46">
         <h3 className="text-basetext-(--color-preto) mb-4 font-normal uppercase">
-          BRANDS A-Z
+          {translate("BRANDS A-Z")}
         </h3>
         <div className="space-y-4">
           <div className="flex gap-8 text-basetext-(--color-preto) font-light">
@@ -95,7 +100,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
               href="/brands/all"
               className="text-basetext-(--color-preto) hover:underline transition font-light"
             >
-              View All
+              {translate("View All")}
             </Link>
           </div>
         </div>
@@ -180,12 +185,12 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
                 key={sectionIndex}
                 className={getSectionClass(sectionIndex, section.className)}
               >
-                <h3 className={getTitleClass()}>{section.title}</h3>
+                <h3 className={getTitleClass()}>{translate(section.title)}</h3>
                 <ul className="space-y-2">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
                       <Link href={link.href} className={getLinkClass()}>
-                        {link.label}
+                        {translate(link.label)}
                       </Link>
                     </li>
                   ))}
@@ -204,7 +209,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
             <div className="w-full">
               <Image
                 src={image.src}
-                alt={spotlight.title}
+                alt={translate(spotlight.title) ?? spotlight.title}
                 width={imageWidth || 460}
                 height={imageHeight || 320}
                 className="w-full h-[320px] object-cover"
@@ -214,19 +219,19 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
                 <div className="space-y-0">
                   {spotlight.topText && (
                     <p className="text-sm text-gray-600 font-normal">
-                      {spotlight.topText}
+                      {translate(spotlight.topText)}
                     </p>
                   )}
                   <p
                     className={`text-sm ${spotlight.topText ? "text-preto font-thin" : "font-thin text-(--color-preto)"}`}
                   >
-                    {spotlight.title}
+                    {translate(spotlight.title)}
                   </p>
                   <Link
                     href={spotlight.link}
                     className="inline-block text-sm underline hover:no-underline text-(--color-preto) font-normal"
                   >
-                    {spotlight.linkText}
+                    {translate(spotlight.linkText)}
                   </Link>
                 </div>
               </div>

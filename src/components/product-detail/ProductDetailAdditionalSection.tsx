@@ -3,8 +3,11 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { ProductDetail, productsById } from "@/constants/products";
+import { Product } from "@/constants/department";
 import { GoHeart } from "react-icons/go";
 import Image from "next/image";
+import { useLanguage } from "@/context/LanguageContext";
+import { useWishlist } from "@/context/WishlistContext";
 import {
   womenswearBestsellers,
   menswearBestsellers,
@@ -126,7 +129,9 @@ const WOMENSWEAR_FEATURED_PRODUCT_IDS = [
 
 // Helper function to convert ProductDetail to CuratedProductCardData
 const convertToCuratedCard = (product: ProductDetail): CuratedProductCardData => {
-  const { brand, productName } = parseProductTitle(product.title);
+  const { brand, productName } = product.subtitle
+    ? { brand: product.title, productName: product.subtitle }
+    : parseProductTitle(product.title);
   
   return {
     id: product.id,
@@ -146,14 +151,18 @@ const VISIBLE_CURATED_CARDS = 5;
 // Smaller product card component for Complete the look section
 function SmallProductCard({ product }: { product: CompleteTheLookProduct }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const { translations } = useLanguage();
+  const { toggleWishlist, isWishlisted } = useWishlist();
+  const translate = (text?: string) =>
+    text ? translations.productCopy[text] ?? text : text;
   const currentImage =
     isHovered && product.hoverImage ? product.hoverImage : product.image;
+  const wishlisted = isWishlisted(product.id);
 
   const handleWishlistClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsWishlisted(!isWishlisted);
+    toggleWishlist(product);
   };
 
   return (
@@ -164,15 +173,18 @@ function SmallProductCard({ product }: { product: CompleteTheLookProduct }) {
             onClick={handleWishlistClick}
             className="absolute top-2 right-2 z-10 p-2 rounded-full transition-colors"
             aria-label="Add to wishlist"
-          >
+          type="button"
+        >
             <GoHeart
-              className={`w-4 h-4 ${isWishlisted ? 'fill-black text-(--color-preto)' : "text-(--color-preto)"}`}
+            className={`w-4 h-4 ${
+              wishlisted ? "fill-black text-(--color-preto)" : "text-(--color-preto)"
+            }`}
               strokeWidth={1.0}
             />
           </button>
           <Image
             src={currentImage.src}
-            alt={product.title}
+            alt={translate(product.title) ?? product.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
             className="object-contain"
@@ -183,11 +195,11 @@ function SmallProductCard({ product }: { product: CompleteTheLookProduct }) {
         <div className="mt-2">
           {/* Brand name - bold */}
           <h3 className="text-[13px] text-(--color-preto) font-bold leading-tight">
-            {product.brand}
+            {translate(product.brand)}
           </h3>
           {/* Product name */}
           <p className="text-[13px] text-(--color-preto) font-normal mt-1 leading-tight">
-            {product.productName}
+            {translate(product.productName)}
           </p>
           {/* Price */}
           <div className="mt-2">
@@ -226,8 +238,29 @@ function CuratedProductCard({
   onNext?: () => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const { translations } = useLanguage();
+  const { toggleWishlist, isWishlisted } = useWishlist();
+  const translate = (text?: string) =>
+    text ? translations.productCopy[text] ?? text : text;
   const currentImage =
     isHovered && card.hoverImage ? card.hoverImage : card.image;
+  const wishlisted = isWishlisted(card.id);
+
+  const handleWishlistClick = () => {
+    const fallbackProduct: Product = {
+      id: card.id,
+      title: card.brand
+        ? `${card.brand} ${card.productName}`
+        : card.productName,
+      subtitle: card.brand ? card.productName : undefined,
+      price: card.price,
+      image: card.image,
+      hoverImage: card.hoverImage,
+      badge: card.badge,
+    };
+    const product = productsById[card.id] ?? fallbackProduct;
+    toggleWishlist(product);
+  };
 
   return (
     <article className="group" style={{ fontFamily: fontStack }}>
@@ -238,7 +271,7 @@ function CuratedProductCard({
       >
         {card.badge && (
           <span className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-[11px] font-semibold text-(--color-preto) border border-gray-200 rounded-full">
-            {card.badge}
+            {translate(card.badge)}
           </span>
         )}
         {showPrevArrow && (
@@ -262,12 +295,19 @@ function CuratedProductCard({
         <button
           className="absolute top-3 right-3 z-10 p-2 rounded-full transition-colors"
           aria-label="Add to wishlist"
+          onClick={handleWishlistClick}
+          type="button"
         >
-          <GoHeart className="w-5 h-5 text-(--color-preto)" strokeWidth={1.0} />
+          <GoHeart
+            className={`w-5 h-5 ${
+              wishlisted ? "fill-(--color-preto) text-(--color-preto)" : "text-(--color-preto)"
+            }`}
+            strokeWidth={1.0}
+          />
         </button>
         <Image
           src={currentImage.src}
-          alt={card.productName}
+          alt={translate(card.productName) ?? card.productName}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 20vw"
           className="object-contain"
@@ -275,9 +315,11 @@ function CuratedProductCard({
       </div>
       <div className="mt-3 space-y-1">
         <p className="text-[13px] font-semibold text-(--color-preto)">
-          {card.brand}
+          {translate(card.brand)}
         </p>
-        <p className="text-[13px] text-(--color-preto)">{card.productName}</p>
+        <p className="text-[13px] text-(--color-preto)">
+          {translate(card.productName)}
+        </p>
         <div className="flex items-baseline gap-2 text-[13px]">
           {card.originalPrice && (
             <span className="text-[#666] line-through">{card.originalPrice}</span>
@@ -298,6 +340,9 @@ export default function ProductDetailAdditionalSection({
   product: ProductDetail;
 }) {
   const [curatedStartIndex, setCuratedStartIndex] = useState(0);
+  const { translations } = useLanguage();
+  const translate = (text?: string) =>
+    text ? translations.productCopy[text] ?? text : text;
 
   // Get recommended products dynamically from product.completeTheLook or fallback list
   const completeTheLookProducts = useMemo(() => {
@@ -446,7 +491,7 @@ export default function ProductDetailAdditionalSection({
       {/* Complete the look section */}
       <div className="mb-8">
         <h2 className="text-[18px] font-medium text-(--color-preto) mb-6">
-          Complete the look
+          {translate("Complete the look")}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {completeTheLookProducts.map((recommendedProduct) => (
@@ -459,10 +504,10 @@ export default function ProductDetailAdditionalSection({
       <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-[18px] font-medium text-(--color-preto)">
-            Recommendations
+            {translate("Recommendations")}
           </h2>
           <button className="px-4 py-2 border border-(--color-preto) rounded-lg text-[13px] font-semibold hover:bg-gray-100 transition-colors">
-            Show More
+            {translate("Show More")}
           </button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -488,7 +533,7 @@ export default function ProductDetailAdditionalSection({
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-[18px] font-medium text-(--color-preto)">
-              Bestsellers, edited for you
+              {translate("Bestsellers, edited for you")}
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -506,7 +551,7 @@ export default function ProductDetailAdditionalSection({
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-[18px] font-medium text-(--color-preto)">
-              Featured
+              {translate("Featured")}
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">

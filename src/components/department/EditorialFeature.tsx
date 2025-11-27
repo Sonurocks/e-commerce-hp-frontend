@@ -1,18 +1,23 @@
 
 import React from "react";
 import Link from "next/link";
+
+interface EditorialFeatureProps {
+  image: { src: string };
+  title?: string;
+  description?: string;
+  ctaLabel?: string;
+}
+
 export default function EditorialFeature({
   image,
   title,
   description,
-}: {
-  image: { src: string };
-  title?: string;
-  description?: string;
-}) {
+  ctaLabel,
+}: EditorialFeatureProps) {
   const defaultTitle = "How to master party season";
   const defaultDescription =
-    "Perfect styles to see every dress code, courtesy Cherina Hreem and more.";
+    "Perfect styles to see every dress, courtesy Cherina Hreem and more.";
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center my-8 lg:my-16 px-4 md:px-8">
       {/* Content Side */}
@@ -41,7 +46,7 @@ export default function EditorialFeature({
           href="#"
           className="inline-block text-[14px] border rounded-lg border-gray-800 px-6 py-2.5 text-(--color-preto) font-semibold hover:bg-gray-100 transition-colors lg:ml-44"
         >
-          Shop Now
+          {ctaLabel ?? "Shop now"}
         </Link>
       </div>
       {/* Image Side */}

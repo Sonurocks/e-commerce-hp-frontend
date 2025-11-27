@@ -2,8 +2,13 @@ import React from "react";
 import { SiSnapchat } from "react-icons/si";
 import { FaPinterestP } from "react-icons/fa";
 import { footerSections, socialMediaLinks, legalLinks } from "../../constants";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Footer = () => {
+  const { translations } = useLanguage();
+  const footerCopy = translations.footer;
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="site-footer bg-gray-200 dark:bg-black text-preto dark:text-white max-w-container w-full min-h-footer min-w-full  py-footer mx-auto font-normal">
       <div className="mx-auto max-w-container w-full pl-footer pr-footer">
@@ -11,7 +16,7 @@ const Footer = () => {
           {footerSections.map((section, sectionIndex) => (
             <div key={sectionIndex}>
               <h4 className="font-semibold mb-4 text-preto dark:text-white text-footer-heading">
-                {section.title}
+                {footerCopy.sectionTitles[section.title] ?? section.title}
               </h4>
               <ul
                 className={`space-y-2 text-footer-heading ${sectionIndex === 2 ? "mb-8" : ""}`}
@@ -19,7 +24,7 @@ const Footer = () => {
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <a href={link.href} className="text-preto dark:text-white hover:underline transition font-light">
-                      {link.label}
+                      {footerCopy.linkLabels[link.label] ?? link.label}
                     </a>
                   </li>
                 ))}
@@ -27,7 +32,7 @@ const Footer = () => {
               {sectionIndex === 2 && (
                 <div>
                   <h4 className="font-semibold mb-4 text-preto dark:text-white text-footer-heading">
-                    Follow us
+                    {footerCopy.followUs}
                   </h4>
                   <div className="flex space-x-4">
                     {socialMediaLinks.map((social, index) => (
@@ -94,19 +99,19 @@ const Footer = () => {
             <div className="flex flex-wrap gap-6 text-footer-heading">
               {legalLinks.map((link, index) => (
                 <a key={index} href={link.href} className="underline transition text-preto dark:text-white">
-                  {link.label}
+                  {footerCopy.legalLinks[link.label] ?? link.label}
                 </a>
               ))}
             </div>
             <div className="text-preto dark:text-white text-footer-text">
               <p className="mb-2">
-                &apos;FARFETCH&apos; and the &apos;FARFETCH&apos; logo are trade
-                marks of FARFETCH UK Limited and are registered in numerous
-                jurisdictions around the world.
+                {footerCopy.legalDisclaimer.trademark}
               </p>
               <p>
-                © Copyright {new Date().getFullYear()} FARFETCH UK Limited. All
-                rights reserved.
+                {footerCopy.legalDisclaimer.copyright.replace(
+                  "{{year}}",
+                  currentYear.toString(),
+                )}
               </p>
             </div>
           </div>

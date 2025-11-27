@@ -7,6 +7,9 @@ import {
   ConditionalHeader,
   ThemeSettingsProvider,
 } from "@/components";
+import { LanguageProvider } from "@/context/LanguageContext";
+import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,17 +50,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${lato.variable} ${inter.variable} ${roboto.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ThemeSettingsProvider>
-            <ConditionalHeader />
-            <main className="min-h-screen">{children}</main>
-            <ConditionalFooter />
-          </ThemeSettingsProvider>
-        </ThemeProvider>
+        <LanguageProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <ThemeSettingsProvider>
+                  <ConditionalHeader />
+                  <main className="min-h-screen">{children}</main>
+                  <ConditionalFooter />
+                </ThemeSettingsProvider>
+              </ThemeProvider>
+            </WishlistProvider>
+          </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

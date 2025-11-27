@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Product } from "@/constants/department";
 import { GoHeart } from "react-icons/go";
+import { useLanguage } from "@/context/LanguageContext";
+import { useWishlist } from "@/context/WishlistContext";
 const fontStack =
   "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)";
 export default function ProductCard({
@@ -14,14 +16,21 @@ export default function ProductCard({
   showBadge?: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const { translations } = useLanguage();
+  const { toggleWishlist, isWishlisted } = useWishlist();
+  const translateProductText = (text?: string) =>
+    text ? translations.productCopy[text] ?? text : text;
+  const localizedTitle = translateProductText(product.title);
+  const localizedSubtitle = translateProductText(product.subtitle);
+  const localizedBadge = translateProductText(product.badge);
   const currentImage =
     isHovered && product.hoverImage ? product.hoverImage : product.image;
   const handleWishlistClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsWishlisted(!isWishlisted);
+    toggleWishlist(product);
   };
+  const wishlisted = isWishlisted(product.id);
   const isImageBadge = product.badge === "Extra 25% off";
   const isTextBadge = product.badge && product.badge !== "Extra 25% off";
   return (
@@ -36,7 +45,7 @@ export default function ProductCard({
           >
             <GoHeart
               className={`w-5 h-5 ${
-                isWishlisted
+                wishlisted
                   ? "fill-black text-(--color-preto)"
                   : "text-(--color-preto)"
               }`}
@@ -46,13 +55,13 @@ export default function ProductCard({
           {showBadge && isImageBadge && (
             <div className="absolute top-2 left-2 z-10">
               <p className="text-[15px] text-gray-500 px-2 py-1">
-                {product.badge}
+                {localizedBadge}
               </p>
             </div>
           )}
           <Image
             src={currentImage.src}
-            alt={product.title}
+            alt={localizedTitle ?? product.title}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
             className="object-contain"
@@ -63,14 +72,14 @@ export default function ProductCard({
         <div className="mt-2 flex-1">
           <div className="h-5 mb-1">
             {showBadge && isTextBadge && (
-              <p className="text-[15px] text-gray-500">{product.badge}</p>
+              <p className="text-[15px] text-gray-500">{localizedBadge}</p>
             )}
           </div>
           <h3 className="text-m text-(--color-preto) font-semibold">
-            {product.title}
+            {localizedTitle ?? product.title}
           </h3>
-          {product.subtitle && (
-            <p className="text-sm text-(--color-preto)">{product.subtitle}</p>
+          {localizedSubtitle && (
+            <p className="text-sm text-(--color-preto)">{localizedSubtitle}</p>
           )}
           {product.price && (
             <p className="text-sm text-(--color-preto) mt-3">{product.price}</p>

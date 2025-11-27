@@ -1,8 +1,14 @@
+"use client";
+
 import React from "react";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { PiCoatHangerBold } from "react-icons/pi";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function HelpCards() {
+  const { translations } = useLanguage();
+  const helpCopy = translations.homepage.helpCards;
+
   return (
     <section className=" py-12 px-2">
       <div className="max-w-12xl mx-auto">
@@ -16,10 +22,10 @@ export default function HelpCards() {
               />
             </div>
             <h3 className="text-base font-base uppercasetext-(--color-preto) mb-1">
-              HOW TO SHOP
+              {helpCopy.howToShop.title}
             </h3>
             <p className="text-normal font-base text-(--color-preto)">
-              Your guide to shopping and placing orders
+              {helpCopy.howToShop.description}
             </p>
           </div>
 
@@ -32,10 +38,10 @@ export default function HelpCards() {
               />
             </div>
             <h3 className="text-base font-base uppercase text-(--color-preto) mb-1">
-              FAQS
+              {helpCopy.faqs.title}
             </h3>
             <p className="text-normal font-base text-(--color-preto)">
-              Your questions answered
+              {helpCopy.faqs.description}
             </p>
           </div>
 
@@ -57,10 +63,10 @@ export default function HelpCards() {
               </svg>
             </div>
             <h3 className="text-base font-base uppercase  text-(--color-preto) mb-1">
-              NEED HELP?
+              {helpCopy.needHelp.title}
             </h3>
             <p className="text-normal font-base  text-(--color-preto)">
-              Contact our global Customer Service team
+              {helpCopy.needHelp.description}
             </p>
           </div>
         </div>

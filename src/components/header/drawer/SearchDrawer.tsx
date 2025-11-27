@@ -2,8 +2,8 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { primaryNavigationLinks, headerConfig } from "../../../constants";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface SearchDrawerProps {
   isDrawerOpen: boolean;
@@ -31,6 +31,12 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [activeLink, setActiveLink] = useState(0);
+  const { translations: languageStrings } = useLanguage();
+  const headerCopy = languageStrings.header;
+  const searchCopy = languageStrings.homepage.searchDrawer;
+
+  const getPrimaryLabel = (linkId: string, fallback: string) =>
+    headerCopy.navigation.primary[linkId] ?? fallback;
 
   useEffect(() => {
     if (isDrawerOpen && inputRef.current) {
@@ -81,7 +87,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
           <div className="flex justify-center items-center py-4">
             <Link href={headerConfig.logo.href}>
               <h1 className="text-3xl font-extraboldtext-(--color-preto) tracking-tight uppercase">
-                {headerConfig.logo.text}
+                {headerCopy.logoText}
               </h1>
             </Link>
           </div>
@@ -92,7 +98,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
             <div className="flex items-center gap-8">
               {primaryNavigationLinks.map((link, index) => (
                 <Link
-                  key={index}
+                  key={link.id}
                   href={link.href}
                   onClick={() => setActiveLink(index)}
                   onMouseEnter={() => setActiveLink(index)}
@@ -100,7 +106,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
                     activeLink === index ? "text-preto" : "text-gray-500 hover:text-gray-700"
                   }`}
                 >
-                  {link.label.toUpperCase()}
+                  {getPrimaryLabel(link.id, link.label)}
                 </Link>
               ))}
             </div>
@@ -135,7 +141,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
                   type="text"
                   value={searchQuery}
                   onChange={(e) => onSearchChange(e.target.value)}
-                  placeholder={headerConfig.search.placeholder}
+                  placeholder={headerCopy.searchPlaceholder}
                   className="w-full pl-10 pr-4 py-2 border-b border-preto focus:outline-none focus:border-gray-900 text-base bg-transparent"
                 />
               </div>
@@ -169,7 +175,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
           <div className="px-[48px]" id="trending-container">
             {/* Trending Heading */}
             <h2 className="text-base text-gray-600 font-normal mb-6">
-              Trending
+              {searchCopy.trendingLabel}
             </h2>
 
             {/* Trending Products - Horizontal Scroll */}
@@ -189,8 +195,13 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
             {searchQuery && (
               <div className="mt-8 pt-8 border-t border-gray-200">
                 <div className="text-gray-500">
-                  <p>Search results for &quot;{searchQuery}&quot;</p>
-                  <p className="text-sm mt-2">Results will appear here...</p>
+                  <p>
+                    {searchCopy.searchResultsFor.replace(
+                      "{{query}}",
+                      searchQuery,
+                    )}
+                  </p>
+                  <p className="text-sm mt-2">{searchCopy.resultsHint}</p>
                 </div>
               </div>
             )}

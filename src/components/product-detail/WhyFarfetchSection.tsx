@@ -2,6 +2,7 @@
 
 import React from "react";
 import { FiTag, FiStar, FiRefreshCw } from "react-icons/fi";
+import { useLanguage } from "@/context/LanguageContext";
 
 const fontStack =
   "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)";
@@ -34,13 +35,16 @@ const benefits = [
 ];
 
 export default function WhyFarfetchSection() {
+  const { translations } = useLanguage();
+  const translate = (text?: string) =>
+    text ? translations.productCopy[text] ?? text : text;
   return (
     <section
       style={{ fontFamily: fontStack }}
       className="w-full mt-12 mb-16 border-t border-gray-200 pt-10"
     >
       <h2 className="text-[20px] font-normal text-(--color-preto) mb-6">
-        Why FARFETCH?
+        {translate("Why FARFETCH?")}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {benefits.map(({ id, Icon, eyebrow, title, ctaLabel, link }) => (
@@ -51,15 +55,17 @@ export default function WhyFarfetchSection() {
             <Icon className="w-4 h-4 text-(--color-preto)" aria-hidden="true" />
             <div>
               <p className="text-[11px] font-normal tracking-wide text-(--color-preto)">
-                {eyebrow}
+                {translate(eyebrow)}
               </p>
-              <p className="text-[13px] font-normal text-(--color-preto) mt-0">{title}</p>
+              <p className="text-[13px] font-normal text-(--color-preto) mt-0">
+                {translate(title)}
+              </p>
             </div>
             <a
               href={link}
               className="text-[11px] text-(--color-preto) underline font-normal"
             >
-              {ctaLabel}
+              {translate(ctaLabel)}
             </a>
           </article>
         ))}

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { FiMail, FiPhone } from "react-icons/fi";
+import { useLanguage } from "@/context/LanguageContext";
 
 const fontStack =
   "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)";
@@ -26,6 +27,9 @@ const contactMethods = [
 ];
 
 export default function ContactSupportSection() {
+  const { translations } = useLanguage();
+  const translate = (text?: string) =>
+    text ? translations.productCopy[text] ?? text : text;
   return (
     <section
       style={{ fontFamily: fontStack }}
@@ -36,7 +40,7 @@ export default function ContactSupportSection() {
         id="contact-support-heading"
         className="text-[20px] font-base text-(--color-preto) mb-4"
       >
-        Contact us
+        {translate("Contact us")}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {contactMethods.map(({ id, Icon, label, description, actionHref, actionLabel }) => (
@@ -47,9 +51,11 @@ export default function ContactSupportSection() {
             <Icon className="w-5 h-5 text-(--color-preto)" aria-hidden="true" />
             <div>
               <p className="text-[13px] font-thin tracking-wide text-(--color-preto)">
-                {label}
+                {translate(label)}
               </p>
-              <p className="text-[13px]  font-thin text-(--color-preto) mt-0">{description}</p>
+              <p className="text-[13px]  font-thin text-(--color-preto) mt-0">
+                {translate(description)}
+              </p>
             </div>
             <a
               href={actionHref}

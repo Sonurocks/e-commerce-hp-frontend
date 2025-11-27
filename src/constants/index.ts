@@ -1,5 +1,6 @@
 export const promotions = [
   {
+    id: "newSeason25",
     type: "promotion",
     text: "Enjoy 25% off the new season",
     link: "/promotions/women/promo-event",
@@ -7,6 +8,7 @@ export const promotions = [
     showShopNow: true,
   },
   {
+    id: "newPiecesDaily",
     type: "generic",
     text: "New pieces added daily",
     link: "https://www.farfetch.com/sets/new-in-this-week-eu-women.aspx",
@@ -17,18 +19,21 @@ export const promotions = [
 
 export const primaryNavigationLinks = [
   {
+    id: "womenswear",
     href: "/womenswear",
     label: "Womenswear",
     className:
       "text-preto hover:text-gray-900 font-semibold text-sm transition px-3 py-1.5 rounded hover:bg-gray-100",
   },
   {
+    id: "menswear",
     href: "/menswear",
     label: "Menswear",
     className:
       "text-preto hover:text-gray-900 font-normal text-sm transition px-3 py-1.5 rounded hover:bg-gray-100",
   },
   {
+    id: "kidswear",
     href: "/kidswear",
     label: "Kidswear",
     className:
@@ -38,6 +43,7 @@ export const primaryNavigationLinks = [
 
 export const secondaryNavigationLinks = [
   {
+    id: "twentyFiveOff",
     href: "/sale/25-off",
     label: "25% off",
     className:
@@ -46,6 +52,7 @@ export const secondaryNavigationLinks = [
     drawerType: "25off",
   },
   {
+    id: "newIn",
     href: "/new-in",
     label: "New in",
     className:
@@ -54,6 +61,7 @@ export const secondaryNavigationLinks = [
     drawerType: "newIn",
   },
   {
+    id: "holidaySeason",
     href: "/holiday-season",
     label: "Holiday season",
     className:
@@ -62,6 +70,7 @@ export const secondaryNavigationLinks = [
     drawerType: "holidaySeason",
   },
   {
+    id: "brands",
     href: "/brands",
     label: "Brands",
     className:
@@ -70,6 +79,7 @@ export const secondaryNavigationLinks = [
     drawerType: "brands",
   },
   {
+    id: "clothing",
     href: "/clothing",
     label: "Clothing",
     className:
@@ -78,6 +88,7 @@ export const secondaryNavigationLinks = [
     drawerType: "clothing",
   },
   {
+    id: "shoes",
     href: "/shoes",
     label: "Shoes",
     className:
@@ -86,6 +97,7 @@ export const secondaryNavigationLinks = [
     drawerType: "shoes",
   },
   {
+    id: "bags",
     href: "/bags",
     label: "Bags",
     className:
@@ -94,6 +106,7 @@ export const secondaryNavigationLinks = [
     drawerType: "bags",
   },
   {
+    id: "accessories",
     href: "/accessories",
     label: "Accessories",
     className:
@@ -102,6 +115,7 @@ export const secondaryNavigationLinks = [
     drawerType: "accessories",
   },
   {
+    id: "jewellery",
     href: "/jewellery",
     label: "Jewellery",
     className:
@@ -110,6 +124,7 @@ export const secondaryNavigationLinks = [
     drawerType: "jewellery",
   },
   {
+    id: "homeware",
     href: "/homeware",
     label: "Homeware",
     className:
@@ -118,6 +133,7 @@ export const secondaryNavigationLinks = [
     drawerType: "homeware",
   },
   {
+    id: "preOwned",
     href: "/pre-owned",
     label: "Pre-owned",
     className:
@@ -126,6 +142,7 @@ export const secondaryNavigationLinks = [
     drawerType: "preOwned",
   },
   {
+    id: "sale",
     href: "/sale",
     label: "Sale",
     className:
@@ -137,6 +154,7 @@ export const secondaryNavigationLinks = [
 
 export const menswearSecondaryNavigationLinks = [
   {
+    id: "twentyFiveOff",
     href: "/sale/25-off",
     label: "25% off",
     className:
@@ -145,6 +163,7 @@ export const menswearSecondaryNavigationLinks = [
     drawerType: "25off",
   },
   {
+    id: "newIn",
     href: "/new-in",
     label: "New in",
     className:
@@ -153,6 +172,7 @@ export const menswearSecondaryNavigationLinks = [
     drawerType: "newIn",
   },
   {
+    id: "holidaySeason",
     href: "/holiday-season",
     label: "Holiday season",
     className:
@@ -161,6 +181,7 @@ export const menswearSecondaryNavigationLinks = [
     drawerType: "holidaySeason",
   },
   {
+    id: "brands",
     href: "/brands",
     label: "Brands",
     className:
@@ -169,6 +190,7 @@ export const menswearSecondaryNavigationLinks = [
     drawerType: "brands",
   },
   {
+    id: "clothing",
     href: "/clothing",
     label: "Clothing",
     className:
@@ -177,6 +199,7 @@ export const menswearSecondaryNavigationLinks = [
     drawerType: "clothing",
   },
   {
+    id: "shoes",
     href: "/shoes",
     label: "Shoes",
     className:
@@ -185,6 +208,7 @@ export const menswearSecondaryNavigationLinks = [
     drawerType: "shoes",
   },
   {
+    id: "bags",
     href: "/bags",
     label: "Bags",
     className:
@@ -193,6 +217,7 @@ export const menswearSecondaryNavigationLinks = [
     drawerType: "bags",
   },
   {
+    id: "accessories",
     href: "/accessories",
     label: "Accessories",
     className:
@@ -201,6 +226,7 @@ export const menswearSecondaryNavigationLinks = [
     drawerType: "accessories",
   },
   {
+    id: "watches",
     href: "/watches",
     label: "Watches",
     className:
@@ -209,6 +235,7 @@ export const menswearSecondaryNavigationLinks = [
     drawerType: "watches",
   },
   {
+    id: "homeware",
     href: "/homeware",
     label: "Homeware",
     className:
@@ -217,6 +244,7 @@ export const menswearSecondaryNavigationLinks = [
     drawerType: "homeware",
   },
   {
+    id: "sale",
     href: "/sale",
     label: "Sale",
     className:
@@ -228,6 +256,7 @@ export const menswearSecondaryNavigationLinks = [
 
 export const kidswearSecondaryNavigationLinks = [
   {
+    id: "newIn",
     href: "/new-in",
     label: "New in",
     className:
@@ -236,6 +265,7 @@ export const kidswearSecondaryNavigationLinks = [
     drawerType: "newIn",
   },
   {
+    id: "holidaySeason",
     href: "/holiday-season",
     label: "Holiday season",
     className:
@@ -244,6 +274,7 @@ export const kidswearSecondaryNavigationLinks = [
     drawerType: "holidaySeason",
   },
   {
+    id: "brands",
     href: "/brands",
     label: "Brands",
     className:
@@ -252,6 +283,7 @@ export const kidswearSecondaryNavigationLinks = [
     drawerType: "brands",
   },
   {
+    id: "baby",
     href: "/kidswear/baby",
     label: "Baby (0-36mth)",
     className:
@@ -260,6 +292,7 @@ export const kidswearSecondaryNavigationLinks = [
     drawerType: "0-36months",
   },
   {
+    id: "kids",
     href: "/kidswear/kids",
     label: "Kids (2-12 yrs)",
     className:
@@ -268,6 +301,7 @@ export const kidswearSecondaryNavigationLinks = [
     drawerType: "0-12months",
   },
   {
+    id: "teens",
     href: "/kidswear/teens",
     label: "Teens (13-16 yrs)",
     className:
@@ -276,6 +310,7 @@ export const kidswearSecondaryNavigationLinks = [
     drawerType: "teens",
   },
   {
+    id: "sale",
     href: "/sale",
     label: "Sale",
     className:

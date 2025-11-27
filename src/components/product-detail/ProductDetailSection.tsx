@@ -6,11 +6,15 @@ import { GoHeart } from "react-icons/go";
 import { FaToggleOn } from "react-icons/fa";
 import { PiCoatHangerBold } from "react-icons/pi";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import ProductDetailAdditionalSection from "./ProductDetailAdditionalSection";
 import WhyFarfetchSection from "./WhyFarfetchSection";
 import DownloadAppBanner from "@/components/department/DownloadAppBanner";
 import ContactSupportSection from "./ContactSupportSection";
 import ImageZoom, { ZoomedImageView } from "./ImageZoom";
+import { useLanguage } from "@/context/LanguageContext";
+import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 const fontStack =
   "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)";
 
@@ -21,7 +25,6 @@ export default function ProductDetailSection({
 }) {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
-  const [isWishlisted, setIsWishlisted] = useState(false);
   const [hoveredZoomImage, setHoveredZoomImage] = useState<{ src: string } | null>(null);
   const [zoomPosition, setZoomPosition] = useState<{ x: number; y: number } | null>(null);
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState<boolean>(false);
@@ -45,6 +48,20 @@ export default function ProductDetailSection({
     { size: "XL", price: "£232", available: true },
   ];
 
+  const { translations } = useLanguage();
+  const { addItem } = useCart();
+  const { toggleWishlist, isWishlisted } = useWishlist();
+  const router = useRouter();
+  const translate = (text?: string) =>
+    text ? translations.productCopy[text] ?? text : text;
+  const template = (key: string, params: Record<string, string>) => {
+    let value = translate(key) ?? key;
+    Object.entries(params).forEach(([placeholder, replacement]) => {
+      value = value.replace(`{{${placeholder}}}`, replacement);
+    });
+    return value;
+  };
+
   const galleryImages = useMemo(() => {
     const uniqueImages: { src: string }[] = [];
     const pushUnique = (image?: { src: string }) => {
@@ -62,7 +79,17 @@ export default function ProductDetailSection({
   const selectedImage = galleryImages[selectedImageIndex] || galleryImages[0] || product.image;
 
   const handleWishlistClick = () => {
-    setIsWishlisted(!isWishlisted);
+    toggleWishlist(product);
+  };
+  const wishlistActive = isWishlisted(product.id);
+
+  const handleAddToBag = () => {
+    if (!selectedSize) {
+      setIsSizeDropdownOpen(true);
+      return;
+    }
+    addItem(product, selectedSize, 1);
+    router.push("/cart");
   };
 
   const sizeDropdownRef = useRef<HTMLDivElement>(null);
@@ -174,7 +201,7 @@ export default function ProductDetailSection({
             <ImageZoom
               key={selectedImage?.src || "selected-image"}
               image={selectedImage}
-              alt={product.title}
+              alt={translate(product.title) ?? product.title}
               zoomLevel={zoomLevel}
               magnifierSize={magnifierSize}
               heightClass="h-[380px]"
@@ -198,7 +225,7 @@ export default function ProductDetailSection({
                 {image ? (
                   <Image
                     src={image.src}
-                    alt={`${product.title} detail ${sourceIndex + 1}`}
+                    alt={`${translate(product.title) ?? product.title} detail ${sourceIndex + 1}`}
                     fill
                     sizes="150px"
                     className="object-cover"
@@ -231,10 +258,12 @@ export default function ProductDetailSection({
           {/* Brand and Product Name */}
           <div className="mb-6">
             <h1 className="text-[22px] font-nromal text-(--color-preto) mb-1 leading-tight">
-              {product.title}
+              {translate(product.title)}
             </h1>
             {product.subtitle && (
-              <p className="text-[12px] text-(--color-preto) font-thin">{product.subtitle}</p>
+              <p className="text-[12px] text-(--color-preto) font-thin">
+                {translate(product.subtitle)}
+              </p>
             )}
           </div>
 
@@ -257,14 +286,17 @@ export default function ProductDetailSection({
               {product.price}
             </span>
           )}
-          <p className="text-[12px] text-[#666] mt-1">Import duties included</p>
+          <p className="text-[12px] text-[#666] mt-1">
+            {translate("Import duties included")}
+          </p>
         </div>
 
         {/* Promotional Message */}
         {(product.badge === "Extra 25% off" || product.badge === "Previous Season" || product.badge === "New Season") && (
           <div className="bg-[#e5e5e5] py-2.5 px-4 mb-4 border rounded-lg border-[#d0d0d0]">
             <p className="text-[13px] text-(--color-preto) leading-tight">
-              <span className="font-bold">Extra 20% off</span> Selected sale items only. Discount applied at checkout
+              <span className="font-bold">{translate("Extra 20% off")}</span>{" "}
+              {translate("Selected sale items only. Discount applied at checkout")}
             </p>
           </div>
         )}
@@ -277,7 +309,7 @@ export default function ProductDetailSection({
               className="w-full px-3 py-2 border border-[#ccc] rounded-lg focus:outline-none focus:border-[#222] bg-white cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
             >
               <span className={selectedSize ? "font-semibold" : "text-gray-400"}>
-                {selectedSize || "Select size"}
+                {selectedSize || translate("Select size")}
               </span>
               <svg
                 className={`w-3 h-3 transition-transform ${isSizeDropdownOpen ? "rotate-180" : ""}`}
@@ -292,7 +324,9 @@ export default function ProductDetailSection({
             {isSizeDropdownOpen && (
               <div className="absolute z-10 w-full mt-1 bg-white border border-[#ccc] rounded-lg shadow-lg">
                 <div className="p-2">
-                  <p className="text-[11px] text-gray-400 mb-2">Select size</p>
+                  <p className="text-[11px] text-gray-400 mb-2">
+                    {translate("Select size")}
+                  </p>
                   <div className="space-y-1">
                     {sizeOptions.map((option) => (
                       <button
@@ -321,13 +355,10 @@ export default function ProductDetailSection({
                   </div>
                   <div className="mt-2 pt-2 border-t border-gray-200 space-y-1">
                     <p className="text-[11px] text-(--color-preto)">
-                      Different to <span className="font-bold">£232</span>?{" "}
-                      <a href="#" className="underline">
-                        Find out why
-                      </a>
+                      {template("Different to {{price}}? Find out why", { price: "£232" })}
                     </p>
                     <a href="#" className="text-[11px] text-(--color-preto) underline block">
-                      Size missing?
+                      {translate("Size missing?")}
                     </a>
                   </div>
                 </div>
@@ -339,27 +370,30 @@ export default function ProductDetailSection({
         {/* Action Buttons */}
         <div className="flex gap-3 mb-6">
           <button
+            onClick={handleAddToBag}
             className="flex-[3] bg-[#222] text-white py-2 px-6 font-semibold rounded-lg text-[15px] hover:bg-[#333] transition-colors"
             disabled={!selectedSize}
           >
-            Add To Bag
+            {translate("Add To Bag")}
           </button>
           <button
             onClick={handleWishlistClick}
             className="flex-[1]  text-preto border-2 border-[#222] rounded-lg py-2 px-4 font-semibold text-[15px] hover:bg-[#f5f5f5] transition-colors flex items-center justify-center gap-2"
           >
             <GoHeart
-              className={`w-5 h-5 ${isWishlisted ? "fill-[#222]" : ""}`}
+              className={`w-5 h-5 ${wishlistActive ? "fill-[#222]" : ""}`}
               strokeWidth={1.0}
             />
-            Wishlist
+            {translate("Wishlist")}
           </button>
         </div>
 
         {/* Estimated Delivery */}
         {product.estimatedDelivery && (
           <div className="text-[13px] text-[#666]">
-            Estimated delivery {product.estimatedDelivery}
+            {template("Estimated delivery {{date}}", {
+              date: product.estimatedDelivery,
+            })}
           </div>
         )}
         </div>
@@ -371,13 +405,17 @@ export default function ProductDetailSection({
         {/* Breadcrumb Navigation */}
         <div className="mb-6">
           <nav className="text-[13px] text-[#666]">
-            <a href="#" className="hover:text-(--color-preto)">Women Home</a>
+            <a href="#" className="hover:text-(--color-preto)">
+              {translate("Women Home")}
+            </a>
             <span className="mx-2">{">"}</span>
             <a href="#" className="hover:text-(--color-preto)">{product.title}</a>
             <span className="mx-2">{">"}</span>
-            <a href="#" className="hover:text-(--color-preto)">Clothing</a>
+            <a href="#" className="hover:text-(--color-preto)">
+              {translate("Clothing")}
+            </a>
             <span className="mx-2">{">"}</span>
-            <span className="hover:text-(--color-preto)">Polo Tops</span>
+            <span className="hover:text-(--color-preto)">{translate("Polo Tops")}</span>
           </nav>
         </div>
 
@@ -391,7 +429,9 @@ export default function ProductDetailSection({
               }
               className="w-full flex items-center justify-between py-4 text-left"
             >
-              <h3 className="text-[13px] font-thin text-(--color-preto)">THE DETAILS</h3>
+              <h3 className="text-[13px] font-thin text-(--color-preto)">
+                {translate("THE DETAILS")}
+              </h3>
               <svg
                 className={`w-4 h-4 text-(--color-preto) transition-transform ${
                   openSections.details ? "rotate-180" : ""
@@ -414,11 +454,15 @@ export default function ProductDetailSection({
                   {/* Left Column */}
                   <div className="flex-1 space-y-3">
                     <div>
-                      <p className="font-normal text-(--color-preto) mb-1">{product.title}</p>
-                      <p>{product.subtitle}</p>
+                      <p className="font-normal text-(--color-preto) mb-1">
+                        {translate(product.title)}
+                      </p>
+                      <p>{translate(product.subtitle)}</p>
                     </div>
                     <div>
-                      <p className="font-semibold text-(--color-preto) mb-1">Highlights</p>
+                      <p className="font-semibold text-(--color-preto) mb-1">
+                        {translate("Highlights")}
+                      </p>
                       <p>||Merino||Merino|MulticolourMerino</p>
                     </div>
                   </div>
@@ -426,16 +470,22 @@ export default function ProductDetailSection({
                   {/* Right Column */}
                   <div className="flex-1 space-y-3">
                     <div>
-                      <p className="font-semibold text-(--color-preto) mb-1">Composition</p>
+                      <p className="font-semibold text-(--color-preto) mb-1">
+                        {translate("Composition")}
+                      </p>
                       <p>Cashmere 100%</p>
                     </div>
                     <div>
-                      <p className="font-semibold text-(--color-preto) mb-1">Washing instructions</p>
-                      <p>Read Manufacturer Guidelines</p>
+                      <p className="font-semibold text-(--color-preto) mb-1">
+                        {translate("Washing instructions")}
+                      </p>
+                      <p>{translate("Read Manufacturer Guidelines")}</p>
                     </div>
                     <div>
-                      <p className="font-semibold text-(--color-preto) mb-1">Wearing</p>
-                      <p>The model is 1.75 m wearing size S</p>
+                      <p className="font-semibold text-(--color-preto) mb-1">
+                        {translate("Wearing")}
+                      </p>
+                      <p>{translate("The model is 1.75 m wearing size S.")}</p>
                     </div>
                     
                   </div>
@@ -452,7 +502,9 @@ export default function ProductDetailSection({
               }
               className="w-full flex items-center justify-between py-4 text-left"
             >
-              <h3 className="text-[13px] font-thin text-(--color-preto)">SIZE & FIT</h3>
+              <h3 className="text-[13px] font-thin text-(--color-preto)">
+                {translate("SIZE & FIT")}
+              </h3>
               <svg
                 className={`w-4 h-4 text-(--color-preto) transition-transform ${
                   openSections.sizeFit ? "rotate-180" : ""
@@ -475,7 +527,9 @@ export default function ProductDetailSection({
                   {/* Left Column - Model Measurements */}
                   <div className="flex-1">
                     <div className="flex items-center gap-50 mb-3">
-                      <h4 className="font-semibold text-[13px] text-(--color-preto)">Model Measurements</h4>
+                      <h4 className="font-semibold text-[13px] text-(--color-preto)">
+                        {translate("Model Measurements")}
+                      </h4>
                       <div className="flex items-center gap-2">
                         <span className={`text-[13px] ${unitToggle === "in" ? "text-(--color-preto)" : "text-gray-400"}`}>in</span>
                         <button
@@ -491,27 +545,29 @@ export default function ProductDetailSection({
                     </div>
                     <div className="space-y-1.5 mb-3">
                       <div className="flex gap-15 text-[13px]">
-                        <span>Height:</span>
+                        <span>{translate("Height:")}</span>
                         <span>1.75 m</span>
                       </div>
                       <div className="flex gap-10 text-[13px]">
-                        <span>Bust/chest:</span>
+                        <span>{translate("Bust/chest:")}</span>
                         <span>{unitToggle === "cm" ? "88 cm" : "35 in"}</span>
                       </div>
                       <div className="flex gap-15 text-[13px]">
-                        <span>Hips:</span>
+                        <span>{translate("Hips:")}</span>
                         <span>{unitToggle === "cm" ? "93 cm" : "37 in"}</span>
                       </div>
                       <div className="flex gap-15 text-[13px]">
-                        <span>Waist:</span>
+                        <span>{translate("Waist:")}</span>
                         <span>{unitToggle === "cm" ? "67 cm" : "26 in"}</span>
                       </div>
                     </div>
-                    <p className="mb-3 text-[13px]">The model is 1.75 m wearing size S.</p>
+                    <p className="mb-3 text-[13px]">
+                      {translate("The model is 1.75 m wearing size S.")}
+                    </p>
                     <p className="text-[13px]">
-                      Still need help?{" "}
+                      {translate("Still need help?")}{" "}
                       <a href="#" className="underline">
-                        Try our size guide
+                        {translate("Try our size guide")}
                       </a>
                     </p>
                   </div>
@@ -525,15 +581,15 @@ export default function ProductDetailSection({
                         />
                         <div>
                           <h4 className="font-normal text-[13px] text-(--color-preto) mb-2">
-                            SHOP NOW, DECIDE LATER
+                            {translate("SHOP NOW, DECIDE LATER")}
                           </h4>
                           <p className="text-[13px] text-(--color-preto) mb-2 leading-relaxed">
-                            The perfect fit is just a try-on away. We offer{" "}
-                            <span className="font-bold">30-day free international returns</span> and{" "}
-                            <span className="font-bold">at-home collection.</span>
+                            {translate(
+                              "The perfect fit is just a try-on away. We offer 30-day free international returns and at-home collection."
+                            )}
                           </p>
                           <a href="#" className="text-[13px] underline">
-                            Know More
+                            {translate("Know More")}
                           </a>
                         </div>
                       </div>
@@ -553,7 +609,7 @@ export default function ProductDetailSection({
               className="w-full flex items-center justify-between py-4 text-left"
             >
               <h3 className="text-[13px] font-thin text-(--color-preto)">
-                DELIVERY, RETURNS & SELLER
+                {translate("DELIVERY, RETURNS & SELLER")}
               </h3>
               <svg
                 className={`w-4 h-4 text-(--color-preto) transition-transform ${
@@ -577,16 +633,30 @@ export default function ProductDetailSection({
                   {/* Left Column */}
                   <div className="flex-1 space-y-3">
                     <div>
-                      <p className="font-semibold text-(--color-preto) mb-1">We ve got your back</p>
+                      <p className="font-semibold text-(--color-preto) mb-1">
+                        {translate("We've got your back")}
+                      </p>
                       <ul className="list-disc list-inside space-y-1">
-                        <li>One delivery fee to most locations (check our Orders & Delivery page)</li>
-                        <li>Free returns within 30 days (excludes final sale and made-to-order items, face masks and certain products containing hazardous or flammable materials, such as fragrances and aerosols)</li>
+                        <li>
+                          {translate(
+                            "One delivery fee to most locations (check our Orders & Delivery page)"
+                          )}
+                        </li>
+                        <li>
+                          {translate(
+                            "Free returns within 30 days (excludes final sale and made-to-order items, face masks and certain products containing hazardous or flammable materials, such as fragrances and aerosols)"
+                          )}
+                        </li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-semibold text-(--color-preto) mb-1">Import duties information</p>
+                      <p className="font-semibold text-(--color-preto) mb-1">
+                        {translate("Import duties information")}
+                      </p>
                       <p>
-                        Let us handle the legwork. Delivery duties are included in the item price when shipping to all EU countries (excluding the Canary Islands), plus The United Kingdom, USA, Canada, China Mainland, Australia, New Zealand, Puerto Rico, Switzerland, Singapore, Republic Of Korea, Kuwait, Mexico, Qatar, India, Norway, Saudi Arabia, Taiwan Region, Thailand, U.A.E., Japan, Brazil, Isle of Man, San Marino, Colombia, Chile, Argentina, Egypt, Lebanon, Hong Kong SAR, and Bahrain. All import duties are included in your order – the price you see is the price you pay.
+                        {translate(
+                          "Let us handle the legwork. Delivery duties are included in the item price when shipping to all EU countries (excluding the Canary Islands), plus The United Kingdom, USA, Canada, China Mainland, Australia, New Zealand, Puerto Rico, Switzerland, Singapore, Republic Of Korea, Kuwait, Mexico, Qatar, India, Norway, Saudi Arabia, Taiwan Region, Thailand, U.A.E., Japan, Brazil, Isle of Man, San Marino, Colombia, Chile, Argentina, Egypt, Lebanon, Hong Kong SAR, and Bahrain. All import duties are included in your order – the price you see is the price you pay."
+                        )}
                       </p>
                     </div>
                   </div>
@@ -594,31 +664,47 @@ export default function ProductDetailSection({
                   {/* Middle Column */}
                   <div className="flex-1 space-y-3">
                     <div>
-                      <p className="font-semibold text-(--color-preto) mb-1">Estimated delivery</p>
-                      <p>Standard: 26 Nov - 28 Nov</p>
-                      <p>Express: 24 Nov - 25 Nov</p>
+                      <p className="font-semibold text-(--color-preto) mb-1">
+                        {translate("Estimated delivery")}
+                      </p>
+                      <p>
+                        {translate("Standard:")} 26 Nov - 28 Nov
+                      </p>
+                      <p>
+                        {translate("Express:")} 24 Nov - 25 Nov
+                      </p>
                     </div>
                     <div>
-                      <a href="#" className="underline">Seller details</a>
+                      <a href="#" className="underline">{translate("Seller details")}</a>
                     </div>
                     <div>
-                      <a href="#" className="underline">Manufacturer details</a>
+                      <a href="#" className="underline">
+                        {translate("Manufacturer details")}
+                      </a>
                     </div>
                   </div>
                   
                   {/* Right Column */}
                   <div className="flex-1 space-y-3">
                     <div>
-                      <p className="font-semibold text-(--color-preto) mb-1">Need more information?</p>
+                      <p className="font-semibold text-(--color-preto) mb-1">
+                        {translate("Need more information?")}
+                      </p>
                       <ul className="space-y-1">
                         <li>
-                          <a href="#" className="underline">Orders & delivery</a>
+                          <a href="#" className="underline">
+                            {translate("Orders & delivery")}
+                          </a>
                         </li>
                         <li>
-                          <a href="#" className="underline">Returns & refunds</a>
+                          <a href="#" className="underline">
+                            {translate("Returns & refunds")}
+                          </a>
                         </li>
                         <li>
-                          <a href="#" className="underline">Duties & taxes</a>
+                          <a href="#" className="underline">
+                            {translate("Duties & taxes")}
+                          </a>
                         </li>
                       </ul>
                     </div>
