@@ -222,6 +222,7 @@ const hindiBundle: TranslationBundle = {
       "Terms and conditions": "नियम और शर्तें",
       "Modern slavery statement": "आधुनिक दासता वक्तव्य",
       Accessibility: "सुलभता",
+      "Become a vendor": "विक्रेता बनें",
     },
     legalDisclaimer: {
       trademark:

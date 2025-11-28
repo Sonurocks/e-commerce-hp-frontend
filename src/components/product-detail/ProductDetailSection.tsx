@@ -6,6 +6,7 @@ import { GoHeart } from "react-icons/go";
 import { FaToggleOn } from "react-icons/fa";
 import { PiCoatHangerBold } from "react-icons/pi";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ProductDetailAdditionalSection from "./ProductDetailAdditionalSection";
 import WhyFarfetchSection from "./WhyFarfetchSection";
@@ -289,6 +290,17 @@ export default function ProductDetailSection({
           <p className="text-[12px] text-[#666] mt-1">
             {translate("Import duties included")}
           </p>
+        </div>
+
+        {/* Booking for Ex-Showroom Price */}
+        <div className="mb-2">
+          
+          <Link
+            href={`/product-detail/${product.id}/store`}
+            className="text-[14px] text-blue-900 hover:text-blue-800 underline"
+          >
+            {translate("Visit the Store")}
+          </Link>
         </div>
 
         {/* Promotional Message */}

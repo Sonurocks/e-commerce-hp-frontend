@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Link from "next/link";
 import { Product } from "@/constants/department";
-import { GoHeart } from "react-icons/go";
+import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useLanguage } from "@/context/LanguageContext";
 import { useWishlist } from "@/context/WishlistContext";
 const fontStack =
@@ -43,14 +43,11 @@ export default function ProductCard({
             className="absolute top-2 right-2 z-10 p-2 rounded-full transition-colors"
             aria-label="Add to wishlist"
           >
-            <GoHeart
-              className={`w-5 h-5 ${
-                wishlisted
-                  ? "fill-black text-(--color-preto)"
-                  : "text-(--color-preto)"
-              }`}
-              strokeWidth={1.0}
-            />
+            {wishlisted ? (
+              <GoHeartFill className="w-5 h-5 text-black" />
+            ) : (
+              <GoHeart className="w-5 h-5 text-black" strokeWidth={1.0} />
+            )}
           </button>
           {showBadge && isImageBadge && (
             <div className="absolute top-2 left-2 z-10">

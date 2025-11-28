@@ -68,9 +68,15 @@ const Header = () => {
   const [isThemeDrawerOpen, setIsThemeDrawerOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const { cartItems } = useCart();
   const { wishlistCount } = useWishlist();
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Prevent hydration mismatch by only showing counts after mount
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const searchDrawerRef = useRef<HTMLDivElement>(null);
   const flagButtonRefDesktop = useRef<HTMLButtonElement>(null);
   const flagButtonRefMobile = useRef<HTMLButtonElement>(null);
@@ -400,7 +406,7 @@ const Header = () => {
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
                     <GoHeart className="w-6 h-6" strokeWidth={1.0} />
-                    {wishlistCount > 0 && (
+                    {isMounted && wishlistCount > 0 && (
                       <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-white text-xs font-semibold flex items-center justify-center">
                         {wishlistCount}
                       </span>
@@ -416,7 +422,7 @@ const Header = () => {
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
                     <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
-                    {cartCount > 0 && (
+                    {isMounted && cartCount > 0 && (
                       <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-white text-xs font-semibold flex items-center justify-center">
                         {cartCount}
                       </span>
@@ -603,7 +609,7 @@ const Header = () => {
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
                     <GoHeart className="w-6 h-6" strokeWidth={1.0} />
-                  {wishlistCount > 0 && (
+                  {isMounted && wishlistCount > 0 && (
                     <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-white text-xs font-semibold flex items-center justify-center">
                       {wishlistCount}
                     </span>
@@ -711,7 +717,7 @@ const Header = () => {
                       >
                       <div className="relative">
                         <GoHeart className="h-4 w-4" />
-                        {wishlistCount > 0 && (
+                        {isMounted && wishlistCount > 0 && (
                           <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-white text-[10px] font-semibold flex items-center justify-center">
                             {wishlistCount}
                           </span>
@@ -726,7 +732,7 @@ const Header = () => {
                       >
                         <div className="relative">
                           <HiOutlineShoppingBag className="h-4 w-4" />
-                          {cartCount > 0 && (
+                          {isMounted && cartCount > 0 && (
                             <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-white text-[10px] font-semibold flex items-center justify-center">
                               {cartCount}
                             </span>

@@ -75,7 +75,7 @@ const Wishlist = () => {
           </p>
         </div>
 
-        <div className="space-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {wishlistItems.map((item) => {
             const sizeOptions =
               item.sizes && item.sizes.length > 0
@@ -91,7 +91,7 @@ const Wishlist = () => {
             return (
               <div
                 key={item.id}
-                className="flex flex-col items-center text-center gap-6"
+                className="flex flex-col items-start text-left gap-6 h-full"
               >
                 <div className="relative w-72 h-72 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden">
                   <Link
@@ -124,16 +124,16 @@ const Wishlist = () => {
                   )}
                 </div>
 
-                <div className="space-y-2 max-w-md">
+                <div className="space-y-2 max-w-md flex-1">
                   <p className="text-sm uppercase tracking-wide text-gray-500">
                     {item.subtitle}
                   </p>
-                  <h3 className="text-xl font-medium text-(--color-preto)">
+                  <h3 className="text-xl font-medium text-(--color-preto) line-clamp-2">
                     {item.title}
                   </h3>
                   <p className="text-sm text-gray-500">FARFETCH ID: {item.id}</p>
 
-                  <div className="flex items-center justify-center gap-3 text-lg">
+                  <div className="flex items-center justify-start gap-3 text-lg">
                     {hasDiscount && (
                       <span className="text-gray-500 line-through">
                         {item.originalPrice}

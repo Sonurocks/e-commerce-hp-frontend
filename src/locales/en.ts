@@ -223,6 +223,7 @@ const englishBundle: TranslationBundle = {
       "Terms and conditions": "Terms and conditions",
       "Modern slavery statement": "Modern slavery statement",
       Accessibility: "Accessibility",
+      "Become a vendor": "Become a vendor",
     },
     legalDisclaimer: {
       trademark:

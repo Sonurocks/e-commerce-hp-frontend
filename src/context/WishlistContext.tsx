@@ -4,6 +4,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -28,6 +29,39 @@ const WishlistContext = createContext<WishlistContextValue | undefined>(
 );
 
 const DEFAULT_SIZES = ["XS", "S", "M", "L", "XL"];
+const WISHLIST_STORAGE_KEY = "ecommerce_wishlist";
+
+// Helper to load wishlist from localStorage
+const loadWishlistFromStorage = (): ProductDetail[] => {
+  if (typeof window === "undefined") return [];
+  
+  try {
+    const stored = localStorage.getItem(WISHLIST_STORAGE_KEY);
+    if (!stored) return [];
+    
+    const productIds: string[] = JSON.parse(stored);
+    // Reconstruct ProductDetails from stored IDs
+    return productIds
+      .map((id) => productsById[id])
+      .filter((product): product is ProductDetail => product !== undefined);
+  } catch (error) {
+    console.error("Error loading wishlist from localStorage:", error);
+    return [];
+  }
+};
+
+// Helper to save wishlist to localStorage
+const saveWishlistToStorage = (wishlistItems: ProductDetail[]) => {
+  if (typeof window === "undefined") return;
+  
+  try {
+    // Store only product IDs to avoid storing full product objects
+    const productIds = wishlistItems.map((item) => item.id);
+    localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(productIds));
+  } catch (error) {
+    console.error("Error saving wishlist to localStorage:", error);
+  }
+};
 
 const normalizeProduct = (
   productInput: WishlistProductInput
@@ -63,7 +97,12 @@ export const WishlistProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [wishlistItems, setWishlistItems] = useState<ProductDetail[]>([]);
+  const [wishlistItems, setWishlistItems] = useState<ProductDetail[]>(() => loadWishlistFromStorage());
+  
+  // Save to localStorage whenever wishlistItems changes
+  useEffect(() => {
+    saveWishlistToStorage(wishlistItems);
+  }, [wishlistItems]);
 
   const addToWishlist = useCallback((productInput: WishlistProductInput) => {
     setWishlistItems((prev) => {
@@ -94,6 +133,9 @@ export const WishlistProvider = ({
 
   const clearWishlist = useCallback(() => {
     setWishlistItems([]);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(WISHLIST_STORAGE_KEY);
+    }
   }, []);
 
   const wishlistCount = wishlistItems.length;

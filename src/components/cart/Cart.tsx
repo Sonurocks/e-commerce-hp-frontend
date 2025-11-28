@@ -1,15 +1,20 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { FaEnvelope } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa";
 import { HiOutlineInformationCircle } from "react-icons/hi2";
 import { GoHeart } from "react-icons/go";
+import { FiX } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
+import { FaApple, FaFacebookF } from "react-icons/fa";
 import DownloadAppBanner from "../department/DownloadAppBanner";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { useCheckout } from "@/context/CheckoutContext";
 
 const formatCurrency = (value: number, symbol: string) =>
   `${symbol}${value.toFixed(2)}`;
@@ -188,9 +193,162 @@ const EmptyCartState = () => {
   );
 };
 
+const CheckoutModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [email, setEmail] = useState("");
+  const router = useRouter();
+  const { setEmail: setCheckoutEmail } = useCheckout();
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
+  // Close on ESC key
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscKey);
+    }
+    return () => {
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [isOpen, onClose]);
+
+  // Close on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      const timeoutId = setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+      }, 100);
+      return () => {
+        clearTimeout(timeoutId);
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const handleContinue = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setCheckoutEmail(email.trim());
+      onClose();
+      router.push("/checkout");
+    }
+  };
+
+  return (
+    <>
+      {/* Dark overlay */}
+      <div className="fixed inset-0 bg-black/50 z-[99]" />
+
+      {/* Modal */}
+      <div
+        ref={modalRef}
+        className="fixed inset-0 z-[100] flex items-center justify-center px-4"
+      >
+        <div className="w-full max-w-[420px] bg-white rounded-3xl shadow-2xl">
+          {/* Header */}
+          <div className="flex items-start justify-between px-6 pt-6 pb-6">
+            <h2 className="text-2xl font-base text-preto">You&apos;re almost there</h2>
+            <button
+              onClick={onClose}
+              aria-label="Close modal"
+              className="text-preto hover:text-gray-600 transition p-2 cursor-pointer"
+            >
+              <FiX className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Body */}
+          <div className="px-6 pb-6">
+            <p className="text-base text-preto  mb-6 font-light leading-relaxed">
+              Please enter your email address before continuing. You&apos;ll be able to sign in if you already have a registered account.
+            </p>
+
+            <form onSubmit={handleContinue} className="space-y-4">
+              <label className="block text-xs font-normal text-black">
+                Email address
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-2 w-full border border-preto px-4 py-3 rounded-lg text-base text-preto placeholder:text-gray-400 focus:outline-none focus:border-black"
+                  placeholder="Enter your email"
+                  required
+                />
+              </label>
+
+              <button
+                type="submit"
+                className="w-full bg-black text-white py-3 text-sm  rounded-lg font-semibold tracking-wide hover:bg-gray-900 transition"
+              >
+                Continue To Checkout
+              </button>
+            </form>
+
+            <div className="flex items-center gap-3 my-4">
+              <span className="flex-1 " />
+              <span className="text-thin font-thin text-preto">OR</span>
+              <span className="flex-1 " />
+            </div>
+
+            <div className="space-y-2">
+              <button
+                type="button"
+                className="w-full border border-preto py-3 rounded-lg text-base font-medium flex items-center justify-center gap-3 hover:bg-gray-50 transition bg-white"
+              >
+                <FcGoogle className="text-xl" />
+                Continue With Google
+              </button>
+              <button
+                type="button"
+                className="w-full border border-preto py-3 rounded-lg  text-base font-medium flex items-center justify-center gap-3 hover:bg-gray-50 transition bg-white"
+              >
+                <FaApple className="text-xl text-black" />
+                Continue With Apple
+              </button>
+              <button
+                type="button"
+                className="w-full border border-preto py-3 rounded-lg text-base font-medium flex items-center justify-center gap-3 hover:bg-gray-50 transition bg-white"
+              >
+                <FaFacebookF className="text-xl text-blue-600" />
+                Continue With Facebook
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
 const Cart = () => {
-  const { cartItems, removeItem, summary } = useCart();
+  const { cartItems, removeItem, updateQuantity, updateSize, summary } = useCart();
   const { addToWishlist, isWishlisted } = useWishlist();
+  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
+  const [openDropdowns, setOpenDropdowns] = useState<Record<string, 'size' | 'quantity' | null>>({});
+  const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const totals = useMemo(
     () => ({
@@ -211,6 +369,51 @@ const Cart = () => {
       : summary.currencySymbol === "€"
       ? "EUR"
       : summary.currencySymbol;
+
+  // Size options - same as ProductDetailSection
+  const sizeOptions = [
+    { size: "XS", price: "£220", available: true },
+    { size: "S", price: "£220", available: true },
+    { size: "M", price: "£232", available: true },
+    { size: "L", price: null, available: false },
+    { size: "XL", price: "£232", available: true },
+  ];
+
+  // Quantity options (1-10)
+  const quantityOptions = Array.from({ length: 10 }, (_, i) => i + 1);
+
+  const toggleDropdown = (itemKey: string, type: 'size' | 'quantity') => {
+    setOpenDropdowns((prev) => ({
+      ...prev,
+      [itemKey]: prev[itemKey] === type ? null : type,
+    }));
+  };
+
+  const closeDropdown = (itemKey: string) => {
+    setOpenDropdowns((prev) => ({
+      ...prev,
+      [itemKey]: null,
+    }));
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      Object.entries(dropdownRefs.current).forEach(([itemKey, ref]) => {
+        if (ref && !ref.contains(event.target as Node)) {
+          closeDropdown(itemKey);
+        }
+      });
+    };
+
+    if (Object.values(openDropdowns).some((val) => val !== null)) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openDropdowns]);
 
   if (cartItems.length === 0) {
     return (
@@ -311,33 +514,146 @@ const Cart = () => {
                           </div>
 
                           <div className="space-y-4 text-sm text-(--color-preto)">
-                            <div className="flex items-center justify-between border-b border-gray-200 pb-2">
-                              <div>
-                                <p className="text-[11px] uppercase tracking-wide text-gray-500">
-                                  Size
-                                </p>
-                                <p className="font-medium">{item.size}</p>
+                            {/* Size Dropdown */}
+                            <div className="relative" ref={(el) => {
+                              const itemKey = `${item.product.id}-${item.size}`;
+                              dropdownRefs.current[`${itemKey}-size`] = el;
+                            }}>
+                              <div className="border-b border-gray-200 pb-2">
+                                <div className="flex-1">
+                                  <p className="text-[11px] uppercase tracking-wide text-gray-500 mb-1">
+                                    Size
+                                  </p>
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleDropdown(`${item.product.id}-${item.size}-size`, 'size')}
+                                    className="w-full px-3 py-2 border border-[#ccc] rounded-lg focus:outline-none focus:border-[#222] bg-white cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
+                                  >
+                                    <span className="font-semibold">{item.size}</span>
+                                    <svg
+                                      className={`w-3 h-3 transition-transform ${openDropdowns[`${item.product.id}-${item.size}-size`] === 'size' ? "rotate-180" : ""}`}
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                  </button>
+                                </div>
                               </div>
-                              <button
-                                type="button"
-                                className="text-sm underline text-gray-600"
-                              >
-                                Change
-                              </button>
+
+                              {openDropdowns[`${item.product.id}-${item.size}-size`] === 'size' && (
+                                <div className="absolute z-10 w-full mt-1 bg-white border border-[#ccc] rounded-lg shadow-lg">
+                                  <div className="p-2">
+                                    <div className="flex items-center justify-between mb-2">
+                                      <p className="text-[11px] text-gray-400">
+                                        Select size
+                                      </p>
+                                      <button
+                                        type="button"
+                                        onClick={() => closeDropdown(`${item.product.id}-${item.size}-size`)}
+                                        className="text-[11px] text-(--color-preto) underline"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </div>
+                                    <div className="space-y-1">
+                                      {sizeOptions.map((option) => (
+                                        <button
+                                          key={option.size}
+                                          onClick={() => {
+                                            if (option.available && option.size !== item.size) {
+                                              updateSize(item.product.id, item.size, option.size);
+                                              closeDropdown(`${item.product.id}-${item.size}-size`);
+                                            }
+                                          }}
+                                          disabled={!option.available}
+                                          className={`w-full flex items-center justify-between py-1 px-2 text-left ${
+                                            item.size === option.size
+                                              ? "bg-gray-100 font-semibold"
+                                              : option.available
+                                              ? "hover:bg-gray-50"
+                                              : "opacity-50 cursor-not-allowed"
+                                          }`}
+                                        >
+                                          <span className="font-semibold text-[13px]">{option.size}</span>
+                                          {option.price && (
+                                            <span className="text-[13px] text-(--color-preto)">{option.price}</span>
+                                          )}
+                                        </button>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                            <div className="flex items-center justify-between">
+
+                            {/* Quantity Dropdown */}
+                            <div className="relative" ref={(el) => {
+                              const itemKey = `${item.product.id}-${item.size}`;
+                              dropdownRefs.current[`${itemKey}-quantity`] = el;
+                            }}>
                               <div>
-                                <p className="text-[11px] uppercase tracking-wide text-gray-500">
-                                  Quantity
-                                </p>
-                                <p className="font-medium">{item.quantity}</p>
+                                <div className="flex-1">
+                                  <p className="text-[11px] uppercase tracking-wide text-gray-500 mb-1">
+                                    Quantity
+                                  </p>
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleDropdown(`${item.product.id}-${item.size}-quantity`, 'quantity')}
+                                    className="w-full px-3 py-2 border border-[#ccc] rounded-lg focus:outline-none focus:border-[#222] bg-white cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
+                                  >
+                                    <span className="font-semibold">{item.quantity}</span>
+                                    <svg
+                                      className={`w-3 h-3 transition-transform ${openDropdowns[`${item.product.id}-${item.size}-quantity`] === 'quantity' ? "rotate-180" : ""}`}
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                  </button>
+                                </div>
                               </div>
-                              <button
-                                type="button"
-                                className="text-sm underline text-gray-600"
-                              >
-                                Change
-                              </button>
+
+                              {openDropdowns[`${item.product.id}-${item.size}-quantity`] === 'quantity' && (
+                                <div className="absolute z-10 w-full mt-1 bg-white border border-[#ccc] rounded-lg shadow-lg">
+                                  <div className="p-2">
+                                    <div className="flex items-center justify-between mb-2">
+                                      <p className="text-[11px] text-gray-400">
+                                        Select quantity
+                                      </p>
+                                      <button
+                                        type="button"
+                                        onClick={() => closeDropdown(`${item.product.id}-${item.size}-quantity`)}
+                                        className="text-[11px] text-(--color-preto) underline"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </div>
+                                    <div className="space-y-1">
+                                      {quantityOptions.map((qty) => (
+                                        <button
+                                          key={qty}
+                                          onClick={() => {
+                                            if (qty !== item.quantity) {
+                                              updateQuantity(item.product.id, item.size, qty);
+                                              closeDropdown(`${item.product.id}-${item.size}-quantity`);
+                                            }
+                                          }}
+                                          className={`w-full flex items-center justify-between py-1 px-2 text-left ${
+                                            item.quantity === qty
+                                              ? "bg-gray-100 font-semibold"
+                                              : "hover:bg-gray-50"
+                                          }`}
+                                        >
+                                          <span className="font-semibold text-[13px]">{qty}</span>
+                                        </button>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -403,7 +719,10 @@ const Cart = () => {
                 </div>
               </div>
 
-              <button className="w-full bg-black text-white mt-6 py-3 rounded-md text-sm font-semibold tracking-wide hover:bg-gray-900 transition">
+              <button 
+                onClick={() => setIsCheckoutModalOpen(true)}
+                className="w-full bg-black text-white mt-6 py-3 rounded-md text-sm font-semibold tracking-wide hover:bg-gray-900 transition"
+              >
                 Go To Checkout
               </button>
             </div>
@@ -415,6 +734,10 @@ const Cart = () => {
         </div>
       </div>
       <DownloadAppBanner />
+      <CheckoutModal 
+        isOpen={isCheckoutModalOpen} 
+        onClose={() => setIsCheckoutModalOpen(false)} 
+      />
     </div>
   );
 };

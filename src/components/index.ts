@@ -1,6 +1,7 @@
 export { default as Accessibility } from "./navigation-links/Accessibility";
 export { default as About } from "./about/About";
 export { default as Cart } from "./cart/Cart";
+export { default as CheckoutForm } from "./checkout/CheckoutForm";
 export { default as ContactUs } from "./contact/ContactUs";
 export { default as Cryptocurrency } from "./navigation-links/Cryptocurrency";
 
@@ -34,3 +35,4 @@ export { default as SupportNavigation } from "./support/SupportNavigation";
 export { ThemeSettingsProvider, useThemeSettings } from "./theme/ThemeContext";
 export { default as ThemeSettingsDrawer } from "./theme/ThemeSettingsDrawer";
 export { default as Wishlist } from "./wishlist/Wishlist";
+export { default as VendorPortal } from "./vendor/VendorPortal";

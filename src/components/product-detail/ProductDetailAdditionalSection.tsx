@@ -4,7 +4,7 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { ProductDetail, productsById } from "@/constants/products";
 import { Product } from "@/constants/department";
-import { GoHeart } from "react-icons/go";
+import { GoHeart, GoHeartFill } from "react-icons/go";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -162,7 +162,9 @@ function SmallProductCard({ product }: { product: CompleteTheLookProduct }) {
   const handleWishlistClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleWishlist(product);
+    // Look up the product from productsById first to ensure we have full product data
+    const fullProduct = productsById[product.id] ?? product;
+    toggleWishlist(fullProduct);
   };
 
   return (
@@ -171,16 +173,15 @@ function SmallProductCard({ product }: { product: CompleteTheLookProduct }) {
         <div className="relative w-full h-[280px] flex items-center justify-center">
           <button
             onClick={handleWishlistClick}
-            className="absolute top-2 right-2 z-10 p-2 rounded-full transition-colors"
+            className="absolute top-2 right-2 z-10 p-2 rounded-full transition-colors bg-white/80 hover:bg-white"
             aria-label="Add to wishlist"
-          type="button"
-        >
-            <GoHeart
-            className={`w-4 h-4 ${
-              wishlisted ? "fill-black text-(--color-preto)" : "text-(--color-preto)"
-            }`}
-              strokeWidth={1.0}
-            />
+            type="button"
+          >
+            {wishlisted ? (
+              <GoHeartFill className="w-4 h-4 text-black" />
+            ) : (
+              <GoHeart className="w-4 h-4 text-black" strokeWidth={1.0} />
+            )}
           </button>
           <Image
             src={currentImage.src}
@@ -293,17 +294,16 @@ function CuratedProductCard({
           </button>
         )}
         <button
-          className="absolute top-3 right-3 z-10 p-2 rounded-full transition-colors"
+          className="absolute top-3 right-3 z-10 p-2 rounded-full transition-colors bg-white/80 hover:bg-white"
           aria-label="Add to wishlist"
           onClick={handleWishlistClick}
           type="button"
         >
-          <GoHeart
-            className={`w-5 h-5 ${
-              wishlisted ? "fill-(--color-preto) text-(--color-preto)" : "text-(--color-preto)"
-            }`}
-            strokeWidth={1.0}
-          />
+          {wishlisted ? (
+            <GoHeartFill className="w-5 h-5 text-black" />
+          ) : (
+            <GoHeart className="w-5 h-5 text-black" strokeWidth={1.0} />
+          )}
         </button>
         <Image
           src={currentImage.src}

@@ -4,10 +4,12 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
 import { ProductDetail } from "@/types/productDetail";
+import { productsById } from "@/constants/products";
 
 export type CartItem = {
   product: ProductDetail;
@@ -28,6 +30,7 @@ type CartContextValue = {
   addItem: (product: ProductDetail, size: string, quantity?: number) => void;
   removeItem: (productId: string, size: string) => void;
   updateQuantity: (productId: string, size: string, quantity: number) => void;
+  updateSize: (productId: string, oldSize: string, newSize: string) => void;
   clearCart: () => void;
   summary: CartSummary;
 };
@@ -49,6 +52,50 @@ const getCurrencySymbol = (price?: string) => {
   }
   const match = price.trim().match(/^[^\d\s]+/);
   return match ? match[0] : "$";
+};
+
+const CART_STORAGE_KEY = "ecommerce_cart";
+
+// Helper to load cart from localStorage
+const loadCartFromStorage = (): CartItem[] => {
+  if (typeof window === "undefined") return [];
+  
+  try {
+    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    if (!stored) return [];
+    
+    const parsed = JSON.parse(stored);
+    // Reconstruct CartItems from stored data
+    return parsed.map((item: { productId: string; size: string; quantity: number }) => {
+      const product = productsById[item.productId];
+      if (!product) return null;
+      return {
+        product,
+        size: item.size,
+        quantity: item.quantity,
+      };
+    }).filter((item: CartItem | null): item is CartItem => item !== null);
+  } catch (error) {
+    console.error("Error loading cart from localStorage:", error);
+    return [];
+  }
+};
+
+// Helper to save cart to localStorage
+const saveCartToStorage = (cartItems: CartItem[]) => {
+  if (typeof window === "undefined") return;
+  
+  try {
+    // Store only essential data to avoid storing full product objects
+    const simplified = cartItems.map((item) => ({
+      productId: item.product.id,
+      size: item.size,
+      quantity: item.quantity,
+    }));
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(simplified));
+  } catch (error) {
+    console.error("Error saving cart to localStorage:", error);
+  }
 };
 
 const calculateSummary = (cartItems: CartItem[]): CartSummary => {
@@ -97,7 +144,12 @@ const calculateSummary = (cartItems: CartItem[]): CartSummary => {
 };
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => loadCartFromStorage());
+  
+  // Save to localStorage whenever cartItems changes
+  useEffect(() => {
+    saveCartToStorage(cartItems);
+  }, [cartItems]);
 
   const addItem = useCallback(
     (product: ProductDetail, size: string, quantity = 1) => {
@@ -150,8 +202,51 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     [removeItem]
   );
 
+  const updateSize = useCallback(
+    (productId: string, oldSize: string, newSize: string) => {
+      if (oldSize === newSize) return;
+
+      setCartItems((prev) => {
+        const itemIndex = prev.findIndex(
+          (item) => item.product.id === productId && item.size === oldSize
+        );
+
+        if (itemIndex === -1) return prev;
+
+        const item = prev[itemIndex];
+        const existingNewSizeIndex = prev.findIndex(
+          (item) => item.product.id === productId && item.size === newSize
+        );
+
+        const updated = [...prev];
+
+        if (existingNewSizeIndex !== -1) {
+          // If new size already exists, merge quantities
+          updated[existingNewSizeIndex] = {
+            ...updated[existingNewSizeIndex],
+            quantity: updated[existingNewSizeIndex].quantity + item.quantity,
+          };
+          // Remove old size item
+          updated.splice(itemIndex, 1);
+        } else {
+          // Just update the size
+          updated[itemIndex] = {
+            ...item,
+            size: newSize,
+          };
+        }
+
+        return updated;
+      });
+    },
+    []
+  );
+
   const clearCart = useCallback(() => {
     setCartItems([]);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(CART_STORAGE_KEY);
+    }
   }, []);
 
   const summary = useMemo(() => calculateSummary(cartItems), [cartItems]);
@@ -162,10 +257,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       addItem,
       removeItem,
       updateQuantity,
+      updateSize,
       clearCart,
       summary,
     }),
-    [cartItems, addItem, removeItem, updateQuantity, clearCart, summary]
+    [cartItems, addItem, removeItem, updateQuantity, updateSize, clearCart, summary]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

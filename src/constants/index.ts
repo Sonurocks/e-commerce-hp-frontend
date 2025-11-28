@@ -1320,6 +1320,7 @@ export const legalLinks = [
   { href: "#", label: "Terms and conditions" },
   { href: "/modern-slavery-statement", label: "Modern slavery statement" },
   { href: "/accessibility", label: "Accessibility" },
+  { href: "/become-a-vendor", label: "Become a vendor" },
 ];
 
 // Header Constants

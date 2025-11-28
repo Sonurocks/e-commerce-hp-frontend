@@ -222,7 +222,8 @@ const arabicBundle: TranslationBundle = {
       "Privacy policy": "سياسة الخصوصية",
       "Terms and conditions": "الشروط والأحكام",
       "Modern slavery statement": "بيان العبودية الحديثة",
-      "Accessibility": "إمكانية الوصول"
+      "Accessibility": "إمكانية الوصول",
+      "Become a vendor": "كن بائعًا"
     },
     "legalDisclaimer": {
       "trademark": "'FARFETCH' وشعار 'FARFETCH' هما علامتان تجاريتان مسجلتان لشركة FARFETCH UK Limited في العديد من البلدان حول العالم.",

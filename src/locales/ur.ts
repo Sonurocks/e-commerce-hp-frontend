@@ -223,7 +223,8 @@ const urduBundle: TranslationBundle = {
     "Privacy policy": "پرائیویسی پالیسی",
     "Terms and conditions": "شرائط و ضوابط",
     "Modern slavery statement": "جدید غلامی کا بیان",
-    "Accessibility": "رسائی"
+    "Accessibility": "رسائی",
+    "Become a vendor": "فروشندہ بنیں"
   },
   "legalDisclaimer": {
     "trademark": "'FARFETCH' اور 'FARFETCH' کا لوگو FARFETCH UK Limited کی ٹریڈ مارک ہیں اور دنیا کے متعدد ممالک میں رجسٹرڈ ہیں۔",

@@ -10,6 +10,7 @@ import {
 import { LanguageProvider } from "@/context/LanguageContext";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
+import { CheckoutProvider } from "@/context/CheckoutContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,17 +58,19 @@ export default function RootLayout({
         <LanguageProvider>
           <CartProvider>
             <WishlistProvider>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-              >
-                <ThemeSettingsProvider>
-                  <ConditionalHeader />
-                  <main className="min-h-screen">{children}</main>
-                  <ConditionalFooter />
-                </ThemeSettingsProvider>
-              </ThemeProvider>
+              <CheckoutProvider>
+                <ThemeProvider
+                  attribute="class"
+                  defaultTheme="system"
+                  enableSystem
+                >
+                  <ThemeSettingsProvider>
+                    <ConditionalHeader />
+                    <main className="min-h-screen">{children}</main>
+                    <ConditionalFooter />
+                  </ThemeSettingsProvider>
+                </ThemeProvider>
+              </CheckoutProvider>
             </WishlistProvider>
           </CartProvider>
         </LanguageProvider>

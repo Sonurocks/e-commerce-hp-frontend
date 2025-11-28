@@ -224,6 +224,7 @@ const frenchBundle: TranslationBundle = {
       "Terms and conditions": "Conditions générales",
       "Modern slavery statement": "Déclaration sur l'esclavage moderne",
       Accessibility: "Accessibilité",
+      "Become a vendor": "Devenir un vendeur",
     },
     legalDisclaimer: {
       trademark:
