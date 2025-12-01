@@ -231,7 +231,7 @@ const FarfetchPartnerBoutiques = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white font-normal text-(--color-preto)">
+    <div className="min-h-screen  font-normal text-(--color-preto)">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-2 py-12">
         <header className="mb-10">
           <h1 className="text-2xl leading-tight tracking-tight font-normal mb-3 text-(--color-preto)">

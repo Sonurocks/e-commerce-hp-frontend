@@ -264,9 +264,7 @@ const sections: SupportSection[] = [
             enter your guest order details here
           </Link>
         </p>
-        {/* <p className="mb-4">
-          You can also track your order by heading to <strong>Orders & Returns</strong> in your account. If you&apos;ve placed an order as a guest and want to track your order, <Link href="#" className="underline font-semibold">enter your guest order details here</Link>.
-        </p> */}
+       
         <p className="mb-4">
           Depending on your location and selected delivery method, it can take 2
           – 7 business days for your package to arrive. We always aim to deliver
@@ -348,7 +346,7 @@ const OrdersAndDelivery = () => {
 
   return (
     <div
-      className="min-h-screen bg-white text-(--color-preto)"
+      className="min-h-screen  text-(--color-preto)"
       style={supportPageStyles}
     >
       <div className="max-w-[137rem] mx-auto px-[1.5rem] py-12">

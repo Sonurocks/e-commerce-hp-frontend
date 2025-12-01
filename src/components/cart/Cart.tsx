@@ -260,7 +260,7 @@ const CheckoutModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
   return (
     <>
       {/* Dark overlay */}
-      <div className="fixed inset-0 bg-black/50 z-[99]" />
+      <div className="fixed inset-0 bg-preto/50 z-[99]" />
 
       {/* Modal */}
       <div
@@ -325,7 +325,7 @@ const CheckoutModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 type="button"
                 className="w-full border border-preto py-3 rounded-lg  text-base font-medium flex items-center justify-center gap-3 hover:bg-gray-50 transition bg-white"
               >
-                <FaApple className="text-xl text-black" />
+                <FaApple className="text-xl text-preto" />
                 Continue With Apple
               </button>
               <button
@@ -425,7 +425,7 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen ">
       <div className="container mx-auto px-6 lg:px-12 py-14 max-w-[1440px]">
         <div className="flex flex-col lg:flex-row gap-10">
           <div className="flex-1">

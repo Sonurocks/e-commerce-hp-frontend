@@ -512,3 +512,515 @@ select option:checked {
   }
 }
 
+/* ============================================
+   UNIVERSAL FIX - VERTICAL SPACING (MOBILE & TABLET)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  /* Reduce vertical space between product image container and product details block */
+  article.group.h-full.flex.flex-col > div.relative.w-full ~ div.mt-2,
+  article.group > div.relative.w-full ~ div.mt-2,
+  article[class*="group"] > div[class*="relative"][class*="w-full"] ~ div[class*="mt-"] {
+    margin-top: 5px !important;
+  }
+}
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES (max-width: 767px)
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Product Grid - Single Column Layout */
+  /* Target all product grid containers to be single column on mobile */
+  /* Department Landing product grids */
+  .grid.grid-cols-2,
+  div.grid.grid-cols-2,
+  section .grid.grid-cols-2,
+  main .grid.grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Ensure product cards take full width */
+  .grid.grid-cols-2 > *,
+  div.grid.grid-cols-2 > *,
+  section .grid.grid-cols-2 > *,
+  main .grid.grid-cols-2 > * {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* ============================================
+     HEADER ICONS - HORIZONTAL ARRANGEMENT (MOBILE ONLY)
+     ============================================ */
+  
+  /* Target mobile header section (xl:hidden) */
+  header div[class*="xl:hidden"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* First row container - hamburger, logo, icons - prevent wrapping */
+  header div[class*="xl:hidden"] > div.flex.w-full {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    gap: 0.375rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Hamburger menu container - FIXED WIDTH, override flex-1 */
+  header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.gap-2:first-child {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 2.5rem !important;
+    max-width: 2.5rem !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+  }
+
+  /* Hamburger button - ensure proper size */
+  header div[class*="xl:hidden"] > div.flex.w-full > div:first-child button {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    flex-shrink: 0 !important;
+    min-width: 2.5rem !important;
+    max-width: 2.5rem !important;
+  }
+
+  /* Logo container - FLEXIBLE but constrained, override flex-1 */
+  header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.justify-center {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 9.5rem) !important;
+    overflow: hidden !important;
+    text-align: center !important;
+    padding: 0 0.25rem !important;
+    box-sizing: border-box !important;
+    flex-shrink: 1 !important;
+  }
+
+  /* Logo text - prevent overflow, ensure it fits */
+  header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.justify-center h1,
+  header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.justify-center a h1 {
+    font-size: 1.125rem !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  /* Header Icons Container - FIXED WIDTH, override flex-1 */
+  header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 0.375rem !important;
+    min-width: 6.5rem !important;
+    max-width: 6.5rem !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+  }
+
+  /* Individual icon buttons and links - keep inline, compact */
+  header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child > button,
+  header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child > a {
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    min-width: 1.75rem !important;
+    max-width: 1.75rem !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Icon sizing - ensure icons fit */
+  header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child svg,
+  header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child .w-6,
+  header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child .h-6 {
+    width: 1.125rem !important;
+    height: 1.125rem !important;
+  }
+
+  /* Ensure no wrapping in the main header row */
+  header div[class*="xl:hidden"] .flex.w-full.flex-wrap {
+    flex-wrap: nowrap !important;
+  }
+
+  /* ============================================
+     EXTRA SMALL MOBILE (320px) - PREVENT FLAG/LOGO OVERLAP
+     ============================================ */
+  
+  @media (max-width: 320px) {
+    /* Reduce padding on very small screens */
+    header div[class*="xl:hidden"] > div.flex.w-full {
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+      gap: 0.25rem !important;
+    }
+
+    /* Hamburger - slightly smaller on 320px */
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.gap-2:first-child {
+      min-width: 2.25rem !important;
+      max-width: 2.25rem !important;
+    }
+
+    header div[class*="xl:hidden"] > div.flex.w-full > div:first-child button {
+      width: 2.25rem !important;
+      height: 2.25rem !important;
+      min-width: 2.25rem !important;
+      max-width: 2.25rem !important;
+    }
+
+    /* Logo container - more constrained to prevent overlap with flag icon */
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.justify-center {
+      max-width: calc(100% - 9rem) !important;
+      padding: 0 0.125rem !important;
+      margin-right: 0.125rem !important;
+    }
+
+    /* Logo text - smaller font on 320px */
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.justify-center h1,
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.justify-center a h1 {
+      font-size: 0.875rem !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    /* Icons container - smaller width on 320px */
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child {
+      min-width: 5.75rem !important;
+      max-width: 5.75rem !important;
+      gap: 0.25rem !important;
+    }
+
+    /* Individual icons - smaller on 320px */
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child > button,
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child > a {
+      width: 1.5rem !important;
+      height: 1.5rem !important;
+      min-width: 1.5rem !important;
+      max-width: 1.5rem !important;
+    }
+
+    /* Icon sizing - smaller on 320px */
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child svg,
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child .w-6,
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child .h-6 {
+      width: 1rem !important;
+      height: 1rem !important;
+    }
+
+    /* Flag icon specifically - ensure it doesn't overlap */
+    header div[class*="xl:hidden"] > div.flex.w-full > div.flex.flex-1.items-center.justify-end:last-child > button:first-child {
+      width: 1.5rem !important;
+      height: 1.5rem !important;
+      min-width: 1.5rem !important;
+      max-width: 1.5rem !important;
+    }
+  }
+
+  /* Hero/Banner Section - Fluid Scaling */
+  /* Ensure hero images scale to fit screen width */
+  section img,
+  .hero-banner img,
+  [class*="hero"] img,
+  [class*="banner"] img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+  }
+
+  /* Hero banner containers - single column on mobile */
+  section[class*="grid"][class*="grid-cols"] {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  /* Specific hero banner grid layouts */
+  section.grid[class*="grid-cols-1"][class*="lg:grid-cols-2"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Hero banner image containers */
+  section .relative.w-full,
+  section .w-full.h-full {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+  }
+
+  /* Hero banner images with min-height - adjust for mobile */
+  section img[style*="minHeight"],
+  section .relative img {
+    min-height: 300px !important;
+    max-height: 400px !important;
+  }
+
+  /* Hero text overlay - ensure readability on mobile */
+  section .absolute.inset-0 {
+    padding: 1rem !important;
+  }
+
+  section .absolute.inset-0 h3 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Department Landing - Container padding adjustment */
+  /* Target main containers with large padding on mobile */
+  main.container.mx-auto[class*="px-"] {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Specific targeting for Department Landing */
+  main.container.mx-auto {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Search Drawer - Mobile optimization */
+  /* Search drawer search bar - full width */
+  /* Target search input in drawer */
+  div[class*="fixed"][class*="top-0"] input[type="text"],
+  div[class*="z-\[100\]"] input[type="text"] {
+    width: 100% !important;
+    padding: 0.75rem 2.5rem 0.75rem 2.5rem !important;
+    box-sizing: border-box;
+  }
+
+  /* Search drawer container padding - reduce on mobile */
+  div[class*="fixed"][class*="top-0"] .container.mx-auto,
+  div[class*="z-\[100\]"] .container.mx-auto {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Search drawer inner padding */
+  div[class*="fixed"][class*="top-0"] .px-\[48px\],
+  div[class*="z-\[100\]"] .px-\[48px\] {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Prevent horizontal scrolling */
+  body,
+  html {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* Ensure all containers respect viewport width */
+  .container,
+  .max-w-screen-2xl,
+  .max-w-7xl,
+  .max-w-6xl {
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Product card spacing on mobile */
+  .grid.gap-6 > * {
+    margin-bottom: 1rem;
+  }
+
+  /* Trending grid - single column */
+  section .grid.grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Store page product grid - single column */
+  .grid.grid-cols-2.gap-4 {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  /* Product detail thumbnail grids - keep 2 columns for thumbnails but ensure no overflow */
+  .grid[class*="grid-cols-2"][class*="sm:grid-cols-3"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Product detail additional section grids - single column on mobile */
+  .grid[class*="grid-cols-1"][class*="sm:grid-cols-2"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ============================================
+     PRODUCT CARD - IMAGE SIZE OPTIMIZATION (MOBILE)
+     ============================================ */
+  
+  /* Optimize product image size for mobile */
+  article.group.h-full.flex.flex-col > div.relative.w-full img,
+  article.group > div.relative.w-full img,
+  article[class*="group"] > div[class*="relative"][class*="w-full"] img {
+    max-width: 90% !important;
+    max-height: 200px !important;
+    object-fit: contain !important;
+  }
+}
+
+/* ============================================
+   TABLET VIEWPORT ADJUSTMENTS (761px to 1024px)
+   ============================================ */
+
+@media (min-width: 761px) and (max-width: 1024px) {
+  /* ============================================
+     1. FORCE THE PRODUCT GRID STRUCTURE
+     ============================================ */
+  
+  /* Target the main container wrapping the products */
+  /* Department Landing product grids */
+  section .grid.grid-cols-2.gap-6,
+  main section .grid.grid-cols-2.gap-6,
+  main .grid.grid-cols-2.gap-6,
+  .grid[class*="grid-cols-2"][class*="md:grid-cols-4"].gap-6,
+  section .grid[class*="grid-cols-2"][class*="md:grid-cols-4"].gap-6,
+  main .grid[class*="grid-cols-2"][class*="md:grid-cols-4"].gap-6,
+  .grid.grid-cols-2[class*="md:grid-cols-4"].gap-6,
+  section .grid.grid-cols-2[class*="md:grid-cols-4"].gap-6,
+  main .grid.grid-cols-2[class*="md:grid-cols-4"].gap-6 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* 3 columns for tablet */
+    gap: 20px !important; /* Crucial: Add necessary space between cards */
+    width: 100% !important;
+    padding: 0 10px !important;
+  }
+
+  /* Trending Grid specific targeting */
+  section .grid[class*="grid-cols-2"][class*="md:grid-cols-4"].gap-6,
+  section .grid.grid-cols-2[class*="md:grid-cols-4"].gap-6 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 20px !important;
+    width: 100% !important;
+    padding: 0 10px !important;
+  }
+
+  /* ============================================
+     2. FIX OVERLAPPING AND ENSURE CARD DIMENSIONS
+     ============================================ */
+  
+  /* Target the individual product card element */
+  article.group.h-full.flex.flex-col,
+  article[class*="group"][class*="h-full"],
+  article.group {
+    /* Ensure the card has a defined height/min-height to contain all content */
+    min-height: 450px !important; /* Adjust this value based on content needs */
+    width: 100% !important;
+    /* Remove any negative margins or offsets causing overlap */
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Trending Grid product card wrapper */
+  section .grid[class*="grid-cols-2"][class*="md:grid-cols-4"].gap-6 > div,
+  section .grid.grid-cols-2[class*="md:grid-cols-4"].gap-6 > div,
+  section .grid.grid-cols-2.gap-6 > div,
+  main .grid.grid-cols-2.gap-6 > div {
+    min-height: 450px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ============================================
+     3. REVEAL MISSING TEXT DETAILS (TITLE, PRICE, DESCRIPTION)
+     ============================================ */
+  
+  /* Target the text block containing the missing product information */
+  /* This is critical. The details are likely hidden or positioned off-screen. */
+  article.group.h-full.flex.flex-col > div.mt-2.flex-1,
+  article.group > div.mt-2.flex-1,
+  article[class*="group"] > div[class*="mt-2"][class*="flex-1"],
+  div.mt-2.flex-1,
+  div.mt-2 {
+    /* Force display and correct positioning */
+    display: block !important;
+    visibility: visible !important;
+    position: static !important; /* Override absolute/fixed positioning */
+    margin-top: 10px !important; /* Add space below image */
+    width: 100% !important;
+    opacity: 1 !important;
+  }
+
+  /* Trending Grid text details */
+  section .grid[class*="grid-cols-2"][class*="md:grid-cols-4"].gap-6 > div > div.mt-2,
+  section .grid.grid-cols-2[class*="md:grid-cols-4"].gap-6 > div > div.mt-2,
+  section .grid.grid-cols-2.gap-6 > div > div.mt-2 {
+    display: block !important;
+    visibility: visible !important;
+    position: static !important;
+    margin-top: 10px !important;
+    width: 100% !important;
+    opacity: 1 !important;
+  }
+
+  /* Ensure text elements are visible */
+  article.group h3,
+  article.group p,
+  div.mt-2 h3,
+  div.mt-2 p {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: inherit !important;
+  }
+
+  /* ============================================
+     4. ENSURE IMAGES SCALE CORRECTLY
+     ============================================ */
+  
+  /* Target the product image container */
+  article.group.h-full.flex.flex-col > div.relative.w-full,
+  article.group > div.relative.w-full,
+  article[class*="group"] > div[class*="relative"][class*="w-full"],
+  section .grid[class*="grid-cols-2"][class*="md:grid-cols-4"].gap-6 > div > div.relative.w-full,
+  section .grid.grid-cols-2[class*="md:grid-cols-4"].gap-6 > div > div.relative.w-full {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 250px !important;
+    max-height: 300px !important;
+  }
+
+  /* Target the product image itself */
+  article.group.h-full.flex.flex-col > div.relative.w-full img,
+  article.group > div.relative.w-full img,
+  article[class*="group"] > div[class*="relative"][class*="w-full"] img,
+  section .grid[class*="grid-cols-2"][class*="md:grid-cols-4"].gap-6 > div > div.relative.w-full img,
+  section .grid.grid-cols-2[class*="md:grid-cols-4"].gap-6 > div > div.relative.w-full img {
+    height: auto !important;
+    width: 100% !important;
+    max-height: 250px !important; /* Prevent images from being too tall */
+    object-fit: contain !important;
+  }
+
+  /* Next.js Image component styling */
+  article.group > div.relative.w-full > span,
+  section .grid[class*="grid-cols-2"][class*="md:grid-cols-4"].gap-6 > div > div.relative.w-full > span,
+  section .grid.grid-cols-2[class*="md:grid-cols-4"].gap-6 > div > div.relative.w-full > span {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 300px !important;
+  }
+}
+

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import {
   ColorTheme,
   FontTheme,
@@ -8,36 +9,44 @@ import {
   ThemeSettingsProviderProps,
 } from "@/types/theme";
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+// Custom hook that uses next-themes storage mechanism
+const useThemeStorage = <T,>(key: string, defaultValue: T): [T, (value: T) => void] => {
+  const [value, setValue] = useState<T>(defaultValue);
+  const [mounted, setMounted] = useState(false);
 
-export const useThemeSettings = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error(
-      "useThemeSettings must be used within ThemeSettingsProvider",
-    );
-  }
-  return context;
+  useEffect(() => {
+    setMounted(true);
+    // Read from localStorage (same way next-themes does)
+    const stored = localStorage.getItem(key);
+    if (stored) {
+      try {
+        setValue(JSON.parse(stored) as T);
+      } catch {
+        setValue(stored as T);
+      }
+    }
+  }, [key]);
+
+  const setStoredValue = (newValue: T) => {
+    setValue(newValue);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(key, typeof newValue === "string" ? newValue : JSON.stringify(newValue));
+    }
+  };
+
+  return [mounted ? value : defaultValue, setStoredValue];
 };
 
-export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({
-  children,
-}) => {
-  const [colorTheme, setColorThemeState] = useState<ColorTheme>("default");
-  const [bgTheme, setBgTheme] = useState<string>("default");
-  const [fontTheme, setFontThemeState] = useState<FontTheme>("default");
+export const useThemeSettings = (): ThemeContextType => {
+  const { theme: darkModeTheme } = useTheme();
+  const [colorTheme, setColorThemeState] = useThemeStorage<ColorTheme>("colorTheme", "default");
+  const [fontTheme, setFontThemeState] = useThemeStorage<FontTheme>("fontTheme", "default");
+  const [bgTheme, setBgThemeState] = useThemeStorage<string>("bgTheme", "default");
+  const [mounted, setMounted] = useState(false);
 
-  // Load preferences from localStorage on mount
+  // Ensure we're mounted (SSR safety)
   useEffect(() => {
-    const savedColorTheme = localStorage.getItem("colorTheme") as ColorTheme;
-    const savedFontTheme = localStorage.getItem("fontTheme") as FontTheme;
-
-    if (savedColorTheme) {
-      setColorThemeState(savedColorTheme);
-    }
-    if (savedFontTheme) {
-      setFontThemeState(savedFontTheme);
-    }
+    setMounted(true);
   }, []);
 
   // Helper function to convert hex to RGB
@@ -77,7 +86,6 @@ export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({
   // Helper function to get text color (white or black) based on background
   const getTextColor = (hex: string): string => {
     const rgb = hexToRgb(hex);
-    7;
     if (!rgb) return "#ffffff";
     // Calculate relative luminance
     const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
@@ -86,6 +94,8 @@ export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({
 
   // Apply color theme to CSS variables
   useEffect(() => {
+    if (!mounted) return;
+    
     const root = document.documentElement;
     root.setAttribute("data-color-theme", colorTheme);
 
@@ -172,10 +182,12 @@ export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({
       root.style.setProperty("--theme-link", primaryColor);
       root.style.setProperty("--theme-link-hover", linkHover);
     }
-  }, [colorTheme]);
+  }, [colorTheme, mounted]);
 
   // Apply font theme
   useEffect(() => {
+    if (!mounted) return;
+    
     const root = document.documentElement;
     root.setAttribute("data-font-theme", fontTheme);
     switch (fontTheme) {
@@ -201,28 +213,79 @@ export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({
         root.style.setProperty("--font-theme", "var(--fontNormal)");
         root.style.removeProperty("--font-theme");
     }
-  }, [fontTheme]);
+  }, [fontTheme, mounted]);
 
   useEffect(() => {
+    if (!mounted) return;
+    
     const root = document.documentElement;
     root.style.setProperty("--theme-bg", bgTheme);
-  }, [bgTheme]);
+  }, [bgTheme, mounted]);
 
   const setColorTheme = (theme: ColorTheme) => {
     setColorThemeState(theme);
-    localStorage.setItem("colorTheme", theme);
   };
 
   const setFontTheme = (theme: FontTheme) => {
     setFontThemeState(theme);
-    localStorage.setItem("fontTheme", theme);
   };
 
-  return (
-    <ThemeContext.Provider
-      value={{ colorTheme, fontTheme, setBgTheme, setColorTheme, setFontTheme }}
-    >
-      {children}
-    </ThemeContext.Provider>
-  );
+  const setBgTheme = (theme: string) => {
+    setBgThemeState(theme);
+  };
+
+  return {
+    colorTheme,
+    fontTheme,
+    setColorTheme,
+    setFontTheme,
+    setBgTheme,
+  };
+};
+
+// Provider component that applies themes on mount (SSR-safe)
+export const ThemeSettingsProvider: React.FC<ThemeSettingsProviderProps> = ({
+  children,
+}) => {
+  // Inject blocking script to prevent flash (similar to next-themes)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    
+    // Check if script already exists
+    if (document.getElementById("theme-settings-init")) return;
+
+    const script = document.createElement("script");
+    script.id = "theme-settings-init";
+    script.innerHTML = `
+      (function() {
+        try {
+          const colorTheme = localStorage.getItem("colorTheme") || "default";
+          const fontTheme = localStorage.getItem("fontTheme") || "default";
+          const root = document.documentElement;
+          root.setAttribute("data-color-theme", colorTheme);
+          root.setAttribute("data-font-theme", fontTheme);
+        } catch (e) {}
+      })();
+    `;
+    // Insert at the beginning of head to run early
+    document.head.insertBefore(script, document.head.firstChild);
+  }, []);
+
+  useEffect(() => {
+    // Apply initial themes from localStorage (SSR-safe)
+    if (typeof window !== "undefined") {
+      const colorTheme = localStorage.getItem("colorTheme") || "default";
+      const fontTheme = localStorage.getItem("fontTheme") || "default";
+
+      const root = document.documentElement;
+      
+      // Set attributes immediately to prevent flash
+      root.setAttribute("data-color-theme", colorTheme);
+      root.setAttribute("data-font-theme", fontTheme);
+    }
+  }, []);
+
+  // Render children immediately (SSR-safe)
+  // The useThemeSettings hook will handle applying CSS variables after mount
+  return <>{children}</>;
 };

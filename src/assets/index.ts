@@ -92,6 +92,7 @@ import footerAngeloImage from "./footer/angelo.png";
 import footerAplusImage from "./footer/aplus.png";
 import footerAbseitsImage from "./footer/abesit.png";
 import footerActualImage from "./footer/actual.png";
+import footerFarfetchAppImage from "./footer/farfetchapp.png";
 
 const kidswear = editorialKidswear;
 import partyDress1 from "./party/dress1.png";
@@ -475,4 +476,5 @@ export {
   footerAplusImage,
   footerAbseitsImage,
   footerActualImage,
+  footerFarfetchAppImage,
 };

@@ -114,7 +114,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         onBlur={handleBlur}
         className={`w-full px-3 py-2 border ${
           error && touched ? "border-red-500" : "border-gray-300"
-        } rounded focus:outline-none focus:border-preto text-base bg-white font-normal text-left flex items-center justify-between ${
+        } rounded focus:outline-none focus:border-preto text-base  font-normal text-left flex items-center justify-between ${
           isPlaceholder ? "text-gray-500" : "text-preto"
         }`}
       >
@@ -135,7 +135,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-auto">
+        <div className="absolute z-50 w-full mt-1  border border-gray-300 rounded shadow-lg max-h-60 overflow-auto">
           {options.map((option) => (
             <button
               key={option.value}
@@ -213,7 +213,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="">
       <h2 className="text-2xl font-normaltext-(--color-preto) mb-2">
         Help & Contact Us
       </h2>

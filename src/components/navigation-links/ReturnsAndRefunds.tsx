@@ -489,7 +489,7 @@ const ReturnsAndRefunds = () => {
 
   return (
     <div
-      className="min-h-screen bg-white text-(--color-preto)"
+      className="min-h-screen text-preto"
       style={typographyStyles}
     >
       <div className="max-w-[137rem] mx-auto px-[1.5rem] py-12">

@@ -44,14 +44,14 @@ export default function ProductCard({
             aria-label="Add to wishlist"
           >
             {wishlisted ? (
-              <GoHeartFill className="w-5 h-5 text-black" />
+              <GoHeartFill className="w-5 h-5 text-preto" />
             ) : (
-              <GoHeart className="w-5 h-5 text-black" strokeWidth={1.0} />
+              <GoHeart className="w-5 h-5 text-preto" strokeWidth={1.0} />
             )}
           </button>
           {showBadge && isImageBadge && (
             <div className="absolute top-2 left-2 z-10">
-              <p className="text-[15px] text-gray-500 px-2 py-1">
+              <p className="text-[15px] text-[--color-hina] px-2 py-1">
                 {localizedBadge}
               </p>
             </div>
@@ -69,17 +69,17 @@ export default function ProductCard({
         <div className="mt-2 flex-1">
           <div className="h-5 mb-1">
             {showBadge && isTextBadge && (
-              <p className="text-[15px] text-gray-500">{localizedBadge}</p>
+              <p className="text-[15px] text-[--color-hina]">{localizedBadge}</p>
             )}
           </div>
-          <h3 className="text-m text-(--color-preto) font-semibold">
+          <h3 className="text-m text-preto font-semibold">
             {localizedTitle ?? product.title}
           </h3>
           {localizedSubtitle && (
-            <p className="text-sm text-(--color-preto)">{localizedSubtitle}</p>
+            <p className="text-sm text-preto">{localizedSubtitle}</p>
           )}
           {product.price && (
-            <p className="text-sm text-(--color-preto) mt-3">{product.price}</p>
+            <p className="text-sm text-preto mt-3">{product.price}</p>
           )}
         </div>
       </article>

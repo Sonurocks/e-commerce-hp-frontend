@@ -1250,7 +1250,7 @@ export const footerSections = [
         href: "/promotions-terms-and-conditions",
         label: "Promotion terms and conditions",
       },
-      { href: "#", label: "FARFETCH Customer Promise" },
+      { href: "/farfetch-promise", label: "FARFETCH Customer Promise" },
     ],
   },
   {
@@ -1259,7 +1259,7 @@ export const footerSections = [
       { href: "/about", label: "About us" },
       { href: "/farfetch-partner-boutiques", label: "FARFETCH partner boutiques" },
       { href: "/about?view=career", label: "Careers" },
-      { href: "#", label: "FARFETCH app" },
+      { href: "/farfetch-app", label: "FARFETCH app" },
       { href: "/modern-slavery-statement", label: "Modern slavery statement" },
       { href: "#", label: "FARFETCH Advertising" },
     ],
@@ -1267,7 +1267,7 @@ export const footerSections = [
   {
     title: "Discounts and membership",
     links: [
-      { href: "#", label: "Affiliate program" },
+      { href: "/affiliate-program", label: "Affiliate program" },
       { href: "#", label: "Refer a friend" },
       { href: "#", label: "FARFETCH membership" },
       { href: "#", label: "Student discount UNIDAYS" },

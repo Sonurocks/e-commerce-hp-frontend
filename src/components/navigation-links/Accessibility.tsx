@@ -11,7 +11,7 @@ const Accessibility = () => {
   const [feedbackHelpful, setFeedbackHelpful] = useState<boolean | null>(null);
 
   return (
-    <div className="min-h-screen bg-white text-(--color-preto)">
+    <div className="min-h-screen  text-(--color-preto)">
       <div className="max-w-[137rem] mx-auto px-[1.5rem] py-12">
         <div className="flex flex-col lg:flex-row gap-12 lg:pl-16">
           <aside className="lg:w-72 flex-shrink-0">

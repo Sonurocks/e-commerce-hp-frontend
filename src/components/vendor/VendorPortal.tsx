@@ -23,12 +23,12 @@ const policyStatements = [
 ];
 
 const inputClasses =
-  "w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none border-preto focus:border-(--color-preto)";
+  "w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-[--color-hina] focus:outline-none border-preto focus:border-preto";
 
 const selectClasses = inputClasses;
 
 const cardClasses =
-  "rounded-3xl border border-gray-100 bg-white text-preto shadow-[0_25px_70px_rgba(15,23,42,0.08)] p-6 md:p-8 space-y-6";
+  "rounded-3xl border border-[--colorGrey] bg-[--color-branco] text-preto shadow-[0_25px_70px_rgba(15,23,42,0.08)] p-6 md:p-8 space-y-6";
 
 const SectionHeading = ({
   title,
@@ -39,7 +39,7 @@ const SectionHeading = ({
 }) => (
   <div className="space-y-2">
     <h3 className="text-xl font-semibold text-preto">{title}</h3>
-    {description && <p className="text-sm text-gray-600">{description}</p>}
+    {description && <p className="text-sm text-[--color-emperor]">{description}</p>}
   </div>
 );
 
@@ -48,8 +48,10 @@ const VendorPortal = () => {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   
   // Login form state
+  const [loginName, setLoginName] = useState<string>("");
   const [loginEmail, setLoginEmail] = useState<string>("");
   const [loginPassword, setLoginPassword] = useState<string>("");
+  const [loginNameError, setLoginNameError] = useState("");
   const [loginEmailError, setLoginEmailError] = useState("");
   const [loginPasswordError, setLoginPasswordError] = useState("");
   
@@ -84,6 +86,13 @@ const VendorPortal = () => {
   const handleLoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     let isValid = true;
+    
+    if (!loginName.trim()) {
+      setLoginNameError("Please enter your name");
+      isValid = false;
+    } else {
+      setLoginNameError("");
+    }
     
     if (!validateEmail(loginEmail)) {
       setLoginEmailError("Please enter a valid email address");
@@ -137,14 +146,14 @@ const VendorPortal = () => {
   };
 
   return (
-    <section className="bg-white text-preto" style={{ fontFamily: 'var(--fontNormal)' }}>
+    <section className="bg-[--color-branco] text-preto" style={{ fontFamily: 'var(--fontNormal)' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
         <header className="space-y-4 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Farfetch Collective</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-[--color-hina]">Farfetch Collective</p>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-preto">
             Become a FARFETCH Vendor
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-[--color-emperor] max-w-2xl mx-auto">
             Partner with the global platform for luxury fashion. Log in to manage your boutique or complete the registration
             form to start selling with FARFETCH.
           </p>
@@ -158,8 +167,8 @@ const VendorPortal = () => {
               onClick={() => setActiveTab(tab)}
               className={`px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-300 border ${
                 activeTab === tab
-                  ? "border-[var(--colorDark)] bg-[var(--colorDark)] text-white shadow-lg shadow-black/20"
-                  : "border-gray-300 text-[#1a1a1a] bg-white hover:text-preto"
+                  ? "border-[--colorDark] bg-[--colorDark] text-[--color-branco] shadow-lg shadow-black/20"
+                  : "border-[--color-silver] text-preto bg-[--color-branco] hover:text-preto"
               }`}
             >
               {tab === "login" ? "Login" : "Register"}
@@ -169,17 +178,50 @@ const VendorPortal = () => {
 
         {activeTab === "login" ? (
           <div className={cardClasses}>
-            <SectionHeading title="Vendor Login" description="Access your vendor dashboard to manage products, orders, and payouts." />
+            <SectionHeading title="Become vendor" description="Access your vendor dashboard to manage products, orders, and payouts." />
             <form className="space-y-6" onSubmit={handleLoginSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <label className="block text-xs font-normal text-preto">
+                  Name
+                  <input
+                    type="text"
+                    value={loginName}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setLoginName(value);
+                      if (!value.trim()) {
+                        setLoginNameError("Please enter your name");
+                      } else {
+                        setLoginNameError("");
+                      }
+                    }}
+                    onBlur={() => {
+                      if (!loginName.trim()) {
+                        setLoginNameError("Please enter your name");
+                      } else {
+                        setLoginNameError("");
+                      }
+                    }}
+                    className={`mt-2 ${inputClasses} ${
+                      loginNameError ? "border-[--color-error]" : ""
+                    }`}
+                    placeholder="Enter your name"
+                  />
+                  {loginNameError && (
+                    <p className="text-xs text-[--color-error]">{loginNameError}</p>
+                  )}
+                </label>
                 <label className="block text-xs font-normal text-preto">
                   Email address
                   <input
                     type="email"
                     value={loginEmail}
                     onChange={(e) => {
-                      setLoginEmail(e.target.value);
-                      if (loginEmailError) {
+                      const value = e.target.value;
+                      setLoginEmail(value);
+                      if (value && !validateEmail(value)) {
+                        setLoginEmailError("Please enter a valid email address");
+                      } else {
                         setLoginEmailError("");
                       }
                     }}
@@ -191,12 +233,12 @@ const VendorPortal = () => {
                       }
                     }}
                     className={`mt-2 ${inputClasses} ${
-                      loginEmailError ? "border-red-500" : ""
+                      loginEmailError ? "border-[--color-error]" : ""
                     }`}
                     placeholder="vendor@boutique.com"
                   />
                   {loginEmailError && (
-                    <p className="text-xs text-red-500">{loginEmailError}</p>
+                    <p className="text-xs text-[--color-error]">{loginEmailError}</p>
                   )}
                 </label>
                 <label className="block text-xs font-normal text-preto">
@@ -205,8 +247,13 @@ const VendorPortal = () => {
                     type="password"
                     value={loginPassword}
                     onChange={(e) => {
-                      setLoginPassword(e.target.value);
-                      if (loginPasswordError) {
+                      const value = e.target.value;
+                      setLoginPassword(value);
+                      if (value.length > 12) {
+                        setLoginPasswordError("Password must not exceed 12 characters");
+                      } else if (value && !validatePassword(value)) {
+                        setLoginPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
+                      } else {
                         setLoginPasswordError("");
                       }
                     }}
@@ -218,20 +265,17 @@ const VendorPortal = () => {
                       }
                     }}
                     className={`mt-2 ${inputClasses} ${
-                      loginPasswordError ? "border-red-500" : ""
+                      loginPasswordError ? "border-[--color-error]" : ""
                     }`}
                     placeholder="Enter your password"
                   />
                   {loginPasswordError && (
-                    <p className="text-xs text-red-500">{loginPasswordError}</p>
+                    <p className="text-xs text-[--color-error]">{loginPasswordError}</p>
                   )}
                 </label>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-4 text-sm">
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="h-4 w-4 rounded border-gray-300 text-preto focus:ring-preto" />
-                  <span>Remember me</span>
-                </label>
+               
                 <button
                   type="button"
                   onClick={() => setShowForgotPassword(true)}
@@ -242,11 +286,11 @@ const VendorPortal = () => {
               </div>
               <button
                 type="submit"
-                className="w-full md:w-auto px-8 py-3 rounded-lg bg-black text-white font-semibold tracking-wide shadow-lg shadow-black/10"
+                className="w-full md:w-auto px-8 py-3 rounded-lg bg-preto text-[--color-branco] font-semibold tracking-wide shadow-lg shadow-black/10"
               >
-                Login
+                Register as vendor
               </button>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-[--color-emperor]">
                 New to FARFETCH?{" "}
                 <button
                   type="button"
@@ -276,8 +320,11 @@ const VendorPortal = () => {
                     type="email"
                     value={registerEmail}
                     onChange={(e) => {
-                      setRegisterEmail(e.target.value);
-                      if (registerEmailError) {
+                      const value = e.target.value;
+                      setRegisterEmail(value);
+                      if (value && !validateEmail(value)) {
+                        setRegisterEmailError("Please enter a valid email address");
+                      } else {
                         setRegisterEmailError("");
                       }
                     }}
@@ -289,12 +336,12 @@ const VendorPortal = () => {
                       }
                     }}
                     className={`mt-2 ${inputClasses} ${
-                      registerEmailError ? "border-red-500" : ""
+                      registerEmailError ? "border-[--color-error]" : ""
                     }`}
                     placeholder="name@vendor.com"
                   />
                   {registerEmailError && (
-                    <p className="mt-1 text-xs text-red-500">{registerEmailError}</p>
+                    <p className="mt-1 text-xs text-[--color-error]">{registerEmailError}</p>
                   )}
                 </label>
                 <label className="space-y-2 text-sm font-medium">
@@ -310,7 +357,7 @@ const VendorPortal = () => {
                   <input type="text" required placeholder="London" className={inputClasses} />
                 </label>
                 <label className="space-y-2 text-sm font-medium">
-                  <span>Gender <span className="text-gray-500 text-xs">(optional)</span></span>
+                  <span>Gender <span className="text-[--color-hina] text-xs">(optional)</span></span>
                   <select className={selectClasses} defaultValue="">
                     <option value="" disabled>
                       Select gender
@@ -327,11 +374,16 @@ const VendorPortal = () => {
                     type="password"
                     value={registerPassword}
                     onChange={(e) => {
-                      setRegisterPassword(e.target.value);
-                      if (registerPasswordError) {
+                      const value = e.target.value;
+                      setRegisterPassword(value);
+                      if (value.length > 12) {
+                        setRegisterPasswordError("Password must not exceed 12 characters");
+                      } else if (value && !validatePassword(value)) {
+                        setRegisterPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
+                      } else {
                         setRegisterPasswordError("");
                       }
-                      if (confirmPassword && e.target.value !== confirmPassword) {
+                      if (confirmPassword && value !== confirmPassword) {
                         setConfirmPasswordError("Passwords do not match");
                       } else {
                         setConfirmPasswordError("");
@@ -345,12 +397,12 @@ const VendorPortal = () => {
                       }
                     }}
                     className={`mt-2 ${inputClasses} ${
-                      registerPasswordError ? "border-red-500" : ""
+                      registerPasswordError ? "border-[--color-error]" : ""
                     }`}
                     placeholder="Create a strong password"
                   />
                   {registerPasswordError && (
-                    <p className="mt-1 text-xs text-red-500">{registerPasswordError}</p>
+                    <p className="mt-1 text-xs text-[--color-error]">{registerPasswordError}</p>
                   )}
                 </label>
                 <label className="block text-xs font-normal text-preto">
@@ -377,12 +429,12 @@ const VendorPortal = () => {
                       }
                     }}
                     className={`mt-2 ${inputClasses} ${
-                      confirmPasswordError ? "border-red-500" : ""
+                      confirmPasswordError ? "border-[--color-error]" : ""
                     }`}
                     placeholder="Re-enter password"
                   />
                   {confirmPasswordError && (
-                    <p className="mt-1 text-xs text-red-500">{confirmPasswordError}</p>
+                    <p className="mt-1 text-xs text-[--color-error]">{confirmPasswordError}</p>
                   )}
                 </label>
               </div>
@@ -433,7 +485,7 @@ const VendorPortal = () => {
                   <input type="text" required placeholder="Street, City, ZIP" className={inputClasses} />
                 </label>
                 <label className="space-y-2 text-sm font-medium md:col-span-2">
-                  <span>Alternate Contact Number <span className="text-gray-500 text-xs">(optional)</span></span>
+                  <span>Alternate Contact Number <span className="text-[--color-hina] text-xs">(optional)</span></span>
                   <input type="tel" placeholder="+1 987 654 3210" className={inputClasses} />
                 </label>
               </div>
@@ -451,11 +503,11 @@ const VendorPortal = () => {
                 </label>
                 <label className="space-y-2 text-sm font-medium">
                   <span>Store Logo</span>
-                  <input type="file" accept="image/*" className={`${inputClasses} file:mr-4 file:rounded-full file:border-0 file:bg-preto file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white`} />
+                  <input type="file" accept="image/*" className={`${inputClasses} file:mr-4 file:rounded-full file:border-0 file:bg-preto file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[--color-branco]`} />
                 </label>
                 <label className="space-y-2 text-sm font-medium">
                   <span>Store Banner</span>
-                  <input type="file" accept="image/*" className={`${inputClasses} file:mr-4 file:rounded-full file:border-0 file:bg-preto file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white`} />
+                  <input type="file" accept="image/*" className={`${inputClasses} file:mr-4 file:rounded-full file:border-0 file:bg-preto file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[--color-branco]`} />
                 </label>
                 <label className="space-y-2 text-sm font-medium md:col-span-2">
                   <span>Store Description</span>
@@ -467,7 +519,7 @@ const VendorPortal = () => {
                   />
                 </label>
                 <label className="space-y-2 text-sm font-medium md:col-span-2">
-                  <span>Website / Social Media Links <span className="text-gray-500 text-xs">(optional)</span></span>
+                  <span>Website / Social Media Links <span className="text-[--color-hina] text-xs">(optional)</span></span>
                   <input type="url" placeholder="https://instagram.com/yourstore" className={inputClasses} />
                 </label>
               </div>
@@ -493,15 +545,15 @@ const VendorPortal = () => {
                   <input type="text" required placeholder="Bank name" className={inputClasses} />
                 </label>
                 <label className="space-y-2 text-sm font-medium">
-                  <span>UPI ID <span className="text-gray-500 text-xs">(for India)</span></span>
+                  <span>UPI ID <span className="text-[--color-hina] text-xs">(for India)</span></span>
                   <input type="text" placeholder="vendor@bank" className={inputClasses} />
                 </label>
                 <label className="space-y-2 text-sm font-medium">
-                  <span>PayPal Email <span className="text-gray-500 text-xs">(for international sellers)</span></span>
+                  <span>PayPal Email <span className="text-[--color-hina] text-xs">(for international sellers)</span></span>
                   <input type="email" placeholder="paypal@vendor.com" className={inputClasses} />
                 </label>
                 <label className="space-y-2 text-sm font-medium md:col-span-2">
-                  <span>Billing Address <span className="text-gray-500 text-xs">(optional)</span></span>
+                  <span>Billing Address <span className="text-[--color-hina] text-xs">(optional)</span></span>
                   <input type="text" placeholder="Billing address if different" className={inputClasses} />
                 </label>
               </div>
@@ -513,7 +565,7 @@ const VendorPortal = () => {
                 {documentUploads.map((doc) => (
                   <label key={doc.id} className="space-y-2 text-sm font-medium">
                     <span>
-                      {doc.label} {doc.optional && <span className="text-gray-500 text-xs">(optional)</span>}
+                      {doc.label} {doc.optional && <span className="text-[--color-hina] text-xs">(optional)</span>}
                     </span>
                     <input
                       type="file"
@@ -530,31 +582,31 @@ const VendorPortal = () => {
               <div className="space-y-4">
                 {policyStatements.map((statement) => (
                   <label key={statement} className="flex items-start gap-3 text-sm leading-tight">
-                    <input type="checkbox" required className="mt-1 h-4 w-4 rounded border-gray-300 text-preto focus:ring-preto" />
+                    <input type="checkbox" required className="mt-1 h-4 w-4 rounded border-[--color-silver] text-preto focus:ring-preto" />
                     <span>{statement}</span>
                   </label>
                 ))}
               </div>
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-4 border-t border-gray-100">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-4 border-t border-[--colorGrey]">
                 <div>
                   <h4 className="text-lg font-semibold">Ready to launch?</h4>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-[--color-emperor]">
                     Our partnerships team will review your submission and contact you within 3-5 business days.
                   </p>
                 </div>
                 <button
                   type="submit"
-                  className="px-8 py-3 rounded-lg bg-black text-white font-semibold tracking-wide shadow-lg shadow-black/10"
+                  className="px-8 py-3 rounded-lg bg-preto text-[--color-branco] font-semibold tracking-wide shadow-lg shadow-black/10"
                 >
                   Register as Vendor
                 </button>
               </div>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-[--color-emperor]">
                 Already have an account?{" "}
                 <button
                   type="button"
                   onClick={() => setActiveTab("login")}
-                  className="font-semibold underline underline-offset-4 hover:text-preto dark:hover:text-white"
+                  className="font-semibold underline underline-offset-4 hover:text-preto dark:hover:text-[--color-branco]"
                 >
                   Login
                 </button>
