@@ -26,6 +26,7 @@ export default function ProductDetailSection({
 }) {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
+  const [selectedThumbnailIndex, setSelectedThumbnailIndex] = useState<number>(0);
   const [hoveredZoomImage, setHoveredZoomImage] = useState<{ src: string } | null>(null);
   const [zoomPosition, setZoomPosition] = useState<{ x: number; y: number } | null>(null);
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState<boolean>(false);
@@ -99,6 +100,7 @@ export default function ProductDetailSection({
 
   useEffect(() => {
     setSelectedImageIndex(0);
+    setSelectedThumbnailIndex(0);
   }, [galleryImages]);
 
   useEffect(() => {
@@ -106,44 +108,31 @@ export default function ProductDetailSection({
     setZoomPosition(null);
   }, [selectedImageIndex]);
 
-  const handleImageSelect = (index: number) => {
-    if (index < 0 || index >= galleryImages.length) return;
-    setSelectedImageIndex(index);
+  const handleImageSelect = (thumbnailIdx: number, sourceIndex: number) => {
+    if (sourceIndex < 0 || sourceIndex >= galleryImages.length) return;
+    setSelectedImageIndex(sourceIndex);
+    setSelectedThumbnailIndex(thumbnailIdx);
   };
 
   const thumbnailImages = useMemo(() => {
     if (galleryImages.length === 0) return [];
 
-    const base = galleryImages.map((image, sourceIndex) => ({
+    // Return only the images provided by the backend, no repeating
+    return galleryImages.map((image, sourceIndex) => ({
       image,
       sourceIndex,
       key: `thumb-${sourceIndex}`,
     }));
-
-    if (base.length >= 5) {
-      return base.slice(0, 5);
-    }
-
-    const extended = [...base];
-    let pointer = 0;
-    while (extended.length < 5 && base.length > 0) {
-      extended.push({
-        ...base[pointer % base.length],
-        key: `thumb-repeat-${extended.length}`,
-      });
-      pointer += 1;
-    }
-
-    return extended;
   }, [galleryImages]);
 
   const handleThumbnailKeyDown = (
     event: React.KeyboardEvent<HTMLElement>,
-    index: number
+    thumbnailIdx: number,
+    sourceIndex: number
   ) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      handleImageSelect(index);
+      handleImageSelect(thumbnailIdx, sourceIndex);
     }
   };
 
@@ -217,10 +206,10 @@ export default function ProductDetailSection({
               <button
                 key={`${key}-${image?.src || idx}`}
                 type="button"
-                onClick={() => handleImageSelect(sourceIndex)}
-                onKeyDown={(event) => handleThumbnailKeyDown(event, sourceIndex)}
+                onClick={() => handleImageSelect(idx, sourceIndex)}
+                onKeyDown={(event) => handleThumbnailKeyDown(event, idx, sourceIndex)}
                 className={`relative border-2 rounded-lg overflow-hidden focus:outline-none focus-visible:border-black h-[120px] ${
-                  selectedImageIndex === sourceIndex ? "border-black" : "border-gray-200"
+                  selectedThumbnailIndex === idx ? "border-black" : "border-gray-200"
                 }`}
               >
                 {image ? (

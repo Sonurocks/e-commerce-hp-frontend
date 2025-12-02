@@ -1269,7 +1269,7 @@ export const footerSections = [
     links: [
       { href: "/affiliate-program", label: "Affiliate program" },
       { href: "#", label: "Refer a friend" },
-      { href: "#", label: "FARFETCH membership" },
+      { href: "/farfetch-membership", label: "FARFETCH membership" },
       { href: "#", label: "Student discount UNIDAYS" },
       { href: "#", label: "Youth discount" },
     ],

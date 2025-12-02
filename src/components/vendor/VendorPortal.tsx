@@ -1,9 +1,7 @@
 'use client';
 
-import React, { useState } from "react";
-import ForgotPassword from "../profile/ForgotPassword";
-
-type Tab = "login" | "register";
+import React, { useState, useEffect, useCallback } from "react";
+import { HiRefresh } from "react-icons/hi";
 
 const businessTypes = ["Individual Seller", "Manufacturer", "Retailer", "Wholesaler", "Distributor"];
 const businessCategories = ["Fashion", "Electronics", "Beauty", "Home", "Accessories", "Lifestyle"];
@@ -44,24 +42,42 @@ const SectionHeading = ({
 );
 
 const VendorPortal = () => {
-  const [activeTab, setActiveTab] = useState<Tab>("login");
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
-  
-  // Login form state
-  const [loginName, setLoginName] = useState<string>("");
-  const [loginEmail, setLoginEmail] = useState<string>("");
-  const [loginPassword, setLoginPassword] = useState<string>("");
-  const [loginNameError, setLoginNameError] = useState("");
-  const [loginEmailError, setLoginEmailError] = useState("");
-  const [loginPasswordError, setLoginPasswordError] = useState("");
-  
   // Register form state
+  const [registerName, setRegisterName] = useState<string>("");
   const [registerEmail, setRegisterEmail] = useState<string>("");
-  const [registerPassword, setRegisterPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [registerPhone, setRegisterPhone] = useState<string>("");
+  const [organizationalName, setOrganizationalName] = useState<string>("");
+  const [registerNameError, setRegisterNameError] = useState("");
   const [registerEmailError, setRegisterEmailError] = useState("");
-  const [registerPasswordError, setRegisterPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [registerPhoneError, setRegisterPhoneError] = useState("");
+  const [captchaCode, setCaptchaCode] = useState<string>("");
+  const [captchaInput, setCaptchaInput] = useState<string>("");
+  const [captchaError, setCaptchaError] = useState("");
+
+  // Generate random captcha code
+  const generateCaptcha = useCallback(() => {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Excluding confusing characters like 0, O, I, 1
+    let code = "";
+    for (let i = 0; i < 5; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setCaptchaCode(code);
+    setCaptchaInput("");
+    setCaptchaError("");
+  }, []);
+
+  // Generate captcha on component mount
+  useEffect(() => {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Excluding confusing characters like 0, O, I, 1
+    let code = "";
+    for (let i = 0; i < 5; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setCaptchaCode(code);
+    setCaptchaInput("");
+    setCaptchaError("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Email validation function
   const validateEmail = (email: string): boolean => {
@@ -69,48 +85,50 @@ const VendorPortal = () => {
     return emailRegex.test(email);
   };
 
-  // Password validation function
-  const validatePassword = (password: string): boolean => {
-    if (password.length < 6 || password.length > 12) {
-      return false;
-    }
-    if (!/[A-Z]/.test(password)) {
-      return false;
-    }
-    if (!/[@$!%*?&#]/.test(password)) {
-      return false;
-    }
-    return true;
+  // Phone validation function
+  const validatePhone = (phone: string): boolean => {
+    // Remove spaces, dashes, and plus signs for validation
+    const cleanedPhone = phone.replace(/[\s\-+]/g, '');
+    // Check if it contains only digits and has at least 10 digits
+    return /^\d{10,15}$/.test(cleanedPhone);
   };
 
-  const handleLoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    let isValid = true;
+  // Handle captcha input change
+  const handleCaptchaChange = (value: string) => {
+    const upperValue = value.toUpperCase();
+    setCaptchaInput(upperValue);
     
-    if (!loginName.trim()) {
-      setLoginNameError("Please enter your name");
-      isValid = false;
-    } else {
-      setLoginNameError("");
+    // Clear error when user starts typing
+    if (captchaError) {
+      setCaptchaError("");
     }
     
-    if (!validateEmail(loginEmail)) {
-      setLoginEmailError("Please enter a valid email address");
-      isValid = false;
-    } else {
-      setLoginEmailError("");
+    // Validate when user enters complete code (5 characters)
+    if (upperValue.length === 5) {
+      if (upperValue !== captchaCode) {
+        setCaptchaError("Captcha code does not match");
+        // Automatically refresh captcha after a short delay
+        setTimeout(() => {
+          generateCaptcha();
+        }, 500);
+      } else {
+        setCaptchaError("");
+      }
     }
-    
-    if (!validatePassword(loginPassword)) {
-      setLoginPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
-      isValid = false;
-    } else {
-      setLoginPasswordError("");
-    }
-    
-    if (isValid) {
-      // Proceed with login
-      console.log("Login successful");
+  };
+
+  // Handle captcha input blur
+  const handleCaptchaBlur = () => {
+    if (captchaInput.trim()) {
+      if (captchaInput.toUpperCase() !== captchaCode) {
+        setCaptchaError("Captcha code does not match");
+        // Automatically refresh captcha
+        setTimeout(() => {
+          generateCaptcha();
+        }, 500);
+      } else {
+        setCaptchaError("");
+      }
     }
   };
 
@@ -118,30 +136,70 @@ const VendorPortal = () => {
     event.preventDefault();
     let isValid = true;
     
-    if (!validateEmail(registerEmail)) {
+    // Validate name
+    if (!registerName.trim()) {
+      setRegisterNameError("Please enter your name");
+      isValid = false;
+    } else if (registerName.trim().length < 2) {
+      setRegisterNameError("Name must be at least 2 characters");
+      isValid = false;
+    } else {
+      setRegisterNameError("");
+    }
+    
+    // Validate email
+    if (!registerEmail.trim()) {
+      setRegisterEmailError("Please enter your email address");
+      isValid = false;
+    } else if (!validateEmail(registerEmail)) {
       setRegisterEmailError("Please enter a valid email address");
       isValid = false;
     } else {
       setRegisterEmailError("");
     }
     
-    if (!validatePassword(registerPassword)) {
-      setRegisterPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
+    // Validate phone
+    if (!registerPhone.trim()) {
+      setRegisterPhoneError("Please enter your phone number");
+      isValid = false;
+    } else if (!validatePhone(registerPhone)) {
+      setRegisterPhoneError("Please enter a valid phone number (10-15 digits)");
       isValid = false;
     } else {
-      setRegisterPasswordError("");
+      setRegisterPhoneError("");
     }
     
-    if (registerPassword !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match");
+    // Validate captcha
+    if (!captchaInput.trim()) {
+      setCaptchaError("Please enter the captcha code");
       isValid = false;
+    } else if (captchaInput.toUpperCase() !== captchaCode) {
+      setCaptchaError("Captcha code does not match");
+      isValid = false;
+      // Automatically refresh captcha on wrong submission
+      setTimeout(() => {
+        generateCaptcha();
+      }, 500);
     } else {
-      setConfirmPasswordError("");
+      setCaptchaError("");
     }
     
     if (isValid) {
       // Proceed with registration
-      console.log("Registration successful");
+      console.log("Registration successful", {
+        name: registerName,
+        email: registerEmail,
+        phone: registerPhone,
+        organizationalName: organizationalName
+      });
+      
+      // Reset form
+      setRegisterName("");
+      setRegisterEmail("");
+      setRegisterPhone("");
+      setOrganizationalName("");
+      setCaptchaInput("");
+      generateCaptcha();
     }
   };
 
@@ -154,473 +212,206 @@ const VendorPortal = () => {
             Become a FARFETCH Vendor
           </h1>
           <p className="text-[--color-emperor] max-w-2xl mx-auto">
-            Partner with the global platform for luxury fashion. Log in to manage your boutique or complete the registration
+            Partner with the global platform for luxury fashion. Complete the registration
             form to start selling with FARFETCH.
           </p>
         </header>
 
-        <div className="flex justify-center gap-4">
-          {(["login", "register"] as Tab[]).map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-300 border ${
-                activeTab === tab
-                  ? "border-[--colorDark] bg-[--colorDark] text-[--color-branco] shadow-lg shadow-black/20"
-                  : "border-[--color-silver] text-preto bg-[--color-branco] hover:text-preto"
-              }`}
-            >
-              {tab === "login" ? "Login" : "Register"}
-            </button>
-          ))}
-        </div>
-
-        {activeTab === "login" ? (
+        <form className="space-y-8" onSubmit={handleRegisterSubmit}>
           <div className={cardClasses}>
-            <SectionHeading title="Become vendor" description="Access your vendor dashboard to manage products, orders, and payouts." />
-            <form className="space-y-6" onSubmit={handleLoginSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <label className="block text-xs font-normal text-preto">
-                  Name
-                  <input
-                    type="text"
-                    value={loginName}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setLoginName(value);
-                      if (!value.trim()) {
-                        setLoginNameError("Please enter your name");
-                      } else {
-                        setLoginNameError("");
-                      }
-                    }}
-                    onBlur={() => {
-                      if (!loginName.trim()) {
-                        setLoginNameError("Please enter your name");
-                      } else {
-                        setLoginNameError("");
-                      }
-                    }}
-                    className={`mt-2 ${inputClasses} ${
-                      loginNameError ? "border-[--color-error]" : ""
-                    }`}
-                    placeholder="Enter your name"
-                  />
-                  {loginNameError && (
-                    <p className="text-xs text-[--color-error]">{loginNameError}</p>
-                  )}
-                </label>
-                <label className="block text-xs font-normal text-preto">
-                  Email address
-                  <input
-                    type="email"
-                    value={loginEmail}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setLoginEmail(value);
-                      if (value && !validateEmail(value)) {
-                        setLoginEmailError("Please enter a valid email address");
-                      } else {
-                        setLoginEmailError("");
-                      }
-                    }}
-                    onBlur={() => {
-                      if (loginEmail && !validateEmail(loginEmail)) {
-                        setLoginEmailError("Please enter a valid email address");
-                      } else {
-                        setLoginEmailError("");
-                      }
-                    }}
-                    className={`mt-2 ${inputClasses} ${
-                      loginEmailError ? "border-[--color-error]" : ""
-                    }`}
-                    placeholder="vendor@boutique.com"
-                  />
-                  {loginEmailError && (
-                    <p className="text-xs text-[--color-error]">{loginEmailError}</p>
-                  )}
-                </label>
-                <label className="block text-xs font-normal text-preto">
-                  Password
-                  <input
-                    type="password"
-                    value={loginPassword}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setLoginPassword(value);
-                      if (value.length > 12) {
-                        setLoginPasswordError("Password must not exceed 12 characters");
-                      } else if (value && !validatePassword(value)) {
-                        setLoginPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
-                      } else {
-                        setLoginPasswordError("");
-                      }
-                    }}
-                    onBlur={() => {
-                      if (loginPassword && !validatePassword(loginPassword)) {
-                        setLoginPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
-                      } else {
-                        setLoginPasswordError("");
-                      }
-                    }}
-                    className={`mt-2 ${inputClasses} ${
-                      loginPasswordError ? "border-[--color-error]" : ""
-                    }`}
-                    placeholder="Enter your password"
-                  />
-                  {loginPasswordError && (
-                    <p className="text-xs text-[--color-error]">{loginPasswordError}</p>
-                  )}
-                </label>
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-4 text-sm">
-               
-                <button
-                  type="button"
-                  onClick={() => setShowForgotPassword(true)}
-                  className="text-xs font-thin text-preto underline hover:text-preto underline-offset-2 hover:underline cursor-pointer"
-                >
-                  Forgot your password ?
-                </button>
-              </div>
-              <button
-                type="submit"
-                className="w-full md:w-auto px-8 py-3 rounded-lg bg-preto text-[--color-branco] font-semibold tracking-wide shadow-lg shadow-black/10"
-              >
-                Register as vendor
-              </button>
-              <p className="text-sm text-[--color-emperor]">
-                New to FARFETCH?{" "}
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("register")}
-                  className="font-semibold underline underline-offset-4 hover:text-preto"
-                >
-                  Register your bussiness
-                </button>
-              </p>
-            </form>
-          </div>
-        ) : (
-          <form className="space-y-8" onSubmit={handleRegisterSubmit}>
-            <div className={cardClasses}>
-              <SectionHeading
-                title="Personal Information"
-                description="These details help us verify you as the primary contact for the boutique."
-              />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <label className="block text-xs font-normal text-preto">
-                  Full Name
-                  <input type="text" required placeholder="Enter your full name" className={`mt-2 ${inputClasses}`} />
-                </label>
-                <label className="block text-xs font-normal text-preto">
-                  Email Address
-                  <input
-                    type="email"
-                    value={registerEmail}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setRegisterEmail(value);
-                      if (value && !validateEmail(value)) {
-                        setRegisterEmailError("Please enter a valid email address");
-                      } else {
-                        setRegisterEmailError("");
-                      }
-                    }}
-                    onBlur={() => {
-                      if (registerEmail && !validateEmail(registerEmail)) {
-                        setRegisterEmailError("Please enter a valid email address");
-                      } else {
-                        setRegisterEmailError("");
-                      }
-                    }}
-                    className={`mt-2 ${inputClasses} ${
-                      registerEmailError ? "border-[--color-error]" : ""
-                    }`}
-                    placeholder="name@vendor.com"
-                  />
-                  {registerEmailError && (
-                    <p className="mt-1 text-xs text-[--color-error]">{registerEmailError}</p>
-                  )}
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Phone Number</span>
-                  <input type="tel" required placeholder="+1 234 567 8900" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Country</span>
-                  <input type="text" required placeholder="United Kingdom" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>State / City</span>
-                  <input type="text" required placeholder="London" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Gender <span className="text-[--color-hina] text-xs">(optional)</span></span>
-                  <select className={selectClasses} defaultValue="">
-                    <option value="" disabled>
-                      Select gender
-                    </option>
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
-                    <option value="nonBinary">Non-binary</option>
-                    <option value="preferNot">Prefer not to say</option>
-                  </select>
-                </label>
-                <label className="block text-xs font-normal text-preto">
-                  Password
-                  <input
-                    type="password"
-                    value={registerPassword}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setRegisterPassword(value);
-                      if (value.length > 12) {
-                        setRegisterPasswordError("Password must not exceed 12 characters");
-                      } else if (value && !validatePassword(value)) {
-                        setRegisterPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
-                      } else {
-                        setRegisterPasswordError("");
-                      }
-                      if (confirmPassword && value !== confirmPassword) {
-                        setConfirmPasswordError("Passwords do not match");
-                      } else {
-                        setConfirmPasswordError("");
-                      }
-                    }}
-                    onBlur={() => {
-                      if (registerPassword && !validatePassword(registerPassword)) {
-                        setRegisterPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
-                      } else {
-                        setRegisterPasswordError("");
-                      }
-                    }}
-                    className={`mt-2 ${inputClasses} ${
-                      registerPasswordError ? "border-[--color-error]" : ""
-                    }`}
-                    placeholder="Create a strong password"
-                  />
-                  {registerPasswordError && (
-                    <p className="mt-1 text-xs text-[--color-error]">{registerPasswordError}</p>
-                  )}
-                </label>
-                <label className="block text-xs font-normal text-preto">
-                  Confirm Password
-                  <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => {
-                      setConfirmPassword(e.target.value);
-                      if (confirmPasswordError) {
-                        setConfirmPasswordError("");
-                      }
-                      if (registerPassword && e.target.value !== registerPassword) {
-                        setConfirmPasswordError("Passwords do not match");
-                      } else {
-                        setConfirmPasswordError("");
-                      }
-                    }}
-                    onBlur={() => {
-                      if (confirmPassword && registerPassword && confirmPassword !== registerPassword) {
-                        setConfirmPasswordError("Passwords do not match");
-                      } else {
-                        setConfirmPasswordError("");
-                      }
-                    }}
-                    className={`mt-2 ${inputClasses} ${
-                      confirmPasswordError ? "border-[--color-error]" : ""
-                    }`}
-                    placeholder="Re-enter password"
-                  />
-                  {confirmPasswordError && (
-                    <p className="mt-1 text-xs text-[--color-error]">{confirmPasswordError}</p>
-                  )}
-                </label>
-              </div>
+            <SectionHeading
+              title="Register as Vendor"
+              description="Enter your details to register as a vendor."
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <label className="block text-xs font-normal text-preto">
+                Name
+                <input
+                  type="text"
+                  value={registerName}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setRegisterName(value);
+                    if (value.trim() && value.trim().length < 2) {
+                      setRegisterNameError("Name must be at least 2 characters");
+                    } else if (!value.trim()) {
+                      setRegisterNameError("Please enter your name");
+                    } else {
+                      setRegisterNameError("");
+                    }
+                  }}
+                  onBlur={() => {
+                    if (!registerName.trim()) {
+                      setRegisterNameError("Please enter your name");
+                    } else if (registerName.trim().length < 2) {
+                      setRegisterNameError("Name must be at least 2 characters");
+                    } else {
+                      setRegisterNameError("");
+                    }
+                  }}
+                  className={`mt-2 ${inputClasses} ${
+                    registerNameError ? "border-(--color-error)" : ""
+                  }`}
+                  placeholder="Enter your name"
+                />
+                {registerNameError && (
+                  <p className="mt-1 text-xs text-(--color-error)">{registerNameError}</p>
+                )}
+              </label>
+              <label className="block text-xs font-normal text-preto">
+                Email Address
+                <input
+                  type="email"
+                  value={registerEmail}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setRegisterEmail(value);
+                    if (value && !validateEmail(value)) {
+                      setRegisterEmailError("Please enter a valid email address");
+                    } else if (!value.trim()) {
+                      setRegisterEmailError("Please enter your email address");
+                    } else {
+                      setRegisterEmailError("");
+                    }
+                  }}
+                  onBlur={() => {
+                    if (!registerEmail.trim()) {
+                      setRegisterEmailError("Please enter your email address");
+                    } else if (!validateEmail(registerEmail)) {
+                      setRegisterEmailError("Please enter a valid email address");
+                    } else {
+                      setRegisterEmailError("");
+                    }
+                  }}
+                  className={`mt-2 ${inputClasses} ${
+                    registerEmailError ? "border-(--color-error)" : ""
+                  }`}
+                  placeholder="name@vendor.com"
+                />
+                {registerEmailError && (
+                  <p className="mt-1 text-xs text-(--color-error)">{registerEmailError}</p>
+                )}
+              </label>
+              <label className="block text-xs font-normal text-preto">
+                Phone Number
+                <input
+                  type="tel"
+                  value={registerPhone}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setRegisterPhone(value);
+                    if (value.trim() && !validatePhone(value)) {
+                      setRegisterPhoneError("Please enter a valid phone number (10-15 digits)");
+                    } else if (!value.trim()) {
+                      setRegisterPhoneError("Please enter your phone number");
+                    } else {
+                      setRegisterPhoneError("");
+                    }
+                  }}
+                  onBlur={() => {
+                    if (!registerPhone.trim()) {
+                      setRegisterPhoneError("Please enter your phone number");
+                    } else if (!validatePhone(registerPhone)) {
+                      setRegisterPhoneError("Please enter a valid phone number (10-15 digits)");
+                    } else {
+                      setRegisterPhoneError("");
+                    }
+                  }}
+                  className={`mt-2 ${inputClasses} ${
+                    registerPhoneError ? "border-(--color-error)" : ""
+                  }`}
+                  placeholder="+1 234 567 8900"
+                />
+                {registerPhoneError && (
+                  <p className="mt-1 text-xs text-(--color-error)">{registerPhoneError}</p>
+                )}
+              </label>
+              <label className="block text-xs font-normal text-preto">
+                Organizational name <span className="text-[--color-hina]">(optional)</span>
+                <input
+                  type="text"
+                  value={organizationalName}
+                  onChange={(e) => setOrganizationalName(e.target.value)}
+                  className={`mt-2 ${inputClasses}`}
+                  placeholder="Enter organizational name"
+                />
+              </label>
             </div>
-
-            <div className={cardClasses}>
-              <SectionHeading
-                title="Business Information"
-                description="Tell us more about your business so we can verify your eligibility."
-              />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Business Name</span>
-                  <input type="text" required placeholder="Boutique Name" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Business Type</span>
-                  <select className={selectClasses} defaultValue="" required>
-                    <option value="" disabled>
-                      Select business type
-                    </option>
-                    {businessTypes.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Business Category</span>
-                  <select className={selectClasses} defaultValue="" required>
-                    <option value="" disabled>
-                      Select category
-                    </option>
-                    {businessCategories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Business Registration Number (GST / Tax ID)</span>
-                  <input type="text" required placeholder="GSTIN / Tax ID" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium md:col-span-2">
-                  <span>Business Address</span>
-                  <input type="text" required placeholder="Street, City, ZIP" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium md:col-span-2">
-                  <span>Alternate Contact Number <span className="text-[--color-hina] text-xs">(optional)</span></span>
-                  <input type="tel" placeholder="+1 987 654 3210" className={inputClasses} />
-                </label>
-              </div>
-            </div>
-
-            <div className={cardClasses}>
-              <SectionHeading
-                title="Store Details"
-                description="Public-facing information for your FARFETCH storefront."
-              />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Store Name</span>
-                  <input type="text" required placeholder="Displayed store name" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Store Logo</span>
-                  <input type="file" accept="image/*" className={`${inputClasses} file:mr-4 file:rounded-full file:border-0 file:bg-preto file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[--color-branco]`} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Store Banner</span>
-                  <input type="file" accept="image/*" className={`${inputClasses} file:mr-4 file:rounded-full file:border-0 file:bg-preto file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[--color-branco]`} />
-                </label>
-                <label className="space-y-2 text-sm font-medium md:col-span-2">
-                  <span>Store Description</span>
-                  <textarea
-                    rows={4}
-                    required
-                    placeholder="Describe your brand story, signature products, and what makes your boutique unique."
-                    className={`${inputClasses} resize-none`}
-                  />
-                </label>
-                <label className="space-y-2 text-sm font-medium md:col-span-2">
-                  <span>Website / Social Media Links <span className="text-[--color-hina] text-xs">(optional)</span></span>
-                  <input type="url" placeholder="https://instagram.com/yourstore" className={inputClasses} />
-                </label>
-              </div>
-            </div>
-
-            <div className={cardClasses}>
-              <SectionHeading title="Bank & Payment Details" description="Secure banking information for payouts and commissions." />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Account Holder Name</span>
-                  <input type="text" required placeholder="Name as per bank records" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Bank Account Number</span>
-                  <input type="text" required placeholder="Account number" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>IFSC / SWIFT / Routing Number</span>
-                  <input type="text" required placeholder="IFSC / SWIFT / Routing" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>Bank Name</span>
-                  <input type="text" required placeholder="Bank name" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>UPI ID <span className="text-[--color-hina] text-xs">(for India)</span></span>
-                  <input type="text" placeholder="vendor@bank" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  <span>PayPal Email <span className="text-[--color-hina] text-xs">(for international sellers)</span></span>
-                  <input type="email" placeholder="paypal@vendor.com" className={inputClasses} />
-                </label>
-                <label className="space-y-2 text-sm font-medium md:col-span-2">
-                  <span>Billing Address <span className="text-[--color-hina] text-xs">(optional)</span></span>
-                  <input type="text" placeholder="Billing address if different" className={inputClasses} />
-                </label>
-              </div>
-            </div>
-
-            <div className={cardClasses}>
-              <SectionHeading title="Document Uploads" description="Provide verified documents to complete compliance checks." />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {documentUploads.map((doc) => (
-                  <label key={doc.id} className="space-y-2 text-sm font-medium">
-                    <span>
-                      {doc.label} {doc.optional && <span className="text-[--color-hina] text-xs">(optional)</span>}
-                    </span>
+            
+            {/* Custom Captcha */}
+            <div className="py-4">
+              <label className="block text-xs font-normal text-preto mb-2">
+                Enter the code shown below
+              </label>
+              <div className="max-w-[240px]">
+                {/* Single Box containing Captcha Code, Refresh Button, and Input Field */}
+                <div className="bg-[--color-branco] border border-[--color-silver] rounded-lg px-3 py-1.5 relative overflow-hidden">
+                  {/* Visual noise overlay */}
+                  <div className="absolute inset-0 pointer-events-none opacity-30">
+                    <svg width="100%" height="100%" className="absolute inset-0">
+                      {/* Random lines */}
+                      <line x1="10%" y1="20%" x2="30%" y2="80%" stroke="#888" strokeWidth="1" />
+                      <line x1="50%" y1="10%" x2="70%" y2="90%" stroke="#888" strokeWidth="1" />
+                      <line x1="80%" y1="30%" x2="90%" y2="70%" stroke="#888" strokeWidth="1" />
+                      {/* Random dots */}
+                      <circle cx="25%" cy="40%" r="2" fill="#888" />
+                      <circle cx="60%" cy="60%" r="2" fill="#888" />
+                      <circle cx="75%" cy="25%" r="2" fill="#888" />
+                      <circle cx="40%" cy="75%" r="2" fill="#888" />
+                    </svg>
+                  </div>
+                  {/* Captcha Code and Refresh Button Row */}
+                  <div className="flex items-center gap-2 mb-1.5 relative z-10">
+                    {/* Captcha Code */}
+                    <div className="flex-1 text-center">
+                      <span className="text-lg font-bold tracking-widest text-preto select-none" style={{ 
+                        letterSpacing: '0.15em',
+                        fontFamily: 'monospace'
+                      }}>
+                        {captchaCode}
+                      </span>
+                    </div>
+                    {/* Refresh Icon Button */}
+                    <button
+                      type="button"
+                      onClick={generateCaptcha}
+                      className="p-1 rounded bg-[--color-whiteSmoke] hover:bg-[--color-shell] transition-colors cursor-pointer"
+                      title="Refresh code"
+                    >
+                      <HiRefresh className="w-3.5 h-3.5 text-preto" />
+                    </button>
+                  </div>
+                  
+                  {/* Input Field Inside Box */}
+                  <div className="relative z-10">
                     <input
-                      type="file"
-                      required={!doc.optional}
-                      className={`${inputClasses} file:mr-4 file:rounded-full file:border-0 file:bg-preto file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white`}
+                      type="text"
+                      value={captchaInput}
+                      onChange={(e) => handleCaptchaChange(e.target.value)}
+                      onBlur={handleCaptchaBlur}
+                      className={`w-full rounded-xl border px-3 py-1.5 text-sm text-preto placeholder:text-[--color-hina] focus:outline-none border-preto focus:border-preto ${
+                        captchaError ? "border-(--color-error)" : ""
+                      }`}
+                      placeholder="Enter code"
+                      maxLength={5}
                     />
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div className={cardClasses}>
-              <SectionHeading title="Terms & Policy Agreements" description="Please confirm the following to submit your application." />
-              <div className="space-y-4">
-                {policyStatements.map((statement) => (
-                  <label key={statement} className="flex items-start gap-3 text-sm leading-tight">
-                    <input type="checkbox" required className="mt-1 h-4 w-4 rounded border-[--color-silver] text-preto focus:ring-preto" />
-                    <span>{statement}</span>
-                  </label>
-                ))}
-              </div>
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-4 border-t border-[--colorGrey]">
-                <div>
-                  <h4 className="text-lg font-semibold">Ready to launch?</h4>
-                  <p className="text-sm text-[--color-emperor]">
-                    Our partnerships team will review your submission and contact you within 3-5 business days.
-                  </p>
+                    {captchaError && (
+                      <p className="mt-1 text-xs text-(--color-error)">{captchaError}</p>
+                    )}
+                  </div>
                 </div>
-                <button
-                  type="submit"
-                  className="px-8 py-3 rounded-lg bg-preto text-[--color-branco] font-semibold tracking-wide shadow-lg shadow-black/10"
-                >
-                  Register as Vendor
-                </button>
               </div>
-              <p className="text-sm text-[--color-emperor]">
-                Already have an account?{" "}
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("login")}
-                  className="font-semibold underline underline-offset-4 hover:text-preto dark:hover:text-[--color-branco]"
-                >
-                  Login
-                </button>
-              </p>
             </div>
-          </form>
-        )}
+            
+            <button
+              type="submit"
+              className="w-full md:w-auto px-8 py-3 rounded-lg bg-[#222] text-white font-semibold tracking-wide shadow-lg shadow-black/10 cursor-pointer"
+            >
+              Register as vendor
+            </button>
+          </div>
+        </form>
       </div>
-      
-      {/* Forgot Password Modal */}
-      <ForgotPassword
-        isOpen={showForgotPassword}
-        onClose={() => setShowForgotPassword(false)}
-      />
     </section>
   );
 };

@@ -788,9 +788,9 @@ const Header = () => {
           onClose={() => setIsLanguageModalOpen(false)}
           buttonRef={
             flagButtonRefDesktop.current
-              ? flagButtonRefDesktop
+              ? (flagButtonRefDesktop as React.RefObject<HTMLButtonElement>)
               : flagButtonRefMobile.current
-                ? flagButtonRefMobile
+                ? (flagButtonRefMobile as React.RefObject<HTMLButtonElement>)
                 : undefined
           }
         />

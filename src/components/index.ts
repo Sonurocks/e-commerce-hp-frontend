@@ -18,6 +18,7 @@ export { default as WelcomeEmail } from "./emailtemplate/welcomeemailpreview";
 export { default as FAQ } from "./navigation-links/FAQ";
 export { default as FarfetchPartnerBoutiques } from "./navigation-links/FarfetchPartnerBoutiques";
 export { default as FarfetchApp } from "./navigation-links/FarfetchApp";
+export { default as FarfetchMembership } from "./navigation-links/FarfetchMembership";
 export { default as FarfetchPromise } from "./navigation-links/FarfetchPromise";
 export { default as Footer } from "./footer/Footer";
 export { default as ConditionalFooter } from "./footer/ConditionalFooter";
