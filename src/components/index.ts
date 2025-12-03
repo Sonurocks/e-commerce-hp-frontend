@@ -30,7 +30,9 @@ export { default as ModernSlavery } from "./navigation-links/ModernSlavery";
 export { default as OrdersAndDelivery } from "./navigation-links/OrdersAndDelivery";
 export { default as PaymentAndPricing } from "./navigation-links/PaymentAndPricing";
 export { default as PromotionsTermsAndConditions } from "./navigation-links/PromotionsTermsAndConditions";
+export { default as ReferFriend } from "./navigation-links/ReferFriend";
 export { default as ReturnsAndRefunds } from "./navigation-links/ReturnsAndRefunds";
+export { default as Unidays } from "./navigation-links/Unidays";
 
 export { default as AccordionSection } from "./support/AccordionSection";
 export { default as FeedbackPrompt } from "./support/FeedbackPrompt";

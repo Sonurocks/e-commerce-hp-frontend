@@ -95,6 +95,13 @@ import footerActualImage from "./footer/actual.png";
 import footerFarfetchAppImage from "./footer/farfetchapp.png";
 import footerMembershipImage from "./footer/membership.png";
 import footerRewardImage from "./footer/reward.png";
+import footerSilverRewardImage from "./footer/silverreward.png";
+import footerGoldRewardImage from "./footer/goldreward.png";
+import footerPlatinumRewardImage from "./footer/platinumreward.png";
+import footerPrivateClientRewardImage from "./footer/privateclient.png";
+import footerHowItWorksImage from "./footer/howitworks.png";
+import footerReferFriendImage from "./footer/referfriend.png";
+import footerUnidaysImage from "./footer/unidays.png";
 
 const kidswear = editorialKidswear;
 import partyDress1 from "./party/dress1.png";
@@ -481,4 +488,11 @@ export {
   footerFarfetchAppImage,
   footerMembershipImage,
   footerRewardImage,
+  footerSilverRewardImage,
+  footerGoldRewardImage,
+  footerPlatinumRewardImage,
+  footerPrivateClientRewardImage,
+  footerHowItWorksImage,
+  footerReferFriendImage,
+  footerUnidaysImage,
 };

@@ -1268,9 +1268,9 @@ export const footerSections = [
     title: "Discounts and membership",
     links: [
       { href: "/affiliate-program", label: "Affiliate program" },
-      { href: "#", label: "Refer a friend" },
+      { href: "/refer-a-friend", label: "Refer a friend" },
       { href: "/farfetch-membership", label: "FARFETCH membership" },
-      { href: "#", label: "Student discount UNIDAYS" },
+      { href: "/unidays", label: "Student discount UNIDAYS" },
       { href: "#", label: "Youth discount" },
     ],
   },
