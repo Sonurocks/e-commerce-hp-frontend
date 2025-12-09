@@ -33,6 +33,9 @@ export { default as PromotionsTermsAndConditions } from "./navigation-links/Prom
 export { default as ReferFriend } from "./navigation-links/ReferFriend";
 export { default as ReturnsAndRefunds } from "./navigation-links/ReturnsAndRefunds";
 export { default as Unidays } from "./navigation-links/Unidays";
+export { default as YouthDiscount } from "./navigation-links/YouthDiscount";
+export { default as TermsAndConditions } from "./navigation-links/TermsAndConditions";
+export { default as PrivacyPolicy } from "./navigation-links/PrivacyPolicy";
 
 export { default as AccordionSection } from "./support/AccordionSection";
 export { default as FeedbackPrompt } from "./support/FeedbackPrompt";

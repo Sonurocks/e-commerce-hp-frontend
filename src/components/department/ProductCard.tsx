@@ -44,7 +44,7 @@ export default function ProductCard({
             aria-label="Add to wishlist"
           >
             {wishlisted ? (
-              <GoHeartFill className="w-5 h-5 text-preto" />
+              <GoHeartFill className="w-5 h-5 text-preto" strokeWidth={0} />
             ) : (
               <GoHeart className="w-5 h-5 text-preto" strokeWidth={1.0} />
             )}

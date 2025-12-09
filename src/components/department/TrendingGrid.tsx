@@ -3,6 +3,7 @@
 import React from "react";
 import { Product } from "@/constants/department";
 import Image from "next/image";
+import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function TrendingGrid({ items }: { items: Product[] }) {
@@ -16,7 +17,7 @@ export default function TrendingGrid({ items }: { items: Product[] }) {
       <h3 className="text-[20px] text-(--color-preto) mb-10">{heading}</h3>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {items.map((t) => (
-          <div key={t.id}>
+          <Link key={t.id} href={`/trending?id=${t.id}`} className="block group">
             <div className="relative w-full h-[300px] sm:h-[400px] flex items-center justify-center">
               <Image 
                 src={t.image.src} 
@@ -31,7 +32,7 @@ export default function TrendingGrid({ items }: { items: Product[] }) {
                 {translateTitle(t.title)}
               </p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

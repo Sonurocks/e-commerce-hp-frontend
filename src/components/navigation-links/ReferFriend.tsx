@@ -355,7 +355,7 @@ const ReferFriend = () => {
                       </div>
                       <button
                         type="submit"
-                        className="w-full rounded-xl bg-preto text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition cursor-pointer"
+                        className="w-full rounded-xl bg-[#222] text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition cursor-pointer"
                       >
                         Register
                       </button>

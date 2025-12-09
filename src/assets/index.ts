@@ -102,6 +102,17 @@ import footerPrivateClientRewardImage from "./footer/privateclient.png";
 import footerHowItWorksImage from "./footer/howitworks.png";
 import footerReferFriendImage from "./footer/referfriend.png";
 import footerUnidaysImage from "./footer/unidays.png";
+import footerYouthImage from "./footer/youth.png";
+import footerLogoffImage from "./footer/logoff.png";
+import searchbarBag from "./header/searchbar/bag.png";
+import searchbarBlackbag from "./header/searchbar/blackbag.png";
+import searchbarBlackboot from "./header/searchbar/blackboot.png";
+import searchbarBoot from "./header/searchbar/boot.png";
+import searchbarBrownbagg from "./header/searchbar/brownbagg.png";
+import searchbarBrownsleeper from "./header/searchbar/brownsleeper.png";
+import searchbarGraybag from "./header/searchbar/graybag.png";
+import searchbarShoes from "./header/searchbar/shoes.png";
+import searchbarSleeper from "./header/searchbar/sleeper.png";
 
 const kidswear = editorialKidswear;
 import partyDress1 from "./party/dress1.png";
@@ -495,4 +506,15 @@ export {
   footerHowItWorksImage,
   footerReferFriendImage,
   footerUnidaysImage,
+  footerYouthImage,
+  footerLogoffImage,
+  searchbarBag,
+  searchbarBlackbag,
+  searchbarBlackboot,
+  searchbarBoot,
+  searchbarBrownbagg,
+  searchbarBrownsleeper,
+  searchbarGraybag,
+  searchbarShoes,
+  searchbarSleeper,
 };

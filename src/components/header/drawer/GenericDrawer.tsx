@@ -11,6 +11,7 @@ interface GenericDrawerProps {
   isDrawerOpen: boolean;
   drawerRef: React.Ref<HTMLDivElement>;
   onMouseEnter: () => void;
+  onMouseLeave: () => void;
   drawerType: string;
   department: DepartmentKey;
 }
@@ -19,6 +20,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
   isDrawerOpen,
   drawerRef,
   onMouseEnter,
+  onMouseLeave,
   drawerType,
   department,
 }) => {
@@ -175,6 +177,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
       ref={drawerRef}
       className="absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-200 z-[100] drawer-styles"
       onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <div className="container mx-auto px-[72px] py-8 bg-white drawer-styles">
         <div className="flex gap-8">

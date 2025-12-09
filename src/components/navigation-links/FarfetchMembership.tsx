@@ -35,7 +35,7 @@ const FarfetchMembership = () => {
                 Get discounts and rewards when you sign in or create an account. The more you shop, the more you get.
               </p>
               <div className="pt-4">
-                <button className="px-6 py-3 bg-preto text-white rounded-lg font-medium hover:opacity-90 transition-colors">
+                <button className="px-6 py-3 bg-[#222] text-white rounded-lg font-medium hover:opacity-90 transition-colors">
                   Join Us
                 </button>
               </div>

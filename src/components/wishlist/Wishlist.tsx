@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import DownloadAppBanner from "@/components/department/DownloadAppBanner";
@@ -13,15 +13,23 @@ const Wishlist = () => {
   const [selectedSizes, setSelectedSizes] = useState<Record<string, string>>(
     {}
   );
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Track when component has mounted to avoid hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const wishlistHeading = useMemo(() => {
-    if (wishlistCount === 0) {
+    // During SSR and initial render, always show "Wishlist" to match server
+    if (!isMounted || wishlistCount === 0) {
       return "Wishlist";
     }
     return wishlistCount === 1
       ? "Wishlist · 1 item"
       : `Wishlist · ${wishlistCount} items`;
-  }, [wishlistCount]);
+  }, [wishlistCount, isMounted]);
 
   const handleSizeChange = (productId: string, value: string) => {
     setSelectedSizes((prev) => ({ ...prev, [productId]: value }));
@@ -38,7 +46,9 @@ const Wishlist = () => {
     addItem(product, selectedSize, 1);
   };
 
-  if (wishlistCount === 0) {
+  const showEmptyState = !isMounted || wishlistCount === 0;
+
+  if (showEmptyState) {
     return (
       <div className="min-h-screen">
         <div className="container mx-auto px-[48px] py-16 max-w-[1440px]">

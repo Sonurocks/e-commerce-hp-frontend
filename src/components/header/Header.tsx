@@ -342,11 +342,17 @@ const Header = () => {
               <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
                 {/* Left - Primary Categories */}
                 <div className="hidden lg:flex items-center space-x-6">
-                  {primaryNavigationLinks.map((link) => (
-                    <Link key={link.id} href={link.href} className={link.className}>
-                      {getNavLabel("primary", link.id, link.label)}
-                    </Link>
-                  ))}
+                  {primaryNavigationLinks.map((link) => {
+                    const isActive = link.id === currentDepartment;
+                    const activeClassName = isActive
+                      ? "text-preto hover:text-gray-900 font-semibold text-sm transition px-3 py-1.5 rounded hover:bg-gray-100"
+                      : "text-preto hover:text-gray-900 font-normal text-sm transition px-3 py-1.5 rounded hover:bg-gray-100";
+                    return (
+                      <Link key={link.id} href={link.href} className={activeClassName}>
+                        {getNavLabel("primary", link.id, link.label)}
+                      </Link>
+                    );
+                  })}
                 </div>
 
                 {/* Center - Logo */}
@@ -384,18 +390,21 @@ const Header = () => {
                   {/* Adjustments Icon */}
                   <button
                     onClick={() => setIsThemeDrawerOpen(true)}
-                    className="hidden md:block text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
+                    className="hidden md:block text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
                   >
                     <SlidersHorizontal className="w-6 h-6" />
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                      Theme
+                    </span>
                   </button>
 
                   {/* Profile */}
                   <button
                     onClick={() => setIsProfileModalOpen(true)}
-                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
+                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
                   >
                     <FaRegUser className="w-6 h-6" />
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                       {headerCopy.tooltips.signIn}
                     </span>
                   </button>
@@ -411,7 +420,7 @@ const Header = () => {
                         {wishlistCount}
                       </span>
                     )}
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                       {headerCopy.tooltips.wishlist}
                     </span>
                   </Link>
@@ -427,7 +436,7 @@ const Header = () => {
                         {cartCount}
                       </span>
                     )}
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                       {headerCopy.tooltips.bag}
                     </span>
                   </Link>
@@ -484,6 +493,7 @@ const Header = () => {
                           ref={linkRef}
                           className="relative"
                           onMouseEnter={() => setActiveDrawer(drawerType)}
+                          onMouseLeave={() => setActiveDrawer(null)}
                         >
                           <Link href={link.href} className={linkClassName}>
                             {translatedLabel}
@@ -597,10 +607,10 @@ const Header = () => {
                   </button>
                   <button
                     onClick={() => setIsProfileModalOpen(true)}
-                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-gray-700 dark:hover:text-gray-300 transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
+                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
                   >
                     <FaRegUser className="w-6 h-6" />
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                       {headerCopy.tooltips.signIn}
                     </span>
                   </button>
@@ -614,7 +624,7 @@ const Header = () => {
                       {wishlistCount}
                     </span>
                   )}
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                       {headerCopy.tooltips.wishlist}
                     </span>
                   </Link>
@@ -623,7 +633,7 @@ const Header = () => {
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
                     <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white dark:text-(--color-preto) text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                       {headerCopy.tooltips.bag}
                     </span>
                   </Link>
@@ -682,16 +692,19 @@ const Header = () => {
                 <div className="border-t border-gray-200 py-4 dark:border-(--color-platinum)">
                   <div className="space-y-6">
                     <div className="flex flex-col gap-3 text-base font-medium">
-                      {primaryNavigationLinks.map((link) => (
-                        <Link
-                          key={`primary-mobile-${link.id}`}
-                          href={link.href}
-                          className="text-(--color-preto) dark:text-(--color-preto)"
-                          onClick={handleMobileLinkClick}
-                        >
-                          {getNavLabel("primary", link.id, link.label)}
-                        </Link>
-                      ))}
+                      {primaryNavigationLinks.map((link) => {
+                        const isActive = link.id === currentDepartment;
+                        return (
+                          <Link
+                            key={`primary-mobile-${link.id}`}
+                            href={link.href}
+                            className={`text-(--color-preto) dark:text-(--color-preto) ${isActive ? "font-semibold" : "font-normal"}`}
+                            onClick={handleMobileLinkClick}
+                          >
+                            {getNavLabel("primary", link.id, link.label)}
+                          </Link>
+                        );
+                      })}
                     </div>
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       {navigationLinks.map((link) => (
@@ -753,6 +766,7 @@ const Header = () => {
               isDrawerOpen={true}
               drawerRef={drawerRef}
               onMouseEnter={() => setActiveDrawer(activeDrawer)}
+              onMouseLeave={() => setActiveDrawer(null)}
               drawerType={activeDrawer}
               department={currentDepartment}
             />

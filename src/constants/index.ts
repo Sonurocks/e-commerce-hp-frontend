@@ -1271,7 +1271,7 @@ export const footerSections = [
       { href: "/refer-a-friend", label: "Refer a friend" },
       { href: "/farfetch-membership", label: "FARFETCH membership" },
       { href: "/unidays", label: "Student discount UNIDAYS" },
-      { href: "#", label: "Youth discount" },
+      { href: "/youth-discount", label: "Youth discount" },
     ],
   },
 ];
@@ -1316,8 +1316,8 @@ export const socialMediaLinks = [
 ];
 
 export const legalLinks = [
-  { href: "#", label: "Privacy policy" },
-  { href: "#", label: "Terms and conditions" },
+  { href: "/privacy-policy", label: "Privacy policy" },
+  { href: "/terms-and-conditions", label: "Terms and conditions" },
   { href: "/modern-slavery-statement", label: "Modern slavery statement" },
   { href: "/accessibility", label: "Accessibility" },
   { href: "/become-a-vendor", label: "Become a vendor" },

@@ -389,16 +389,16 @@ export default function CheckoutForm() {
               </div>
 
               {/* Phone */}
-              <div className="w-[622px]">
+              <div className="w-full md:w-[622px]">
                 <label className="block text-sm font-medium mb-2">
                   Phone <span className="text-red-500">*</span>
                 </label>
-                <div className="flex gap-2">
+                <div className="flex gap-2 w-full">
                   <select
                     name="phoneCode"
                     value={formData.phoneCode}
                     onChange={handleInputChange}
-                    className="border border-preto px-1 py-3 rounded-md focus:outline-none focus:border-black"
+                    className="border border-preto px-2 md:px-1 py-3 rounded-md focus:outline-none focus:border-black flex-shrink-0 min-w-[100px] md:min-w-auto"
                   >
                     <option value="+91">🇮🇳 +91</option>
                     <option value="+1">🇺🇸 +1</option>
@@ -411,7 +411,7 @@ export default function CheckoutForm() {
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
-                    className="flex-1 border border-preto px-4 py-3 rounded-md focus:outline-none focus:border-black"
+                    className="flex-1 min-w-0 border border-preto px-4 py-3 rounded-md focus:outline-none focus:border-black"
                   />
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
