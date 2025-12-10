@@ -235,15 +235,15 @@ export default function FilterDrawer({
         />
       )}
 
-      {/* Filter Drawer */}
+      {/* Filter Drawer */} 
       <div
         ref={drawerRef}
-        className={`fixed left-0 top-0 h-full w-[400px] bg-white shadow-xl z-[100] transform transition-transform duration-300 ease-in-out overflow-y-auto ${
+        className={`fixed left-0 top-0 h-full w-[400px] bg-white  shadow-xl z-[100] transform transition-transform duration-300 ease-in-out overflow-y-auto ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Header */}
-        <div className="bg-[--color-branco] px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+        <div className=" px-6 py-4 flex items-center justify-between sticky top-0 z-10">
           <h2 className="text-xl font-medium text-preto ">
             All Filters
           </h2>

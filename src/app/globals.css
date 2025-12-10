@@ -309,9 +309,12 @@ html[data-color-theme] * {
 }
 
 /* Default footer background - gray in light mode, black in dark mode */
-.site-footer {
+.site-footer,
+.site-footer.bg-gray-200,
+html[data-color-theme] .site-footer,
+html[data-color-theme] .site-footer.bg-gray-200 {
   background-color: #e5e7eb !important; /* bg-gray-200 */
-  color: #222 !important; /* dark text in light mode */
+  color: var(--theme-text, #222) !important; /* dark text in light mode */
 }
 
 .site-footer h4,
@@ -319,12 +322,15 @@ html[data-color-theme] * {
 .site-footer p,
 .site-footer span,
 .site-footer div {
-  color: #222 !important; /* dark text in light mode */
+  color: var(--theme-text, #222) !important; /* dark text in light mode */
 }
 
-.dark .site-footer {
+.dark .site-footer,
+.dark .site-footer.bg-gray-200,
+html[data-color-theme].dark .site-footer,
+html[data-color-theme].dark .site-footer.bg-gray-200 {
   background-color: #000000 !important; /* black */
-  color: #ffffff !important; /* white text in dark mode */
+  color: var(--theme-text, #ffffff) !important; /* white text in dark mode */
 }
 
 .dark .site-footer h4,
@@ -332,7 +338,7 @@ html[data-color-theme] * {
 .dark .site-footer p,
 .dark .site-footer span,
 .dark .site-footer div {
-  color: #ffffff !important; /* white text in dark mode */
+  color: var(--theme-text, #ffffff) !important; /* white text in dark mode */
 }
 
 /* Footer Mobile/Tablet Refinements (≤1024px) */

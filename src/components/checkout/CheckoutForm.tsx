@@ -167,7 +167,7 @@ export default function CheckoutForm() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen ">
       {/* Header */}
       <div className="border-b border-gray-200">
         <div className="container mx-auto px-6 lg:px-12 py-4 max-w-[1440px]">

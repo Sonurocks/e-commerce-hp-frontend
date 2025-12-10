@@ -59,8 +59,6 @@ const getProductsForTrending = (
     ...partyPlusOnesByDept[department],
   ];
 
-  // For now, return all products from the department
-  // You can add more specific filtering logic here
   return allProducts;
 };
 
@@ -155,7 +153,6 @@ export default function TrendingPage() {
     if (selectedFilter === "all") {
       return productsToShow;
     }
-    // Add filtering logic based on selected filter
     // For now, return all products
     return productsToShow;
   }, [productsToShow, selectedFilter]);
@@ -250,8 +247,8 @@ export default function TrendingPage() {
               onClick={() => setIsFilterDrawerOpen(true)}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
                 selectedFilter === "all"
-                  ? "bg-black text-white"
-                  : "bg-white border border-gray-300 text-(--color-preto) hover:bg-gray-50"
+                  ? "bg-[#222] text-white"
+                  : " border border-gray-300 text-(--color-preto) hover:bg-gray-50"
               }`}
             >
               All Filters
@@ -263,7 +260,7 @@ export default function TrendingPage() {
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
                   selectedFilter === filter
                     ? "bg-black text-white"
-                    : "bg-white border border-gray-300 text-(--color-preto) hover:bg-gray-50"
+                    : " border border-gray-300 text-(--color-preto) hover:bg-gray-50"
                 }`}
               >
                 {filter}
