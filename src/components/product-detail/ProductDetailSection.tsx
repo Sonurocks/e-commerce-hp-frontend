@@ -247,11 +247,11 @@ export default function ProductDetailSection({
         >
           {/* Brand and Product Name */}
           <div className="mb-6">
-            <h1 className="text-[22px] font-nromal text-(--color-preto) mb-1 leading-tight">
+            <h1 className="text-[22px] font-normal text-(--color-preto) mb-1 leading-tight">
               {translate(product.title)}
             </h1>
             {product.subtitle && (
-              <p className="text-[12px] text-(--color-preto) font-thin">
+              <p className="text-[12px] text-(--color-preto) font-normal">
                 {translate(product.subtitle)}
               </p>
             )}
@@ -458,7 +458,7 @@ export default function ProductDetailSection({
                       <p className="font-normal text-(--color-preto) mb-1">
                         {translate(product.title)}
                       </p>
-                      <p>{translate(product.subtitle)}</p>
+                      <p className="font-normal">{translate(product.subtitle)}</p>
                     </div>
                     <div>
                       <p className="font-semibold text-(--color-preto) mb-1">

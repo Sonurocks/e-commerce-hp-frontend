@@ -75,7 +75,7 @@ export default function HeroBanner({
           />
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <h3
-              className="text-white mb-2 font-normal"
+              className="text-white  mb-2 font-normal"
               style={{
                 fontFamily:
                   '"Farfetch Basis", "Helvetica Neue", Arial, sans-serif',

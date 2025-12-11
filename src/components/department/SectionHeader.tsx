@@ -16,7 +16,7 @@ export default function SectionHeader({
       {cta && (
         <Link
           href={cta.href}
-          className="border bg-(--theme-bg) border-[var(--theme-border)]text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors"
+          className="border  border-[var(--theme-border)]text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors"
         >
           {cta.label}
         </Link>

@@ -238,12 +238,12 @@ export default function FilterDrawer({
       {/* Filter Drawer */} 
       <div
         ref={drawerRef}
-        className={`fixed left-0 top-0 h-full w-[400px] bg-white  shadow-xl z-[100] transform transition-transform duration-300 ease-in-out overflow-y-auto ${
+        className={`fixed left-0 top-0 h-full w-[400px] bg-branco shadow-xl z-[100] transform transition-transform duration-300 ease-in-out overflow-y-auto ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Header */}
-        <div className=" px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+        <div className="px-6 py-4 flex items-center justify-between sticky top-0 z-10 bg-branco">
           <h2 className="text-xl font-medium text-preto ">
             All Filters
           </h2>
@@ -353,7 +353,7 @@ export default function FilterDrawer({
                               onClick={() => toggleColor(color.name)}
                               className={`w-full flex items-center space-x-3 py-2 px-2 rounded transition-all ${
                                 isSelected
-                                  ? "border border-preto bg-white"
+                                  ? "border border-preto bg-[--color-branco]"
                                   : "border border-transparent bg-gray-50 hover:bg-gray-100"
                               }`}
                             >
@@ -391,7 +391,7 @@ export default function FilterDrawer({
                             handlePriceInputChange("min", e.target.value);
                           }}
                           onBlur={() => handlePriceInputBlur("min")}
-                          className="w-28 px-3 py-2 border border-gray-300 rounded bg-white text-sm text-gray-700 focus:outline-none focus:border-gray-400"
+                          className="w-28 px-3 py-2 border border-gray-300 rounded bg-[--color-branco] text-sm text-gray-700 focus:outline-none focus:border-gray-400"
                         />
                         <input
                           type="text"
@@ -402,7 +402,7 @@ export default function FilterDrawer({
                             handlePriceInputChange("max", e.target.value);
                           }}
                           onBlur={() => handlePriceInputBlur("max")}
-                          className="w-28 px-3 py-2 border border-gray-300 rounded bg-white text-sm text-gray-700 focus:outline-none focus:border-gray-400"
+                          className="w-28 px-3 py-2 border border-gray-300 rounded bg-[--color-branco] text-sm text-gray-700 focus:outline-none focus:border-gray-400"
                         />
                       </div>
                       {/* Range Slider */}
@@ -562,7 +562,7 @@ export default function FilterDrawer({
         </div>
 
         {/* Bottom Button */}
-        <div className="sticky bottom-0 bg-[--color-branco] px-6 pt-10 pb-4 border-t border-[--color-platinum] flex justify-end">
+        <div className="sticky bottom-0 bg-branco px-6 pt-10 pb-4 border-t border-[--color-platinum] flex justify-end">
           <button
             onClick={onClose}
             className="bg-[#222] text-[#f5f5f5] py-3 px-6 rounded-lg text-sm font-normal transition-colors"

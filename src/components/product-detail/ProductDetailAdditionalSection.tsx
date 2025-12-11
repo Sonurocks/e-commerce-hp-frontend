@@ -65,6 +65,9 @@ const parseProductTitle = (title: string): { brand: string; productName: string 
     "ARMANI",
     "TOM FORD",
     "BOTTEGA VENETA",
+    "Chloé",
+    "GANNI",
+    "AGOLDE",
   ];
 
   // Try to find a brand at the start of the title
@@ -194,7 +197,7 @@ function SmallProductCard({ product }: { product: CompleteTheLookProduct }) {
           />
         </div>
         <div className="mt-2">
-          {/* Brand name - bold */}
+          {/* Brand name */}
           <h3 className="text-[13px] text-(--color-preto) font-bold leading-tight">
             {translate(product.brand)}
           </h3>
@@ -314,10 +317,10 @@ function CuratedProductCard({
         />
       </div>
       <div className="mt-3 space-y-1">
-        <p className="text-[13px] font-semibold text-(--color-preto)">
+        <p className="text-[13px] font-bold text-(--color-preto)">
           {translate(card.brand)}
         </p>
-        <p className="text-[13px] text-(--color-preto)">
+        <p className="text-[13px] font-normal text-(--color-preto)">
           {translate(card.productName)}
         </p>
         <div className="flex items-baseline gap-2 text-[13px]">

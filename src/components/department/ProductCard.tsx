@@ -69,14 +69,14 @@ export default function ProductCard({
         <div className="mt-2 flex-1">
           <div className="h-5 mb-1">
             {showBadge && isTextBadge && (
-              <p className="text-[15px] text-[--color-hina]">{localizedBadge}</p>
+              <p className="text-[15px] text-(--color-emperor)">{localizedBadge}</p>
             )}
           </div>
-          <h3 className="text-m text-preto font-semibold">
+          <h3 className="text-[13px] text-preto font-semibold">
             {localizedTitle ?? product.title}
           </h3>
           {localizedSubtitle && (
-            <p className="text-sm text-preto">{localizedSubtitle}</p>
+            <p className="text-[12px] text-preto">{localizedSubtitle}</p>
           )}
           {product.price && (
             <p className="text-sm text-preto mt-3">{product.price}</p>

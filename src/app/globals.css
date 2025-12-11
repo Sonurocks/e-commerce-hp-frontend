@@ -68,6 +68,10 @@
   background-color: var(--color-preto) !important;
 }
 
+.bg-branco {
+  background-color: var(--color-branco) !important;
+}
+
 .border-preto {
   border-color: var(--color-preto) !important;
 }
