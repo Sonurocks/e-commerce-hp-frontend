@@ -214,10 +214,10 @@ const ContactForm = () => {
 
   return (
     <div className="">
-      <h2 className="text-2xl font-normaltext-(--color-preto) mb-2">
+            <h2 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-2">
         Help & Contact Us
       </h2>
-      <p className="text-smtext-(--color-preto) font-normal mb-6">
+      <p className="text-smtext-(--color-preto) font-normal mb-4 sm:mb-6">
         Simply complete the form and click &apos;send&apos; to submit an
         enquiry:
       </p>
@@ -484,7 +484,7 @@ const ContactForm = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full md:w-auto bg-preto text-white px-8 py-3 rounded text-base font-normal hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto bg-preto text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded text-sm sm:text-base font-normal hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Send
               </button>
@@ -633,9 +633,9 @@ const ContactUs = () => {
       className="min-h-screen bg-white text-(--color-preto) font-normal"
       style={supportPageStyles}
     >
-      <div className="container mx-auto px-[48px] py-16 max-w-[1440px]">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-[48px] py-8 sm:py-12 lg:py-16 max-w-[1440px]">
         {/* Four Column Horizontal Layout - All sections aligned horizontally */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-8 sm:mb-12 lg:mb-16 items-start">
           {/* Column 1 - Information Links */}
           <div>
             <h3 className="text-normal font-normaltext-(--color-preto) mb-2 underline">
@@ -663,11 +663,11 @@ const ContactUs = () => {
           </div>
 
           {/* Column 2 - Customer Service */}
-          <div className="ml-16">
-            <h2 className="text-2xl font-normaltext-(--color-preto) mb-13">
+          <div className="md:ml-8 lg:ml-16 mt-6 md:mt-0">
+            <h2 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-4 sm:mb-8 lg:mb-13">
               Contact us
             </h2>
-            <h3 className="text-2xl font-normaltext-(--color-preto) mb-3">
+            <h3 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-3">
               Customer Service
             </h3>
             <div className="mb-4">
@@ -692,8 +692,8 @@ const ContactUs = () => {
           </div>
 
           {/* Column 3 - FAQs */}
-          <div className="pt-[81px] ml-8">
-            <h3 className="text-2xl font-normaltext-(--color-preto) mb-4">
+          <div className="pt-0 md:pt-8 lg:pt-[81px] md:ml-4 lg:ml-8 mt-6 md:mt-0">
+            <h3 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-4">
               FAQs
             </h3>
             <p className="text-smtext-(--color-preto) font-normal mb-2">
@@ -722,8 +722,8 @@ const ContactUs = () => {
           </div>
 
           {/* Column 4 - Response Time Information */}
-          <div className="pt-[81px]">
-            <h2 className="text-2xl font-normaltext-(--color-preto) mb-4">
+          <div className="pt-0 md:pt-8 lg:pt-[81px] mt-6 md:mt-0">
+            <h2 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-4">
               We&apos;ll be in touch soon.
             </h2>
             <p className="text-smtext-(--color-preto) font-normal leading-relaxed mb-4">
@@ -738,12 +738,12 @@ const ContactUs = () => {
         </div>
 
         {/* Expandable Sections and Feedback - Positioned to the right of first column, below other 3 sections */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 -mt-29">
-          {/* Empty first column to align with first section */}
-          <div></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 -mt-8 sm:-mt-16 lg:-mt-29">
+          {/* Empty first column to align with first section - hidden on mobile/tablet */}
+          <div className="hidden lg:block"></div>
 
           {/* Content spanning the other 3 columns */}
-          <div className="md:col-span-3 ml-14">
+          <div className="md:col-span-2 lg:col-span-3 md:ml-4 lg:ml-14">
             {/* Expandable Sections */}
             <div className="space-y-4 mb-8">
               {/* Step by Step to Cancel or Return Your Order */}
@@ -752,7 +752,7 @@ const ContactUs = () => {
                   onClick={() => toggleSection("cancelReturn")}
                   className="w-full flex justify-between items-center text-left"
                 >
-                  <h3 className="text-l font-normaltext-(--color-preto)">
+                  <h3 className="text-sm sm:text-base lg:text-l font-normaltext-(--color-preto) pr-4">
                     STEP BY STEP TO CANCEL OR RETURN YOUR ORDER
                   </h3>
                   <svg
@@ -952,7 +952,7 @@ const ContactUs = () => {
               onFeedbackChange={handleFeedbackChange}
               containerClassName="pt-8 mt-8"
               titleClassName="text-sm font-normal text-(--color-preto) mb-2"
-              questionClassName="text-2xl font-normal text-(--color-preto) mb-4"
+              questionClassName="text-xl sm:text-2xl font-normal text-(--color-preto) mb-4"
               buttonClassName="px-4 py-2 border border-black rounded-lg text-l font-semibold transition-colors"
               activeButtonClassName="bg-(--color-preto) text-white"
               inactiveButtonClassName="text-(--color-preto) hover:bg-gray-100"
@@ -961,7 +961,7 @@ const ContactUs = () => {
         </div>
 
         {/* Download App Banner */}
-        <div className="mt-16">
+        <div className="mt-8 sm:mt-12 lg:mt-16">
           <DownloadAppBanner />
         </div>
       </div>

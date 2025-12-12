@@ -490,7 +490,7 @@ const Cart = () => {
                           </button>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
                           <div className="space-y-1 text-sm text-(--color-hina)">
                             {originalValue > 0 && (
                               <p className="line-through text-(--color-hina)">
@@ -513,7 +513,7 @@ const Cart = () => {
                             </p>
                           </div>
 
-                          <div className="space-y-4 text-sm text-(--color-preto)">
+                          <div className="space-y-3 text-sm text-(--color-preto) -mt-22">
                             {/* Size Dropdown */}
                             <div className="relative" ref={(el) => {
                               const itemKey = `${item.product.id}-${item.size}`;
@@ -655,26 +655,27 @@ const Cart = () => {
                                 </div>
                               )}
                             </div>
-                          </div>
-                        </div>
 
-                        <div className="flex items-center gap-3 text-sm">
-                          <button
-                            type="button"
-                            className="flex items-center gap-2 p-2  border-1 rounded-lg text-(--color-preto) hover:opacity-80"
-                            onClick={() => {
-                              addToWishlist(item.product);
-                              removeItem(item.product.id, item.size);
-                            }}
-                          >
-                            <GoHeart
-                              className={`w-4 h-4 ${
-                                wishlisted ? "fill-(--color-preto)" : ""
-                              }`}
-                              strokeWidth={1.0}
-                            />
-                            {wishlisted ? "In wishlist" : "Move to wishlist"}
-                          </button>
+                            {/* Wishlist Button */}
+                            <div className="flex items-center gap-3 text-sm">
+                              <button
+                                type="button"
+                                className="flex items-center gap-2 p-2  text-(--color-preto) hover:opacity-80"
+                                onClick={() => {
+                                  addToWishlist(item.product);
+                                  removeItem(item.product.id, item.size);
+                                }}
+                              >
+                                <GoHeart
+                                  className={`w-4 h-4 ${
+                                    wishlisted ? "fill-(--color-preto)" : ""
+                                  }`}
+                                  strokeWidth={1.0}
+                                />
+                                {wishlisted ? "In your wishlist" : "Move to wishlist"}
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>

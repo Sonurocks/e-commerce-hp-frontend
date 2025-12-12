@@ -135,21 +135,23 @@ const Wishlist = () => {
                 </div>
 
                 <div className="space-y-2 max-w-md flex-1">
-                  <p className="text-sm uppercase tracking-wide text-gray-500">
-                    {item.subtitle}
-                  </p>
-                  <h3 className="text-xl font-medium text-(--color-preto) line-clamp-2">
+                  {item.subtitle && (
+                    <p className="text-[12px] text-preto">
+                      {item.subtitle}
+                    </p>
+                  )}
+                  <h3 className="text-[13px] text-preto font-semibold line-clamp-2">
                     {item.title}
                   </h3>
                   <p className="text-sm text-gray-500">FARFETCH ID: {item.id}</p>
 
-                  <div className="flex items-center justify-start gap-3 text-lg">
+                  <div className="flex items-center justify-start gap-3 mt-3">
                     {hasDiscount && (
-                      <span className="text-gray-500 line-through">
+                      <span className="text-sm text-gray-500 line-through">
                         {item.originalPrice}
                       </span>
                     )}
-                    <span className="text-[#d32f2f] font-semibold">
+                    <span className="text-sm text-preto">
                       {item.discountedPrice || item.price || item.originalPrice}
                     </span>
                   </div>

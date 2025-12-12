@@ -231,7 +231,7 @@ export default function ProductDetailSection({
       {/* Right Side - Product Information */}
       <div className="flex-[1.2] max-w-lg sticky top-8 self-start lg:ml-4 relative min-h-[420px]">
         {hoveredZoomImage && zoomPosition && (
-          <div className="absolute inset-0 z-20 bg-white flex items-center justify-center shadow-lg">
+          <div className="absolute inset-0 z-20  flex items-center justify-center shadow-lg">
             <ZoomedImageView
               image={hoveredZoomImage}
               zoomLevel={zoomLevel}
