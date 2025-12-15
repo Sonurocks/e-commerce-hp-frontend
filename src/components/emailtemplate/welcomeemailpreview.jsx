@@ -12,7 +12,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { useLogo } from "@/context/LogoContext";
 
 export default function WelcomeEmail({
-  logoUrl,
+  logoUrl = undefined,
   siteName = "FARFETCH",
   name = "Supriya",
   message = "Thanks for joining the FARFETCH community. Discover handpicked designer pieces from top global brands!",
