@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
@@ -17,6 +18,7 @@ import {
   headerConfig,
 } from "../../constants";
 import { useLanguage } from "@/context/LanguageContext";
+import { useLogo } from "@/context/LogoContext";
 import { NavigationSection } from "@/lib/i18n";
 import { DepartmentKey } from "../../constants/department";
 import GenericDrawer from "./drawer/GenericDrawer";
@@ -41,6 +43,7 @@ const Header = () => {
 
   const { translations: languageStrings } = useLanguage();
   const headerCopy = languageStrings.header;
+  const { logoConfig } = useLogo();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -357,10 +360,22 @@ const Header = () => {
 
                 {/* Center - Logo */}
                 <div className="flex-1 flex justify-center items-center">
-                  <Link href={headerConfig.logo.href}>
-                    <h1 className="text-3xl font-extrabold text-(--color-preto) dark:text-(--color-preto) tracking-tight uppercase w-[290px] h-[26px]">
-                      {headerCopy.logoText}
-                    </h1>
+                  <Link href={logoConfig.header.href || headerConfig.logo.href}>
+                    {logoConfig.header.type === "image" && logoConfig.header.imageUrl ? (
+                      <div className="relative w-[290px] h-[26px]">
+                        <Image
+                          src={logoConfig.header.imageUrl}
+                          alt={logoConfig.header.alt || "Logo"}
+                          fill
+                          className="object-contain"
+                          priority
+                        />
+                      </div>
+                    ) : (
+                      <h1 className="text-3xl font-extrabold text-(--color-preto) dark:text-(--color-preto) tracking-tight uppercase w-[290px] h-[26px]">
+                        {logoConfig.header.text || headerCopy.logoText}
+                      </h1>
+                    )}
                   </Link>
                 </div>
 
@@ -576,10 +591,22 @@ const Header = () => {
 
                 {/* Center - Logo */}
                 <div className="flex flex-1 justify-center">
-                  <Link href={headerConfig.logo.href}>
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-(--color-preto) dark:text-(--color-preto) tracking-tight uppercase">
-                      {headerCopy.logoText}
-                    </h1>
+                  <Link href={logoConfig.header.href || headerConfig.logo.href}>
+                    {logoConfig.header.type === "image" && logoConfig.header.imageUrl ? (
+                      <div className="relative w-[200px] h-[20px] sm:w-[290px] sm:h-[26px]">
+                        <Image
+                          src={logoConfig.header.imageUrl}
+                          alt={logoConfig.header.alt || "Logo"}
+                          fill
+                          className="object-contain"
+                          priority
+                        />
+                      </div>
+                    ) : (
+                      <h1 className="text-2xl sm:text-3xl font-extrabold text-(--color-preto) dark:text-(--color-preto) tracking-tight uppercase">
+                        {logoConfig.header.text || headerCopy.logoText}
+                      </h1>
+                    )}
                   </Link>
                 </div>
 

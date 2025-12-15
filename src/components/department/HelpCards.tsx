@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { PiCoatHangerBold } from "react-icons/pi";
 import { useLanguage } from "@/context/LanguageContext";
@@ -14,20 +15,20 @@ export default function HelpCards() {
       <div className="max-w-12xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* HOW TO SHOP Card */}
-          <div className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start">
+          <Link href="/how-to-shop" className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start hover:bg-gray-50 transition-colors cursor-pointer">
             <div className="mb-2">
               <PiCoatHangerBold
                 className="text-(--theme-text)"
                 size={28}
               />
             </div>
-            <h3 className="text-base font-base uppercasetext-(--color-preto) mb-1">
+            <h3 className="text-base font-base uppercase text-(--color-preto) mb-1">
               {helpCopy.howToShop.title}
             </h3>
             <p className="text-normal font-base text-(--color-preto)">
               {helpCopy.howToShop.description}
             </p>
-          </div>
+          </Link>
 
           {/* FAQS Card */}
           <div className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start">

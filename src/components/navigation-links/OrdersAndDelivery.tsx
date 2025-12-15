@@ -336,7 +336,7 @@ const OrdersAndDelivery = () => {
           isOpen={openSectionIndex === sectionIndex}
           onToggle={toggleSection}
           containerClassName="border-b border-gray-200"
-          buttonClassName="w-full py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors "
+          buttonClassName="w-full py-4 flex items-center rounded-lg justify-between text-left hover:bg-gray-50 transition-colors "
           contentClassName="pb-4 px-4"
           titleClassName="font-light text-sm text-(--color-preto) uppercase tracking-wide"
         />

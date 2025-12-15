@@ -3,11 +3,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { footerYouthImage, footerLogoffImage } from "@/assets";
+import { footerYouthImage } from "@/assets";
 import { useRouter } from "next/navigation";
+import { useLogo } from "@/context/LogoContext";
 
 const YouthDiscount = () => {
   const router = useRouter();
+  const { logoConfig } = useLogo();
   const [countryCode, setCountryCode] = useState("IN (+91)");
   const [mobileNumber, setMobileNumber] = useState("");
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
@@ -57,8 +59,8 @@ const YouthDiscount = () => {
             <div className="mb-4 sm:mb-6">
               <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16">
                 <Image
-                  src={footerLogoffImage}
-                  alt="Farfetch Logo"
+                  src={logoConfig.footer.imageUrl}
+                  alt={logoConfig.footer.alt || "Logo"}
                   className="w-full h-full object-contain"
                   fill
                 />

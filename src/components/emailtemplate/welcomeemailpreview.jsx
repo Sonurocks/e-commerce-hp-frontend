@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { FaFacebookF } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io5";
@@ -7,9 +9,10 @@ import {
   AiOutlineGlobal,
 } from "react-icons/ai";
 import { FaXTwitter } from "react-icons/fa6";
+import { useLogo } from "@/context/LogoContext";
 
 export default function WelcomeEmail({
-  logoUrl = "https://1000logos.net/wp-content/uploads/2022/08/Farfetch-Logo-2015.png",
+  logoUrl,
   siteName = "FARFETCH",
   name = "Supriya",
   message = "Thanks for joining the FARFETCH community. Discover handpicked designer pieces from top global brands!",
@@ -24,6 +27,11 @@ export default function WelcomeEmail({
     twitter: "https://twitter.com/farfetch",
   },
 }) {
+  const { logoConfig } = useLogo();
+  // Use prop logoUrl if provided, otherwise use dynamic logo from context
+  const finalLogoUrl = logoUrl || logoConfig.email.imageUrl;
+  const logoAlt = logoConfig.email.alt || `${siteName} Logo`;
+
   return (
     <div
       style={{
@@ -60,8 +68,8 @@ export default function WelcomeEmail({
         >
           <div style={{ textAlign: "center", margin: "0 auto" }}>
             <img
-              src={logoUrl}
-              alt={`${siteName} Logo`}
+              src={finalLogoUrl}
+              alt={logoAlt}
               style={{
                 maxWidth: "200px",
                 height: "auto",

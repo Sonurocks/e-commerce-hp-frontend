@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { primaryNavigationLinks, headerConfig } from "../../../constants";
 import { useLanguage } from "@/context/LanguageContext";
+import { useLogo } from "@/context/LogoContext";
 import {
   searchbarBag,
   searchbarBlackbag,
@@ -71,6 +72,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
   const { translations: languageStrings } = useLanguage();
   const headerCopy = languageStrings.header;
   const searchCopy = languageStrings.homepage.searchDrawer;
+  const { logoConfig } = useLogo();
 
   const getPrimaryLabel = (linkId: string, fallback: string) =>
     headerCopy.navigation.primary[linkId] ?? fallback;
@@ -205,10 +207,22 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
         <div className="container mx-auto px-[36px]">
           {/* Logo - Top Center */}
           <div className="flex justify-center items-center py-4">
-            <Link href={headerConfig.logo.href}>
-              <h1 className="text-3xl font-extraboldtext-(--color-preto) tracking-tight uppercase">
-                {headerCopy.logoText}
-              </h1>
+            <Link href={logoConfig.header.href || headerConfig.logo.href}>
+              {logoConfig.header.type === "image" && logoConfig.header.imageUrl ? (
+                <div className="relative w-[290px] h-[26px]">
+                  <Image
+                    src={logoConfig.header.imageUrl}
+                    alt={logoConfig.header.alt || "Logo"}
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+              ) : (
+                <h1 className="text-3xl font-extrabold text-(--color-preto) tracking-tight uppercase">
+                  {logoConfig.header.text || headerCopy.logoText}
+                </h1>
+              )}
             </Link>
           </div>
 

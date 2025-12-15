@@ -2,7 +2,7 @@ import { SupportNavLink } from "@/types/support";
 
 export const supportNavigationLinks: SupportNavLink[] = [
   { href: "/contact-us", label: "Contact us" },
-  { href: "#", label: "How to shop" },
+  { href: "/how-to-shop", label: "How to shop" },
   { href: "/orders-and-delivery", label: "Orders and delivery" },
   { href: "/payment-and-pricing", label: "Payment and pricing" },
   { href: "/cryptocurrency-payments", label: "Cryptocurrency Payments" },
