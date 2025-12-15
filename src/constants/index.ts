@@ -1323,6 +1323,12 @@ export const legalLinks = [
   { href: "/become-a-vendor", label: "Become a vendor" },
 ];
 
+// Global company / brand info used in legal copy, footer, etc.
+export const companyInfo = {
+  brandName: "FARFETCH",
+  companyName: "FARFETCH UK Limited",
+};
+
 // Header Constants
 export const headerConfig = {
   logo: {

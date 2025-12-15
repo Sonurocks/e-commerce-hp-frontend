@@ -31,7 +31,10 @@ export default function HelpCards() {
           </Link>
 
           {/* FAQS Card */}
-          <div className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start">
+          <Link
+            href="/faq"
+            className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start hover:bg-gray-50 transition-colors cursor-pointer"
+          >
             <div className="mb-2">
               <IoMdHelpCircleOutline
                 className="text-(--theme-text)"
@@ -44,10 +47,13 @@ export default function HelpCards() {
             <p className="text-normal font-base text-(--color-preto)">
               {helpCopy.faqs.description}
             </p>
-          </div>
+          </Link>
 
           {/* NEED HELP? Card */}
-          <div className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start">
+          <Link
+            href="/contact-us"
+            className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start hover:bg-gray-50 transition-colors cursor-pointer"
+          >
             <div className="mb-2">
               <svg
                 width="28"
@@ -69,7 +75,7 @@ export default function HelpCards() {
             <p className="text-normal font-base  text-(--color-preto)">
               {helpCopy.needHelp.description}
             </p>
-          </div>
+          </Link>
         </div>
       </div>
     </section>

@@ -227,8 +227,8 @@ const urduBundle: TranslationBundle = {
     "Become a vendor": "فروشندہ بنیں"
   },
   "legalDisclaimer": {
-    "trademark": "'FARFETCH' اور 'FARFETCH' کا لوگو FARFETCH UK Limited کی ٹریڈ مارک ہیں اور دنیا کے متعدد ممالک میں رجسٹرڈ ہیں۔",
-    "copyright": "© حقوق اشاعت {{year}} FARFETCH UK Limited. جملہ حقوق محفوظ ہیں۔"
+    "trademark": "'{{brand}}' اور '{{brand}}' کا لوگو {{company}} کی ٹریڈ مارک ہیں اور دنیا کے متعدد ممالک میں رجسٹرڈ ہیں۔",
+    "copyright": "© حقوق اشاعت {{year}} {{company}}. جملہ حقوق محفوظ ہیں۔"
   }
   },
   "productCopy": {

@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { ProductDetail } from "@/constants/products";
-import { GoHeart } from "react-icons/go";
-import { FaToggleOn } from "react-icons/fa";
+import { GoHeart, GoHeartFill } from "react-icons/go";
+import { MdToggleOff, MdToggleOn } from "react-icons/md";
 import { PiCoatHangerBold } from "react-icons/pi";
 import Image from "next/image";
 import Link from "next/link";
@@ -46,7 +46,7 @@ export default function ProductDetailSection({
     { size: "XS", price: "£220", available: true },
     { size: "S", price: "£220", available: true },
     { size: "M", price: "£232", available: true },
-    { size: "L", price: null, available: false },
+    { size: "L", price: "£232", available:true },
     { size: "XL", price: "£232", available: true },
   ];
 
@@ -381,10 +381,11 @@ export default function ProductDetailSection({
             onClick={handleWishlistClick}
             className="flex-[1]  text-preto border-2 border-[#222] rounded-lg py-2 px-4 font-semibold text-[15px] hover:bg-[#f5f5f5] transition-colors flex items-center justify-center gap-2"
           >
-            <GoHeart
-              className={`w-5 h-5 ${wishlistActive ? "fill-[#222]" : ""}`}
-              strokeWidth={1.0}
-            />
+            {wishlistActive ? (
+              <GoHeartFill className="w-5 h-5 text-preto" strokeWidth={0} />
+            ) : (
+              <GoHeart className="w-5 h-5 text-preto" strokeWidth={1.0} />
+            )}
             {translate("Wishlist")}
           </button>
         </div>
@@ -532,16 +533,32 @@ export default function ProductDetailSection({
                         {translate("Model Measurements")}
                       </h4>
                       <div className="flex items-center gap-2">
-                        <span className={`text-[13px] ${unitToggle === "in" ? "text-(--color-preto)" : "text-gray-400"}`}>in</span>
+                        <span
+                          className={`text-[13px] ${
+                            unitToggle === "in" ? "text-(--color-preto)" : "text-gray-400"
+                          }`}
+                        >
+                          in
+                        </span>
                         <button
-                          onClick={() => setUnitToggle(unitToggle === "in" ? "cm" : "in")}
+                          onClick={() =>
+                            setUnitToggle(unitToggle === "in" ? "cm" : "in")
+                          }
                           className="focus:outline-none -ml-1"
                         >
-                          <FaToggleOn
-                            className="text-3xl text-(--color-preto) transition-colors"
-                          />
+                          {unitToggle === "cm" ? (
+                            <MdToggleOn className="text-3xl text-(--color-preto) transition-colors" />
+                          ) : (
+                            <MdToggleOff className="text-3xl text-(--color-preto) transition-colors" />
+                          )}
                         </button>
-                        <span className={`text-[11px] ${unitToggle === "cm" ? "text-(--color-preto)" : "text-gray-400"}`}>cm</span>
+                        <span
+                          className={`text-[11px] ${
+                            unitToggle === "cm" ? "text-(--color-preto)" : "text-gray-400"
+                          }`}
+                        >
+                          cm
+                        </span>
                       </div>
                     </div>
                     <div className="space-y-1.5 mb-3">

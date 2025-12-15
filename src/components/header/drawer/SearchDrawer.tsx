@@ -184,15 +184,46 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
 
     if (isDrawerOpen) {
       document.addEventListener("keydown", handleEscKey);
-      // Prevent body scroll when drawer is open
-      document.body.style.overflow = "hidden";
     }
 
     return () => {
       document.removeEventListener("keydown", handleEscKey);
-      document.body.style.overflow = "unset";
     };
   }, [isDrawerOpen, onClose]);
+
+  // Prevent body scroll when drawer is open
+  useEffect(() => {
+    if (isDrawerOpen) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      const originalOverflow = document.body.style.overflow;
+      const originalPosition = document.body.style.position;
+      const originalTop = document.body.style.top;
+      const originalWidth = document.body.style.width;
+
+      // Prevent scrolling
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+
+      // Prevent touch scrolling on mobile
+      const preventTouchMove = (e: TouchEvent) => {
+        e.preventDefault();
+      };
+      document.addEventListener("touchmove", preventTouchMove, { passive: false });
+
+      return () => {
+        // Restore original styles
+        document.body.style.overflow = originalOverflow;
+        document.body.style.position = originalPosition;
+        document.body.style.top = originalTop;
+        document.body.style.width = originalWidth;
+        window.scrollTo(0, scrollY);
+        document.removeEventListener("touchmove", preventTouchMove);
+      };
+    }
+  }, [isDrawerOpen]);
 
   return (
     <>

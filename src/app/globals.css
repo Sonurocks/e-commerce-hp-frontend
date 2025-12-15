@@ -125,6 +125,20 @@ body {
   font-family: var(--font-theme);
 }
 
+/* Prevent horizontal scrolling on all viewports */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Cursor pointer for all buttons and links */
+button,
+a,
+[role="button"],
+Link {
+  cursor: pointer;
+}
+
 .download-app-banner {
   font-family: var(--fontNormal);
 }
@@ -559,6 +573,39 @@ html[data-color-theme].dark .site-footer.bg-gray-200 {
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+/* Mobile navbar scrollbar hide - ensure it's hidden */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Global scrollbar styling - thin light gray line */
+* {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #d4d4d4 transparent;
+}
+
+/* Chrome, Safari and Edge (WebKit-based) */
+*::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #d4d4d4;
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #bfbfbf;
 }
 
 /* Target all select elements */

@@ -56,7 +56,7 @@ const VendorPortal = () => {
 
   // Generate random captcha code
   const generateCaptcha = useCallback(() => {
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Excluding confusing characters like 0, O, I, 1
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789"; // Excluding confusing characters like 0, O, I, 1, l
     let code = "";
     for (let i = 0; i < 5; i++) {
       code += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -68,7 +68,7 @@ const VendorPortal = () => {
 
   // Generate captcha on component mount
   useEffect(() => {
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Excluding confusing characters like 0, O, I, 1
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789"; // Excluding confusing characters like 0, O, I, 1, l
     let code = "";
     for (let i = 0; i < 5; i++) {
       code += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -95,8 +95,8 @@ const VendorPortal = () => {
 
   // Handle captcha input change
   const handleCaptchaChange = (value: string) => {
-    const upperValue = value.toUpperCase();
-    setCaptchaInput(upperValue);
+    const newValue = value;
+    setCaptchaInput(newValue);
     
     // Clear error when user starts typing
     if (captchaError) {
@@ -104,13 +104,9 @@ const VendorPortal = () => {
     }
     
     // Validate when user enters complete code (5 characters)
-    if (upperValue.length === 5) {
-      if (upperValue !== captchaCode) {
+    if (newValue.length === 5) {
+      if (newValue.toLowerCase() !== captchaCode.toLowerCase()) {
         setCaptchaError("Captcha code does not match");
-        // Automatically refresh captcha after a short delay
-        setTimeout(() => {
-          generateCaptcha();
-        }, 500);
       } else {
         setCaptchaError("");
       }
@@ -120,12 +116,8 @@ const VendorPortal = () => {
   // Handle captcha input blur
   const handleCaptchaBlur = () => {
     if (captchaInput.trim()) {
-      if (captchaInput.toUpperCase() !== captchaCode) {
+      if (captchaInput.toLowerCase() !== captchaCode.toLowerCase()) {
         setCaptchaError("Captcha code does not match");
-        // Automatically refresh captcha
-        setTimeout(() => {
-          generateCaptcha();
-        }, 500);
       } else {
         setCaptchaError("");
       }
@@ -173,10 +165,10 @@ const VendorPortal = () => {
     if (!captchaInput.trim()) {
       setCaptchaError("Please enter the captcha code");
       isValid = false;
-    } else if (captchaInput.toUpperCase() !== captchaCode) {
+    } else if (captchaInput.trim().toLowerCase() !== captchaCode.toLowerCase()) {
       setCaptchaError("Captcha code does not match");
       isValid = false;
-      // Automatically refresh captcha on wrong submission
+      // Refresh captcha only when form is submitted with wrong captcha
       setTimeout(() => {
         generateCaptcha();
       }, 500);

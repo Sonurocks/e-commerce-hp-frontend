@@ -228,9 +228,9 @@ const frenchBundle: TranslationBundle = {
     },
     legalDisclaimer: {
       trademark:
-        "'FARFETCH' et le logo 'FARFETCH' sont des marques déposées de FARFETCH UK Limited et sont enregistrés dans de nombreuses juridictions à travers le monde.",
+        "'{{brand}}' et le logo '{{brand}}' sont des marques déposées de {{company}} et sont enregistrés dans de nombreuses juridictions à travers le monde.",
       copyright:
-        "© Copyright {{year}} FARFETCH UK Limited. Tous droits réservés.",
+        "© Copyright {{year}} {{company}}. Tous droits réservés.",
     },
   },
   productCopy: {

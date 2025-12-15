@@ -226,9 +226,9 @@ const hindiBundle: TranslationBundle = {
     },
     legalDisclaimer: {
       trademark:
-        "'FARFETCH' और 'FARFETCH' लोगो FARFETCH UK Limited के ट्रेडमार्क हैं और दुनिया के कई न्यायक्षेत्रों में पंजीकृत हैं।",
+        "'{{brand}}' और '{{brand}}' लोगो {{company}} के ट्रेडमार्क हैं और दुनिया के कई न्यायक्षेत्रों में पंजीकृत हैं।",
       copyright:
-        "© कॉपीराइट {{year}} FARFETCH UK Limited. सर्वाधिकार सुरक्षित.",
+        "© कॉपीराइट {{year}} {{company}}. सर्वाधिकार सुरक्षित.",
     },
   },
   productCopy: {

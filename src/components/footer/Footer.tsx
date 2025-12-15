@@ -1,13 +1,21 @@
 import React from "react";
 import { SiSnapchat } from "react-icons/si";
 import { FaPinterestP } from "react-icons/fa";
-import { footerSections, socialMediaLinks, legalLinks } from "../../constants";
+import { footerSections, socialMediaLinks, legalLinks, companyInfo } from "../../constants";
 import { useLanguage } from "@/context/LanguageContext";
 
 const Footer = () => {
   const { translations } = useLanguage();
   const footerCopy = translations.footer;
   const currentYear = new Date().getFullYear();
+
+  const trademarkText = footerCopy.legalDisclaimer.trademark
+    .replace(/{{brand}}/g, companyInfo.brandName)
+    .replace(/{{company}}/g, companyInfo.companyName);
+
+  const copyrightText = footerCopy.legalDisclaimer.copyright
+    .replace("{{year}}", currentYear.toString())
+    .replace(/{{company}}/g, companyInfo.companyName);
 
   return (
     <footer className="site-footer bg-gray-200 dark:bg-black text-preto dark:text-white max-w-container w-full min-h-footer min-w-full  py-footer mx-auto font-normal">
@@ -104,15 +112,8 @@ const Footer = () => {
               ))}
             </div>
             <div className="text-preto dark:text-white text-footer-text">
-              <p className="mb-2">
-                {footerCopy.legalDisclaimer.trademark}
-              </p>
-              <p>
-                {footerCopy.legalDisclaimer.copyright.replace(
-                  "{{year}}",
-                  currentYear.toString(),
-                )}
-              </p>
+              <p className="mb-2">{trademarkText}</p>
+              <p>{copyrightText}</p>
             </div>
           </div>
         </div>

@@ -97,7 +97,15 @@ export const WishlistProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [wishlistItems, setWishlistItems] = useState<ProductDetail[]>(() => loadWishlistFromStorage());
+  const [wishlistItems, setWishlistItems] = useState<ProductDetail[]>([]);
+  
+  // Load wishlist from localStorage on client after mount to avoid SSR/client mismatch
+  useEffect(() => {
+    const storedItems = loadWishlistFromStorage();
+    if (storedItems.length > 0) {
+      setWishlistItems(storedItems);
+    }
+  }, []);
   
   // Save to localStorage whenever wishlistItems changes
   useEffect(() => {

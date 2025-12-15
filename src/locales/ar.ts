@@ -226,8 +226,8 @@ const arabicBundle: TranslationBundle = {
       "Become a vendor": "كن بائعًا"
     },
     "legalDisclaimer": {
-      "trademark": "'FARFETCH' وشعار 'FARFETCH' هما علامتان تجاريتان مسجلتان لشركة FARFETCH UK Limited في العديد من البلدان حول العالم.",
-      "copyright": "© حقوق النشر {{year}} FARFETCH UK Limited. جميع الحقوق محفوظة."
+      "trademark": "'{{brand}}' وشعار '{{brand}}' هما علامتان تجاريتان مسجلتان لشركة {{company}} في العديد من البلدان حول العالم.",
+      "copyright": "© حقوق النشر {{year}} {{company}}. جميع الحقوق محفوظة."
     }
   },
   "productCopy": {

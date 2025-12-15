@@ -8,7 +8,7 @@ import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { FiMenu, FiX } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa";
-import { SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   promotions,
   primaryNavigationLinks,
@@ -83,6 +83,9 @@ const Header = () => {
   const searchDrawerRef = useRef<HTMLDivElement>(null);
   const flagButtonRefDesktop = useRef<HTMLButtonElement>(null);
   const flagButtonRefMobile = useRef<HTMLButtonElement>(null);
+  const mobileNavScrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   const navigationSectionKey: NavigationSection = isKidswearPage
     ? "kidswearSecondary"
     : isMenswearPage
@@ -262,6 +265,47 @@ const Header = () => {
   const handleMobileLinkClick = () => {
     setIsMenuOpen(false);
   };
+
+  // Check scroll position for mobile nav
+  const checkScrollPosition = () => {
+    if (mobileNavScrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = mobileNavScrollRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+    }
+  };
+
+  // Scroll handlers for mobile nav
+  const scrollNavLeft = () => {
+    if (mobileNavScrollRef.current) {
+      mobileNavScrollRef.current.scrollBy({ left: -200, behavior: "smooth" });
+    }
+  };
+
+  const scrollNavRight = () => {
+    if (mobileNavScrollRef.current) {
+      mobileNavScrollRef.current.scrollBy({ left: 200, behavior: "smooth" });
+    }
+  };
+
+  // Check scroll position on mount and resize
+  useEffect(() => {
+    checkScrollPosition();
+    const handleResize = () => checkScrollPosition();
+    window.addEventListener("resize", handleResize);
+    
+    const scrollContainer = mobileNavScrollRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener("scroll", checkScrollPosition);
+    }
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (scrollContainer) {
+        scrollContainer.removeEventListener("scroll", checkScrollPosition);
+      }
+    };
+  }, [navigationLinks]);
 
   return (
     <>
@@ -669,21 +713,50 @@ const Header = () => {
 
               {/* Secondary Navigation and Search */}
               <div className="flex flex-col gap-4 border-t border-gray-200 py-4 dark:border-(--color-platinum)">
-                <div className="flex items-center gap-4 overflow-x-auto text-sm text-(--color-preto) dark:text-(--color-preto)">
-                  {navigationLinks.map((link) => (
-                    <Link
-                      key={`mobile-${link.id}`}
-                      href={link.href}
-                      onClick={handleMobileLinkClick}
-                      className="whitespace-nowrap font-medium"
+                <div className="relative flex items-center gap-2">
+                  {/* Previous Button */}
+                  {canScrollLeft && (
+                    <button
+                      onClick={scrollNavLeft}
+                      className="flex h-5 w-5 shrink-0 items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition"
+                      aria-label="Scroll left"
                     >
-                      {getNavLabel(
-                        navigationSectionKey,
-                        link.id,
-                        link.label,
-                      )}
-                    </Link>
-                  ))}
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                  )}
+                  
+                  {/* Scrollable Navigation */}
+                  <div
+                    ref={mobileNavScrollRef}
+                    className="flex flex-1 items-center gap-4 overflow-x-auto scrollbar-hide text-sm text-(--color-preto) dark:text-(--color-preto) scroll-smooth"
+                    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                  >
+                    {navigationLinks.map((link) => (
+                      <Link
+                        key={`mobile-${link.id}`}
+                        href={link.href}
+                        onClick={handleMobileLinkClick}
+                        className="whitespace-nowrap font-medium"
+                      >
+                        {getNavLabel(
+                          navigationSectionKey,
+                          link.id,
+                          link.label,
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+
+                  {/* Next Button */}
+                  {canScrollRight && (
+                    <button
+                      onClick={scrollNavRight}
+                      className="flex h-5 w-5 shrink-0 items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition"
+                      aria-label="Scroll right"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  )}
                 </div>
 
                 <div className="w-full">
