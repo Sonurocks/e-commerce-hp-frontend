@@ -15,7 +15,7 @@ export default function HelpCards() {
       <div className="max-w-12xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* HOW TO SHOP Card */}
-          <Link href="/how-to-shop" className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start hover:bg-gray-50 transition-colors cursor-pointer">
+          <Link href="/how-to-shop" className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start transition-colors cursor-pointer">
             <div className="mb-2">
               <PiCoatHangerBold
                 className="text-(--theme-text)"
@@ -33,7 +33,7 @@ export default function HelpCards() {
           {/* FAQS Card */}
           <Link
             href="/faq"
-            className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start hover:bg-gray-50 transition-colors cursor-pointer"
+            className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start  transition-colors cursor-pointer"
           >
             <div className="mb-2">
               <IoMdHelpCircleOutline
@@ -52,7 +52,7 @@ export default function HelpCards() {
           {/* NEED HELP? Card */}
           <Link
             href="/contact-us"
-            className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start hover:bg-gray-50 transition-colors cursor-pointer"
+            className="border border-gray-300 rounded-lg py-4 px-6 flex flex-col items-start transition-colors cursor-pointer"
           >
             <div className="mb-2">
               <svg

@@ -33,7 +33,7 @@ export default function EditorialFeature({
           {title || defaultTitle}
         </h3>
         <p
-          className="text-gray-800 mb-8 lg:mb-12 max-w-md lg:max-w-none"
+          className="text-(--color-emperor) mb-8 lg:mb-12 max-w-md lg:max-w-none"
           style={{
             fontFamily: '"Nimbus Roman D", "Times New Roman", serif',
             fontSize: "clamp(1rem, 3vw, 1.2rem)", // Responsive font size
@@ -44,7 +44,7 @@ export default function EditorialFeature({
         </p>
         <Link
           href="#"
-          className="inline-block text-[14px] border rounded-lg border-gray-800 px-6 py-2.5 text-(--color-preto) font-semibold hover:bg-gray-100 transition-colors lg:ml-44"
+          className="inline-block text-[14px] border rounded-lg border-gray-800 px-6 py-2.5 text-(--color-preto) font-semibold  transition-colors lg:ml-44"
         >
           {ctaLabel ?? "Shop now"}
         </Link>

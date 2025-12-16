@@ -310,7 +310,8 @@ const Header = () => {
   return (
     <>
       <header
-        className={`bg-white dark:bg-(--colorWhite) sticky top-0 z-50 font-normal ${isSearchDrawerOpen ? "hidden" : ""}`}
+        className={`bg-white dark:bg-(--colorWhite)  sticky top-0 z-50 font-normal transition-transform duration-300 ${isSearchDrawerOpen ? "hidden" : ""}`}
+        style={{ position: 'sticky', top: 0 }}
       >
         {/* Top Promotional Bar */}
         <div

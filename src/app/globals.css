@@ -125,11 +125,7 @@ body {
   font-family: var(--font-theme);
 }
 
-/* Prevent horizontal scrolling on all viewports */
-html,
-body {
-  overflow-x: hidden;
-}
+
 
 /* Cursor pointer for all buttons and links */
 button,

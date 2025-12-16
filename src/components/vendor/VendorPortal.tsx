@@ -1,32 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import React, { useState, useEffect, useCallback } from "react";
 import { HiRefresh } from "react-icons/hi";
+import Toast from "@/components/profile/Toast";
 
-const businessTypes = ["Individual Seller", "Manufacturer", "Retailer", "Wholesaler", "Distributor"];
-const businessCategories = ["Fashion", "Electronics", "Beauty", "Home", "Accessories", "Lifestyle"];
-const documentUploads = [
-  { id: "idProof", label: "ID Proof (Aadhar / Passport / Driver License)" },
-  { id: "businessRegistration", label: "Business Registration Certificate" },
-  { id: "gstCertificate", label: "GST Certificate / Tax License" },
-  { id: "addressProof", label: "Address Proof" },
-  { id: "cancelledCheque", label: "Cancelled Cheque or Bank Verification Document" },
-  { id: "signatureUpload", label: "Signature Upload (optional)", optional: true },
-];
-const policyStatements = [
-  "I agree to the Terms & Conditions",
-  "I agree to the Vendor/Seller Policies",
-  "I accept the Payment & Commission Terms",
-  "I confirm all details are correct",
-];
+
 
 const inputClasses =
-  "w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-[--color-hina] focus:outline-none border-preto focus:border-preto";
+  "w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-[var(--color-hina)] focus:outline-none border-preto focus:border-preto";
 
-const selectClasses = inputClasses;
+// const selectClasses = inputClasses;
 
 const cardClasses =
-  "rounded-3xl border border-[--colorGrey] bg-[--color-branco] text-preto shadow-[0_25px_70px_rgba(15,23,42,0.08)] p-6 md:p-8 space-y-6";
+  "rounded-3xl border border-[var(--colorGrey)] bg-[var(--color-branco)] text-preto shadow-[0_25px_70px_rgba(15,23,42,0.08)] p-6 md:p-8 space-y-6";
 
 const SectionHeading = ({
   title,
@@ -37,7 +24,7 @@ const SectionHeading = ({
 }) => (
   <div className="space-y-2">
     <h3 className="text-xl font-semibold text-preto">{title}</h3>
-    {description && <p className="text-sm text-[--color-emperor]">{description}</p>}
+    {description && <p className="text-sm text-(--color-emperor)">{description}</p>}
   </div>
 );
 
@@ -53,6 +40,9 @@ const VendorPortal = () => {
   const [captchaCode, setCaptchaCode] = useState<string>("");
   const [captchaInput, setCaptchaInput] = useState<string>("");
   const [captchaError, setCaptchaError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [showToast, setShowToast] = useState(false);
 
   // Generate random captcha code
   const generateCaptcha = useCallback(() => {
@@ -124,9 +114,12 @@ const VendorPortal = () => {
     }
   };
 
-  const handleRegisterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleRegisterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     let isValid = true;
+    
+    // Clear previous messages
+    setSubmitMessage(null);
     
     // Validate name
     if (!registerName.trim()) {
@@ -177,40 +170,115 @@ const VendorPortal = () => {
     }
     
     if (isValid) {
-      // Proceed with registration
-      console.log("Registration successful", {
-        name: registerName,
-        email: registerEmail,
-        phone: registerPhone,
-        organizationalName: organizationalName
-      });
+      setIsSubmitting(true);
+      setSubmitMessage(null);
       
-      // Reset form
-      setRegisterName("");
-      setRegisterEmail("");
-      setRegisterPhone("");
-      setOrganizationalName("");
-      setCaptchaInput("");
-      generateCaptcha();
+      try {
+        // Prepare request body
+        const requestBody = {
+          name: registerName.trim(),
+          email: registerEmail.trim(),
+          phone: registerPhone.trim(),
+          organizationName: organizationalName.trim() || undefined
+        };
+        
+        // Make API call through Next.js API route (proxy) to avoid CORS issues
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+        
+        let response;
+        try {
+          // Use Next.js API route as proxy instead of calling backend directly
+          response = await fetch('/api/vendor/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+            signal: controller.signal,
+          });
+          clearTimeout(timeoutId);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (fetchError: any) {
+          clearTimeout(timeoutId);
+          
+          // Handle specific error types
+          if (fetchError.name === 'AbortError') {
+            throw new Error('Connection timeout. The server took too long to respond. Please check if the API server is running and try again.');
+          } else if (fetchError.message?.includes('Failed to fetch') || fetchError.message?.includes('NetworkError')) {
+            throw new Error('Network error: Cannot connect to the server. Please check:\n1. The API server is running\n2. The IP address is correct\n3. Your network connection');
+          } else {
+            throw fetchError;
+          }
+        }
+        
+        // Try to parse response
+        let data;
+        try {
+          const text = await response.text();
+          data = text ? JSON.parse(text) : {};
+        } catch (parseError) {
+          // If response is not JSON, use status text
+          data = { message: response.statusText || 'Unknown error' };
+        }
+        
+        if (response.ok) {
+          // Success - show toast message
+          setShowToast(true);
+          setSubmitMessage(null);
+          
+          // Reset form
+          setRegisterName("");
+          setRegisterEmail("");
+          setRegisterPhone("");
+          setOrganizationalName("");
+          setCaptchaInput("");
+          generateCaptcha();
+        } else {
+          // Error from API
+          const errorMessage = data?.message || data?.error || data?.detail || `Registration failed (Status: ${response.status}). Please try again.`;
+          setSubmitMessage({
+            type: 'error',
+            text: errorMessage
+          });
+        }
+      } catch (error: any) {
+        // Network or other errors
+        console.error('Registration error:', error);
+        const errorMessage = error?.message || 'Failed to submit registration. Please check your connection and try again.';
+        setSubmitMessage({
+          type: 'error',
+          text: errorMessage
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
   return (
-    <section className="bg-[--color-branco] text-preto" style={{ fontFamily: 'var(--fontNormal)' }}>
+    <section className="bg-(--color-branco) text-preto" style={{ fontFamily: 'var(--fontNormal)' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
         <header className="space-y-4 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-[--color-hina]">Farfetch Collective</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-(--color-hina)">Farfetch Collective</p>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-preto">
             Become a FARFETCH Vendor
           </h1>
-          <p className="text-[--color-emperor] max-w-2xl mx-auto">
+          <p className="text-(--color-emperor) max-w-2xl mx-auto">
             Partner with the global platform for luxury fashion. Complete the registration
             form to start selling with FARFETCH.
           </p>
         </header>
 
         <form className="space-y-8" onSubmit={handleRegisterSubmit}>
-          <div className={cardClasses}>
+          <div className={`${cardClasses} relative`}>
+            {/* Toast Notification */}
+            <Toast
+              message="Registration submitted successfully! Your request has been sent to the admin for approval. You will be notified once approved."
+              isVisible={showToast}
+              onClose={() => setShowToast(false)}
+              duration={3000}
+            />
             <SectionHeading
               title="Register as Vendor"
               description="Enter your details to register as a vendor."
@@ -293,7 +361,7 @@ const VendorPortal = () => {
                     const value = e.target.value;
                     setRegisterPhone(value);
                     if (value.trim() && !validatePhone(value)) {
-                      setRegisterPhoneError("Please enter a valid phone number (10-15 digits)");
+                      setRegisterPhoneError("Please enter a valid phone number (10 digits)");
                     } else if (!value.trim()) {
                       setRegisterPhoneError("Please enter your phone number");
                     } else {
@@ -304,7 +372,7 @@ const VendorPortal = () => {
                     if (!registerPhone.trim()) {
                       setRegisterPhoneError("Please enter your phone number");
                     } else if (!validatePhone(registerPhone)) {
-                      setRegisterPhoneError("Please enter a valid phone number (10-15 digits)");
+                      setRegisterPhoneError("Please enter a valid phone number (10 digits)");
                     } else {
                       setRegisterPhoneError("");
                     }
@@ -312,14 +380,14 @@ const VendorPortal = () => {
                   className={`mt-2 ${inputClasses} ${
                     registerPhoneError ? "border-(--color-error)" : ""
                   }`}
-                  placeholder="+1 234 567 8900"
+                  placeholder="+91 234 567 8900"
                 />
                 {registerPhoneError && (
                   <p className="mt-1 text-xs text-(--color-error)">{registerPhoneError}</p>
                 )}
               </label>
               <label className="block text-xs font-normal text-preto">
-                Organizational name <span className="text-[--color-hina]">(optional)</span>
+                Organizational name <span className="text-(--color-hina)">(optional)</span>
                 <input
                   type="text"
                   value={organizationalName}
@@ -335,21 +403,21 @@ const VendorPortal = () => {
               <label className="block text-xs font-normal text-preto mb-2">
                 Enter the code shown below
               </label>
-              <div className="max-w-[240px]">
+              <div className="max-w-60">
                 {/* Single Box containing Captcha Code, Refresh Button, and Input Field */}
-                <div className="bg-[--color-branco] border border-[--color-silver] rounded-lg px-3 py-1.5 relative overflow-hidden">
+                <div className="bg-(--color-branco) border border-(--color-silver) rounded-lg px-3 py-1.5 relative overflow-hidden">
                   {/* Visual noise overlay */}
                   <div className="absolute inset-0 pointer-events-none opacity-30">
                     <svg width="100%" height="100%" className="absolute inset-0">
                       {/* Random lines */}
-                      <line x1="10%" y1="20%" x2="30%" y2="80%" stroke="#888" strokeWidth="1" />
-                      <line x1="50%" y1="10%" x2="70%" y2="90%" stroke="#888" strokeWidth="1" />
-                      <line x1="80%" y1="30%" x2="90%" y2="70%" stroke="#888" strokeWidth="1" />
+                      <line x1="10%" y1="20%" x2="30%" y2="80%" stroke="var(--color-hina)" strokeWidth="1" />
+                      <line x1="50%" y1="10%" x2="70%" y2="90%" stroke="var(--color-hina)" strokeWidth="1" />
+                      <line x1="80%" y1="30%" x2="90%" y2="70%" stroke="var(--color-hina)" strokeWidth="1" />
                       {/* Random dots */}
-                      <circle cx="25%" cy="40%" r="2" fill="#888" />
-                      <circle cx="60%" cy="60%" r="2" fill="#888" />
-                      <circle cx="75%" cy="25%" r="2" fill="#888" />
-                      <circle cx="40%" cy="75%" r="2" fill="#888" />
+                      <circle cx="25%" cy="40%" r="2" fill="var(--color-hina)" />
+                      <circle cx="60%" cy="60%" r="2" fill="var(--color-hina)" />
+                      <circle cx="75%" cy="25%" r="2" fill="var(--color-hina)" />
+                      <circle cx="40%" cy="75%" r="2" fill="var(--color-hina)" />
                     </svg>
                   </div>
                   {/* Captcha Code and Refresh Button Row */}
@@ -367,7 +435,7 @@ const VendorPortal = () => {
                     <button
                       type="button"
                       onClick={generateCaptcha}
-                      className="p-1 rounded bg-[--color-whiteSmoke] hover:bg-[--color-shell] transition-colors cursor-pointer"
+                      className="p-1 rounded bg-(--color-whiteSmoke) hover:bg-(--color-shell) transition-colors cursor-pointer"
                       title="Refresh code"
                     >
                       <HiRefresh className="w-3.5 h-3.5 text-preto" />
@@ -381,7 +449,7 @@ const VendorPortal = () => {
                       value={captchaInput}
                       onChange={(e) => handleCaptchaChange(e.target.value)}
                       onBlur={handleCaptchaBlur}
-                      className={`w-full rounded-xl border px-3 py-1.5 text-sm text-preto placeholder:text-[--color-hina] focus:outline-none border-preto focus:border-preto ${
+                      className={`w-full rounded-xl border px-3 py-1.5 text-sm text-preto placeholder:text-(--color-hina) focus:outline-none border-preto focus:border-preto ${
                         captchaError ? "border-(--color-error)" : ""
                       }`}
                       placeholder="Enter code"
@@ -395,11 +463,23 @@ const VendorPortal = () => {
               </div>
             </div>
             
+            {/* Error Message */}
+            {submitMessage && submitMessage.type === 'error' && (
+              <div className="p-4 rounded-lg bg-(--color-error)/10 border border-(--color-error)/30 text-(--color-error)">
+                <p className="text-sm font-medium">{submitMessage.text}</p>
+              </div>
+            )}
+            
             <button
               type="submit"
-              className="w-full md:w-auto px-8 py-3 rounded-lg bg-[#222] text-white font-semibold tracking-wide shadow-lg shadow-black/10 cursor-pointer"
+              disabled={isSubmitting}
+              className={`w-full md:w-auto px-8 py-3 rounded-lg bg-[#222] text-white font-semibold tracking-wide shadow-lg shadow-black/10 ${
+                isSubmitting 
+                  ? 'opacity-60 cursor-not-allowed' 
+                  : 'cursor-pointer hover:bg-(--color-emperor) transition-colors'
+              }`}
             >
-              Register as vendor
+              {isSubmitting ? 'Submitting...' : 'Register as vendor'}
             </button>
           </div>
         </form>

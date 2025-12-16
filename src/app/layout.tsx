@@ -68,6 +68,7 @@ export default function RootLayout({
                   >
                     <ThemeSettingsProvider>
                       <ConditionalHeader />
+                      
                       <main className="min-h-screen">{children}</main>
                       <ConditionalFooter />
                     </ThemeSettingsProvider>
