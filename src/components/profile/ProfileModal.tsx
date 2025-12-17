@@ -184,7 +184,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                   className={`pb-3 relative transition cursor-pointer ${
                     activeTab === "signin" 
                       ? "text-preto" 
-                      : "text-(--color-hina) hover:text-preto"
+                      : "text-(--color-hina) "
                   }`}
                 >
                   SIGN IN
@@ -305,7 +305,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                     </div>
                     <button
                       type="submit"
-                      className="w-full rounded-xl bg-black text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition cursor-pointer"
+                      className="w-full rounded-xl bg-(--colorDark) text-white font-semibold py-3 text-base shadow-sm transition cursor-pointer"
                     >
                       Sign In
                     </button>
@@ -501,7 +501,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                     </div>
                     <button
                       type="submit"
-                      className="w-full rounded-xl bg-black text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition cursor-pointer"
+                      className="w-full rounded-xl bg-(--colorDark)  text-white font-semibold py-3 text-base shadow-sm  transition cursor-pointer"
                     >
                       Register
                     </button>

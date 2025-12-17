@@ -30,6 +30,7 @@ export default function ProductDetailSection({
   const [hoveredZoomImage, setHoveredZoomImage] = useState<{ src: string } | null>(null);
   const [zoomPosition, setZoomPosition] = useState<{ x: number; y: number } | null>(null);
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState<boolean>(false);
+  const [sizeError, setSizeError] = useState<string>("");
   const [openSections, setOpenSections] = useState<{
     details: boolean;
     sizeFit: boolean;
@@ -87,9 +88,10 @@ export default function ProductDetailSection({
 
   const handleAddToBag = () => {
     if (!selectedSize) {
-      setIsSizeDropdownOpen(true);
+      setSizeError("Please select size before proceed");
       return;
     }
+    setSizeError("");
     addItem(product, selectedSize, 1);
     router.push("/cart");
   };
@@ -323,7 +325,7 @@ export default function ProductDetailSection({
             </button>
 
             {isSizeDropdownOpen && (
-              <div className="absolute z-10 w-full mt-1 bg-white border border-[#ccc] rounded-lg shadow-lg">
+              <div className="absolute z-10 w-full mt-1 bg-(--color-branco) border border-[#ccc] rounded-lg shadow-lg">
                 <div className="p-2">
                   <p className="text-[11px] text-gray-400 mb-2">
                     {translate("Select size")}
@@ -336,6 +338,7 @@ export default function ProductDetailSection({
                           if (option.available) {
                             setSelectedSize(option.size);
                             setIsSizeDropdownOpen(false);
+                            setSizeError("");
                           }
                         }}
                         disabled={!option.available}
@@ -369,17 +372,22 @@ export default function ProductDetailSection({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3 mb-6">
-          <button
-            onClick={handleAddToBag}
-            className="flex-[3] bg-[#222] text-white py-2 px-6 font-semibold rounded-lg text-[15px] hover:bg-[#333] transition-colors"
-            disabled={!selectedSize}
-          >
-            {translate("Add To Bag")}
-          </button>
+        <div className="flex flex-col gap-3 mb-6">
+          {sizeError && (
+            <div className="text-red-600 text-sm font-medium">
+              {sizeError}
+            </div>
+          )}
+          <div className="flex gap-3">
+            <button
+              onClick={handleAddToBag}
+              className="flex-[3] bg-[#222] text-white py-2 px-6 font-semibold rounded-lg text-[15px] hover:bg-[#333] transition-colors"
+            >
+              {translate("Add To Bag")}
+            </button>
           <button
             onClick={handleWishlistClick}
-            className="flex-[1]  text-preto border-2 border-[#222] rounded-lg py-2 px-4 font-semibold text-[15px] hover:bg-[#f5f5f5] transition-colors flex items-center justify-center gap-2"
+            className="flex-[1]  text-preto border-2 border-[#222] rounded-lg py-2 px-4 font-semibold text-[15px] transition-colors flex items-center justify-center gap-2"
           >
             {wishlistActive ? (
               <GoHeartFill className="w-5 h-5 text-preto" strokeWidth={0} />
@@ -388,6 +396,7 @@ export default function ProductDetailSection({
             )}
             {translate("Wishlist")}
           </button>
+          </div>
         </div>
 
         {/* Estimated Delivery */}

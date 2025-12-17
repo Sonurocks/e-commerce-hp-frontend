@@ -175,11 +175,11 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
   return (
     <div
       ref={drawerRef}
-      className="absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-200 z-[100] drawer-styles"
+      className="absolute top-full left-0 w-full bg-(--color-branco) shadow-lg border-t border-gray-200 z-[100] drawer-styles"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="container mx-auto px-[72px] py-8 bg-white drawer-styles">
+      <div className="container mx-auto px-[72px] py-8 bg-(--color-branco) drawer-styles">
         <div className="flex gap-8">
           {/* Left Sidebar - Categories */}
           <div className={getLeftContainerClass()}>
@@ -221,7 +221,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
               <div className="mt-4">
                 <div className="space-y-0">
                   {spotlight.topText && (
-                    <p className="text-sm text-gray-600 font-normal">
+                    <p className="text-sm text-(--color-hina) font-normal">
                       {translate(spotlight.topText)}
                     </p>
                   )}

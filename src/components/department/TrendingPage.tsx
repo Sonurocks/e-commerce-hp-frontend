@@ -311,7 +311,7 @@ export default function TrendingPage() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6 mb-12">
           {sortedProducts.map((item) => (
             <div key={item.id} className="group">
               <Link href={`/product-detail/${item.id}`} className="block">

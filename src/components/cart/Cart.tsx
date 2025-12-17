@@ -372,6 +372,7 @@ const Cart = () => {
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, 'size' | 'quantity' | null>>({});
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [mounted, setMounted] = useState(false);
 
   const totals = useMemo(
     () => ({
@@ -419,6 +420,11 @@ const Cart = () => {
     }));
   };
 
+  // Ensure consistent hydration by only rendering cart content after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -438,7 +444,8 @@ const Cart = () => {
     };
   }, [openDropdowns]);
 
-  if (cartItems.length === 0) {
+  // Show empty state during SSR and if cart is empty after mount
+  if (!mounted || cartItems.length === 0) {
     return (
       <div className="min-h-screen">
         <EmptyCartState />
@@ -448,7 +455,7 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <div className="container mx-auto px-6 lg:px-12 py-14 max-w-[1440px]">
         <div className="flex flex-col lg:flex-row gap-10">
           <div className="flex-1">

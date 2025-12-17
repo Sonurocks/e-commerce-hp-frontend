@@ -37,16 +37,16 @@ export default function ProductCard({
     <Link href={`/product-detail/${product.id}`} className="block h-full">
       <article className="group h-full flex flex-col" style={{ fontFamily: fontStack }}>
         {/* RESPONSIVE UPDATE: h-[300px] for mobile, h-[400px] for tablet/desktop */}
-        <div className="relative w-full h-[300px] sm:h-[400px] flex items-center justify-center">
+        <div className="relative w-full h-[300px] sm:h-[400px] flex items-center justify-start">
           <button
             onClick={handleWishlistClick}
             className="absolute top-2 right-2 z-10 p-2 rounded-full transition-colors"
             aria-label="Add to wishlist"
           >
             {wishlisted ? (
-              <GoHeartFill className="w-5 h-5 text-preto" strokeWidth={0} />
+              <GoHeartFill className="w-5 h-5 text-black dark:text-black" strokeWidth={0} />
             ) : (
-              <GoHeart className="w-5 h-5 text-preto" strokeWidth={1.0} />
+              <GoHeart className="w-5 h-5 text-black dark:text-black" strokeWidth={1.0} />
             )}
           </button>
           {showBadge && isImageBadge && (
@@ -61,7 +61,7 @@ export default function ProductCard({
             alt={localizedTitle ?? product.title}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-            className="object-contain"
+            className="object-contain object-left"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           />

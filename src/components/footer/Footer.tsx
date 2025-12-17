@@ -18,12 +18,12 @@ const Footer = () => {
     .replace(/{{company}}/g, companyInfo.companyName);
 
   return (
-    <footer className="site-footer bg-gray-200 dark:bg-black text-preto dark:text-white max-w-container w-full min-h-footer min-w-full  py-footer mx-auto font-normal">
+    <footer className="site-footer bg-gray-200 dark:bg-black text-preto dark:text-white max-w-container w-full min-h-footer min-w-full  py-footer mx-auto font-normal border-t border-gray-300 dark:border-(--color-platinum)" style={{ backgroundColor: 'var(--theme-bg, var(--colorLightGrey, #e5e7eb))', color: 'var(--theme-text, var(--color-preto, #222))', borderTopColor: 'var(--theme-border, var(--color-platinum, #ddd))' }}>
       <div className="mx-auto max-w-container w-full pl-footer pr-footer">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {footerSections.map((section, sectionIndex) => (
             <div key={sectionIndex}>
-              <h4 className="font-semibold mb-4 text-preto dark:text-white text-footer-heading">
+              <h4 className="font-semibold mb-4 text-preto dark:text-white text-footer-heading" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
                 {footerCopy.sectionTitles[section.title] ?? section.title}
               </h4>
               <ul
@@ -31,7 +31,7 @@ const Footer = () => {
               >
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
-                    <a href={link.href} className="text-preto dark:text-white hover:underline transition font-light">
+                    <a href={link.href} className="text-preto dark:text-white hover:underline transition font-light" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
                       {footerCopy.linkLabels[link.label] ?? link.label}
                     </a>
                   </li>
@@ -39,7 +39,7 @@ const Footer = () => {
               </ul>
               {sectionIndex === 2 && (
                 <div>
-                  <h4 className="font-semibold mb-4 text-preto dark:text-white text-footer-heading">
+                  <h4 className="font-semibold mb-4 text-preto dark:text-white text-footer-heading" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
                     {footerCopy.followUs}
                   </h4>
                   <div className="flex space-x-4">
@@ -48,6 +48,7 @@ const Footer = () => {
                         key={index}
                         href={social.href}
                         className="text-preto dark:text-white hover:text-gray-900 dark:hover:text-white transition"
+                        style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}
                         aria-label={social.ariaLabel}
                       >
                         {social.iconType === "instagram" && (
@@ -102,16 +103,16 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section: Legal and Copyright */}
-        <div className="border-t border-white dark:border-platinum pt-8 mt-8">
+        <div className="border-t border-white dark:border-platinum pt-8 mt-8" style={{ borderColor: 'var(--theme-border, var(--color-platinum, #ddd))' }}>
           <div className="flex flex-col space-y-4">
             <div className="flex flex-wrap gap-6 text-footer-heading">
               {legalLinks.map((link, index) => (
-                <a key={index} href={link.href} className="underline transition text-preto dark:text-white">
+                <a key={index} href={link.href} className="underline transition text-preto dark:text-white" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
                   {footerCopy.legalLinks[link.label] ?? link.label}
                 </a>
               ))}
             </div>
-            <div className="text-preto dark:text-white text-footer-text">
+            <div className="text-preto dark:text-white text-footer-text" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
               <p className="mb-2">{trademarkText}</p>
               <p>{copyrightText}</p>
             </div>

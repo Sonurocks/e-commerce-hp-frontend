@@ -148,6 +148,7 @@ html[data-color-theme] {
 html[data-color-theme]:not([data-color-theme="default"]) body {
   background-color: var(--theme-bg);
   color: var(--theme-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Theme colors for text elements */
@@ -160,10 +161,17 @@ html[data-color-theme]:not([data-color-theme="default"]) h6,
 html[data-color-theme]:not([data-color-theme="default"]) p,
 html[data-color-theme]:not([data-color-theme="default"]) span,
 html[data-color-theme]:not([data-color-theme="default"])
-  div:not([class*="bg-white"]):not([class*="bg-gray"]),
+  div:not([class*="bg-white"]):not([class*="bg-gray"]):not([class*="bg-"]),
 html[data-color-theme]:not([data-color-theme="default"]) label {
   color: var(--theme-text);
   transition: color 0.3s ease;
+}
+
+/* Headings can use primary color for emphasis */
+html[data-color-theme]:not([data-color-theme="default"]) h1,
+html[data-color-theme]:not([data-color-theme="default"]) h2,
+html[data-color-theme]:not([data-color-theme="default"]) h3 {
+  color: var(--theme-primary);
 }
 
 /* Theme colors for links */
@@ -292,8 +300,22 @@ html[data-color-theme]:not([data-color-theme="default"])
 }
 
 /* Theme colors for cards and containers */
-html[data-color-theme]:not([data-color-theme="default"]) .bg-white {
+html[data-color-theme]:not([data-color-theme="default"]) .bg-white,
+html[data-color-theme]:not([data-color-theme="default"]) [class*="bg-white"] {
   background-color: var(--theme-bg) !important;
+}
+
+/* Ensure main content area uses theme background */
+html[data-color-theme]:not([data-color-theme="default"]) main {
+  background-color: var(--theme-bg);
+  transition: background-color 0.3s ease;
+}
+
+/* Product cards and containers should have subtle background */
+html[data-color-theme]:not([data-color-theme="default"]) article,
+html[data-color-theme]:not([data-color-theme="default"]) .product-card {
+  background-color: var(--theme-bg);
+  transition: background-color 0.3s ease;
 }
 
 /* Smooth transitions for theme color changes */
@@ -302,6 +324,50 @@ html[data-color-theme] * {
     background-color 0.3s ease,
     color 0.3s ease,
     border-color 0.3s ease;
+}
+
+/* Header and navigation should maintain good contrast */
+html[data-color-theme]:not([data-color-theme="default"]) header {
+  background-color: var(--theme-bg) !important;
+  border-bottom-color: var(--theme-border) !important;
+}
+
+/* Ensure input placeholders are readable */
+html[data-color-theme]:not([data-color-theme="default"]) input::placeholder,
+html[data-color-theme]:not([data-color-theme="default"]) textarea::placeholder {
+  color: var(--theme-text);
+  opacity: 0.6;
+}
+
+/* Product prices and important text can use primary color */
+html[data-color-theme]:not([data-color-theme="default"]) .price,
+html[data-color-theme]:not([data-color-theme="default"]) [class*="price"] {
+  color: var(--theme-primary);
+}
+
+/* Ensure badges and tags use theme colors appropriately */
+html[data-color-theme]:not([data-color-theme="default"]) .badge,
+html[data-color-theme]:not([data-color-theme="default"]) [class*="badge"] {
+  background-color: var(--theme-primary);
+  color: var(--theme-button-text);
+}
+
+/* Badge text color - ensure white text is visible on black badges */
+html[data-color-theme] .bg-black[class*="rounded-full"],
+html[data-color-theme] span.bg-black[class*="rounded-full"],
+html[data-color-theme] [class*="bg-black"][class*="rounded-full"] {
+  color: var(--theme-badge-text, #ffffff) !important;
+}
+
+/* Tooltip text color - ensure white text is visible on dark tooltip backgrounds */
+html[data-color-theme] .bg-gray-800[class*="group-hover"],
+html[data-color-theme] span.bg-gray-800[class*="group-hover"],
+html[data-color-theme] [class*="bg-gray-800"][class*="group-hover"],
+html[data-color-theme] .dark .bg-gray-700[class*="group-hover"],
+html[data-color-theme] span.dark.bg-gray-700[class*="group-hover"],
+html[data-color-theme] [class*="bg-gray-800"][class*="opacity-0"][class*="group-hover"],
+html[data-color-theme] [class*="bg-gray-700"][class*="opacity-0"][class*="group-hover"] {
+  color: var(--theme-tooltip-text, #ffffff) !important;
 }
 
 /* Dark mode support for header and footer navigation links */
@@ -324,9 +390,7 @@ html[data-color-theme] * {
 
 /* Default footer background - gray in light mode, black in dark mode */
 .site-footer,
-.site-footer.bg-gray-200,
-html[data-color-theme] .site-footer,
-html[data-color-theme] .site-footer.bg-gray-200 {
+.site-footer.bg-gray-200 {
   background-color: #e5e7eb !important; /* bg-gray-200 */
   color: var(--theme-text, #222) !important; /* dark text in light mode */
 }
@@ -340,9 +404,7 @@ html[data-color-theme] .site-footer.bg-gray-200 {
 }
 
 .dark .site-footer,
-.dark .site-footer.bg-gray-200,
-html[data-color-theme].dark .site-footer,
-html[data-color-theme].dark .site-footer.bg-gray-200 {
+.dark .site-footer.bg-gray-200 {
   background-color: #000000 !important; /* black */
   color: var(--theme-text, #ffffff) !important; /* white text in dark mode */
 }
@@ -353,6 +415,35 @@ html[data-color-theme].dark .site-footer.bg-gray-200 {
 .dark .site-footer span,
 .dark .site-footer div {
   color: var(--theme-text, #ffffff) !important; /* white text in dark mode */
+}
+
+/* Custom theme support for footer */
+html[data-color-theme]:not([data-color-theme="default"]) .site-footer,
+html[data-color-theme]:not([data-color-theme="default"]) .site-footer.bg-gray-200 {
+  background-color: var(--theme-bg) !important;
+  color: var(--theme-text) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html[data-color-theme]:not([data-color-theme="default"]) .site-footer h4,
+html[data-color-theme]:not([data-color-theme="default"]) .site-footer p,
+html[data-color-theme]:not([data-color-theme="default"]) .site-footer span,
+html[data-color-theme]:not([data-color-theme="default"]) .site-footer div {
+  color: var(--theme-text) !important;
+  transition: color 0.3s ease;
+}
+
+html[data-color-theme]:not([data-color-theme="default"]) .site-footer a {
+  color: var(--theme-link) !important;
+  transition: color 0.3s ease;
+}
+
+html[data-color-theme]:not([data-color-theme="default"]) .site-footer a:hover {
+  color: var(--theme-link-hover) !important;
+}
+
+html[data-color-theme]:not([data-color-theme="default"]) .site-footer .border-t {
+  border-color: var(--theme-border) !important;
 }
 
 /* Footer Mobile/Tablet Refinements (≤1024px) */

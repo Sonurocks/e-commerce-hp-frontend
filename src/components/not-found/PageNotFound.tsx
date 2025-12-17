@@ -17,7 +17,7 @@ const PageNotFound = () => {
             </div>
 
             <div className="space-y-5">
-              <p className="text-5xl font-light tracking-wide text-(--colorGrey) sm:text-6xl">
+              <p className="text-6xl font-bold tracking-wide text-(--color-hina) sm:text-6xl">
                 404
               </p>
               <h1
@@ -41,7 +41,7 @@ const PageNotFound = () => {
               </Link>
               <Link
                 href="/contact-us"
-                className="inline-flex w-full items-center justify-center rounded-full border border-(--colorGrey) px-6 py-3 text-(--color-preto) transition hover:border-(--color-preto) sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-lg border border-(--color-hina) px-6 py-3 text-(--color-preto) transition hover:border-(--color-preto) sm:w-auto"
               >
                 Contact customer care
               </Link>

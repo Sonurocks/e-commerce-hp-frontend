@@ -62,7 +62,7 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
           title={departmentCopy.featured.title}
           cta={{ href: "#", label: departmentCopy.featured.ctaLabel }}
         />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
           {featuredPromoCardsByDept[department].map((product) => (
             <ProductCard key={product.id} product={product} showBadge />
           ))}
@@ -81,7 +81,7 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
           title={departmentCopy.newIn.title}
           cta={{ href: "#", label: departmentCopy.newIn.ctaLabel }}
         />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
           {newInProductsByDept[department].map((product) => (
             <ProductCard
               key={product.id}
@@ -97,7 +97,7 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
           title={departmentCopy.party.title}
           cta={{ href: "#", label: departmentCopy.party.ctaLabel }}
         />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
           {partyPlusOnesByDept[department].map((product) => (
             <ProductCard
               key={product.id}

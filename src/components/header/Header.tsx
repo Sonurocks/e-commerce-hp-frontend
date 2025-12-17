@@ -72,6 +72,7 @@ const Header = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isBannerClosed, setIsBannerClosed] = useState(false);
   const { cartItems } = useCart();
   const { wishlistCount } = useWishlist();
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -79,7 +80,17 @@ const Header = () => {
   // Prevent hydration mismatch by only showing counts after mount
   useEffect(() => {
     setIsMounted(true);
+    // Check if banner was closed in localStorage
+    const bannerClosed = localStorage.getItem("promoBannerClosed");
+    if (bannerClosed === "true") {
+      setIsBannerClosed(true);
+    }
   }, []);
+
+  const handleCloseBanner = () => {
+    setIsBannerClosed(true);
+    localStorage.setItem("promoBannerClosed", "true");
+  };
   const searchDrawerRef = useRef<HTMLDivElement>(null);
   const flagButtonRefDesktop = useRef<HTMLButtonElement>(null);
   const flagButtonRefMobile = useRef<HTMLButtonElement>(null);
@@ -314,15 +325,16 @@ const Header = () => {
         style={{ position: 'sticky', top: 0 }}
       >
         {/* Top Promotional Bar */}
-        <div
-          className={`text-[13px] py-2 px-4 sm:px-6 xl:py-[6px] xl:px-[36px] transition-all duration-300 font-normal ${
-            currentPromo.type === "generic"
-              ? "bg-gray-200 dark:bg-(--colorLightGrey)"
-              : "bg-black dark:bg-black"
-          } ${isScrolled ? "hidden" : ""}`}
-        >
-          <div className="mx-auto max-w-screen-2xl px-2 sm:px-4">
-            <ul className="flex items-center justify-center relative h-6">
+        {!isBannerClosed && (
+          <div
+            className={`text-[13px] py-2 px-4 sm:px-6 xl:py-[6px] xl:px-[36px] transition-all duration-300 font-normal relative ${
+              currentPromo.type === "generic"
+                ? "bg-gray-200 dark:bg-(--colorLightGrey)"
+                : "bg-black dark:bg-black"
+            } ${isScrolled ? "hidden" : ""}`}
+          >
+            <div className="mx-auto max-w-screen-2xl px-2 sm:px-4 relative">
+              <ul className="flex items-center justify-center relative h-6">
               {promotions.map((promo, index) => (
                 <li
                   key={index}
@@ -375,9 +387,23 @@ const Header = () => {
                   </span>
                 </li>
               ))}
-            </ul>
+              </ul>
+              <button
+                onClick={handleCloseBanner}
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-1 hover:opacity-70 transition-opacity cursor-pointer"
+                aria-label="Close promotional banner"
+              >
+                <FiX
+                  className={`w-4 h-4 ${
+                    currentPromo.type === "generic"
+                      ? "text-(--color-preto) dark:text-(--color-preto)"
+                      : "text-white dark:text-white"
+                  }`}
+                />
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Main Header */}
         <div
@@ -453,7 +479,7 @@ const Header = () => {
                     className="hidden md:block text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
                   >
                     <SlidersHorizontal className="w-6 h-6" />
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
                       Theme
                     </span>
                   </button>
@@ -464,7 +490,7 @@ const Header = () => {
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
                   >
                     <FaRegUser className="w-6 h-6" />
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
                       {headerCopy.tooltips.signIn}
                     </span>
                   </button>
@@ -476,11 +502,11 @@ const Header = () => {
                   >
                     <GoHeart className="w-6 h-6" strokeWidth={1.0} />
                     {isMounted && wishlistCount > 0 && (
-                      <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-white text-xs font-semibold flex items-center justify-center">
+                      <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-xs font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
                         {wishlistCount}
                       </span>
                     )}
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
                       {headerCopy.tooltips.wishlist}
                     </span>
                   </Link>
@@ -492,11 +518,11 @@ const Header = () => {
                   >
                     <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
                     {isMounted && cartCount > 0 && (
-                      <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-white text-xs font-semibold flex items-center justify-center">
+                      <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-xs font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
                         {cartCount}
                       </span>
                     )}
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
                       {headerCopy.tooltips.bag}
                     </span>
                   </Link>
@@ -682,7 +708,7 @@ const Header = () => {
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
                   >
                     <FaRegUser className="w-6 h-6" />
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
                       {headerCopy.tooltips.signIn}
                     </span>
                   </button>
@@ -692,11 +718,11 @@ const Header = () => {
                   >
                     <GoHeart className="w-6 h-6" strokeWidth={1.0} />
                   {isMounted && wishlistCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-white text-xs font-semibold flex items-center justify-center">
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-xs font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
                       {wishlistCount}
                     </span>
                   )}
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
                       {headerCopy.tooltips.wishlist}
                     </span>
                   </Link>
@@ -705,7 +731,7 @@ const Header = () => {
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
                     <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
-                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
                       {headerCopy.tooltips.bag}
                     </span>
                   </Link>
@@ -832,7 +858,7 @@ const Header = () => {
                       <div className="relative">
                         <GoHeart className="h-4 w-4" />
                         {isMounted && wishlistCount > 0 && (
-                          <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-white text-[10px] font-semibold flex items-center justify-center">
+                          <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
                             {wishlistCount}
                           </span>
                         )}
@@ -847,7 +873,7 @@ const Header = () => {
                         <div className="relative">
                           <HiOutlineShoppingBag className="h-4 w-4" />
                           {isMounted && cartCount > 0 && (
-                            <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-white text-[10px] font-semibold flex items-center justify-center">
+                            <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
                               {cartCount}
                             </span>
                           )}

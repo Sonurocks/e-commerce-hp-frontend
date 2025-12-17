@@ -49,7 +49,7 @@ export default function DownloadAppBanner() {
                 />
                 <button
                   type="button"
-                  className="w-full sm:w-auto bg-black text-white border border-preto rounded-md px-6 py-2 text-sm font-medium hover:bg-gray-800 transition-colors"
+                  className="w-full sm:w-auto bg-[#222] text-white  rounded-md px-6 py-2 text-sm font-medium transition-colors"
                 >
                   {copy.sendButton}
                 </button>

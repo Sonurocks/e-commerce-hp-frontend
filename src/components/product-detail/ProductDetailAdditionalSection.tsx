@@ -1,13 +1,10 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Link from "next/link";
 import { ProductDetail, productsById } from "@/constants/products";
 import { Product } from "@/constants/department";
-import { GoHeart, GoHeartFill } from "react-icons/go";
-import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
-import { useWishlist } from "@/context/WishlistContext";
+import ProductCard from "@/components/department/ProductCard";
 import {
   womenswearBestsellers,
   menswearBestsellers,
@@ -151,191 +148,43 @@ const convertToCuratedCard = (product: ProductDetail): CuratedProductCardData =>
 
 const VISIBLE_CURATED_CARDS = 5;
 
-// Smaller product card component for Complete the look section
-function SmallProductCard({ product }: { product: CompleteTheLookProduct }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const { translations } = useLanguage();
-  const { toggleWishlist, isWishlisted } = useWishlist();
-  const translate = (text?: string) =>
-    text ? translations.productCopy[text] ?? text : text;
-  const currentImage =
-    isHovered && product.hoverImage ? product.hoverImage : product.image;
-  const wishlisted = isWishlisted(product.id);
-
-  const handleWishlistClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Look up the product from productsById first to ensure we have full product data
-    const fullProduct = productsById[product.id] ?? product;
-    toggleWishlist(fullProduct);
+// Helper function to convert CompleteTheLookProduct to Product
+const convertToProduct = (product: CompleteTheLookProduct): Product => {
+  const title = product.brand && product.productName 
+    ? `${product.brand} ${product.productName}` 
+    : product.title;
+  const subtitle = product.brand ? product.productName : product.subtitle;
+  const price = product.discountedPrice || product.price || "";
+  
+  return {
+    id: product.id,
+    title,
+    subtitle,
+    price,
+    image: product.image,
+    hoverImage: product.hoverImage,
+    badge: product.badge,
   };
+};
 
-  return (
-    <Link href={`/product-detail/${product.id}`} className="block">
-      <article className="group" style={{ fontFamily: fontStack }}>
-        <div className="relative w-full h-[280px] flex items-center justify-center">
-          <button
-            onClick={handleWishlistClick}
-            className="absolute top-2 right-2 z-10 p-2 rounded-full transition-colors bg-white/80 hover:bg-white"
-            aria-label="Add to wishlist"
-            type="button"
-          >
-            {wishlisted ? (
-              <GoHeartFill className="w-4 h-4 text-black" />
-            ) : (
-              <GoHeart className="w-4 h-4 text-black" strokeWidth={1.0} />
-            )}
-          </button>
-          <Image
-            src={currentImage.src}
-            alt={translate(product.title) ?? product.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            className="object-contain"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          />
-        </div>
-        <div className="mt-2">
-          {/* Brand name */}
-          <h3 className="text-[13px] text-(--color-preto) font-bold leading-tight">
-            {translate(product.brand)}
-          </h3>
-          {/* Product name */}
-          <p className="text-[13px] text-(--color-preto) font-normal mt-1 leading-tight">
-            {translate(product.productName)}
-          </p>
-          {/* Price */}
-          <div className="mt-2">
-            {product.originalPrice && product.discountedPrice ? (
-              <div className="flex items-baseline gap-2">
-                <span className="text-[13px] text-[#666] line-through">
-                  {product.originalPrice}
-                </span>
-                <span className="text-[13px] text-[#d32f2f] font-normal">
-                  {product.discountedPrice}
-                </span>
-              </div>
-            ) : (
-              <p className="text-[13px] text-(--color-preto) font-normal">
-                {product.price}
-              </p>
-            )}
-          </div>
-        </div>
-      </article>
-    </Link>
-  );
-}
-
-function CuratedProductCard({
-  card,
-  showPrevArrow,
-  showNextArrow,
-  onPrev,
-  onNext,
-}: {
-  card: CuratedProductCardData;
-  showPrevArrow?: boolean;
-  showNextArrow?: boolean;
-  onPrev?: () => void;
-  onNext?: () => void;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
-  const { translations } = useLanguage();
-  const { toggleWishlist, isWishlisted } = useWishlist();
-  const translate = (text?: string) =>
-    text ? translations.productCopy[text] ?? text : text;
-  const currentImage =
-    isHovered && card.hoverImage ? card.hoverImage : card.image;
-  const wishlisted = isWishlisted(card.id);
-
-  const handleWishlistClick = () => {
-    const fallbackProduct: Product = {
-      id: card.id,
-      title: card.brand
-        ? `${card.brand} ${card.productName}`
-        : card.productName,
-      subtitle: card.brand ? card.productName : undefined,
-      price: card.price,
-      image: card.image,
-      hoverImage: card.hoverImage,
-      badge: card.badge,
-    };
-    const product = productsById[card.id] ?? fallbackProduct;
-    toggleWishlist(product);
+// Helper function to convert CuratedProductCardData to Product
+const convertCuratedToProduct = (card: CuratedProductCardData): Product => {
+  const title = card.brand && card.productName
+    ? `${card.brand} ${card.productName}`
+    : card.productName;
+  const subtitle = card.brand ? card.productName : undefined;
+  const price = card.price || "";
+  
+  return {
+    id: card.id,
+    title,
+    subtitle,
+    price,
+    image: card.image,
+    hoverImage: card.hoverImage,
+    badge: card.badge,
   };
-
-  return (
-    <article className="group" style={{ fontFamily: fontStack }}>
-      <div
-        className="relative w-full h-[320px] flex items-center justify-center bg-white border border-gray-100"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {card.badge && (
-          <span className="absolute top-3 left-3 bg-white/90 px-3 py-1 text-[11px] font-semibold text-(--color-preto) border border-gray-200 rounded-full">
-            {translate(card.badge)}
-          </span>
-        )}
-        {showPrevArrow && (
-          <button
-            aria-label="Previous recommendations"
-            onClick={onPrev}
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center border border-gray-300 rounded bg-white shadow-sm hover:bg-gray-50"
-          >
-            &lt;
-          </button>
-        )}
-        {showNextArrow && (
-          <button
-            aria-label="Next recommendations"
-            onClick={onNext}
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center border border-gray-300 rounded bg-white shadow-sm hover:bg-gray-50"
-          >
-            &gt;
-          </button>
-        )}
-        <button
-          className="absolute top-3 right-3 z-10 p-2 rounded-full transition-colors bg-white/80 hover:bg-white"
-          aria-label="Add to wishlist"
-          onClick={handleWishlistClick}
-          type="button"
-        >
-          {wishlisted ? (
-            <GoHeartFill className="w-5 h-5 text-black" />
-          ) : (
-            <GoHeart className="w-5 h-5 text-black" strokeWidth={1.0} />
-          )}
-        </button>
-        <Image
-          src={currentImage.src}
-          alt={translate(card.productName) ?? card.productName}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 20vw"
-          className="object-contain"
-        />
-      </div>
-      <div className="mt-3 space-y-1">
-        <p className="text-[13px] font-bold text-(--color-preto)">
-          {translate(card.brand)}
-        </p>
-        <p className="text-[13px] font-normal text-(--color-preto)">
-          {translate(card.productName)}
-        </p>
-        <div className="flex items-baseline gap-2 text-[13px]">
-          {card.originalPrice && (
-            <span className="text-[#666] line-through">{card.originalPrice}</span>
-          )}
-          <span className={card.originalPrice ? "text-[#d32f2f]" : "text-(--color-preto)"}>{card.price}</span>
-          {card.discountLabel && (
-            <span className="text-[#d32f2f]">{card.discountLabel}</span>
-          )}
-        </div>
-      </div>
-    </article>
-  );
-}
+};
 
 export default function ProductDetailAdditionalSection({
   product,
@@ -496,10 +345,11 @@ export default function ProductDetailAdditionalSection({
         <h2 className="text-[18px] font-medium text-(--color-preto) mb-6">
           {translate("Complete the look")}
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {completeTheLookProducts.map((recommendedProduct) => (
-            <SmallProductCard key={recommendedProduct.id} product={recommendedProduct} />
-          ))}
+        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+          {completeTheLookProducts.map((recommendedProduct) => {
+            const product = convertToProduct(recommendedProduct);
+            return <ProductCard key={product.id} product={product} />;
+          })}
         </div>
       </div>
 
@@ -513,22 +363,31 @@ export default function ProductDetailAdditionalSection({
             {translate("Show More")}
           </button>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {displayedCuratedCards.map((card, index) => (
-            <CuratedProductCard
-              key={`${card.id}-${curatedStartIndex}`}
-              card={card}
-              showPrevArrow={
-                totalCuratedCards > VISIBLE_CURATED_CARDS && index === 0
-              }
-              showNextArrow={
-                totalCuratedCards > VISIBLE_CURATED_CARDS &&
-                index === displayedCuratedCards.length - 1
-              }
-              onPrev={handlePrevCurated}
-              onNext={handleNextCurated}
-            />
-          ))}
+        <div className="relative">
+          {totalCuratedCards > VISIBLE_CURATED_CARDS && (
+            <button
+              aria-label="Previous recommendations"
+              onClick={handlePrevCurated}
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center border border-gray-300 rounded bg-white shadow-sm hover:bg-gray-50"
+            >
+              &lt;
+            </button>
+          )}
+          {totalCuratedCards > VISIBLE_CURATED_CARDS && (
+            <button
+              aria-label="Next recommendations"
+              onClick={handleNextCurated}
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center border border-gray-300 rounded bg-white shadow-sm hover:bg-gray-50"
+            >
+              &gt;
+            </button>
+          )}
+          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+            {displayedCuratedCards.map((card) => {
+              const product = convertCuratedToProduct(card);
+              return <ProductCard key={`${card.id}-${curatedStartIndex}`} product={product} />;
+            })}
+          </div>
         </div>
       </div>
 
@@ -539,13 +398,11 @@ export default function ProductDetailAdditionalSection({
               {translate("Bestsellers, edited for you")}
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {bestsellerProducts.map((bestseller) => (
-              <SmallProductCard
-                key={`bestseller-${bestseller.id}`}
-                product={bestseller}
-              />
-            ))}
+          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+            {bestsellerProducts.map((bestseller) => {
+              const product = convertToProduct(bestseller);
+              return <ProductCard key={`bestseller-${product.id}`} product={product} />;
+            })}
           </div>
         </div>
       )}
@@ -557,13 +414,11 @@ export default function ProductDetailAdditionalSection({
               {translate("Featured")}
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {featuredProducts.map((featuredProduct) => (
-              <SmallProductCard
-                key={`featured-${featuredProduct.id}`}
-                product={featuredProduct}
-              />
-            ))}
+          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+            {featuredProducts.map((featuredProduct) => {
+              const product = convertToProduct(featuredProduct);
+              return <ProductCard key={`featured-${product.id}`} product={product} />;
+            })}
           </div>
         </div>
       )}

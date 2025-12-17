@@ -198,7 +198,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ isOpen, onClose }) => {
                 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-black text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition"
+                  className="w-full rounded-xl bg-(--colorDark) text-white font-semibold py-3 text-base shadow-sm  transition"
                 >
                   Get OTP
                 </button>

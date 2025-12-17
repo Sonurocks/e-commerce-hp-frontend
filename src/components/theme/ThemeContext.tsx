@@ -92,6 +92,72 @@ export const useThemeSettings = (): ThemeContextType => {
     return luminance > 0.5 ? "#222222" : "#ffffff";
   };
 
+  // Helper function to get readable text color for body text (always dark for light backgrounds)
+  const getBodyTextColor = (bgColor: string): string => {
+    const rgb = hexToRgb(bgColor);
+    if (!rgb) return "#222222";
+    // Calculate relative luminance
+    const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+    // For light backgrounds, use dark text; for dark backgrounds, use light text
+    if (luminance > 0.7) {
+      // Very light background - use dark text
+      return "#222222";
+    } else if (luminance > 0.5) {
+      // Medium light - use darker text
+      return "#333333";
+    } else if (luminance > 0.3) {
+      // Medium dark - use light text
+      return "#f5f5f5";
+    } else {
+      // Dark background - use light text
+      return "#ffffff";
+    }
+  };
+
+  // Theme color definitions with predefined backgrounds
+  const themeColors: Record<string, { primary: string; secondary: string; bg: string }> = {
+    aubergine: {
+      primary: "#4A148C",
+      secondary: "#7B1FA2",
+      bg: "#EDE7F6", // soft lavender background
+    },
+    clementine: {
+      primary: "#FF6B35",
+      secondary: "#FF8C5A",
+      bg: "#FFF1E6", // pale peach / warm neutral
+    },
+    banana: {
+      primary: "#FFD700",
+      secondary: "#FFE44D",
+      bg: "#FFFBEA", // off-white / buttery cream
+    },
+    jade: {
+      primary: "#00A86B",
+      secondary: "#00C97A",
+      bg: "#E6F7EE", // very light mint
+    },
+    lagoon: {
+      primary: "#00CED1",
+      secondary: "#20B2AA",
+      bg: "#E0FBFC", // icy blue background
+    },
+    barbra: {
+      primary: "#8B0000",
+      secondary: "#A52A2A",
+      bg: "#FDECEA", // soft rose background
+    },
+    gray: {
+      primary: "#808080",
+      secondary: "#A0A0A0",
+      bg: "#F5F5F5", // very light gray / neutral white
+    },
+    "mood-indigo": {
+      primary: "#4B0082",
+      secondary: "#6A0DAD",
+      bg: "#ECE4F9", // soft lilac background
+    },
+  };
+
   // Apply color theme to CSS variables
   useEffect(() => {
     if (!mounted) return;
@@ -99,49 +165,6 @@ export const useThemeSettings = (): ThemeContextType => {
     const root = document.documentElement;
     root.setAttribute("data-color-theme", colorTheme);
 
-    let primaryColor = "#222222";
-    let secondaryColor = "#222222";
-
-    // Apply color theme variables
-    switch (colorTheme) {
-      case "aubergine":
-        primaryColor = "#4A148C";
-        secondaryColor = "#7B1FA2";
-        break;
-      case "clementine":
-        primaryColor = "#FF6B35";
-        secondaryColor = "#FF8C5A";
-        break;
-      case "banana":
-        primaryColor = "#FFD700";
-        secondaryColor = "#FFE44D";
-        break;
-      case "jade":
-        primaryColor = "#00A86B";
-        secondaryColor = "#00C97A";
-        break;
-      case "lagoon":
-        primaryColor = "#00CED1";
-        secondaryColor = "#20B2AA";
-        break;
-      case "barbra":
-        primaryColor = "#8B0000";
-        secondaryColor = "#A52A2A";
-        break;
-      case "gray":
-        primaryColor = "#808080";
-        secondaryColor = "#A0A0A0";
-        break;
-      case "mood-indigo":
-        primaryColor = "#4B0082";
-        secondaryColor = "#6A0DAD";
-        break;
-      default:
-        primaryColor = "#222222";
-        secondaryColor = "#222222";
-    }
-
-    // Generate comprehensive color variations
     if (colorTheme === "default") {
       // Reset to default colors
       root.style.setProperty("--theme-primary", "var(--color-preto)");
@@ -157,30 +180,42 @@ export const useThemeSettings = (): ThemeContextType => {
       root.style.setProperty("--theme-button-hover", "var(--colorDarkerGrey)");
       root.style.setProperty("--theme-link", "var(--color-preto)");
       root.style.setProperty("--theme-link-hover", "var(--colorDarkerGrey)");
+      root.style.setProperty("--theme-badge-text", "#ffffff");
+      root.style.setProperty("--theme-tooltip-text", "#ffffff");
     } else {
-      // Apply theme colors with variations
-      const textColor = getTextColor(primaryColor);
-      const lightBg = lightenColor(primaryColor, 0.95);
-      const lighterBg = lightenColor(primaryColor, 0.98);
-      const hoverBg = lightenColor(primaryColor, 0.85);
-      const activeBg = lightenColor(primaryColor, 0.75);
-      const borderColor = lightenColor(primaryColor, 0.7);
+      const theme = themeColors[colorTheme];
+      if (!theme) return;
+
+      const { primary: primaryColor, secondary: secondaryColor, bg: bgColor } = theme;
+
+      // Generate color variations with better contrast
+      const bodyTextColor = getBodyTextColor(bgColor);
+      const buttonTextColor = getTextColor(primaryColor);
+      const lightBg = lightenColor(bgColor, 0.3); // Slightly lighter than bg
+      const hoverBg = lightenColor(primaryColor, 0.92); // Very subtle hover
+      const activeBg = lightenColor(primaryColor, 0.88); // Slightly more visible active
+      const borderColor = lightenColor(primaryColor, 0.75); // Subtle border
       const buttonHover = darkenColor(primaryColor, 0.15);
       const linkHover = darkenColor(primaryColor, 0.2);
 
+      // Apply theme colors with improved contrast
       root.style.setProperty("--theme-primary", primaryColor);
       root.style.setProperty("--theme-secondary", secondaryColor);
-      root.style.setProperty("--theme-text", primaryColor);
-      root.style.setProperty("--theme-bg", lighterBg);
+      root.style.setProperty("--theme-text", bodyTextColor); // Readable body text
+      root.style.setProperty("--theme-bg", bgColor); // Predefined background
       root.style.setProperty("--theme-bg-light", lightBg);
       root.style.setProperty("--theme-border", borderColor);
       root.style.setProperty("--theme-hover", hoverBg);
       root.style.setProperty("--theme-active", activeBg);
-      root.style.setProperty("--theme-button-bg", primaryColor);
-      root.style.setProperty("--theme-button-text", textColor);
+      root.style.setProperty("--theme-button-bg", primaryColor); // Vibrant button
+      root.style.setProperty("--theme-button-text", buttonTextColor);
       root.style.setProperty("--theme-button-hover", buttonHover);
-      root.style.setProperty("--theme-link", primaryColor);
+      root.style.setProperty("--theme-link", primaryColor); // Vibrant links
       root.style.setProperty("--theme-link-hover", linkHover);
+      // Badge text should always be white for contrast on black/dark badges
+      root.style.setProperty("--theme-badge-text", "#ffffff");
+      // Tooltip text should always be white for contrast on dark tooltip backgrounds
+      root.style.setProperty("--theme-tooltip-text", "#ffffff");
     }
   }, [colorTheme, mounted]);
 
