@@ -361,7 +361,7 @@ export default function ProductDetailSection({
                     <p className="text-[11px] text-(--color-preto)">
                       {template("Different to {{price}}? Find out why", { price: "£232" })}
                     </p>
-                    <a href="#" className="text-[11px] text-(--color-preto) underline block">
+                    <a href="#" className="text-[14px] text-(--color-preto) underline block">
                       {translate("Size missing?")}
                     </a>
                   </div>
@@ -460,7 +460,7 @@ export default function ProductDetailSection({
               </svg>
             </button>
             {openSections.details && (
-              <div className="pb-4 text-[13px] text-[#666]">
+              <div className="pb-4 text-[13px] text-(--color-preto) ">
                 <div className="flex gap-10">
                   {/* Left Column */}
                   <div className="flex-1 space-y-3">
@@ -544,7 +544,7 @@ export default function ProductDetailSection({
                       <div className="flex items-center gap-2">
                         <span
                           className={`text-[13px] ${
-                            unitToggle === "in" ? "text-(--color-preto)" : "text-gray-400"
+                            unitToggle === "in" ? "text-(--color-preto)" : "text-(--colorhina)"
                           }`}
                         >
                           in
@@ -601,7 +601,7 @@ export default function ProductDetailSection({
 
                   {/* Right Column - Returns Policy */}
                   <div className="flex-[0.8]">
-                    <div className="bg-[#f5f5f5] p-4 rounded-lg">
+                    <div className="bg-(--color-branco) p-4 rounded-lg">
                       <div className="flex items-start gap-3">
                         <PiCoatHangerBold
                           className="w-4 h-4 text-(--color-preto) mt-0.5 flex-shrink-0"

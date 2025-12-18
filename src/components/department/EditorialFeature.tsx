@@ -1,12 +1,14 @@
 
 import React from "react";
 import Link from "next/link";
+import { DepartmentKey } from "@/constants/department";
 
 interface EditorialFeatureProps {
   image: { src: string };
   title?: string;
   description?: string;
   ctaLabel?: string;
+  department?: DepartmentKey;
 }
 
 export default function EditorialFeature({
@@ -14,6 +16,7 @@ export default function EditorialFeature({
   title,
   description,
   ctaLabel,
+  department = "womenswear",
 }: EditorialFeatureProps) {
   const defaultTitle = "How to master party season";
   const defaultDescription =
@@ -43,7 +46,7 @@ export default function EditorialFeature({
           {description || defaultDescription}
         </p>
         <Link
-          href="#"
+          href={`/shop?section=editorial&department=${department}`}
           className="inline-block text-[14px] border rounded-lg border-gray-800 px-6 py-2.5 text-(--color-preto) font-semibold  transition-colors lg:ml-44"
         >
           {ctaLabel ?? "Shop now"}
