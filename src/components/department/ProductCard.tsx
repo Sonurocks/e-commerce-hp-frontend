@@ -40,7 +40,7 @@ export default function ProductCard({
         <div className="relative w-full h-[300px] sm:h-[400px] flex items-center justify-start">
           <button
             onClick={handleWishlistClick}
-            className="absolute top-2 right-2 z-10 p-2 rounded-full transition-colors"
+            className="absolute top-2 right-3 z-10 p-2 rounded-full transition-colors"
             aria-label="Add to wishlist"
           >
             {wishlisted ? (
@@ -61,7 +61,7 @@ export default function ProductCard({
             alt={localizedTitle ?? product.title}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-            className="object-contain object-left"
+            className="object-fill"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           />

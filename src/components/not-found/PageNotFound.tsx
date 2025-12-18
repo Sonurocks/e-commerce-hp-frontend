@@ -4,13 +4,13 @@ import Link from "next/link";
 const PageNotFound = () => {
   return (
     <section
-      className="bg-(--colorLightGrey) px-4 py-12 text-(--color-preto) sm:py-16 lg:py-20"
+      className=" px-4 py-12 text-(--color-preto) sm:py-16 lg:py-20"
       aria-labelledby="not-found-heading"
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 rounded-[1.75rem] border border-(--colorGrey) bg-(--colorWhite)/90 p-6 shadow-[0_25px_80px_rgba(0,0,0,0.08)] backdrop-blur sm:gap-10 sm:rounded-[2rem] sm:p-8 lg:p-10">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 rounded-[1.75rem] border bg-(--colorGrey) border-(--colorLightGrey)  p-6 shadow-[0_25px_80px_rgba(0,0,0,0.08)] backdrop-blur sm:gap-10 sm:rounded-[2rem] sm:p-8 lg:p-10">
         <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-14">
-          <div className="space-y-8">
-            <div className="flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.45em] text-(--color-hina)">
+          <div className="space-y-8 ">
+            <div className="flex items-center gap-4 text-xs font-semibold  uppercase tracking-[0.45em] text-(--color-hina)">
               <span className="hidden h-px flex-1 bg-(--colorGrey) sm:inline-flex" />
               <span>404 / page not found</span>
               <span className="hidden h-px flex-1 bg-(--colorGrey) sm:inline-flex" />
@@ -35,7 +35,7 @@ const PageNotFound = () => {
             <div className="flex flex-col gap-3 text-sm font-semibold uppercase tracking-wide sm:flex-row sm:flex-wrap">
               <Link
                 href="/"
-                className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-(--color-preto) px-7 py-3 text-(--colorWhite) transition hover:bg-(--colorDark) sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-3 rounded-full border  border-(--color-hina) px-7 py-3 text-(--color-preto) transition sm:w-auto"
               >
                 Keep browsing
               </Link>

@@ -80,8 +80,8 @@ const Header = () => {
   // Prevent hydration mismatch by only showing counts after mount
   useEffect(() => {
     setIsMounted(true);
-    // Check if banner was closed in localStorage
-    const bannerClosed = localStorage.getItem("promoBannerClosed");
+    // Check if banner was closed in sessionStorage
+    const bannerClosed = sessionStorage.getItem("promoBannerClosed");
     if (bannerClosed === "true") {
       setIsBannerClosed(true);
     }
@@ -89,7 +89,7 @@ const Header = () => {
 
   const handleCloseBanner = () => {
     setIsBannerClosed(true);
-    localStorage.setItem("promoBannerClosed", "true");
+    sessionStorage.setItem("promoBannerClosed", "true");
   };
   const searchDrawerRef = useRef<HTMLDivElement>(null);
   const flagButtonRefDesktop = useRef<HTMLButtonElement>(null);
@@ -407,9 +407,9 @@ const Header = () => {
 
         {/* Main Header */}
         <div
-          className={`relative ${isScrolled ? "border-b border-gray-300 dark:border-(--color-platinum)" : ""}`}
+          className={`relative overflow-x-hidden ${isScrolled ? "border-b border-gray-300 dark:border-(--color-platinum)" : ""}`}
         >
-          <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 xl:px-10">
+          <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 xl:px-10 overflow-x-hidden">
             {/* Desktop Layout */}
             <div className="hidden xl:block">
               {/* First Row - Primary Navigation */}

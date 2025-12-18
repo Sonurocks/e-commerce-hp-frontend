@@ -23,7 +23,7 @@ export default async function ProductDetailPage({
   }
 
   return (
-    <main className="container mx-auto px-[110px] py-10">
+    <main className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-[110px] py-10 max-w-full overflow-x-hidden">
       <ProductDetailSection product={product} />
     </main>
   );

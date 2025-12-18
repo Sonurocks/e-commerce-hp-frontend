@@ -4,8 +4,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { HiRefresh } from "react-icons/hi";
 import Toast from "@/components/profile/Toast";
-
-
+import { useMutation } from "@tanstack/react-query";
+import { registerVendorQn, type VendorRegistrationData } from "@/queries/vendor";
 
 const inputClasses =
   "w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-[var(--color-hina)] focus:outline-none border-preto focus:border-preto";
@@ -40,9 +40,13 @@ const VendorPortal = () => {
   const [captchaCode, setCaptchaCode] = useState<string>("");
   const [captchaInput, setCaptchaInput] = useState<string>("");
   const [captchaError, setCaptchaError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [showToast, setShowToast] = useState(false);
+
+  // TanStack Query mutation for vendor registration
+  const registrationMutation = useMutation({
+    mutationFn: registerVendorQn,
+    retry: 1,
+  });
 
   // Generate random captcha code
   const generateCaptcha = useCallback(() => {
@@ -114,12 +118,25 @@ const VendorPortal = () => {
     }
   };
 
+  // Handle successful registration
+  useEffect(() => {
+    if (registrationMutation.isSuccess) {
+      // Show toast message
+      setShowToast(true);
+      
+      // Reset form
+      setRegisterName("");
+      setRegisterEmail("");
+      setRegisterPhone("");
+      setOrganizationalName("");
+      setCaptchaInput("");
+      generateCaptcha();
+    }
+  }, [registrationMutation.isSuccess, generateCaptcha]);
+
   const handleRegisterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     let isValid = true;
-    
-    // Clear previous messages
-    setSubmitMessage(null);
     
     // Validate name
     if (!registerName.trim()) {
@@ -170,89 +187,16 @@ const VendorPortal = () => {
     }
     
     if (isValid) {
-      setIsSubmitting(true);
-      setSubmitMessage(null);
+      // Prepare request body - same structure as before
+      const requestBody = {
+        name: registerName.trim(),
+        email: registerEmail.trim(),
+        phone: registerPhone.trim(),
+        organizationName: organizationalName.trim() || undefined
+      };
       
-      try {
-        // Prepare request body
-        const requestBody = {
-          name: registerName.trim(),
-          email: registerEmail.trim(),
-          phone: registerPhone.trim(),
-          organizationName: organizationalName.trim() || undefined
-        };
-        
-        // Make API call through Next.js API route (proxy) to avoid CORS issues
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
-        
-        let response;
-        try {
-          // Use Next.js API route as proxy instead of calling backend directly
-          response = await fetch('/api/vendor/register', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            signal: controller.signal,
-          });
-          clearTimeout(timeoutId);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (fetchError: any) {
-          clearTimeout(timeoutId);
-          
-          // Handle specific error types
-          if (fetchError.name === 'AbortError') {
-            throw new Error('Connection timeout. The server took too long to respond. Please check if the API server is running and try again.');
-          } else if (fetchError.message?.includes('Failed to fetch') || fetchError.message?.includes('NetworkError')) {
-            throw new Error('Network error: Cannot connect to the server. Please check:\n1. The API server is running\n2. The IP address is correct\n3. Your network connection');
-          } else {
-            throw fetchError;
-          }
-        }
-        
-        // Try to parse response
-        let data;
-        try {
-          const text = await response.text();
-          data = text ? JSON.parse(text) : {};
-        } catch (parseError) {
-          // If response is not JSON, use status text
-          data = { message: response.statusText || 'Unknown error' };
-        }
-        
-        if (response.ok) {
-          // Success - show toast message
-          setShowToast(true);
-          setSubmitMessage(null);
-          
-          // Reset form
-          setRegisterName("");
-          setRegisterEmail("");
-          setRegisterPhone("");
-          setOrganizationalName("");
-          setCaptchaInput("");
-          generateCaptcha();
-        } else {
-          // Error from API
-          const errorMessage = data?.message || data?.error || data?.detail || `Registration failed (Status: ${response.status}). Please try again.`;
-          setSubmitMessage({
-            type: 'error',
-            text: errorMessage
-          });
-        }
-      } catch (error: any) {
-        // Network or other errors
-        console.error('Registration error:', error);
-        const errorMessage = error?.message || 'Failed to submit registration. Please check your connection and try again.';
-        setSubmitMessage({
-          type: 'error',
-          text: errorMessage
-        });
-      } finally {
-        setIsSubmitting(false);
-      }
+      // Use TanStack Query mutation - API endpoint remains the same
+      registrationMutation.mutate(requestBody);
     }
   };
 
@@ -464,22 +408,22 @@ const VendorPortal = () => {
             </div>
             
             {/* Error Message */}
-            {submitMessage && submitMessage.type === 'error' && (
+            {registrationMutation.isError && registrationMutation.error && (
               <div className="p-4 rounded-lg bg-(--color-error)/10 border border-(--color-error)/30 text-(--color-error)">
-                <p className="text-sm font-medium">{submitMessage.text}</p>
+                <p className="text-sm font-medium">{registrationMutation.error.message}</p>
               </div>
             )}
             
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={registrationMutation.isPending}
               className={`w-full md:w-auto px-8 py-3 rounded-lg bg-[#222] text-white font-semibold tracking-wide shadow-lg shadow-black/10 ${
-                isSubmitting 
+                registrationMutation.isPending 
                   ? 'opacity-60 cursor-not-allowed' 
                   : 'cursor-pointer hover:bg-(--color-emperor) transition-colors'
               }`}
             >
-              {isSubmitting ? 'Submitting...' : 'Register as vendor'}
+              {registrationMutation.isPending ? 'Submitting...' : 'Register as vendor'}
             </button>
           </div>
         </form>

@@ -181,7 +181,14 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
               </button>
 
               <button
-                onClick={() => setTheme("dark")}
+                onClick={() => {
+                  // If switching to dark mode, clear custom theme (custom themes only work for light mode)
+                  if (colorTheme !== "default") {
+                    setColorTheme("default");
+                    setBgTheme("default");
+                  }
+                  setTheme("dark");
+                }}
                 className={`flex-1 flex flex-col items-center justify-center p-4 border-2 rounded-lg transition cursor-pointer ${
                   theme === "dark"
                     ? "border-gray-800 bg-gray-50 dark:bg-blue-900/20"
@@ -207,7 +214,15 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
               </button>
 
               <button
-                onClick={() => setTheme("system")}
+                onClick={() => {
+                  // If switching to system theme and system prefers dark, clear custom theme
+                  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                  if (prefersDark && colorTheme !== "default") {
+                    setColorTheme("default");
+                    setBgTheme("default");
+                  }
+                  setTheme("system");
+                }}
                 className={`flex-1 flex flex-col items-center justify-center p-4 border-2 rounded-lg transition cursor-pointer ${
                   theme === "system"
                     ? "border-gray-800 bg-gray-50 dark:bg-blue-900/20"

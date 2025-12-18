@@ -12,6 +12,7 @@ import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { CheckoutProvider } from "@/context/CheckoutContext";
 import { LogoProvider } from "@/context/LogoContext";
+import { ReactQueryProvider } from "@/lib/react-query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,32 +53,34 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
+    <html lang="en" dir="ltr" suppressHydrationWarning className="overflow-x-hidden">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${lato.variable} ${inter.variable} ${roboto.variable} antialiased`}
       >
-        <LanguageProvider>
-          <LogoProvider>
-            <CartProvider>
-              <WishlistProvider>
-                <CheckoutProvider>
-                  <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                  >
-                    <ThemeSettingsProvider>
-                      <ConditionalHeader />
-                      
-                      <main className="min-h-screen">{children}</main>
-                      <ConditionalFooter />
-                    </ThemeSettingsProvider>
-                  </ThemeProvider>
-                </CheckoutProvider>
-              </WishlistProvider>
-            </CartProvider>
-          </LogoProvider>
-        </LanguageProvider>
+        <ReactQueryProvider>
+          <LanguageProvider>
+            <LogoProvider>
+              <CartProvider>
+                <WishlistProvider>
+                  <CheckoutProvider>
+                    <ThemeProvider
+                      attribute="class"
+                      defaultTheme="system"
+                      enableSystem
+                    >
+                      <ThemeSettingsProvider>
+                        <ConditionalHeader />
+                        
+                        <main className="min-h-screen overflow-x-hidden">{children}</main>
+                        <ConditionalFooter />
+                      </ThemeSettingsProvider>
+                    </ThemeProvider>
+                  </CheckoutProvider>
+                </WishlistProvider>
+              </CartProvider>
+            </LogoProvider>
+          </LanguageProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

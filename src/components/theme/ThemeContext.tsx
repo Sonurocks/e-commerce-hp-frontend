@@ -165,7 +165,12 @@ export const useThemeSettings = (): ThemeContextType => {
     const root = document.documentElement;
     root.setAttribute("data-color-theme", colorTheme);
 
-    if (colorTheme === "default") {
+    // Check if we're in dark mode
+    const isDarkMode = darkModeTheme === "dark" || 
+      (darkModeTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+    // Custom themes only work in light mode - if dark mode is active, use default
+    if (colorTheme === "default" || isDarkMode) {
       // Reset to default colors
       root.style.setProperty("--theme-primary", "var(--color-preto)");
       root.style.setProperty("--theme-secondary", "var(--color-preto)");
@@ -217,7 +222,7 @@ export const useThemeSettings = (): ThemeContextType => {
       // Tooltip text should always be white for contrast on dark tooltip backgrounds
       root.style.setProperty("--theme-tooltip-text", "#ffffff");
     }
-  }, [colorTheme, mounted]);
+  }, [colorTheme, mounted, darkModeTheme]);
 
   // Apply font theme
   useEffect(() => {
