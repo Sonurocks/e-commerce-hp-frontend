@@ -45,6 +45,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
     spotlight,
     imageWidth,
     imageHeight,
+    imageClassName,
     rightContentClassName,
   } = drawerContent;
 
@@ -215,7 +216,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
                 alt={translate(spotlight.title) ?? spotlight.title}
                 width={imageWidth || 460}
                 height={imageHeight || 320}
-                className="w-full h-[320px] object-cover"
+                className={`w-full h-[320px] object-cover object-center ${imageClassName || ""}`}
                 style={{ height: `${imageHeight || 320}px` }}
               />
               <div className="mt-4">

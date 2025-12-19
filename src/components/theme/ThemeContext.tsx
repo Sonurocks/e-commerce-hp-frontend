@@ -169,9 +169,11 @@ export const useThemeSettings = (): ThemeContextType => {
     const isDarkMode = darkModeTheme === "dark" || 
       (darkModeTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
 
-    // Custom themes only work in light mode - if dark mode is active, use default
-    if (colorTheme === "default" || isDarkMode) {
-      // Reset to default colors
+    // Custom themes are independent - they always use light base regardless of dark/light mode
+    // Only apply custom themes if colorTheme is NOT "default"
+    if (colorTheme === "default") {
+      // Default theme respects dark/light mode
+      // Reset to default colors (light base for default theme)
       root.style.setProperty("--theme-primary", "var(--color-preto)");
       root.style.setProperty("--theme-secondary", "var(--color-preto)");
       root.style.setProperty("--theme-text", "var(--color-preto)");
@@ -188,6 +190,7 @@ export const useThemeSettings = (): ThemeContextType => {
       root.style.setProperty("--theme-badge-text", "#ffffff");
       root.style.setProperty("--theme-tooltip-text", "#ffffff");
     } else {
+      // Custom theme - always use light base, ignore dark mode
       const theme = themeColors[colorTheme];
       if (!theme) return;
 

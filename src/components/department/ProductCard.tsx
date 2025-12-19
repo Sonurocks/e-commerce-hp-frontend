@@ -51,7 +51,7 @@ export default function ProductCard({
           </button>
           {showBadge && isImageBadge && (
             <div className="absolute top-2 left-2 z-10">
-              <p className="text-[15px] text-[--color-hina] px-2 py-1">
+              <p className="text-[15px] text-white bg-[var(--color-red)] px-2 py-1 rounded">
                 {localizedBadge}
               </p>
             </div>

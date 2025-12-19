@@ -127,7 +127,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
       <div
         className="fixed right-0 top-0 h-full w-96 shadow-xl z-50 transform transition-transform overflow-y-auto"
         style={{
-          backgroundColor: theme === "dark" ? "#111827" : "#ffffff",
+          backgroundColor: colorTheme !== "default" ? "#ffffff" : (theme === "dark" ? "#111827" : "#ffffff"),
         }}
       >
         <div className="p-6">

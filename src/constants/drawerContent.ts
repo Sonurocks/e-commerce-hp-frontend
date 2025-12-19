@@ -350,11 +350,7 @@ const womenswearDrawers: Record<string, DrawerContent> = {
         links: preOwnedDrawerLinks.discover,
         className: "ml-20",
       },
-      {
-        title: "OUR SUSTAINABLE SERVICES",
-        links: preOwnedDrawerLinks.sustainableServices,
-        className: "max-w-[235px] ml-20",
-      },
+     
     ],
     preOwnedPng,
     {
@@ -365,7 +361,8 @@ const womenswearDrawers: Record<string, DrawerContent> = {
     },
     {
       imageWidth: 440,
-      rightContentClassName: "w-[440px] flex-shrink-0 ml-auto mr-10",
+      imageHeight: 320,
+      rightContentClassName: "w-[440px] flex-shrink-0 ml-auto",
     },
   ),
   sale: createDrawerContent(

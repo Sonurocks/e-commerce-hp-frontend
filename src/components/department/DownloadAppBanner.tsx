@@ -9,14 +9,14 @@ export default function DownloadAppBanner() {
   const copy = translations.homepage.downloadApp;
 
   return (
-    <section className="download-app-banner py-8 sm:py-12 px-4 sm:px-6 lg:px-8 ">
-      <div className="max-w-7xl mx-auto">
-       
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8 lg:gap-4">
+    <section className="download-app-banner py-16 md:py-20">
+      <div className="container mx-auto px-6 lg:px-12 max-w-[1440px]">
+        {/* Mobile: Stacked vertically and center-aligned */}
+        {/* Tablet/Desktop: 3-column split (Heading/Description | Email Form | QR Code) */}
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-y-8 gap-x-12">
           {/* Left Section: DOWNLOAD THE FARFETCH APP */}
-          {/* Centered on mobile, Left aligned on Desktop */}
-          <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:items-start lg:text-left">
-            <h2 className="text-xl sm:text-2xl font-normal text-preto mb-4 leading-tight uppercase">
+          <div className="w-full lg:w-auto lg:flex-1 flex flex-col items-center text-center lg:items-start lg:text-left">
+            <h2 className="text-xl sm:text-2xl font-normal text-preto mb-4 leading-tight uppercase tracking-normal">
               {copy.heading}
             </h2>
             <p className="text-sm sm:text-base font-normal text-preto mb-4 leading-relaxed max-w-xl">
@@ -29,43 +29,39 @@ export default function DownloadAppBanner() {
               </a>
             </p>
           </div>
-          {/* Right Section: EMAIL ME and SCAN QR CODE */}
-          {/* Stack vertically on mobile, Row on Tablet/Desktop */}
-          <div className="w-full lg:w-auto flex flex-col sm:flex-row items-center lg:items-start gap-8 lg:gap-0">
-            {/* EMAIL ME Section */}
-            <div className="flex flex-col items-center lg:items-start w-full sm:w-auto lg:mr-8">
-              <h3 className="text-sm sm:text-base font-normal text-preto mb-2 uppercase">
-                {copy.emailHeading}
-              </h3>
-              <p className="text-xs sm:text-sm font-normal text-preto mb-4 leading-relaxed text-center lg:text-left max-w-xs">
-                {copy.emailDescription}
-              </p>
-              {/* Form */}
-              <form className="w-full max-w-xs flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  placeholder={copy.emailPlaceholder}
-                  className="w-full sm:flex-1 border border-preto rounded-md px-3 py-2 text-sm text-preto placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-preto"
-                />
-                <button
-                  type="button"
-                  className="w-full sm:w-auto bg-[#222] text-white  rounded-md px-6 py-2 text-sm font-medium transition-colors"
-                >
-                  {copy.sendButton}
-                </button>
-              </form>
-            </div>
-            {/* Vertical divider (Hidden on mobile, visible on large screens) */}
-            <div className="hidden lg:block w-px h-32 bg-gray-300 mx-4 self-center"></div>
-            {/* SCAN QR CODE Section */}
-            <div className="flex flex-col items-center text-center gap-3">
-              <h3 className="text-sm sm:text-base font-bold text-preto uppercase">
-                {copy.qrHeading}
-              </h3>
-              <div className="w-32 h-32  border-2 border-preto flex items-center justify-center p-2">
-              
-                 <BsQrCode className="text-(--color-preto) w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20" />
-              </div>
+
+          {/* Middle Section: EMAIL ME */}
+          <div className="w-full lg:w-auto flex flex-col items-center lg:items-start">
+            <h3 className="text-sm sm:text-base font-normal text-preto mb-2 uppercase">
+              {copy.emailHeading}
+            </h3>
+            <p className="text-xs sm:text-sm font-normal text-preto mb-4 leading-relaxed text-center lg:text-left max-w-xs">
+              {copy.emailDescription}
+            </p>
+            {/* Form - Input and Button same height (h-11) */}
+            <form className="w-full max-w-xs flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                placeholder={copy.emailPlaceholder}
+                className="h-11 sm:flex-1 border border-preto rounded-lg px-3 text-sm text-preto placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+              />
+              <button
+                type="button"
+                className="h-11 sm:w-auto bg-[#222] text-white rounded-lg px-6 text-sm font-medium transition-colors hover:bg-[#333] whitespace-nowrap"
+              >
+                {copy.sendButton}
+              </button>
+            </form>
+          </div>
+
+          {/* Right Section: SCAN QR CODE */}
+          <div className="w-full lg:w-auto flex flex-col items-center text-center">
+            <h3 className="text-sm sm:text-base font-bold text-preto uppercase mb-3">
+              {copy.qrHeading}
+            </h3>
+            {/* QR Code with thin border matching FAQ cards */}
+            <div className="w-32 h-32 border border-gray-200 rounded-lg flex items-center justify-center p-2">
+              <BsQrCode className="text-preto w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20" />
             </div>
           </div>
         </div>

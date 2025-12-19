@@ -157,7 +157,7 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
           <div className="flex-shrink-0 bg-(--colorWhite)">
             <div className="flex items-start justify-between px-8 pt-8 pb-6">
               <div>
-                <p className="text-[24px] leading-8 font-normal text-preto">
+                <p className="text-[24px] leading-8 font-normal text-preto px-2 py-1">
                   {modalCopy.title}
                 </p>
               </div>
@@ -172,7 +172,7 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
 
             {/* Instruction Text */}
             <div className="px-8 pb-4">
-              <p className="text-sm text-(--color-hina) dark:text-(--color-hina)">
+              <p className="text-sm text-(--color-hina) dark:text-(--color-hina) px-2 py-1">
                 {modalCopy.instruction}
               </p>
             </div>
@@ -186,13 +186,13 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
                   <button
                     key={languageOption.code}
                     onClick={() => handleLanguageSelect(languageOption)}
-                    className="w-full text-left py-4 px-0 flex items-center justify-between group border-b border-[#eaeaea] last:border-b-0"
+                    className="w-full text-left py-4 px-2 flex items-center justify-between group border-b border-[#eaeaea] last:border-b-0"
                   >
-                    <span className="flex flex-col">
-                      <span className="text-base font-normal text-preto leading-tight">
+                    <span className="flex flex-col px-2">
+                      <span className="text-base font-normal text-preto leading-tight py-1">
                         {languageOption.nativeName}
                       </span>
-                      <span className="text-sm text-(--color-hina) leading-tight mt-1">
+                      <span className="text-sm text-(--color-hina) leading-tight mt-1 py-1">
                         {languageOption.description}
                       </span>
                     </span>

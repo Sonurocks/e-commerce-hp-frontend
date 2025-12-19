@@ -66,6 +66,7 @@ const Header = () => {
     | "teens"
     | null
   >(null);
+  const drawerTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isSearchDrawerOpen, setIsSearchDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isThemeDrawerOpen, setIsThemeDrawerOpen] = useState(false);
@@ -407,7 +408,7 @@ const Header = () => {
 
         {/* Main Header */}
         <div
-          className={`relative overflow-x-hidden ${isScrolled ? "border-b border-gray-300 dark:border-(--color-platinum)" : ""}`}
+          className={`relative ${isScrolled ? "border-b border-gray-300 dark:border-(--color-platinum)" : ""}`}
         >
           <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 xl:px-10 overflow-x-hidden">
             {/* Desktop Layout */}
@@ -578,10 +579,32 @@ const Header = () => {
                           key={link.id ?? index}
                           ref={linkRef}
                           className="relative"
-                          onMouseEnter={() => setActiveDrawer(drawerType)}
-                          onMouseLeave={() => setActiveDrawer(null)}
+                          onMouseEnter={() => {
+                            if (drawerTimeoutRef.current) {
+                              clearTimeout(drawerTimeoutRef.current);
+                              drawerTimeoutRef.current = null;
+                            }
+                            setActiveDrawer(drawerType);
+                          }}
+                          onMouseLeave={() => {
+                            // Small delay to allow mouse to move to drawer
+                            drawerTimeoutRef.current = setTimeout(() => {
+                              setActiveDrawer(null);
+                            }, 150);
+                          }}
                         >
-                          <Link href={link.href} className={linkClassName}>
+                          <Link 
+                            href={link.href} 
+                            className={linkClassName}
+                            onMouseEnter={(e) => {
+                              e.stopPropagation();
+                              if (drawerTimeoutRef.current) {
+                                clearTimeout(drawerTimeoutRef.current);
+                                drawerTimeoutRef.current = null;
+                              }
+                              setActiveDrawer(drawerType);
+                            }}
+                          >
                             {translatedLabel}
                           </Link>
                         </div>
@@ -887,18 +910,29 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Drawers - Positioned relative to header */}
-          {activeDrawer && (
-            <GenericDrawer
-              isDrawerOpen={true}
-              drawerRef={drawerRef}
-              onMouseEnter={() => setActiveDrawer(activeDrawer)}
-              onMouseLeave={() => setActiveDrawer(null)}
-              drawerType={activeDrawer}
-              department={currentDepartment}
-            />
-          )}
         </div>
+
+        {/* Drawers - Positioned relative to header */}
+        {activeDrawer && (
+          <GenericDrawer
+            isDrawerOpen={true}
+            drawerRef={drawerRef}
+            onMouseEnter={() => {
+              if (drawerTimeoutRef.current) {
+                clearTimeout(drawerTimeoutRef.current);
+                drawerTimeoutRef.current = null;
+              }
+              setActiveDrawer(activeDrawer);
+            }}
+            onMouseLeave={() => {
+              drawerTimeoutRef.current = setTimeout(() => {
+                setActiveDrawer(null);
+              }, 100);
+            }}
+            drawerType={activeDrawer}
+            department={currentDepartment}
+          />
+        )}
       </header>
 
       {/* Search Drawer */}

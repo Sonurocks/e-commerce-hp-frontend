@@ -1101,9 +1101,9 @@ select option:checked {
   article.group.h-full.flex.flex-col > div.relative.w-full img,
   article.group > div.relative.w-full img,
   article[class*="group"] > div[class*="relative"][class*="w-full"] img {
-    max-width: 90% !important;
+    max-width: 100% !important;
     max-height: 200px !important;
-    object-fit: contain !important;
+    object-fit: fill !important;
   }
 }
 

@@ -223,7 +223,7 @@ export default function ShopPage() {
                 }}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap border ${
                   selectedFilter === filter.toLowerCase() || filter === "All Filters"
-                    ? "bg-preto text-branco border-preto"
+                    ? " text-branco border-preto"
                     : "border-gray-300 text-preto hover:bg-gray-50"
                 }`}
               >
