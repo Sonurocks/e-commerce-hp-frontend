@@ -168,7 +168,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
       drawerType === "watches" ||
       drawerType === "shoes"
     ) {
-      return "text-basetext-(--color-preto) hover:underline transition font-light whitespace-nowrap";
+      return "text-basetext-(--colorpreto) hover:underline transition font-light whitespace-nowrap";
     }
     return "text-basetext-(--color-preto) hover:underline transition font-light";
   };
