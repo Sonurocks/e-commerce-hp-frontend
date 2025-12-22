@@ -20,7 +20,7 @@ export default function EditorialFeature({
 }: EditorialFeatureProps) {
   const defaultTitle = "How to master party season";
   const defaultDescription =
-    "Perfect styles to see every dress, courtesy Cherina Hreem and more.";
+    "Perfect styles to see every dress,courtesy Cherina Hreem and more.";
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center my-8 lg:my-16 px-4 md:px-8">
       {/* Content Side */}

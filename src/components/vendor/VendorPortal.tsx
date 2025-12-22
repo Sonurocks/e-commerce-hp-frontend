@@ -201,7 +201,7 @@ const VendorPortal = () => {
   };
 
   return (
-    <section className="bg-(--color-branco) text-preto" style={{ fontFamily: 'var(--fontNormal)' }}>
+    <section className=" text-preto" style={{ fontFamily: 'var(--fontNormal)' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
         <header className="space-y-4 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-(--color-hina)">Farfetch Collective</p>

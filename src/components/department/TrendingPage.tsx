@@ -2,11 +2,11 @@
 
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useSearchParams, usePathname } from "next/navigation";
 import { FiChevronDown, FiCheck } from "react-icons/fi";
 import { DownloadAppBanner } from "@/components";
 import FilterDrawer from "./FilterDrawer";
+import ProductCard from "./ProductCard";
 import {
   trendingNowByDept,
   DepartmentKey,
@@ -312,35 +312,12 @@ export default function TrendingPage() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6 mb-12">
-          {sortedProducts.map((item) => (
-            <div key={item.id} className="group">
-              <Link href={`/product-detail/${item.id}`} className="block">
-                <div className="relative w-full h-[300px] sm:h-[400px] flex items-center justify-center mb-2">
-                  <Image
-                    src={item.image.src}
-                    alt={translateTitle(item.title) ?? item.title}
-                    fill
-                    sizes="(min-width: 768px) 25vw, 50vw"
-                    className="object-contain"
-                  />
-                </div>
-                <div className="mt-2 text-left">
-                  <p className="text-sm font-base text-(--color-preto)">
-                    {translateTitle(item.title)}
-                  </p>
-                  {item.subtitle && (
-                    <p className="text-xs text-gray-600 mt-1">
-                      {translateTitle(item.subtitle)}
-                    </p>
-                  )}
-                  {item.price && (
-                    <p className="text-sm text-(--color-preto) mt-1">
-                      {item.price}
-                    </p>
-                  )}
-                </div>
-              </Link>
-            </div>
+          {sortedProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              showBadge={!!product.badge}
+            />
           ))}
         </div>
       </div>

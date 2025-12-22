@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Link from "next/link";
 import { ProductDetail, productsById } from "@/constants/products";
 import { Product } from "@/constants/department";
 import { useLanguage } from "@/context/LanguageContext";
@@ -196,6 +197,15 @@ export default function ProductDetailAdditionalSection({
   const translate = (text?: string) =>
     text ? translations.productCopy[text] ?? text : text;
 
+  // Determine department from product ID
+  const getDepartment = (): "womenswear" | "menswear" | "kidswear" => {
+    if (product.id.startsWith("m-")) return "menswear";
+    if (product.id.startsWith("k-")) return "kidswear";
+    return "womenswear";
+  };
+
+  const department = getDepartment();
+
   // Get recommended products dynamically from product.completeTheLook or fallback list
   const completeTheLookProducts = useMemo(() => {
     const isMenswear = product.id.startsWith("m-");
@@ -359,9 +369,12 @@ export default function ProductDetailAdditionalSection({
           <h2 className="text-[18px] font-medium text-(--color-preto)">
             {translate("Recommendations")}
           </h2>
-          <button className="px-4 py-2 border border-(--color-preto) rounded-lg text-[13px] font-semibold hover:bg-gray-100 transition-colors">
+          <Link
+            href={`/shop?section=newIn&department=${department}`}
+            className="px-4 py-2 border border-(--color-preto) rounded-lg text-[13px] font-semibold hover:bg-gray-100 transition-colors inline-block"
+          >
             {translate("Show More")}
-          </button>
+          </Link>
         </div>
         <div className="relative">
           {totalCuratedCards > VISIBLE_CURATED_CARDS && (

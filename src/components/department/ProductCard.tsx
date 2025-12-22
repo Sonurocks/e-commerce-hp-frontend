@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Product } from "@/constants/department";
 import { GoHeart, GoHeartFill } from "react-icons/go";
+import { GrTooltip } from "react-icons/gr";
 import { useLanguage } from "@/context/LanguageContext";
 import { useWishlist } from "@/context/WishlistContext";
 const fontStack =
@@ -51,9 +52,15 @@ export default function ProductCard({
           </button>
           {showBadge && isImageBadge && (
             <div className="absolute top-2 left-2 z-10">
-              <p className="text-[15px] text-white bg-[var(--color-red)] px-2 py-1 rounded">
-                {localizedBadge}
-              </p>
+              <div className="relative bg-(--color-red) px-2 py-1 rounded-md flex items-center gap-1">
+               
+                <p className="text-[11px] text-white font-medium">
+                  {localizedBadge}
+                </p>
+                <div className="absolute bottom-0 left-3 transform translate-y-full">
+                  <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-(--color-red)"></div>
+                </div>
+              </div>
             </div>
           )}
           <Image
