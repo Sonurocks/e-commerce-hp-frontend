@@ -6,3 +6,4 @@ const OrdersAndDeliveryPage = () => {
 };
 
 export default OrdersAndDeliveryPage;
+

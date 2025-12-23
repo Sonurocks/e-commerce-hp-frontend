@@ -6,3 +6,4 @@ const AccessibilityPage = () => {
 };
 
 export default AccessibilityPage;
+

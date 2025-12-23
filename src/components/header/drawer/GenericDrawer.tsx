@@ -14,6 +14,7 @@ interface GenericDrawerProps {
   onMouseLeave: () => void;
   drawerType: string;
   department: DepartmentKey;
+  onClose?: () => void;
 }
 
 const GenericDrawer: React.FC<GenericDrawerProps> = ({
@@ -23,6 +24,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
   onMouseLeave,
   drawerType,
   department,
+  onClose,
 }) => {
   const { translations } = useLanguage();
   const translate = (text?: string) =>
@@ -69,7 +71,15 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
         </h3>
         <div className="space-y-4">
           <div className="flex gap-8 text-basetext-(--color-preto) font-light">
-            <Link href="/brands/0-9" className="hover:underline transition">
+            <Link 
+              href="/brands/0-9" 
+              className="hover:underline transition"
+              onClick={() => {
+                if (onClose) {
+                  onClose();
+                }
+              }}
+            >
               0-9
             </Link>
             {alphabetGroups[0].map((letter, letterIndex) => (
@@ -77,6 +87,11 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
                 key={letterIndex}
                 href={`/brands/${letter.toLowerCase()}`}
                 className={`hover:underline transition ${letterIndex === 0 ? "ml-4" : ""}`}
+                onClick={() => {
+                  if (onClose) {
+                    onClose();
+                  }
+                }}
               >
                 {letter}
               </Link>
@@ -92,6 +107,11 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
                   key={letterIndex}
                   href={`/brands/${letter.toLowerCase()}`}
                   className="hover:underline transition"
+                  onClick={() => {
+                    if (onClose) {
+                      onClose();
+                    }
+                  }}
                 >
                   {letter}
                 </Link>
@@ -102,6 +122,11 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
             <Link
               href="/brands/all"
               className="text-basetext-(--color-preto) hover:underline transition font-light"
+              onClick={() => {
+                if (onClose) {
+                  onClose();
+                }
+              }}
             >
               {translate("View All")}
             </Link>
@@ -193,7 +218,15 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
                 <ul className="space-y-2">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <Link href={link.href} className={getLinkClass()}>
+                      <Link 
+                        href={link.href} 
+                        className={getLinkClass()}
+                        onClick={() => {
+                          if (onClose) {
+                            onClose();
+                          }
+                        }}
+                      >
                         {translate(link.label)}
                       </Link>
                     </li>
@@ -234,6 +267,11 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
                   <Link
                     href={spotlight.link}
                     className="inline-block text-sm underline hover:no-underline text-(--color-preto) font-normal"
+                    onClick={() => {
+                      if (onClose) {
+                        onClose();
+                      }
+                    }}
                   >
                     {translate(spotlight.linkText)}
                   </Link>

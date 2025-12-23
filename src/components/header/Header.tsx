@@ -931,6 +931,13 @@ const Header = () => {
             }}
             drawerType={activeDrawer}
             department={currentDepartment}
+            onClose={() => {
+              if (drawerTimeoutRef.current) {
+                clearTimeout(drawerTimeoutRef.current);
+                drawerTimeoutRef.current = null;
+              }
+              setActiveDrawer(null);
+            }}
           />
         )}
       </header>

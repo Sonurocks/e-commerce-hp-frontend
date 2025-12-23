@@ -261,7 +261,7 @@ export default function FilterDrawer({
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-[99] transition-opacity duration-300"
+          className="fixed inset-0 z-[99] transition-opacity duration-300 bg-(--color-preto)/50"
           onClick={onClose}
         />
       )}
@@ -280,7 +280,7 @@ export default function FilterDrawer({
           </h2>
           <button
             onClick={onClose}
-            className="text-preto hover:text-[--color-hina] transition cursor-pointer"
+            className="text-preto hover:text-hina transition cursor-pointer"
             aria-label="Close filters"
           >
             <FiX className="w-6 h-6" />
@@ -293,10 +293,10 @@ export default function FilterDrawer({
             <div key={section.key} className=" py-4">
               <button
                 onClick={() => toggleSection(section.key)}
-                className="w-full flex items-center justify-between text-sm font-thin text-preto uppercase hover:text-[--color-hina] transition"
+                className="w-full flex items-center justify-between text-sm font-thin text-preto uppercase hover:text-hina transition"
               >
                 <span
-                  className={section.isRed ? "text-[--color-red]" : "text-preto"}
+                  className={section.isRed ? "text-(--color-red)" : "text-preto"}
                 >
                   {section.key === "price" && getPriceFilterCount() > 0
                     ? `${section.label} (${getPriceFilterCount()})`
@@ -314,16 +314,16 @@ export default function FilterDrawer({
                 <div className="mt-4 space-y-4 pl-4">
                   {section.key === "category" ? (
                     <>
-                      <div className="text-sm text-preto py-1 cursor-pointer hover:text-[--color-hina] transition">
+                      <div className="text-sm text-preto py-1 cursor-pointer hover:text-hina transition">
                         Clothing
                       </div>
-                      <div className="text-sm text-preto py-1 cursor-pointer hover:text-[--color-hina] transition">
+                      <div className="text-sm text-preto py-1 cursor-pointer hover:text-hina transition">
                         Bags
                       </div>
-                      <div className="text-sm text-preto py-1 cursor-pointer hover:text-[--color-hina] transition">
+                      <div className="text-sm text-preto py-1 cursor-pointer hover:text-hina transition">
                         Jewellery
                       </div>
-                      <div className="text-sm text-preto py-1 cursor-pointer hover:text-[--color-hina] transition">
+                      <div className="text-sm text-preto py-1 cursor-pointer hover:text-hina transition">
                         Shoes
                       </div>
                     </>
@@ -331,18 +331,18 @@ export default function FilterDrawer({
                     <>
                       {/* Search Bar */}
                       <div className="relative mb-4">
-                        <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-(--color-nimbus)" />
                         <input
                           type="text"
                           placeholder="Search 17 brands"
                           value={brandSearch}
                           onChange={(e) => setBrandSearch(e.target.value)}
-                          className="w-full pl-10 pr-10 py-2 border-b border-gray-200 text-sm text-preto focus:outline-none focus:border-[--color-hina]"
+                          className="w-full pl-10 pr-10 py-2 border-b border-(--color-platinum) text-sm text-preto focus:outline-none focus:border-(--color-hina)"
                         />
                         {brandSearch && (
                           <button
                             onClick={() => setBrandSearch("")}
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 transition text-(--color-nimbus) hover:text-(--color-hina)"
                             aria-label="Clear search"
                           >
                             <FiX className="w-4 h-4" />
@@ -359,11 +359,11 @@ export default function FilterDrawer({
                             {brands.map((brand) => (
                               <label
                                 key={brand}
-                                className="flex items-center space-x-2 cursor-pointer hover:text-[--color-hina] transition"
+                                className="flex items-center space-x-2 cursor-pointer transition text-(--color-preto) hover:text-(--color-hina)"
                               >
                                 <input
                                   type="checkbox"
-                                  className="w-4 h-4 border-gray-300 rounded text-[--color-hina] focus:ring-[--color-hina]"
+                                  className="w-4 h-4 rounded border-(--color-silver) accent-(--color-hina)"
                                 />
                                 <span className="text-sm text-preto">{brand}</span>
                               </label>
@@ -384,13 +384,13 @@ export default function FilterDrawer({
                               onClick={() => toggleColor(color.name)}
                               className={`w-full flex items-center space-x-3 py-2 px-2 rounded transition-all ${
                                 isSelected
-                                  ? "border border-preto bg-[--color-branco]"
-                                  : "border border-transparent bg-gray-50 hover:bg-gray-100"
+                                  ? "border border-preto bg-branco"
+                                  : "border border-transparent bg-(--color-shell) hover:bg-(--color-platinum)"
                               }`}
                             >
                               <div
                                 className={`w-8 h-8 rounded shrink-0 ${
-                                  color.hasBorder ? "border border-gray-300" : ""
+                                  color.hasBorder ? "border border-(--color-silver)" : ""
                                 }`}
                                 style={{
                                   backgroundColor: color.gradient ? undefined : color.value,
@@ -399,7 +399,7 @@ export default function FilterDrawer({
                               />
                               <span
                                 className={`text-sm flex-1 text-left ${
-                                  isSelected ? "text-preto" : "text-gray-500"
+                                  isSelected ? "text-preto" : "text-(--color-emperor)"
                                 }`}
                               >
                                 {color.name}
@@ -422,7 +422,7 @@ export default function FilterDrawer({
                             handlePriceInputChange("min", e.target.value);
                           }}
                           onBlur={() => handlePriceInputBlur("min")}
-                          className="w-28 px-3 py-2 border border-gray-300 rounded bg-[--color-branco] text-sm text-gray-700 focus:outline-none focus:border-gray-400"
+                          className="w-28 px-3 py-2 border border-(--color-silver) rounded bg-branco text-sm text-(--color-emperor) focus:outline-none focus:border-(--color-nimbus)"
                         />
                         <input
                           type="text"
@@ -433,14 +433,14 @@ export default function FilterDrawer({
                             handlePriceInputChange("max", e.target.value);
                           }}
                           onBlur={() => handlePriceInputBlur("max")}
-                          className="w-28 px-3 py-2 border border-gray-300 rounded bg-[--color-branco] text-sm text-gray-700 focus:outline-none focus:border-gray-400"
+                          className="w-28 px-3 py-2 border border-(--color-silver) rounded bg-branco text-sm text-(--color-emperor) focus:outline-none focus:border-(--color-nimbus)"
                         />
                       </div>
                       {/* Range Slider */}
                       <div className="relative py-2">
                         <div
                           ref={sliderRef}
-                          className="relative h-1 bg-gray-300 rounded-full"
+                          className="relative h-1 rounded-full bg-(--color-silver)"
                           onMouseDown={(e) => {
                             const rect = sliderRef.current?.getBoundingClientRect();
                             if (!rect) return;
@@ -460,14 +460,14 @@ export default function FilterDrawer({
                         >
                           {/* Unselected Range (right side) */}
                           <div
-                            className="absolute h-1 bg-gray-300 rounded-full right-0"
+                            className="absolute h-1 rounded-full right-0 bg-(--color-silver)"
                             style={{
                               width: `${100 - (priceRange.max / 5000) * 100}%`,
                             }}
                           />
                           {/* Selected Range */}
                           <div
-                            className="absolute h-1 bg-gray-700 rounded-full"
+                            className="absolute h-1 rounded-full bg-(--color-emperor)"
                             style={{
                               left: `${(priceRange.min / 5000) * 100}%`,
                               width: `${((priceRange.max - priceRange.min) / 5000) * 100}%`,
@@ -475,8 +475,10 @@ export default function FilterDrawer({
                           />
                           {/* Min Handle */}
                           <div
-                            className="absolute w-4 h-4 bg-black rounded-full cursor-pointer transform -translate-x-1/2 -translate-y-1.5 top-1/2 shadow-sm hover:scale-110 transition-transform"
-                            style={{ left: `${(priceRange.min / 5000) * 100}%` }}
+                            className="absolute w-4 h-4 rounded-full cursor-pointer transform -translate-x-1/2 -translate-y-1.5 top-1/2 shadow-sm hover:scale-110 transition-transform bg-(--color-preto)"
+                            style={{ 
+                              left: `${(priceRange.min / 5000) * 100}%`,
+                            }}
                             onMouseDown={(e) => {
                               e.stopPropagation();
                               const startX = e.clientX;
@@ -502,8 +504,10 @@ export default function FilterDrawer({
                           />
                           {/* Max Handle */}
                           <div
-                            className="absolute w-4 h-4 bg-black rounded-full cursor-pointer transform -translate-x-1/2 -translate-y-1.5 top-1/2 shadow-sm hover:scale-110 transition-transform"
-                            style={{ left: `${(priceRange.max / 5000) * 100}%` }}
+                            className="absolute w-4 h-4 rounded-full cursor-pointer transform -translate-x-1/2 -translate-y-1.5 top-1/2 shadow-sm hover:scale-110 transition-transform bg-(--color-preto)"
+                            style={{ 
+                              left: `${(priceRange.max / 5000) * 100}%`,
+                            }}
                             onMouseDown={(e) => {
                               e.stopPropagation();
                               const startX = e.clientX;
@@ -542,8 +546,8 @@ export default function FilterDrawer({
                               className={`flex items-center space-x-2 py-1 cursor-pointer transition ${
                                 option.enabled
                                   ? isSelected
-                                    ? "bg-gray-100"
-                                    : "hover:bg-gray-50"
+                                    ? "bg-(--color-shell)"
+                                    : "hover:bg-(--color-whiteSmoke)"
                                   : "opacity-50 cursor-not-allowed"
                               }`}
                             >
@@ -552,11 +556,11 @@ export default function FilterDrawer({
                                 checked={isSelected}
                                 onChange={() => toggleSaleOption(option.label)}
                                 disabled={!option.enabled}
-                                className="w-4 h-4 border-gray-300 rounded text-[--color-red] focus:ring-[--color-red] disabled:opacity-50"
+                                className="w-4 h-4 rounded border-(--color-silver) accent-(--color-red) disabled:opacity-50"
                               />
                               <span
                                 className={`text-sm ${
-                                  option.enabled ? "text-preto" : "text-gray-400"
+                                  option.enabled ? "text-preto" : "text-(--color-nimbus)"
                                 }`}
                               >
                                 {option.label}
@@ -570,19 +574,21 @@ export default function FilterDrawer({
                     <>
                       {/* Promotion Options List */}
                       <div className="space-y-1">
-                        <label className="flex items-center space-x-2 py-1 cursor-pointer hover:bg-gray-50 transition">
+                        <label 
+                          className="flex items-center space-x-2 py-1 cursor-pointer transition hover:bg-(--color-whiteSmoke)"
+                        >
                           <input
                             type="checkbox"
                             checked={selectedPromotion}
                             onChange={() => setSelectedPromotion(!selectedPromotion)}
-                            className="w-4 h-4 border-gray-300 rounded text-preto focus:ring-preto"
+                            className="w-4 h-4 rounded border-(--color-silver) accent-(--color-preto)"
                           />
                           <span className="text-sm text-preto">20% off</span>
                         </label>
                       </div>
                     </>
                   ) : (
-                    <div className="text-sm text-[--color-hina]">
+                    <div className="text-sm text-(--color-hina)">
                       Filter options for {section.label.toLowerCase()} will appear here
                     </div>
                   )}
@@ -593,10 +599,10 @@ export default function FilterDrawer({
         </div>
 
         {/* Bottom Button */}
-        <div className="sticky bottom-0 bg-branco px-6 pt-10 pb-4 border-t border-[--color-platinum] flex justify-end">
+        <div className="sticky bottom-0 bg-branco px-6 pt-10 pb-4 border-t border-(--color-platinum) flex justify-end">
           <button
             onClick={onClose}
-            className="bg-[#222] text-[#f5f5f5] py-3 px-6 rounded-lg text-sm font-normal transition-colors"
+            className="py-3 px-6 rounded-lg text-sm font-normal transition-colors bg-(--color-preto) text-(--color-whiteSmoke) hover:bg-(--color-emperor)"
           >
             Show {resultCount}+ Results
           </button>

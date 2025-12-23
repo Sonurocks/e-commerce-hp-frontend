@@ -6,3 +6,4 @@ const PaymentAndPricingPage = () => {
 };
 
 export default PaymentAndPricingPage;
+

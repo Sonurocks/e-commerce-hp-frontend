@@ -6,3 +6,4 @@ const PromotionsTermsPage = () => {
 };
 
 export default PromotionsTermsPage;
+

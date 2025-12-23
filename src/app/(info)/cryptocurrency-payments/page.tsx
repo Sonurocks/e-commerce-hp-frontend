@@ -5,3 +5,4 @@ const CryptocurrencyPaymentsPage = () => {
 };
 
 export default CryptocurrencyPaymentsPage;
+
