@@ -227,7 +227,6 @@ export default function DrawerLinkPage() {
     { value: "sale-high", label: "Sale: high to low" },
   ];
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -340,7 +339,7 @@ export default function DrawerLinkPage() {
                           setSortBy(option.value);
                           setIsSortDropdownOpen(false);
                         }}
-                        className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
                       >
                         <span>{option.label}</span>
                         {isSelected && (

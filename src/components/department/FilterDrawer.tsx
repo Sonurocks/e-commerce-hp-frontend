@@ -261,7 +261,7 @@ export default function FilterDrawer({
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-[99] transition-opacity duration-300 bg-(--color-preto)/50"
+          className="fixed inset-0 z-99 transition-opacity duration-300 bg-(--color-preto)/50"
           onClick={onClose}
         />
       )}
@@ -269,7 +269,7 @@ export default function FilterDrawer({
       {/* Filter Drawer */} 
       <div
         ref={drawerRef}
-        className={`fixed left-0 top-0 h-full w-[400px] bg-branco shadow-xl z-[100] transform transition-transform duration-300 ease-in-out overflow-y-auto ${
+        className={`fixed left-0 top-0 h-full w-[400px] bg-branco shadow-xl z-100 transform transition-transform duration-300 ease-in-out overflow-y-auto ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
