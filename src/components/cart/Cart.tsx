@@ -557,7 +557,7 @@ const Cart = () => {
                                   <button
                                     type="button"
                                     onClick={() => toggleDropdown(`${item.product.id}-${item.size}-size`, 'size')}
-                                    className="w-full px-3 py-2 border border-(--color-silver) rounded-lg focus:outline-none focus:border-(--color-preto) bg-white cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
+                                    className="w-full px-3 py-2 border border-(--color-silver) rounded-lg focus:outline-none focus:border-(--color-preto) bg-(--color-branco) cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
                                   >
                                     <span className="font-semibold">{item.size}</span>
                                     <svg
@@ -573,7 +573,7 @@ const Cart = () => {
                               </div>
 
                               {openDropdowns[`${item.product.id}-${item.size}-size`] === 'size' && (
-                                <div className="absolute z-10 w-full mt-1 bg-white border border-(--color-silver) rounded-lg shadow-lg">
+                                <div className="absolute z-10 w-full mt-1 bg-(--color-branco) border border-(--color-silver) rounded-lg shadow-lg">
                                   <div className="p-2">
                                     <div className="flex items-center justify-between mb-2">
                                       <p className="text-[11px] text-(--color-nimbus)">
@@ -631,7 +631,7 @@ const Cart = () => {
                                   <button
                                     type="button"
                                     onClick={() => toggleDropdown(`${item.product.id}-${item.size}-quantity`, 'quantity')}
-                                    className="w-full px-3 py-2 border border-(--color-silver) rounded-lg focus:outline-none focus:border-(--color-preto) bg-white cursor-pointer text-[13px] text-[var(--color-preto)] flex items-center justify-between"
+                                    className="w-full px-3 py-2 border border-(--color-silver) rounded-lg focus:outline-none focus:border-(--color-preto) bg-(--color-branco) cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
                                   >
                                     <span className="font-semibold">{item.quantity}</span>
                                     <svg
@@ -647,7 +647,7 @@ const Cart = () => {
                               </div>
 
                               {openDropdowns[`${item.product.id}-${item.size}-quantity`] === 'quantity' && (
-                                <div className="absolute z-10 w-full mt-1 bg-white border border-(--color-silver) rounded-lg shadow-lg">
+                                <div className="absolute z-10 w-full mt-1 bg-(--color-branco) border border-(--color-silver) rounded-lg shadow-lg">
                                   <div className="p-2">
                                     <div className="flex items-center justify-between mb-2">
                                       <p className="text-[11px] text-(--color-nimbus)">
