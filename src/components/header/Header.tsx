@@ -739,12 +739,14 @@ const Header = () => {
                     href="/wishlist"
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
-                    <GoHeart className="w-6 h-6" strokeWidth={1.0} />
-                  {isMounted && wishlistCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-xs font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
-                      {wishlistCount}
-                    </span>
-                  )}
+                    <div className="relative">
+                      <GoHeart className="w-6 h-6" strokeWidth={1.0} />
+                      {isMounted && wishlistCount > 0 && (
+                        <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
+                          {wishlistCount}
+                        </span>
+                      )}
+                    </div>
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
                       {headerCopy.tooltips.wishlist}
                     </span>
@@ -753,7 +755,14 @@ const Header = () => {
                     href="/cart"
                     className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
-                    <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
+                    <div className="relative">
+                      <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
+                      {isMounted && cartCount > 0 && (
+                        <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
+                          {cartCount}
+                        </span>
+                      )}
+                    </div>
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
                       {headerCopy.tooltips.bag}
                     </span>
@@ -855,22 +864,71 @@ const Header = () => {
                           </Link>
                         );
                       })}
+                      {/* Theme Icon for Mobile */}
+                      <button
+                        onClick={() => {
+                          setIsThemeDrawerOpen(true);
+                          setIsMenuOpen(false);
+                        }}
+                        className="flex items-center gap-2 text-(--color-preto) dark:text-(--color-preto) font-normal text-base"
+                      >
+                        <SlidersHorizontal className="h-5 w-5" />
+                        Theme
+                      </button>
                     </div>
                     <div className="grid grid-cols-2 gap-3 text-sm">
-                      {navigationLinks.map((link) => (
-                        <Link
-                          key={`secondary-mobile-${link.id}`}
-                          href={link.href}
-                          className="rounded border border-gray-200 px-3 py-2 text-(--color-preto) dark:border-(--color-platinum) dark:text-(--color-preto)"
-                          onClick={handleMobileLinkClick}
-                        >
-                          {getNavLabel(
-                            navigationSectionKey,
-                            link.id,
-                            link.label,
-                          )}
-                        </Link>
-                      ))}
+                      {navigationLinks.map((link) => {
+                        if (link.hasDrawer) {
+                          const drawerType = link.drawerType as
+                            | "25off"
+                            | "newIn"
+                            | "holidaySeason"
+                            | "brands"
+                            | "clothing"
+                            | "shoes"
+                            | "bags"
+                            | "accessories"
+                            | "jewellery"
+                            | "watches"
+                            | "homeware"
+                            | "preOwned"
+                            | "sale"
+                            | "0-36months"
+                            | "0-12months"
+                            | "teens";
+                          return (
+                            <button
+                              key={`secondary-mobile-${link.id}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setActiveDrawer(drawerType);
+                                setIsMenuOpen(false);
+                              }}
+                              className="rounded border border-gray-200 px-3 py-2 text-(--color-preto) dark:border-(--color-platinum) dark:text-(--color-preto) text-left"
+                            >
+                              {getNavLabel(
+                                navigationSectionKey,
+                                link.id,
+                                link.label,
+                              )}
+                            </button>
+                          );
+                        }
+                        return (
+                          <Link
+                            key={`secondary-mobile-${link.id}`}
+                            href={link.href}
+                            className="rounded border border-gray-200 px-3 py-2 text-(--color-preto) dark:border-(--color-platinum) dark:text-(--color-preto)"
+                            onClick={handleMobileLinkClick}
+                          >
+                            {getNavLabel(
+                              navigationSectionKey,
+                              link.id,
+                              link.label,
+                            )}
+                          </Link>
+                        );
+                      })}
                     </div>
                     <div className="flex flex-wrap items-center gap-4 border-t border-gray-200 pt-4 dark:border-(--color-platinum) text-sm">
                       <Link
@@ -881,7 +939,7 @@ const Header = () => {
                       <div className="relative">
                         <GoHeart className="h-4 w-4" />
                         {isMounted && wishlistCount > 0 && (
-                          <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
+                          <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
                             {wishlistCount}
                           </span>
                         )}
@@ -896,7 +954,7 @@ const Header = () => {
                         <div className="relative">
                           <HiOutlineShoppingBag className="h-4 w-4" />
                           {isMounted && cartCount > 0 && (
-                            <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
+                            <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
                               {cartCount}
                             </span>
                           )}

@@ -29,13 +29,24 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
     (code) => languageMetadata[code],
   );
   const [position, setPosition] = useState({ top: 0, right: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Calculate position relative to button
   useEffect(() => {
     const updatePosition = () => {
       if (isOpen) {
         const button = buttonRef?.current;
-        if (button) {
+        if (button && !isMobile) {
           const buttonRect = button.getBoundingClientRect();
           setPosition({
             top: buttonRect.bottom + 16, // Gap below button
@@ -55,7 +66,7 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
       window.removeEventListener("resize", updatePosition);
       window.removeEventListener("scroll", updatePosition, true);
     };
-  }, [isOpen, buttonRef]);
+  }, [isOpen, buttonRef, isMobile]);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -143,16 +154,30 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
 
   return (
     <>
+      {/* Backdrop for mobile */}
+      <div 
+        className="fixed inset-0 bg-black/50 z-[99] lg:hidden"
+        onClick={onClose}
+      />
+      
       {/* Language Modal - Positioned relative to button */}
       <div
         ref={modalRef}
         className="fixed z-[100]"
-        style={{
-          top: `${position.top}px`,
-          right: `${position.right}px`,
-        }}
+        style={
+          isMobile
+            ? {
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }
+            : {
+                top: `${position.top}px`,
+                right: `${position.right}px`,
+              }
+        }
       >
-        <div className="w-[360px] max-h-[600px] flex flex-col rounded-2xl bg-(--colorWhite) shadow-2xl border border-(--colorGrey) overflow-hidden">
+        <div className="w-[90vw] max-w-[360px] lg:w-[360px] max-h-[80vh] lg:max-h-[600px] flex flex-col rounded-2xl bg-(--colorWhite) shadow-2xl border border-(--colorGrey) overflow-hidden">
           {/* Header - Fixed */}
           <div className="flex-shrink-0 bg-(--colorWhite)">
             <div className="flex items-start justify-between px-8 pt-8 pb-6">

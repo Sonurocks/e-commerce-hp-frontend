@@ -235,12 +235,12 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
         } shadow-lg max-h-screen overflow-y-auto`}
       >
         {/* Top Header Row */}
-        <div className="container mx-auto px-[36px]">
+        <div className="container mx-auto px-4 sm:px-6 md:px-[36px]">
           {/* Logo - Top Center */}
-          <div className="flex justify-center items-center py-4">
+          <div className="flex justify-center items-center py-3 md:py-4">
             <Link href={logoConfig.header.href || headerConfig.logo.href}>
               {logoConfig.header.type === "image" && logoConfig.header.imageUrl ? (
-                <div className="relative w-[290px] h-[26px]">
+                <div className="relative w-[200px] sm:w-[250px] md:w-[290px] h-[20px] sm:h-[24px] md:h-[26px]">
                   <Image
                     src={logoConfig.header.imageUrl}
                     alt={logoConfig.header.alt || "Logo"}
@@ -250,7 +250,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
                   />
                 </div>
               ) : (
-                <h1 className="text-3xl font-extrabold text-(--color-preto) tracking-tight uppercase">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-(--color-preto) tracking-tight uppercase">
                   {logoConfig.header.text || headerCopy.logoText}
                 </h1>
               )}
@@ -258,14 +258,14 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
           </div>
 
           {/* Links and Search Bar Row - Below Logo */}
-          <div className="flex items-center justify-between w-full h-[68px] py-0 px-[48px] pt-6 relative">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full min-h-[68px] lg:h-[68px] py-3 lg:py-0 px-2 sm:px-4 md:px-[48px] lg:pt-6 relative gap-4 lg:gap-0">
             {/* Left - Navigation Links (Tabs) */}
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-hide">
               {primaryNavigationLinks.map((link, index) => (
                 <button
                   key={link.id}
                   onClick={() => setActiveLink(index)}
-                  className={`text-sm font-normal transition relative ${
+                  className={`text-xs sm:text-sm font-normal transition relative whitespace-nowrap ${
                     activeLink === index 
                       ? "text-preto" 
                       : "text-(--color-hina) hover:text-gray-700"
@@ -281,15 +281,15 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
 
             {/* Gray Border Line under tabs - aligned with image container end */}
             <div
-              className="absolute bottom-0 left-[56px] h-px bg-gray-300"
+              className="hidden lg:block absolute bottom-0 left-[56px] h-px bg-gray-300"
               style={{ width: "calc(50% - 56px)" }}
             ></div>
 
             {/* Right - Search Bar and Close Button */}
-            <div className="flex items-start space-x-4 relative">
+            <div className="flex items-start space-x-2 sm:space-x-4 relative w-full lg:w-auto">
               {/* Search Input with Suggestions */}
-              <div className="relative">
-                <div className="relative w-[270px] h-[44px]">
+              <div className="relative flex-1 lg:flex-none">
+                <div className="relative w-full lg:w-[270px] h-[40px] sm:h-[44px]">
                   <div className="absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">
                     <svg
                       className="w-5 h-5 text-(--color-hina)"
@@ -337,7 +337,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
 
                 {/* Search Suggestions - Right below input */}
                 {searchQuery && searchSuggestions.length > 0 && (
-                  <div className="absolute top-full left-0 mt-1 w-[270px] bg-(--color-branco)  border border-gray-200 shadow-lg max-h-[400px] overflow-y-auto z-50">
+                  <div className="absolute top-full left-0 mt-1 w-full lg:w-[270px] bg-(--color-branco)  border border-gray-200 shadow-lg max-h-[300px] sm:max-h-[400px] overflow-y-auto z-50">
                     {searchSuggestions.map((suggestion, index) => (
                       <div
                         key={index}
@@ -378,18 +378,18 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
         </div>
 
         {/* Trending Section with Image Slider */}
-        <div className="container mx-auto px-[36px] py-8">
-          <div className="px-[48px]" id="trending-container">
+        <div className="container mx-auto px-4 sm:px-6 md:px-[36px] py-4 sm:py-6 md:py-8">
+          <div className="px-2 sm:px-4 md:px-[48px]" id="trending-container">
             {/* Trending Section with Half-Width Images */}
-            <div className="flex items-start gap-8">
+            <div className="flex flex-col lg:flex-row items-start gap-4 lg:gap-8">
               {/* Left Side - Heading */}
               <div className="flex-shrink-0">
                 {searchQuery ? (
-                  <h2 className="text-base text-(--color-hina) font-normal">
+                  <h2 className="text-sm sm:text-base text-(--color-hina) font-normal">
                     {searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1)}
                   </h2>
                 ) : (
-                  <h2 className="text-base text-(--color-hina) font-normal">
+                  <h2 className="text-sm sm:text-base text-(--color-hina) font-normal">
                     {searchCopy.trendingLabel}
                   </h2>
                 )}
@@ -397,10 +397,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
 
               {/* Image Slider - Right Half Width, aligned to end where gray line ends (50% of container) */}
               <div 
-                className="flex-1 relative"
-                style={{ 
-                  maxWidth: "calc(50% - 8px)"
-                }}
+                className="w-full lg:flex-1 lg:max-w-[calc(50%-8px)] relative"
               >
                 {/* Left Arrow Button */}
                 <button
@@ -446,14 +443,14 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
 
                 <div 
                   ref={sliderRef}
-                  className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-2 px-2"
+                  className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-2 px-2"
                 >
                   {currentProducts.map((product) => (
                     <div
                       key={product.uniqueKey || `${currentCategory}-${product.id}`}
-                      className="flex-shrink-0 w-[150px]"
+                      className="flex-shrink-0 w-[120px] sm:w-[140px] md:w-[150px]"
                     >
-                      <div className="w-full h-[180px] bg-gray-100 rounded overflow-hidden">
+                      <div className="w-full h-[140px] sm:h-[160px] md:h-[180px] bg-gray-100 rounded overflow-hidden">
                         <Image
                           src={product.image}
                           alt={product.name}
