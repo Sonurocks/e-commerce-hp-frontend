@@ -414,7 +414,7 @@ const Header = () => {
             {/* Desktop Layout */}
             <div className="hidden xl:block">
               {/* First Row - Primary Navigation */}
-              <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
+              <div className="flex items-center justify-between max-w-[1440px] w-full h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
                 {/* Left - Primary Categories */}
                 <div className="hidden lg:flex items-center space-x-6">
                   {primaryNavigationLinks.map((link) => {
@@ -531,7 +531,7 @@ const Header = () => {
               </div>
 
               {/* Second Row - Secondary Navigation and Search */}
-              <div className="flex items-center justify-between w-[1440px] h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
+              <div className="flex items-center justify-between max-w-[1440px] w-full h-[68px] my-0 ml-0 mr-[40.4px] py-0 px-[48px]">
                 {/* Left - Categories */}
                 <div className="hidden lg:flex items-center space-x-6 overflow-x-auto">
                   {navigationLinks.map((link, index) => {

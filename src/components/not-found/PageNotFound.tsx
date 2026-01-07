@@ -41,7 +41,7 @@ const PageNotFound = () => {
               </Link>
               <Link
                 href="/contact-us"
-                className="inline-flex w-full items-center justify-center rounded-lg border border-(--color-hina) px-6 py-3 text-(--color-preto) transition hover:border-(--color-preto) sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-(--color-hina) px-7 py-3 text-(--color-preto) transition hover:border-(--color-preto) sm:w-auto"
               >
                 Contact customer care
               </Link>

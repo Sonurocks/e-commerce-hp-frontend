@@ -41,31 +41,18 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Calculate position relative to button
+  // Calculate position relative to button - only once when modal opens
   useEffect(() => {
-    const updatePosition = () => {
-      if (isOpen) {
-        const button = buttonRef?.current;
-        if (button && !isMobile) {
-          const buttonRect = button.getBoundingClientRect();
-          setPosition({
-            top: buttonRect.bottom + 16, // Gap below button
-            right: window.innerWidth - buttonRect.right,
-          });
-        }
+    if (isOpen) {
+      const button = buttonRef?.current;
+      if (button && !isMobile) {
+        const buttonRect = button.getBoundingClientRect();
+        setPosition({
+          top: buttonRect.bottom + 16, // Gap below button
+          right: window.innerWidth - buttonRect.right,
+        });
       }
-    };
-
-    updatePosition();
-    
-    // Update position on window resize and scroll
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
-    
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
-    };
+    }
   }, [isOpen, buttonRef, isMobile]);
 
   // Prevent body scroll when modal is open
@@ -78,14 +65,33 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
       const originalTop = document.body.style.top;
       const originalWidth = document.body.style.width;
 
-      // Prevent scrolling
+      // Get header element to ensure it stays visible
+      const header = document.querySelector('header');
+      const originalHeaderPosition = header ? window.getComputedStyle(header).position : '';
+      const originalHeaderTop = header ? window.getComputedStyle(header).top : '';
+
+      // Prevent scrolling - same approach as ProfileModal to avoid content shift
       document.body.style.overflow = "hidden";
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = "100%";
 
+      // Ensure header stays visible at top when modal opens after scroll
+      if (header) {
+        header.style.position = "fixed";
+        header.style.top = "0";
+        header.style.left = "0";
+        header.style.right = "0";
+        header.style.zIndex = "50";
+      }
+
       // Prevent touch scrolling on mobile
       const preventTouchMove = (e: TouchEvent) => {
+        // Allow scrolling within the modal
+        const target = e.target as HTMLElement;
+        if (modalRef.current && modalRef.current.contains(target)) {
+          return;
+        }
         e.preventDefault();
       };
       document.addEventListener("touchmove", preventTouchMove, { passive: false });
@@ -96,6 +102,16 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
         document.body.style.position = originalPosition;
         document.body.style.top = originalTop;
         document.body.style.width = originalWidth;
+        
+        // Restore header styles
+        if (header) {
+          header.style.position = originalHeaderPosition;
+          header.style.top = originalHeaderTop;
+          header.style.left = "";
+          header.style.right = "";
+          header.style.zIndex = "";
+        }
+        
         window.scrollTo(0, scrollY);
         document.removeEventListener("touchmove", preventTouchMove);
       };
@@ -211,7 +227,7 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
                   <button
                     key={languageOption.code}
                     onClick={() => handleLanguageSelect(languageOption)}
-                    className="w-full text-left py-4 px-2 flex items-center justify-between group border-b border-[#eaeaea] last:border-b-0"
+                    className="w-full text-left py-2 px-2 flex items-center justify-between group border-b border-[#eaeaea] last:border-b-0"
                   >
                     <span className="flex flex-col px-2">
                       <span className="text-base font-normal text-preto leading-tight py-1">

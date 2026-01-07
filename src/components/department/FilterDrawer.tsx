@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { FiX, FiChevronDown, FiChevronUp, FiSearch } from "react-icons/fi";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface FilterDrawerProps {
   isOpen: boolean;
@@ -14,6 +15,10 @@ export default function FilterDrawer({
   onClose,
   resultCount = 100,
 }: FilterDrawerProps) {
+  const { translations } = useLanguage();
+  const translate = (text?: string) =>
+    text ? translations.productCopy[text] ?? text : text;
+  
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     category: false,
     brand: false,
@@ -32,13 +37,13 @@ export default function FilterDrawer({
   const drawerRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const saleOptions = [
-    { label: "No Discount", enabled: true },
-    { label: "up to 30%", enabled: true },
-    { label: "30% - 50%", enabled: true },
-    { label: "50% - 60%", enabled: false },
-    { label: "+ 60%", enabled: false },
-  ];
+  const saleOptions = useMemo(() => [
+    { label: "No Discount", displayLabel: translate("No Discount") || "No Discount", enabled: true },
+    { label: "up to 30%", displayLabel: translate("up to 30%") || "up to 30%", enabled: true },
+    { label: "30% - 50%", displayLabel: translate("30% - 50%") || "30% - 50%", enabled: true },
+    { label: "50% - 60%", displayLabel: translate("50% - 60%") || "50% - 60%", enabled: false },
+    { label: "+ 60%", displayLabel: translate("+ 60%") || "+ 60%", enabled: false },
+  ], [translations]);
 
   const toggleSaleOption = (optionLabel: string) => {
     const option = saleOptions.find((opt) => opt.label === optionLabel);
@@ -51,24 +56,24 @@ export default function FilterDrawer({
     );
   };
 
-  const colors = [
-    { name: "Black", value: "#000000" },
-    { name: "Yellow", value: "#FFD700" },
-    { name: "Gold", value: "#FFD700", gradient: "linear-gradient(135deg, #FFD700 0%, #FFA500 100%)" },
-    { name: "Silver", value: "#C0C0C0", gradient: "linear-gradient(135deg, #C0C0C0 0%, #E8E8E8 100%)" },
-    { name: "Purple", value: "#800080" },
-    { name: "White", value: "#FFFFFF", hasBorder: true },
-    { name: "Grey", value: "#808080" },
-    { name: "Neutrals", value: "multi", gradient: "linear-gradient(to bottom, #F5F5DC 0%, #DEB887 33%, #F5F5DC 66%)" },
-    { name: "Red", value: "#FF0000" },
-    { name: "Blue", value: "#0000FF" },
-    { name: "Green", value: "#008000" },
-    { name: "Orange", value: "#FFA500" },
-    { name: "Pink", value: "#FFC0CB" },
-    { name: "Brown", value: "#A52A2A" },
-    { name: "Navy", value: "#000080" },
-    { name: "Beige", value: "#F5F5DC" },
-  ];
+  const colors = useMemo(() => [
+    { name: "Black", displayName: translate("Black") || "Black", value: "#000000" },
+    { name: "Yellow", displayName: translate("Yellow") || "Yellow", value: "#FFD700" },
+    { name: "Gold", displayName: translate("Gold") || "Gold", value: "#FFD700", gradient: "linear-gradient(135deg, #FFD700 0%, #FFA500 100%)" },
+    { name: "Silver", displayName: translate("Silver") || "Silver", value: "#C0C0C0", gradient: "linear-gradient(135deg, #C0C0C0 0%, #E8E8E8 100%)" },
+    { name: "Purple", displayName: translate("Purple") || "Purple", value: "#800080" },
+    { name: "White", displayName: translate("White") || "White", value: "#FFFFFF", hasBorder: true },
+    { name: "Grey", displayName: translate("Grey") || "Grey", value: "#808080" },
+    { name: "Neutrals", displayName: translate("Neutrals") || "Neutrals", value: "multi", gradient: "linear-gradient(to bottom, #F5F5DC 0%, #DEB887 33%, #F5F5DC 66%)" },
+    { name: "Red", displayName: translate("Red") || "Red", value: "#FF0000" },
+    { name: "Blue", displayName: translate("Blue") || "Blue", value: "#0000FF" },
+    { name: "Green", displayName: translate("Green") || "Green", value: "#008000" },
+    { name: "Orange", displayName: translate("Orange") || "Orange", value: "#FFA500" },
+    { name: "Pink", displayName: translate("Pink") || "Pink", value: "#FFC0CB" },
+    { name: "Brown", displayName: translate("Brown") || "Brown", value: "#A52A2A" },
+    { name: "Navy", displayName: translate("Navy") || "Navy", value: "#000080" },
+    { name: "Beige", displayName: translate("Beige") || "Beige", value: "#F5F5DC" },
+  ], [translations]);
 
   const toggleColor = (colorName: string) => {
     setSelectedColors((prev) =>
@@ -247,14 +252,14 @@ export default function FilterDrawer({
     return 0;
   };
 
-  const filterSections = [
-    { key: "category", label: "CATEGORY" },
-    { key: "brand", label: "BRAND" },
-    { key: "colour", label: "COLOUR" },
-    { key: "price", label: "PRICE" },
-    { key: "sale", label: "SALE", isRed: true },
-    { key: "promotion", label: "PROMOTION" },
-  ];
+  const filterSections = useMemo(() => [
+    { key: "category", label: translate("CATEGORY") || "CATEGORY" },
+    { key: "brand", label: translate("BRAND") || "BRAND" },
+    { key: "colour", label: translate("COLOUR") || "COLOUR" },
+    { key: "price", label: translate("PRICE") || "PRICE" },
+    { key: "sale", label: translate("SALE") || "SALE", isRed: true },
+    { key: "promotion", label: translate("PROMOTION") || "PROMOTION" },
+  ], [translations]);
 
   return (
     <>
@@ -276,7 +281,7 @@ export default function FilterDrawer({
         {/* Header */}
         <div className="px-6 py-4 flex items-center justify-between sticky top-0 z-10 bg-branco">
           <h2 className="text-xl font-medium text-preto ">
-            All Filters
+            {translate("All Filters") || "All Filters"}
           </h2>
           <button
             onClick={onClose}
@@ -315,16 +320,16 @@ export default function FilterDrawer({
                   {section.key === "category" ? (
                     <>
                       <div className="text-sm text-preto py-1 cursor-pointer hover:text-hina transition">
-                        Clothing
+                        {translate("Clothing") || "Clothing"}
                       </div>
                       <div className="text-sm text-preto py-1 cursor-pointer hover:text-hina transition">
-                        Bags
+                        {translate("Bags") || "Bags"}
                       </div>
                       <div className="text-sm text-preto py-1 cursor-pointer hover:text-hina transition">
-                        Jewellery
+                        {translate("Jewellery") || "Jewellery"}
                       </div>
                       <div className="text-sm text-preto py-1 cursor-pointer hover:text-hina transition">
-                        Shoes
+                        {translate("Shoes") || "Shoes"}
                       </div>
                     </>
                   ) : section.key === "brand" ? (
@@ -334,7 +339,7 @@ export default function FilterDrawer({
                         <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-(--color-nimbus)" />
                         <input
                           type="text"
-                          placeholder="Search 17 brands"
+                          placeholder={translate("Search brands") || "Search brands"}
                           value={brandSearch}
                           onChange={(e) => setBrandSearch(e.target.value)}
                           className="w-full pl-10 pr-10 py-2 border-b border-(--color-platinum) text-sm text-preto focus:outline-none focus:border-(--color-hina)"
@@ -402,7 +407,7 @@ export default function FilterDrawer({
                                   isSelected ? "text-preto" : "text-(--color-emperor)"
                                 }`}
                               >
-                                {color.name}
+                                {color.displayName}
                               </span>
                             </button>
                           );
@@ -563,7 +568,7 @@ export default function FilterDrawer({
                                   option.enabled ? "text-preto" : "text-(--color-nimbus)"
                                 }`}
                               >
-                                {option.label}
+                                {option.displayLabel}
                               </span>
                             </label>
                           );
@@ -583,7 +588,7 @@ export default function FilterDrawer({
                             onChange={() => setSelectedPromotion(!selectedPromotion)}
                             className="w-4 h-4 rounded border-(--color-silver) accent-(--color-preto)"
                           />
-                          <span className="text-sm text-preto">20% off</span>
+                          <span className="text-sm text-preto">{translate("20% off") || "20% off"}</span>
                         </label>
                       </div>
                     </>
@@ -604,7 +609,7 @@ export default function FilterDrawer({
             onClick={onClose}
             className="py-3 px-6 rounded-lg text-sm font-normal transition-colors bg-(--color-preto) text-(--color-whiteSmoke) hover:bg-(--color-emperor)"
           >
-            Show {resultCount}+ Results
+            {translate("Show") || "Show"} {resultCount}+ {translate("Results") || "Results"}
           </button>
         </div>
       </div>

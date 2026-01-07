@@ -82,13 +82,16 @@ export default function TrendingPage() {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState<boolean>(false);
   const sortDropdownRef = useRef<HTMLDivElement>(null);
 
-  const sortOptions = [
-    { value: "our-picks", label: "Our Picks" },
-    { value: "newest", label: "Newest first" },
-    { value: "price-high", label: "Price: high to low" },
-    { value: "price-low", label: "Price: low to high" },
-    { value: "sale-high", label: "Sale: high to low" },
-  ];
+  const translate = (text?: string) =>
+    text ? translations.productCopy[text] ?? text : text;
+
+  const sortOptions = useMemo(() => [
+    { value: "our-picks", label: translate("Our Picks") || "Our Picks" },
+    { value: "newest", label: translate("Newest first") || "Newest first" },
+    { value: "price-high", label: translate("Price: high to low") || "Price: high to low" },
+    { value: "price-low", label: translate("Price: low to high") || "Price: low to high" },
+    { value: "sale-high", label: translate("Sale: high to low") || "Sale: high to low" },
+  ], [translations]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -251,7 +254,7 @@ export default function TrendingPage() {
                   : " border border-gray-300 text-(--color-preto) hover:bg-gray-50"
               }`}
             >
-              All Filters
+              {translate("All Filters") || "All Filters"}
             </button>
             {availableFilters.map((filter) => (
               <button
@@ -263,7 +266,7 @@ export default function TrendingPage() {
                     : " border border-gray-300 text-(--color-preto) hover:bg-gray-50"
                 }`}
               >
-                {filter}
+                {translate(filter) || filter}
               </button>
             ))}
           </div>
@@ -274,7 +277,7 @@ export default function TrendingPage() {
               onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
               className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-sm text-gray-700 hover:bg-gray-200 transition-colors"
             >
-              <span>Sort by</span>
+              <span>{translate("Sort by") || "Sort by"}</span>
               <FiChevronDown
                 className={`w-4 h-4 transition-transform ${
                   isSortDropdownOpen ? "rotate-180" : ""

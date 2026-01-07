@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState, useEffect } from "react";
 import { ProductDetail, productsById } from "@/constants/products";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { useRouter } from "next/navigation";
+import ProductDetailDrawer from "./ProductDetailDrawer";
+import ProductCard from "@/components/department/ProductCard";
+import { Product } from "@/constants/department";
 
 const fontStack =
   "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)";
@@ -13,6 +16,9 @@ const fontStack =
 export default function StorePage({ product }: { product: ProductDetail }) {
   const { translations } = useLanguage();
   const router = useRouter();
+  const [isProductDetailDrawerOpen, setIsProductDetailDrawerOpen] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const bannerRef = useRef<HTMLDivElement>(null);
   
   const translate = (text?: string) =>
     text ? translations.productCopy[text] ?? text : text;
@@ -62,7 +68,7 @@ export default function StorePage({ product }: { product: ProductDetail }) {
   const secondImage = product.hoverImage || product.images?.[0] || product.image;
   const thirdImage = product.images?.[1] || product.hoverImage || product.image;
 
-  // Get related products from the same brand
+  // Get related products from the same brand - converted to Product type for ProductCard
   const relatedProducts = useMemo(() => {
     const allProducts = Object.values(productsById);
     return allProducts
@@ -70,10 +76,19 @@ export default function StorePage({ product }: { product: ProductDetail }) {
         const pBrand = parseBrand(p.title);
         return pBrand === brandName && p.id !== product.id;
       })
-      .slice(0, 4); // Get exactly 4 related products for 2x2 grid
+      .slice(0, 4) // Get exactly 4 related products
+      .map((p): Product => ({
+        id: p.id,
+        title: p.title,
+        subtitle: p.subtitle,
+        price: p.price || p.discountedPrice || p.originalPrice,
+        image: p.image,
+        hoverImage: p.hoverImage,
+        badge: p.badge,
+      }));
   }, [product.id, brandName]);
 
-  // Get best sellers from the same brand
+  // Get best sellers from the same brand - converted to Product type for ProductCard
   const bestSellers = useMemo(() => {
     const allProducts = Object.values(productsById);
     return allProducts
@@ -81,10 +96,19 @@ export default function StorePage({ product }: { product: ProductDetail }) {
         const pBrand = parseBrand(p.title);
         return pBrand === brandName && p.id !== product.id;
       })
-      .slice(0, 8); // Get up to 8 best sellers
+      .slice(0, 8) // Get up to 8 best sellers
+      .map((p): Product => ({
+        id: p.id,
+        title: p.title,
+        subtitle: p.subtitle,
+        price: p.price || p.discountedPrice || p.originalPrice,
+        image: p.image,
+        hoverImage: p.hoverImage,
+        badge: p.badge,
+      }));
   }, [product.id, brandName]);
 
-  // Get recommendations from the same brand
+  // Get recommendations from the same brand - converted to Product type for ProductCard
   const recommendations = useMemo(() => {
     const allProducts = Object.values(productsById);
     return allProducts
@@ -92,27 +116,83 @@ export default function StorePage({ product }: { product: ProductDetail }) {
         const pBrand = parseBrand(p.title);
         return pBrand === brandName && p.id !== product.id;
       })
-      .slice(4, 12); // Get different products for recommendations
+      .slice(4, 12) // Get different products for recommendations
+      .map((p): Product => ({
+        id: p.id,
+        title: p.title,
+        subtitle: p.subtitle,
+        price: p.price || p.discountedPrice || p.originalPrice,
+        image: p.image,
+        hoverImage: p.hoverImage,
+        badge: p.badge,
+      }));
   }, [product.id, brandName]);
 
   // Refs for carousel scrolling
   const bestSellersRef = useRef<HTMLDivElement>(null);
   const recommendationsRef = useRef<HTMLDivElement>(null);
+  
+  // State to track scroll positions
+  const [bestSellersScroll, setBestSellersScroll] = useState({ canScrollLeft: false, canScrollRight: false });
+  const [recommendationsScroll, setRecommendationsScroll] = useState({ canScrollLeft: false, canScrollRight: false });
 
-  const scrollCarousel = (ref: React.RefObject<HTMLDivElement> | React.MutableRefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
+  // Check scroll position for carousels
+  const checkScrollPosition = (ref: React.RefObject<HTMLDivElement> | React.MutableRefObject<HTMLDivElement | null>, setScrollState: React.Dispatch<React.SetStateAction<{ canScrollLeft: boolean; canScrollRight: boolean }>>) => {
+    if (ref?.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = ref.current;
+      setScrollState({
+        canScrollLeft: scrollLeft > 0,
+        canScrollRight: scrollLeft < scrollWidth - clientWidth - 1
+      });
+    }
+  };
+
+  // Update scroll states on mount and scroll
+  useEffect(() => {
+    const handleBestSellersScroll = () => checkScrollPosition(bestSellersRef, setBestSellersScroll);
+    const handleRecommendationsScroll = () => checkScrollPosition(recommendationsRef, setRecommendationsScroll);
+
+    if (bestSellersRef.current) {
+      bestSellersRef.current.addEventListener('scroll', handleBestSellersScroll);
+      handleBestSellersScroll(); // Initial check
+    }
+    if (recommendationsRef.current) {
+      recommendationsRef.current.addEventListener('scroll', handleRecommendationsScroll);
+      handleRecommendationsScroll(); // Initial check
+    }
+
+    // Also check on resize
+    window.addEventListener('resize', handleBestSellersScroll);
+    window.addEventListener('resize', handleRecommendationsScroll);
+
+    return () => {
+      if (bestSellersRef.current) {
+        bestSellersRef.current.removeEventListener('scroll', handleBestSellersScroll);
+      }
+      if (recommendationsRef.current) {
+        recommendationsRef.current.removeEventListener('scroll', handleRecommendationsScroll);
+      }
+      window.removeEventListener('resize', handleBestSellersScroll);
+      window.removeEventListener('resize', handleRecommendationsScroll);
+    };
+  }, [bestSellers.length, recommendations.length]);
+
+  const scrollCarousel = (ref: React.RefObject<HTMLDivElement> | React.MutableRefObject<HTMLDivElement | null>, direction: 'left' | 'right', setScrollState: React.Dispatch<React.SetStateAction<{ canScrollLeft: boolean; canScrollRight: boolean }>>) => {
     if (ref?.current) {
       const scrollAmount = 300;
       ref.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
       });
+      // Update scroll state after a short delay to allow scroll to complete
+      setTimeout(() => checkScrollPosition(ref, setScrollState), 100);
     }
   };
 
   return (
     <div style={{ fontFamily: fontStack }} className="min-h-screen bg-(--color-branco)">
       {/* Banner Section with Product Image and Heading */}
-      <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
+      <div ref={bannerRef} className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
         {mainImage && (
           <Image
             src={mainImage.src}
@@ -134,7 +214,11 @@ export default function StorePage({ product }: { product: ProductDetail }) {
       </div>
 
       {/* Navigation Header Bar */}
-      <div className=" border-b  bg-white border-(--color-platinum) sticky top-0 z-50">
+      <div 
+        ref={headerRef}
+        className="border-b bg-white border-(--color-platinum) relative"
+        data-store-header
+      >
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between py-4">
             {/* Left Side - Logo and Brand Name */}
@@ -161,73 +245,48 @@ export default function StorePage({ product }: { product: ProductDetail }) {
               >
                 {translate("HOME") || "HOME"}
               </Link>
-              <Link
-                href={`/product-detail/${product.id}`}
+              <button
+                onClick={() => setIsProductDetailDrawerOpen(true)}
                 className="text-[14px] font-medium text-(--color-preto) hover:text-(--color-preto) transition-colors"
               >
                 {translate("PRODUCT DETAILS") || "PRODUCT DETAILS"}
-              </Link>
-              <Link
-                href="#"
-                className="text-[14px] font-medium text-(--color-preto) hover:text-(--color-preto) transition-colors"
-              >
-                {translate("ABOUT") || "ABOUT"}
-              </Link>
-              <Link
-                href="#"
-                className="text-[14px] font-medium text-(--color-preto) hover:text-(--color-preto) transition-colors"
-              >
-                {translate("CONTACT") || "CONTACT"}
-              </Link>
+              </button>
             </nav>
 
            
           </div>
         </div>
+
+        {/* Product Detail Drawer - Positioned relative to header */}
+        {isProductDetailDrawerOpen && (
+          <ProductDetailDrawer
+            isOpen={isProductDetailDrawerOpen}
+            onClose={() => setIsProductDetailDrawerOpen(false)}
+            product={product}
+          />
+        )}
       </div>
 
       {/* Exclusive Collection Banner */}
       <div className="bg-[#222] py-6 md:py-8">
         <div className="container mx-auto px-4 md:px-8">
-          <h2 className="text-[28px] md:text-[36px] font-bold text-(--color-branco) text-center uppercase tracking-wide">
-            {brandName} EXCLUSIVE COLLECTION
+            <h2 className="text-[28px] md:text-[36px] font-bold text-(--color-branco) text-center uppercase tracking-wide">
+            {brandName} {translate("EXCLUSIVE COLLECTION") || "EXCLUSIVE COLLECTION"}
           </h2>
         </div>
       </div>
 
-      {/* Related Products Gallery - 2x2 Square Grid */}
+      {/* Related Products Gallery - Using ProductCard */}
       {relatedProducts.length > 0 && (
         <div className="bg-(--color-whiteSmoke) py-12">
           <div className="container mx-auto px-4 md:px-8">
-            <div className="max-w-4xl mx-auto grid grid-cols-2 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
               {relatedProducts.map((relatedProduct) => (
-                <Link
+                <ProductCard
                   key={relatedProduct.id}
-                  href={`/product-detail/${relatedProduct.id}`}
-                  className="group"
-                >
-                  <div className="bg-(--color-branco) rounded-lg p-4 md:p-6 shadow-sm hover:shadow-md transition-shadow">
-                    <div className="relative w-full aspect-square mb-3 rounded overflow-hidden bg-(--color-shell)">
-                      {relatedProduct.image && (
-                        <Image
-                          src={relatedProduct.image.src}
-                          alt={translate(relatedProduct.title) ?? relatedProduct.title}
-                          fill
-                          sizes="(max-width: 768px) 50vw, 25vw"
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      )}
-                    </div>
-                    <h3 className="text-[12px] md:text-[14px] font-semibold text-(--color-preto) mb-1 line-clamp-2">
-                      {translate(relatedProduct.title) ?? relatedProduct.title}
-                    </h3>
-                    {relatedProduct.price && (
-                      <p className="text-[12px] md:text-[14px] text-(--color-preto) font-medium">
-                        {relatedProduct.price}
-                      </p>
-                    )}
-                  </div>
-                </Link>
+                  product={relatedProduct}
+                  showBadge={true}
+                />
               ))}
             </div>
           </div>
@@ -239,61 +298,44 @@ export default function StorePage({ product }: { product: ProductDetail }) {
         <div className="bg-(--color-branco) py-12">
           <div className="container mx-auto px-4 md:px-8">
             <h2 className="text-[28px] md:text-[32px] font-bold text-(--color-preto) mb-8">
-              Best Sellers from {brandName}
+              {translate("Best Sellers from") || "Best Sellers from"} {brandName}
             </h2>
             <div className="relative">
-              <button
-                onClick={() => scrollCarousel(bestSellersRef, 'left')}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
-                aria-label="Scroll left"
-              >
-                <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
+              {bestSellers.length > 2 && bestSellersScroll.canScrollLeft && (
+                <button
+                  onClick={() => scrollCarousel(bestSellersRef, 'left', setBestSellersScroll)}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
+                  aria-label="Scroll left"
+                >
+                  <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              )}
               <div
                 ref={bestSellersRef}
                 className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
               >
                 {bestSellers.map((bestSeller) => (
-                  <Link
-                    key={bestSeller.id}
-                    href={`/product-detail/${bestSeller.id}`}
-                    className="group flex-shrink-0 w-[200px] md:w-[240px]"
-                  >
-                    <div className="bg-(--color-branco) rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-                      <div className="relative w-full aspect-square mb-3 rounded overflow-hidden bg-(--color-shell)">
-                        {bestSeller.image && (
-                          <Image
-                            src={bestSeller.image.src}
-                            alt={translate(bestSeller.title) ?? bestSeller.title}
-                            fill
-                            sizes="200px"
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                        )}
-                      </div>
-                      <h3 className="text-[14px] font-semibold text-(--color-preto) mb-1 line-clamp-2">
-                        {translate(bestSeller.title) ?? bestSeller.title}
-                      </h3>
-                      {bestSeller.price && (
-                        <p className="text-[14px] text-(--color-preto) font-medium">
-                          {bestSeller.price}
-                        </p>
-                      )}
-                    </div>
-                  </Link>
+                  <div key={bestSeller.id} className="flex-shrink-0 w-[200px] md:w-[240px]">
+                    <ProductCard
+                      product={bestSeller}
+                      showBadge={true}
+                    />
+                  </div>
                 ))}
               </div>
-              <button
-                onClick={() => scrollCarousel(bestSellersRef, 'right')}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
-                aria-label="Scroll right"
-              >
-                <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+              {bestSellers.length > 2 && bestSellersScroll.canScrollRight && (
+                <button
+                  onClick={() => scrollCarousel(bestSellersRef, 'right', setBestSellersScroll)}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
+                  aria-label="Scroll right"
+                >
+                  <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -304,66 +346,48 @@ export default function StorePage({ product }: { product: ProductDetail }) {
         <div className="bg-(--color-branco) py-12 border-t border-(--color-platinum)">
           <div className="container mx-auto px-4 md:px-8">
             <h2 className="text-[28px] md:text-[32px] font-bold text-(--color-preto) mb-8">
-              Recommendations from {brandName}
+              {translate("Recommendations from") || "Recommendations from"} {brandName}
             </h2>
             <div className="relative">
-              <button
-                onClick={() => scrollCarousel(recommendationsRef, 'left')}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
-                aria-label="Scroll left"
-              >
-                <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
+              {recommendations.length > 2 && recommendationsScroll.canScrollLeft && (
+                <button
+                  onClick={() => scrollCarousel(recommendationsRef, 'left', setRecommendationsScroll)}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
+                  aria-label="Scroll left"
+                >
+                  <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              )}
               <div
                 ref={recommendationsRef}
                 className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
               >
                 {recommendations.map((recommendation) => (
-                  <Link
-                    key={recommendation.id}
-                    href={`/product-detail/${recommendation.id}`}
-                    className="group flex-shrink-0 w-[200px] md:w-[240px]"
-                  >
-                    <div className="bg-(--color-branco) rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-                      <div className="relative w-full aspect-square mb-3 rounded overflow-hidden bg-(--color-shell)">
-                        {recommendation.image && (
-                          <Image
-                            src={recommendation.image.src}
-                            alt={translate(recommendation.title) ?? recommendation.title}
-                            fill
-                            sizes="200px"
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                        )}
-                      </div>
-                      <h3 className="text-[14px] font-semibold text-(--color-preto) mb-1 line-clamp-2">
-                        {translate(recommendation.title) ?? recommendation.title}
-                      </h3>
-                      {recommendation.price && (
-                        <p className="text-[14px] text-(--color-preto) font-medium">
-                          {recommendation.price}
-                        </p>
-                      )}
-                    </div>
-                  </Link>
+                  <div key={recommendation.id} className="flex-shrink-0 w-[200px] md:w-[240px]">
+                    <ProductCard
+                      product={recommendation}
+                      showBadge={true}
+                    />
+                  </div>
                 ))}
               </div>
-              <button
-                onClick={() => scrollCarousel(recommendationsRef, 'right')}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
-                aria-label="Scroll right"
-              >
-                <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+              {recommendations.length > 2 && recommendationsScroll.canScrollRight && (
+                <button
+                  onClick={() => scrollCarousel(recommendationsRef, 'right', setRecommendationsScroll)}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
+                  aria-label="Scroll right"
+                >
+                  <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
             </div>
           </div>
         </div>
       )}
-
      
     </div>
   );
