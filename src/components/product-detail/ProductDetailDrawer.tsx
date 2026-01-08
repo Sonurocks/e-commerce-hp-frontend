@@ -69,20 +69,24 @@ export default function ProductDetailDrawer({
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
   return (
     <>
       {/* Mobile Backdrop - Only on mobile */}
-      <div 
-        className="fixed inset-0 bg-black/50 z-[99] lg:hidden"
-        onClick={onClose}
-      />
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-[99] lg:hidden transition-opacity duration-300"
+          onClick={onClose}
+        />
+      )}
       
-      {/* Drawer Container - Opens horizontally below header */}
+      {/* Drawer Container - Opens horizontally below navigation */}
       <div
         ref={drawerRef}
-        className="fixed lg:absolute top-0 lg:top-full left-0 w-full h-full lg:h-auto bg-(--color-branco) shadow-lg border-t border-gray-200 z-[100] lg:z-[100] overflow-y-auto lg:max-h-[80vh]"
+        className={`fixed lg:absolute top-0 lg:top-0 left-0 w-full h-full lg:h-auto bg-(--color-branco) shadow-lg border-t border-gray-200 z-[100] lg:z-[50] overflow-y-auto lg:max-h-[80vh] transition-all duration-300 ease-in-out ${
+          isOpen 
+            ? 'translate-y-0 lg:translate-y-0 lg:opacity-100 lg:pointer-events-auto' 
+            : 'translate-y-full lg:translate-y-0 lg:opacity-0 lg:pointer-events-none lg:hidden'
+        }`}
         style={{ fontFamily: fontStack }}
         onClick={(e) => e.stopPropagation()}
         onMouseEnter={(e) => e.stopPropagation()}
