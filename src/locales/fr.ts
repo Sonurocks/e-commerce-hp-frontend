@@ -336,7 +336,6 @@ const frenchBundle: TranslationBundle = {
     "Sale: high to low": "Promotion: décroissant",
     "20% off": "20% de réduction",
     "Bags": "Sacs",
-    "Clothing": "Vêtements",
     "Shoes": "Chaussures",
     "Jewellery": "Bijoux",
     "Accessories": "Accessoires",

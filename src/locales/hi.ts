@@ -334,7 +334,6 @@ const hindiBundle: TranslationBundle = {
     "Sale: high to low": "सेल: उच्च से निम्न",
     "20% off": "20% छूट",
     "Bags": "बैग",
-    "Clothing": "कपड़े",
     "Shoes": "जूते",
     "Jewellery": "ज्वेलरी",
     "Accessories": "एक्सेसरीज़",

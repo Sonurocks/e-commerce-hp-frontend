@@ -334,7 +334,6 @@ const urduBundle: TranslationBundle = {
     "Sale: high to low": "سیل: زیادہ سے کم",
     "20% off": "20% رعایت",
     "Bags": "بیگز",
-    "Clothing": "کپڑے",
     "Shoes": "جوتے",
     "Jewellery": "زیورات",
     "Accessories": "ایکسسوریز",

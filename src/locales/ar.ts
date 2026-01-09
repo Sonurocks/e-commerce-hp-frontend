@@ -333,7 +333,6 @@ const arabicBundle: TranslationBundle = {
     "Sale: high to low": "التخفيضات: من الأعلى إلى الأدنى",
     "20% off": "خصم 20%",
     "Bags": "حقائب",
-    "Clothing": "ملابس",
     "Shoes": "أحذية",
     "Jewellery": "مجوهرات",
     "Accessories": "إكسسوارات",
