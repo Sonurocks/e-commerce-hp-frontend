@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { useRouter } from "next/navigation";
-import ProductDetailDrawer from "./ProductDetailDrawer";
+
 import VendorDetailDrawer from "./VendorDetailDrawer";
 import ProductCard from "@/components/department/ProductCard";
 import { Product } from "@/constants/department";
@@ -293,15 +293,7 @@ export default function StorePage({ product }: { product: ProductDetail }) {
             >
               {translate("HOME") || "HOME"}
             </Link>
-            <button
-              onClick={() => {
-                setIsVendorDetailDrawerOpen(false);
-                setIsProductDetailDrawerOpen(true);
-              }}
-              className="text-[14px] font-medium text-white hover:text-gray-300 transition-colors"
-            >
-              {translate("PRODUCT DETAILS") || "PRODUCT DETAILS"}
-            </button>
+          
             <button
               onClick={() => {
                 setIsProductDetailDrawerOpen(false);
@@ -311,9 +303,9 @@ export default function StorePage({ product }: { product: ProductDetail }) {
             >
               {translate("VENDOR DETAILS") || "VENDOR DETAILS"}
             </button>
-            <button className="text-[14px] font-medium text-white hover:text-gray-300 transition-colors">
+            {/* <button className="text-[14px] font-medium text-white hover:text-gray-300 transition-colors">
               {translate("Get Quote") || "Get Quote"}
-            </button>
+            </button> */}
             <button className="text-[14px] font-medium text-white hover:text-gray-300 transition-colors">
               {translate("Call Now") || "Call Now"}
             </button>
@@ -360,11 +352,7 @@ export default function StorePage({ product }: { product: ProductDetail }) {
 
           {/* Product Detail Drawer - Positioned relative to navigation */}
           <div className="relative">
-            <ProductDetailDrawer
-              isOpen={isProductDetailDrawerOpen}
-              onClose={() => setIsProductDetailDrawerOpen(false)}
-              product={product}
-            />
+            
             <VendorDetailDrawer
               isOpen={isVendorDetailDrawerOpen}
               onClose={() => setIsVendorDetailDrawerOpen(false)}
