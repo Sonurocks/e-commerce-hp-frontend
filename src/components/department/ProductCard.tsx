@@ -83,10 +83,10 @@ export default function ProductCard({
             {localizedTitle ?? product.title}
           </h3>
           {localizedSubtitle && (
-            <p className="text-[12px] text-preto">{localizedSubtitle}</p>
+            <p className="text-[13px] text-preto">{localizedSubtitle}</p>
           )}
           {product.price && (
-            <p className="text-sm text-preto mt-3">{product.price}</p>
+            <p className="text-sm font-semibold  text-preto mt-3">{product.price}</p>
           )}
         </div>
       </article>

@@ -332,6 +332,7 @@ const Header = () => {
               currentPromo.type === "generic"
                 ? "bg-gray-200 dark:bg-(--colorLightGrey)"
                 : "bg-black dark:bg-black"
+                
             } ${isScrolled ? "hidden" : ""}`}
           >
             <div className="mx-auto max-w-screen-2xl px-2 sm:px-4 relative">
@@ -667,8 +668,9 @@ const Header = () => {
             {/* Mobile & Tablet Layout */}
             <div className="xl:hidden">
               {/* First Row - Primary Navigation */}
-              <div className="flex w-full flex-wrap items-center gap-3 py-4">
-                <div className="flex flex-1 items-center gap-2">
+              <div className="flex w-full items-center justify-between gap-3 py-4">
+                {/* Left - Menu + Logo */}
+                <div className="flex items-center gap-3 flex-shrink">
                   <button
                     type="button"
                     onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -681,13 +683,10 @@ const Header = () => {
                       <FiMenu className="h-5 w-5" />
                     )}
                   </button>
-                </div>
 
-                {/* Center - Logo */}
-                <div className="flex flex-1 justify-center">
                   <Link href={logoConfig.header.href || headerConfig.logo.href}>
                     {logoConfig.header.type === "image" && logoConfig.header.imageUrl ? (
-                      <div className="relative w-[200px] h-[20px] sm:w-[290px] sm:h-[26px]">
+                      <div className="relative w-[160px] h-[20px] sm:w-[220px] sm:h-[24px]">
                         <Image
                           src={logoConfig.header.imageUrl}
                           alt={logoConfig.header.alt || "Logo"}
@@ -705,26 +704,28 @@ const Header = () => {
                 </div>
 
                 {/* Right - User Icons */}
-                <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
+                <div className="flex items-center justify-end gap-2 sm:gap-3 flex-shrink-0">
                   {/* Country Flag */}
                   <button
                     ref={flagButtonRefMobile}
                     onClick={() => setIsLanguageModalOpen(true)}
-                    className="w-6 h-6 rounded-full overflow-hidden border border-gray-300 dark:border-platinum hover:border-gray-400 dark:hover:border-silver transition cursor-pointer relative"
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-white border border-gray-300 dark:bg-(--colorWhite) dark:border-platinum hover:border-gray-400 dark:hover:border-silver shadow-sm transition cursor-pointer relative"
                     aria-label="Select language"
                   >
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="w-full h-full"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      {/* India Flag */}
-                      <rect width="24" height="8" fill="#FF9933" />
-                      <rect y="8" width="24" height="8" fill="#FFFFFF" />
-                      <rect y="16" width="24" height="8" fill="#138808" />
-                      <circle cx="12" cy="12" r="2.5" fill="#000080" />
-                    </svg>
+                    <div className="w-6 h-6 rounded-full overflow-hidden">
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="w-full h-full"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        {/* India Flag */}
+                        <rect width="24" height="8" fill="#FF9933" />
+                        <rect y="8" width="24" height="8" fill="#FFFFFF" />
+                        <rect y="16" width="24" height="8" fill="#138808" />
+                        <circle cx="12" cy="12" r="2.5" fill="#000080" />
+                      </svg>
+                    </div>
                   </button>
                   <button
                     onClick={() => setIsProfileModalOpen(true)}

@@ -1093,6 +1093,25 @@ select option:checked {
     grid-template-columns: 1fr !important;
   }
 
+  /* Trending Grid text visibility on mobile */
+  section.my-10 .grid > div > div.mt-4,
+  section.my-10 .grid > div > div.mt-4 p,
+  section.my-10 .grid > div.flex-col > div.mt-4,
+  section.my-10 .grid > div.flex-col > div.mt-4 p {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #000 !important;
+    position: static !important;
+    width: 100% !important;
+    margin-top: 1rem !important;
+  }
+  
+  /* Ensure gap is visible on mobile for trending grid */
+  section.my-10 .grid.gap-8 {
+    gap: 2rem !important;
+    row-gap: 2rem !important;
+  }
   
   /* Optimize product image size for mobile */
   article.group.h-full.flex.flex-col > div.relative.w-full img,

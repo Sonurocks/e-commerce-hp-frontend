@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import {
   DownloadAppBanner,
   EditorialFeature,
@@ -60,12 +61,21 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
       <section className="my-6">
         <SectionHeader
           title={departmentCopy.featured.title}
-          cta={{ href: `/shop?section=featured&department=${department}`, label: departmentCopy.featured.ctaLabel }}
         />
-        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+        <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {featuredPromoCardsByDept[department].map((product) => (
-            <ProductCard key={product.id} product={product} showBadge />
+            <div key={product.id} className="flex-shrink-0 w-[280px] md:w-auto">
+              <ProductCard product={product} showBadge />
+            </div>
           ))}
+        </div>
+        <div className="flex justify-center mt-6">
+          <Link
+            href={`/shop?section=featured&department=${department}`}
+            className="border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors"
+          >
+            Shop now
+          </Link>
         </div>
       </section>
 
@@ -80,32 +90,48 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
       <section className="my-10">
         <SectionHeader
           title={departmentCopy.newIn.title}
-          cta={{ href: `/shop?section=newIn&department=${department}`, label: departmentCopy.newIn.ctaLabel }}
         />
-        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+        <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {newInProductsByDept[department].map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              showBadge={!!product.badge}
-            />
+            <div key={product.id} className="flex-shrink-0 w-[280px] md:w-auto">
+              <ProductCard
+                product={product}
+                showBadge={!!product.badge}
+              />
+            </div>
           ))}
+        </div>
+        <div className="flex justify-center mt-6">
+          <Link
+            href={`/shop?section=newIn&department=${department}`}
+            className="border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors"
+          >
+            Shop now
+          </Link>
         </div>
       </section>
 
       <section className="my-10">
         <SectionHeader
           title={departmentCopy.party.title}
-          cta={{ href: `/shop?section=party&department=${department}`, label: departmentCopy.party.ctaLabel }}
         />
-        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+        <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {partyPlusOnesByDept[department].map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              showBadge={!!product.badge}
-            />
+            <div key={product.id} className="flex-shrink-0 w-[280px] md:w-auto">
+              <ProductCard
+                product={product}
+                showBadge={!!product.badge}
+              />
+            </div>
           ))}
+        </div>
+        <div className="flex justify-center mt-6">
+          <Link
+            href={`/shop?section=party&department=${department}`}
+            className="border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors"
+          >
+            Shop now
+          </Link>
         </div>
       </section>
 
