@@ -14,7 +14,7 @@ export default function TrendingGrid({ items }: { items: Product[] }) {
 
   return (
     <section className="my-10">
-      <h3 className="text-[20px] text-(--color-preto) mb-10">{heading}</h3>
+      <h3 className="text-[22px] font-medium text-(--color-preto) mb-10">{heading}</h3>
       <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-8 md:gap-6">
         {items.map((t) => (
           <div key={t.id} className="flex flex-col">
@@ -29,7 +29,7 @@ export default function TrendingGrid({ items }: { items: Product[] }) {
                 />
               </div>
             </Link>
-            <div className="mt-4 text-left" style={{ display: 'block', visibility: 'visible', opacity: 1, position: 'static', zIndex: 1 }}>
+            <div className="mt-2 md:mt-4 text-left" style={{ display: 'block', visibility: 'visible', opacity: 1, position: 'static', zIndex: 1 }}>
               <p className="text-sm font-normal text-preto block" style={{ color: '#000', display: 'block', visibility: 'visible', opacity: 1 }}>
                 {translateTitle(t.title)}
               </p>

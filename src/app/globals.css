@@ -1014,18 +1014,74 @@ select option:checked {
   }
 
   
-  /* Target main containers with large padding on mobile */
-  main.container.mx-auto[class*="px-"] {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+  /* Target main containers with large padding on mobile - align with header */
+  main.container.mx-auto[class*="px-"],
+  main.container.mx-auto {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
   }
   
-  /* Specific targeting for Department Landing */
-  main.container.mx-auto {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+  /* Ensure header and main sections align on mobile */
+  header .mx-auto.max-w-screen-2xl,
+  header > div > div.mx-auto {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
   }
-
+  
+  /* Align both header rows on mobile - ensure consistent padding */
+  header div[class*="xl:hidden"] > div:first-child,
+  header div[class*="xl:hidden"] > div:last-child > div:first-child {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* Ensure all sections align with header on mobile */
+  main section[class*="px-"],
+  main section.py-12,
+  main section.my-8,
+  main section.my-10,
+  main section.my-6,
+  main section.my-12,
+  main section.my-16 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* HelpCards section alignment */
+  section.py-12.px-2 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* EditorialFeature section alignment */
+  section[class*="px-4"][class*="md:px-8"] {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* HeroBanner section alignment - ensure full-width images have proper container padding */
+  section.my-16[class*="grid"],
+  section.my-12 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* HeroBanner grid items - remove extra padding from inner divs on mobile */
+  section.my-16[class*="grid"] > div {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* HeroBanner text content alignment - remove left padding on mobile */
+  section.my-16[class*="grid"] > div.pl-16 {
+    padding-left: 0 !important;
+  }
+  
+  /* TrendingGrid section alignment */
+  section.my-10 > div {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 
   /* Target search input in drawer */
   div[class*="fixed"][class*="top-0"] input[type="text"],
@@ -1038,15 +1094,15 @@ select option:checked {
   /* Search drawer container padding - reduce on mobile */
   div[class*="fixed"][class*="top-0"] .container.mx-auto,
   div[class*="z-\[100\]"] .container.mx-auto {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
   }
   
   /* Search drawer inner padding */
   div[class*="fixed"][class*="top-0"] .px-\[48px\],
   div[class*="z-\[100\]"] .px-\[48px\] {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
   }
 
   /* Prevent horizontal scrolling */
@@ -1062,8 +1118,8 @@ select option:checked {
   .max-w-7xl,
   .max-w-6xl {
     max-width: 100% !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
   }
 
   /* Product card spacing on mobile */
@@ -1278,8 +1334,8 @@ main.container.mx-auto {
   main.container.mx-auto[class*="px-"],
   main.container.mx-auto {
     max-width: 100% !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    padding-left: 0.275rem!important;
+    padding-right: 0.275rem !important;
   }
 }
 
@@ -1310,8 +1366,8 @@ main.container.mx-auto {
   .container.mx-auto.px-8,
   .container.mx-auto[class*="px-"] {
     max-width: 100% !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    padding-left: 0.275rem !important;
+    padding-right: 0.275rem !important;
   }
 }
 
@@ -1339,8 +1395,8 @@ main.container.mx-auto {
   .site-footer > div.mx-auto.max-w-container,
   .site-footer > div[class*="mx-auto"][class*="max-w-container"] {
     max-width: 100% !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    padding-left: 0.275rem !important;
+    padding-right: 0.275rem !important;
   }
 }
 

@@ -50,16 +50,12 @@ export default function ProductCard({
               <GoHeart className="w-5 h-5 text-black dark:text-black" strokeWidth={1.0} />
             )}
           </button>
-          {showBadge && isImageBadge && (
-            <div className="absolute top-2 left-2 z-10">
-              <div className="relative bg-(--color-red) px-2 py-1 rounded-md flex items-center gap-1">
-               
-                <p className="text-[11px] text-white font-medium">
-                  {localizedBadge}
+          {showBadge && isImageBadge && localizedBadge && (
+            <div className="absolute top-0 left-0 z-10">
+              <div className="bg-red-600 px-4 py-1.5 flex items-center justify-center">
+                <p className="text-xs text-white font-bold">
+                  - {localizedBadge.replace(/[^0-9]/g, '')}%
                 </p>
-                <div className="absolute bottom-0 left-3 transform translate-y-full">
-                  <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-(--color-red)"></div>
-                </div>
               </div>
             </div>
           )}

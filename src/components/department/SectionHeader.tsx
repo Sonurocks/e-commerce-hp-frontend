@@ -10,7 +10,7 @@ export default function SectionHeader({
 }) {
   return (
     <div className="flex items-center justify-between mb-5">
-      <h2 className="text-[18px] font-medium text-(--theme-text)">
+      <h2 className="text-[22px] font-medium text-(--theme-text)">
         {title}
       </h2>
       {cta && (

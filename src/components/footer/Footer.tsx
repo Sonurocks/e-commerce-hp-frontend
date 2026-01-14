@@ -103,7 +103,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section: Legal and Copyright */}
-        <div className="border-t border-white dark:border-platinum pt-8 mt-8" style={{ borderColor: 'var(--theme-border, var(--color-platinum, #ddd))' }}>
+        <div className="md:border-t border-white dark:border-platinum pt-8 mt-8" style={{ borderColor: 'var(--theme-border, var(--color-platinum, #ddd))' }}>
           <div className="flex flex-col space-y-4">
             <div className="flex flex-wrap gap-6 text-footer-heading">
               {legalLinks.map((link, index) => (
@@ -114,7 +114,7 @@ const Footer = () => {
             </div>
             <div className="text-preto dark:text-white text-footer-text" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
               <p className="mb-2">{trademarkText}</p>
-              <p>{copyrightText}</p>
+              <p className="text-preto text-xs">{copyrightText}</p>
             </div>
           </div>
         </div>

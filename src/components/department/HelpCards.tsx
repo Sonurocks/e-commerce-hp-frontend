@@ -22,7 +22,7 @@ export default function HelpCards() {
                 size={28}
               />
             </div>
-            <h3 className="text-base font-base uppercase text-(--color-preto) mb-1">
+            <h3 className="text-base font-semibold uppercase text-(--color-preto) mb-1">
               {helpCopy.howToShop.title}
             </h3>
             <p className="text-normal font-base text-(--color-preto)">
@@ -41,7 +41,7 @@ export default function HelpCards() {
                 size={28}
               />
             </div>
-            <h3 className="text-base font-base uppercase text-(--color-preto) mb-1">
+            <h3 className="text-base font-semibold uppercase text-(--color-preto) mb-1">
               {helpCopy.faqs.title}
             </h3>
             <p className="text-normal font-base text-(--color-preto)">
@@ -69,7 +69,7 @@ export default function HelpCards() {
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
             </div>
-            <h3 className="text-base font-base uppercase  text-(--color-preto) mb-1">
+            <h3 className="text-base font-semibold uppercase  text-(--color-preto) mb-1">
               {helpCopy.needHelp.title}
             </h3>
             <p className="text-normal font-base  text-(--color-preto)">

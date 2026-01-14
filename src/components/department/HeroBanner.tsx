@@ -35,7 +35,7 @@ export default function HeroBanner({
   if (image2 && title2 && shopText2) {
     return (
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 my-16">
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full rounded-lg md:rounded-none overflow-hidden">
           <Image
             src={image.src}
             alt={primaryTitle || "Hero banner"}
@@ -64,7 +64,7 @@ export default function HeroBanner({
             </Link>
           </div>
         </div>
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full rounded-lg md:rounded-none overflow-hidden">
           <Image
             src={image2.src}
             alt={secondaryTitle || "Hero banner"}
@@ -120,13 +120,13 @@ export default function HeroBanner({
             {primaryCta}
           </Link>
         </div>
-        <div className="w-full">
+        <div className="w-full rounded-lg md:rounded-none overflow-hidden">
           <Image
             src={image.src}
             alt={primaryTitle || "Hero banner"}
             width={1200}
             height={600}
-            className="w-full h-auto rounded bg-gray-100"
+            className="w-full h-auto bg-gray-100"
           />
         </div>
       </section>
@@ -135,13 +135,13 @@ export default function HeroBanner({
 
   // Default layout for other departments
   return (
-    <section className="my-12">
+    <section className="my-12 rounded-lg md:rounded-none overflow-hidden">
       <Image
         src={image.src}
         alt="Hero banner"
         width={1200}
         height={600}
-        className="w-full h-auto rounded bg-gray-100"
+        className="w-full h-auto bg-gray-100"
       />
     </section>
   );

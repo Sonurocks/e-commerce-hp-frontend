@@ -376,13 +376,14 @@ export default function StorePage({ product }: { product: ProductDetail }) {
       {relatedProducts.length > 0 && (
         <div className="bg-(--color-whiteSmoke) py-12">
           <div className="w-full px-4 md:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {relatedProducts.map((relatedProduct) => (
-                <ProductCard
-                  key={relatedProduct.id}
-                  product={relatedProduct}
-                  showBadge={true}
-                />
+                <div key={relatedProduct.id} className="flex-shrink-0 w-[280px] md:w-auto">
+                  <ProductCard
+                    product={relatedProduct}
+                    showBadge={true}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -400,7 +401,7 @@ export default function StorePage({ product }: { product: ProductDetail }) {
               {bestSellers.length > 2 && bestSellersScroll.canScrollLeft && (
                 <button
                   onClick={() => scrollCarousel(bestSellersRef, 'left', setBestSellersScroll)}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
+                  className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
                   aria-label="Scroll left"
                 >
                   <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -410,10 +411,10 @@ export default function StorePage({ product }: { product: ProductDetail }) {
               )}
               <div
                 ref={bestSellersRef}
-                className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+                className="flex gap-4 pb-4 scrollbar-hide scroll-smooth md:gap-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', overflowX: 'auto' }}
               >
                 {bestSellers.map((bestSeller) => (
-                  <div key={bestSeller.id} className="flex-shrink-0 w-[200px] md:w-[240px]">
+                  <div key={bestSeller.id} className="flex-shrink-0 w-[280px] md:w-[240px]">
                     <ProductCard
                       product={bestSeller}
                       showBadge={true}
@@ -424,7 +425,7 @@ export default function StorePage({ product }: { product: ProductDetail }) {
               {bestSellers.length > 2 && bestSellersScroll.canScrollRight && (
                 <button
                   onClick={() => scrollCarousel(bestSellersRef, 'right', setBestSellersScroll)}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
+                  className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
                   aria-label="Scroll right"
                 >
                   <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -448,7 +449,7 @@ export default function StorePage({ product }: { product: ProductDetail }) {
               {recommendations.length > 2 && recommendationsScroll.canScrollLeft && (
                 <button
                   onClick={() => scrollCarousel(recommendationsRef, 'left', setRecommendationsScroll)}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
+                  className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
                   aria-label="Scroll left"
                 >
                   <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -458,10 +459,10 @@ export default function StorePage({ product }: { product: ProductDetail }) {
               )}
               <div
                 ref={recommendationsRef}
-                className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+                className="flex gap-4 pb-4 scrollbar-hide scroll-smooth md:gap-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', overflowX: 'auto' }}
               >
                 {recommendations.map((recommendation) => (
-                  <div key={recommendation.id} className="flex-shrink-0 w-[200px] md:w-[240px]">
+                  <div key={recommendation.id} className="flex-shrink-0 w-[280px] md:w-[240px]">
                     <ProductCard
                       product={recommendation}
                       showBadge={true}
@@ -472,7 +473,7 @@ export default function StorePage({ product }: { product: ProductDetail }) {
               {recommendations.length > 2 && recommendationsScroll.canScrollRight && (
                 <button
                   onClick={() => scrollCarousel(recommendationsRef, 'right', setRecommendationsScroll)}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
+                  className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--color-branco)/80 hover:bg-(--color-branco) rounded-full p-2 shadow-lg transition-all"
                   aria-label="Scroll right"
                 >
                   <svg className="w-6 h-6 text-(--color-hina)" fill="none" stroke="currentColor" viewBox="0 0 24 24">

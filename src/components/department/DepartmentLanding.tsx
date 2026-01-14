@@ -72,7 +72,7 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
         <div className="flex justify-center mt-6">
           <Link
             href={`/shop?section=featured&department=${department}`}
-            className="border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors"
+            className="w-full md:w-auto border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors text-center"
           >
             Shop now
           </Link>
@@ -104,7 +104,7 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
         <div className="flex justify-center mt-6">
           <Link
             href={`/shop?section=newIn&department=${department}`}
-            className="border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors"
+            className="w-full md:w-auto border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors text-center"
           >
             Shop now
           </Link>
@@ -128,7 +128,7 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
         <div className="flex justify-center mt-6">
           <Link
             href={`/shop?section=party&department=${department}`}
-            className="border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors"
+            className="w-full md:w-auto border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded text-sm font-semibold transition-colors text-center"
           >
             Shop now
           </Link>

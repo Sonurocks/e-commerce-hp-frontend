@@ -355,10 +355,14 @@ export default function ProductDetailAdditionalSection({
         <h2 className="text-[18px] font-medium text-(--color-preto) mb-6">
           {translate("Complete the look")}
         </h2>
-        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+        <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {completeTheLookProducts.map((recommendedProduct) => {
             const product = convertToProduct(recommendedProduct);
-            return <ProductCard key={product.id} product={product} />;
+            return (
+              <div key={product.id} className="flex-shrink-0 w-[280px] md:w-auto">
+                <ProductCard product={product} />
+              </div>
+            );
           })}
         </div>
       </div>
@@ -381,7 +385,7 @@ export default function ProductDetailAdditionalSection({
             <button
               aria-label="Previous recommendations"
               onClick={handlePrevCurated}
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center border border-gray-300 rounded bg-white shadow-sm hover:bg-gray-50"
+              className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 items-center justify-center border border-gray-300 rounded bg-white shadow-sm hover:bg-gray-50"
             >
               &lt;
             </button>
@@ -390,15 +394,19 @@ export default function ProductDetailAdditionalSection({
             <button
               aria-label="Next recommendations"
               onClick={handleNextCurated}
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center border border-gray-300 rounded bg-white shadow-sm hover:bg-gray-50"
+              className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 items-center justify-center border border-gray-300 rounded bg-white shadow-sm hover:bg-gray-50"
             >
               &gt;
             </button>
           )}
-          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {displayedCuratedCards.map((card) => {
               const product = convertCuratedToProduct(card);
-              return <ProductCard key={`${card.id}-${curatedStartIndex}`} product={product} />;
+              return (
+                <div key={`${card.id}-${curatedStartIndex}`} className="flex-shrink-0 w-[280px] md:w-auto">
+                  <ProductCard product={product} />
+                </div>
+              );
             })}
           </div>
         </div>
@@ -411,10 +419,14 @@ export default function ProductDetailAdditionalSection({
               {translate("Bestsellers, edited for you")}
             </h2>
           </div>
-          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {bestsellerProducts.map((bestseller) => {
               const product = convertToProduct(bestseller);
-              return <ProductCard key={`bestseller-${product.id}`} product={product} />;
+              return (
+                <div key={`bestseller-${product.id}`} className="flex-shrink-0 w-[280px] md:w-auto">
+                  <ProductCard product={product} />
+                </div>
+              );
             })}
           </div>
         </div>
@@ -427,10 +439,14 @@ export default function ProductDetailAdditionalSection({
               {translate("Featured")}
             </h2>
           </div>
-          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6">
+          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {featuredProducts.map((featuredProduct) => {
               const product = convertToProduct(featuredProduct);
-              return <ProductCard key={`featured-${product.id}`} product={product} />;
+              return (
+                <div key={`featured-${product.id}`} className="flex-shrink-0 w-[280px] md:w-auto">
+                  <ProductCard product={product} />
+                </div>
+              );
             })}
           </div>
         </div>

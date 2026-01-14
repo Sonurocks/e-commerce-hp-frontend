@@ -47,6 +47,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [activeDrawer, setActiveDrawer] = useState<
     | "25off"
     | "newIn"
@@ -193,6 +195,16 @@ const Header = () => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       setIsScrolled(scrollPosition > 0);
+      
+      // Hide header when scrolling down, show when scrolling up
+      setLastScrollY((prevScrollY) => {
+        if (scrollPosition > prevScrollY && scrollPosition > 100) {
+          setIsHeaderVisible(false);
+        } else {
+          setIsHeaderVisible(true);
+        }
+        return scrollPosition;
+      });
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -322,7 +334,13 @@ const Header = () => {
   return (
     <>
       <header
-        className={`bg-white dark:bg-(--colorWhite)  sticky top-0 z-50 font-normal transition-transform duration-300 ${isSearchDrawerOpen ? "hidden" : ""}`}
+        className={`bg-white dark:bg-[var(--colorWhite)]
+  sticky top-0 z-50
+  font-normal
+  transition-transform duration-300
+  ${isSearchDrawerOpen ? "hidden" : ""}
+  ${!isHeaderVisible ? "-translate-y-full" : "translate-y-0"}
+`}
         style={{ position: 'sticky', top: 0 }}
       >
         {/* Top Promotional Bar */}
@@ -411,7 +429,7 @@ const Header = () => {
         <div
           className={`relative ${isScrolled ? "border-b border-gray-300 dark:border-(--color-platinum)" : ""}`}
         >
-          <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 xl:px-10 overflow-x-hidden">
+          <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 xl:px-10 sticky">
             {/* Desktop Layout */}
             <div className="hidden xl:block">
               {/* First Row - Primary Navigation */}
@@ -674,7 +692,7 @@ const Header = () => {
                   <button
                     type="button"
                     onClick={() => setIsMenuOpen((prev) => !prev)}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 text-gray-700 transition hover:border-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:border-platinum dark:text-preto dark:hover:border-silver"
+                    className="flex h-10 w-10 items-center justify-center text-gray-700 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:text-preto"
                     aria-label={`${isMenuOpen ? "Close" : "Open"} navigation menu`}
                   >
                     {isMenuOpen ? (
@@ -686,7 +704,7 @@ const Header = () => {
 
                   <Link href={logoConfig.header.href || headerConfig.logo.href}>
                     {logoConfig.header.type === "image" && logoConfig.header.imageUrl ? (
-                      <div className="relative w-[160px] h-[20px] sm:w-[220px] sm:h-[24px]">
+                      <div className="relative w-[120px] h-[16px] sm:w-[220px] sm:h-[24px]">
                         <Image
                           src={logoConfig.header.imageUrl}
                           alt={logoConfig.header.alt || "Logo"}
@@ -696,7 +714,7 @@ const Header = () => {
                         />
                       </div>
                     ) : (
-                      <h1 className="text-2xl sm:text-3xl font-extrabold text-(--color-preto) dark:text-(--color-preto) tracking-tight uppercase">
+                      <h1 className="text-xl sm:text-3xl font-extrabold text-(--color-preto) dark:text-(--color-preto) tracking-tight uppercase">
                         {logoConfig.header.text || headerCopy.logoText}
                       </h1>
                     )}
@@ -712,7 +730,7 @@ const Header = () => {
                     className="flex items-center justify-center w-8 h-8 rounded-full bg-white border border-gray-300 dark:bg-(--colorWhite) dark:border-platinum hover:border-gray-400 dark:hover:border-silver shadow-sm transition cursor-pointer relative"
                     aria-label="Select language"
                   >
-                    <div className="w-6 h-6 rounded-full overflow-hidden">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full overflow-hidden">
                       <svg
                         viewBox="0 0 24 24"
                         className="w-full h-full"
@@ -729,19 +747,19 @@ const Header = () => {
                   </button>
                   <button
                     onClick={() => setIsProfileModalOpen(true)}
-                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
+                    className="flex items-center justify-center w-8 h-8 text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"
                   >
-                    <FaRegUser className="w-6 h-6" />
+                    <FaRegUser className="w-5 h-5 sm:w-6 sm:h-6" />
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
                       {headerCopy.tooltips.signIn}
                     </span>
                   </button>
                   <Link
                     href="/wishlist"
-                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
+                    className="flex items-center justify-center w-8 h-8 text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
                     <div className="relative">
-                      <GoHeart className="w-6 h-6" strokeWidth={1.0} />
+                      <GoHeart className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.0} />
                       {isMounted && wishlistCount > 0 && (
                         <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
                           {wishlistCount}
@@ -754,10 +772,10 @@ const Header = () => {
                   </Link>
                   <Link
                     href="/cart"
-                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
+                    className="flex items-center justify-center w-8 h-8 text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
                   >
                     <div className="relative">
-                      <HiOutlineShoppingBag className="w-6 h-6" strokeWidth={2.0} />
+                      <HiOutlineShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.0} />
                       {isMounted && cartCount > 0 && (
                         <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
                           {cartCount}

@@ -47,7 +47,7 @@ export default function EditorialFeature({
         </p>
         <Link
           href={`/shop?section=editorial&department=${department}`}
-          className="inline-block text-[14px] border rounded-lg border-gray-800 px-6 py-2.5 text-(--color-preto) font-semibold  transition-colors lg:ml-44"
+          className="w-full md:w-auto md:inline-block text-sm border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded font-semibold transition-colors text-center md:text-left lg:ml-44"
         >
           {ctaLabel ?? "Shop now"}
         </Link>
