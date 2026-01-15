@@ -3,6 +3,7 @@
 import React from "react";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { useLanguage } from "@/context/LanguageContext";
+import styles from "./ContactSupportSection.module.css";
 
 const fontStack =
   "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)";
@@ -33,7 +34,7 @@ export default function ContactSupportSection() {
   return (
     <section
       style={{ fontFamily: fontStack }}
-      className="w-full mt-12 mb-16"
+      className={`w-full mt-12 mb-16 ${styles.sectionWrapper}`}
       aria-labelledby="contact-support-heading"
     >
       <h2

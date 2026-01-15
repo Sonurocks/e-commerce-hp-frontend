@@ -69,7 +69,7 @@ export default function ProductCard({
             onMouseLeave={() => setIsHovered(false)}
           />
         </div>
-        <div className="mt-2 flex-1">
+        <div className="mt-2 flex-1 flex flex-col">
           <div className="h-5 mb-1">
             {showBadge && isTextBadge && (
               <p className="text-[15px] text-(--color-emperor)">{localizedBadge}</p>
@@ -82,7 +82,7 @@ export default function ProductCard({
             <p className="text-[13px] text-preto">{localizedSubtitle}</p>
           )}
           {product.price && (
-            <p className="text-sm font-semibold  text-preto mt-3">{product.price}</p>
+            <p className="text-sm font-semibold text-preto mt-auto pt-3">{product.price}</p>
           )}
         </div>
       </article>

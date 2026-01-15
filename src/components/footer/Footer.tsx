@@ -19,7 +19,7 @@ const Footer = () => {
 
   return (
     <footer className="site-footer bg-gray-200 dark:bg-black text-preto dark:text-white max-w-container w-full min-h-footer min-w-full  py-footer mx-auto font-normal border-t border-gray-300 dark:border-(--color-platinum)" style={{ backgroundColor: 'var(--theme-bg, var(--colorLightGrey, #e5e7eb))', color: 'var(--theme-text, var(--color-preto, #222))', borderTopColor: 'var(--theme-border, var(--color-platinum, #ddd))' }}>
-      <div className="mx-auto max-w-container w-full pl-footer pr-footer">
+      <div className="mx-auto max-w-container w-full !px-4 sm:px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {footerSections.map((section, sectionIndex) => (
             <div key={sectionIndex}>

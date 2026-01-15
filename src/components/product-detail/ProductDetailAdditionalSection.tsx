@@ -6,6 +6,7 @@ import { ProductDetail, productsById } from "@/constants/products";
 import { Product } from "@/constants/department";
 import { useLanguage } from "@/context/LanguageContext";
 import ProductCard from "@/components/department/ProductCard";
+import styles from "./ProductDetailAdditionalSection.module.css";
 import {
   womenswearBestsellers,
   menswearBestsellers,
@@ -349,9 +350,9 @@ export default function ProductDetailAdditionalSection({
   }
 
   return (
-    <div style={{ fontFamily: fontStack }} className="w-full mt-12">
+    <div style={{ fontFamily: fontStack }} className={`w-full mt-12 ${styles.mainWrapper}`}>
       {/* Complete the look section */}
-      <div className="mb-8">
+      <div className={`mb-8 ${styles.innerContainer}`}>
         <h2 className="text-[18px] font-medium text-(--color-preto) mb-6">
           {translate("Complete the look")}
         </h2>
@@ -368,7 +369,7 @@ export default function ProductDetailAdditionalSection({
       </div>
 
       {/* Dynamic curated recommendations */}
-      <div className="mb-8">
+      <div className={`mb-8 ${styles.innerContainer}`}>
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-[18px] font-medium text-(--color-preto)">
             {translate("Recommendations")}
@@ -433,7 +434,7 @@ export default function ProductDetailAdditionalSection({
       )}
 
       {featuredProducts.length > 0 && (
-        <div className="mb-8">
+        <div className={`mb-8 ${styles.innerContainer}`}>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-[18px] font-medium text-(--color-preto)">
               {translate("Featured")}

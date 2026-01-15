@@ -3,6 +3,7 @@
 import React from "react";
 import { FiTag, FiStar, FiRefreshCw } from "react-icons/fi";
 import { useLanguage } from "@/context/LanguageContext";
+import styles from "./WhyFarfetchSection.module.css";
 
 const fontStack =
   "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)";
@@ -41,7 +42,7 @@ export default function WhyFarfetchSection() {
   return (
     <section
       style={{ fontFamily: fontStack }}
-      className="w-full mt-12 mb-16 border-t border-gray-200 pt-10"
+      className={`w-full mt-12 mb-16 border-t border-gray-200 pt-10 ${styles.sectionWrapper}`}
     >
       <h2 className="text-[20px] font-normal text-(--color-preto) mb-6">
         {translate("Why FARFETCH?")}

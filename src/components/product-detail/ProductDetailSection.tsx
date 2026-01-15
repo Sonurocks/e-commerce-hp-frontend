@@ -16,6 +16,7 @@ import ImageZoom, { ZoomedImageView } from "./ImageZoom";
 import { useLanguage } from "@/context/LanguageContext";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import styles from "./ProductDetailSection.module.css";
 const fontStack =
   "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)";
 
@@ -183,9 +184,9 @@ export default function ProductDetailSection({
   }, [isSizeDropdownOpen]);
 
   return (
-    <div style={{ fontFamily: fontStack }}>
+    <div style={{ fontFamily: fontStack }} className={styles.mainWrapper}>
       {/* Images and Product Info Section */}
-      <div className="flex flex-col lg:flex-row gap-6 lg:items-start">
+      <div className={`flex flex-col lg:flex-row gap-6 lg:items-start ${styles.contentFlex}`}>
         {/* Left Side - Product Images */}
         <div className="flex-[1.6] lg:ml-6">
           {/* Main Image with Zoom Feature */}
@@ -412,10 +413,10 @@ export default function ProductDetailSection({
       </div>
 
       {/* Full Width Sections - Breadcrumb and Collapsible Sections */}
-      <div className="w-full mt-8">
+      <div className={`w-full mt-8 ${styles.collapsibleContainer}`}>
         {/* Breadcrumb Navigation */}
         <div className="mb-6">
-          <nav className="text-[13px] text-[#666]">
+          <nav className={`text-[13px] text-[#666] ${styles.breadcrumb}`}>
             <a href="#" className="hover:text-(--color-preto)">
               {translate("Women Home")}
             </a>
@@ -433,7 +434,7 @@ export default function ProductDetailSection({
         {/* Collapsible Sections */}
         <div>
           {/* THE DETAILS Section */}
-          <div className="border-b border-gray-200">
+          <div className={`border-b border-gray-200 ${styles.collapsibleSection}`}>
             <button
               onClick={() =>
                 setOpenSections((prev) => ({ ...prev, details: !prev.details }))
@@ -506,7 +507,7 @@ export default function ProductDetailSection({
           </div>
 
           {/* SIZE & FIT Section */}
-          <div className="border-b border-gray-200">
+          <div className={`border-b border-gray-200 ${styles.collapsibleSection}`}>
             <button
               onClick={() =>
                 setOpenSections((prev) => ({ ...prev, sizeFit: !prev.sizeFit }))
@@ -534,10 +535,10 @@ export default function ProductDetailSection({
             </button>
             {openSections.sizeFit && (
               <div className="pb-4 text-[13px] text-(--color-preto)">
-                <div className="flex gap-6">
+                <div className={`flex gap-6 ${styles.sizeFitContent}`}>
                   {/* Left Column - Model Measurements */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-50 mb-3">
+                  <div className={`flex-1 ${styles.sizeFitLeft}`}>
+                    <div className={`flex items-center gap-50 mb-3 ${styles.sizeFitHeader}`}>
                       <h4 className="font-semibold text-[13px] text-(--color-preto)">
                         {translate("Model Measurements")}
                       </h4>
@@ -571,19 +572,19 @@ export default function ProductDetailSection({
                       </div>
                     </div>
                     <div className="space-y-1.5 mb-3">
-                      <div className="flex gap-15 text-[13px]">
+                      <div className={`flex gap-15 text-[13px] ${styles.measurementItem}`}>
                         <span>{translate("Height:")}</span>
                         <span>1.75 m</span>
                       </div>
-                      <div className="flex gap-10 text-[13px]">
+                      <div className={`flex gap-10 text-[13px] ${styles.measurementItem}`}>
                         <span>{translate("Bust/chest:")}</span>
                         <span>{unitToggle === "cm" ? "88 cm" : "35 in"}</span>
                       </div>
-                      <div className="flex gap-15 text-[13px]">
+                      <div className={`flex gap-15 text-[13px] ${styles.measurementItem}`}>
                         <span>{translate("Hips:")}</span>
                         <span>{unitToggle === "cm" ? "93 cm" : "37 in"}</span>
                       </div>
-                      <div className="flex gap-15 text-[13px]">
+                      <div className={`flex gap-15 text-[13px] ${styles.measurementItem}`}>
                         <span>{translate("Waist:")}</span>
                         <span>{unitToggle === "cm" ? "67 cm" : "26 in"}</span>
                       </div>
@@ -600,7 +601,7 @@ export default function ProductDetailSection({
                   </div>
 
                   {/* Right Column - Returns Policy */}
-                  <div className="flex-[0.8]">
+                  <div className={`flex-[0.8] ${styles.sizeFitRight}`}>
                     <div className="bg-(--color-branco) p-4 rounded-lg">
                       <div className="flex items-start gap-3">
                         <PiCoatHangerBold
@@ -628,7 +629,7 @@ export default function ProductDetailSection({
           </div>
 
           {/* DELIVERY, RETURNS & SELLER Section */}
-          <div className="border-b border-gray-200">
+          <div className={`border-b border-gray-200 ${styles.collapsibleSection}`}>
             <button
               onClick={() =>
                 setOpenSections((prev) => ({ ...prev, delivery: !prev.delivery }))
@@ -656,9 +657,9 @@ export default function ProductDetailSection({
             </button>
             {openSections.delivery && (
               <div className="pb-4 text-[13px] text-(--color-preto)">
-                <div className="flex gap-12">
+                <div className={`flex gap-12 ${styles.deliveryContent}`}>
                   {/* Left Column */}
-                  <div className="flex-1 space-y-3">
+                  <div className={`flex-1 space-y-3 ${styles.deliveryColumn}`}>
                     <div>
                       <p className="font-semibold text-(--color-preto) mb-1">
                         {translate("We've got your back")}
@@ -689,7 +690,7 @@ export default function ProductDetailSection({
                   </div>
                   
                   {/* Middle Column */}
-                  <div className="flex-1 space-y-3">
+                  <div className={`flex-1 space-y-3 ${styles.deliveryColumn}`}>
                     <div>
                       <p className="font-semibold text-(--color-preto) mb-1">
                         {translate("Estimated delivery")}
@@ -712,7 +713,7 @@ export default function ProductDetailSection({
                   </div>
                   
                   {/* Right Column */}
-                  <div className="flex-1 space-y-3">
+                  <div className={`flex-1 space-y-3 ${styles.deliveryColumn}`}>
                     <div>
                       <p className="font-semibold text-(--color-preto) mb-1">
                         {translate("Need more information?")}

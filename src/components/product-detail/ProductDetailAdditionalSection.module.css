@@ -1,0 +1,16 @@
+/* Product Detail Additional Section - Mobile Alignment Styles */
+/* Align with header and footer on mobile view */
+
+@media (max-width: 767px) {
+  /* Main wrapper - apply same padding as header */
+  .mainWrapper {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Inner containers - remove extra padding */
+  .innerContainer {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

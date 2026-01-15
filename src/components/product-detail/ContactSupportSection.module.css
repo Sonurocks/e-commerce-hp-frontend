@@ -1,0 +1,10 @@
+/* ContactSupportSection - Mobile Alignment Styles */
+/* Align with header and footer on mobile view */
+
+@media (max-width: 767px) {
+  /* Section wrapper - apply same padding as header */
+  .sectionWrapper {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}

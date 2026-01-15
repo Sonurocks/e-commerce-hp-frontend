@@ -195,16 +195,6 @@ const Header = () => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       setIsScrolled(scrollPosition > 0);
-      
-      // Hide header when scrolling down, show when scrolling up
-      setLastScrollY((prevScrollY) => {
-        if (scrollPosition > prevScrollY && scrollPosition > 100) {
-          setIsHeaderVisible(false);
-        } else {
-          setIsHeaderVisible(true);
-        }
-        return scrollPosition;
-      });
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -317,7 +307,7 @@ const Header = () => {
     checkScrollPosition();
     const handleResize = () => checkScrollPosition();
     window.addEventListener("resize", handleResize);
-    
+
     const scrollContainer = mobileNavScrollRef.current;
     if (scrollContainer) {
       scrollContainer.addEventListener("scroll", checkScrollPosition);
@@ -346,33 +336,53 @@ const Header = () => {
         {/* Top Promotional Bar */}
         {!isBannerClosed && (
           <div
-            className={`text-[13px] py-2 px-4 sm:px-6 xl:py-[6px] xl:px-[36px] transition-all duration-300 font-normal relative ${
-              currentPromo.type === "generic"
-                ? "bg-gray-200 dark:bg-(--colorLightGrey)"
-                : "bg-black dark:bg-black"
-                
-            } ${isScrolled ? "hidden" : ""}`}
+            className={`text-[13px] py-2 px-4 sm:px-6 xl:py-[6px] xl:px-[36px] transition-all duration-300 font-normal relative ${currentPromo.type === "generic"
+              ? "bg-gray-200 dark:bg-(--colorLightGrey)"
+              : "bg-black dark:bg-black"
+
+              } ${isScrolled ? "hidden" : ""}`}
           >
             <div className="mx-auto max-w-screen-2xl px-2 sm:px-4 relative">
               <ul className="flex items-center justify-center relative h-6">
-              {promotions.map((promo, index) => (
-                <li
-                  key={index}
-                  className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
-                    index === currentPromoIndex
+                {promotions.map((promo, index) => (
+                  <li
+                    key={index}
+                    className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${index === currentPromoIndex
                       ? "opacity-100 z-10"
                       : "opacity-0 z-0 pointer-events-none"
-                  }`}
-                >
-                  <span
-                    className={`flex items-center justify-center space-x-2 ${
-                      promo.type === "generic"
+                      }`}
+                  >
+                    <span
+                      className={`flex items-center justify-center space-x-2 ${promo.type === "generic"
                         ? "text-(--color-preto) dark:text-(--color-preto)"
                         : "text-white dark:text-white"
-                    }`}
-                  >
-                    {promo.type === "promotion" && promo.showCountdown ? (
-                      <>
+                        }`}
+                    >
+                      {promo.type === "promotion" && promo.showCountdown ? (
+                        <>
+                          <a
+                            href={promo.link}
+                            target="_self"
+                            className="underline hover:no-underline"
+                          >
+                            {headerCopy.promotions[promo.id] ?? promo.text}
+                          </a>
+                          <span>|</span>
+                          <span>{headerCopy.countdown.endsIn}</span>
+                          <span data-testid="countdown" className="font-semibold">
+                            {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
+                            {timeLeft.seconds}s
+                          </span>
+                          {promo.showShopNow && (
+                            <>
+                              <span>|</span>
+                              <a href={promo.link} target="_self">
+                                {headerCopy.countdown.shopNow}
+                              </a>
+                            </>
+                          )}
+                        </>
+                      ) : (
                         <a
                           href={promo.link}
                           target="_self"
@@ -380,33 +390,10 @@ const Header = () => {
                         >
                           {headerCopy.promotions[promo.id] ?? promo.text}
                         </a>
-                        <span>|</span>
-                        <span>{headerCopy.countdown.endsIn}</span>
-                        <span data-testid="countdown" className="font-semibold">
-                          {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
-                          {timeLeft.seconds}s
-                        </span>
-                        {promo.showShopNow && (
-                          <>
-                            <span>|</span>
-                            <a href={promo.link} target="_self">
-                              {headerCopy.countdown.shopNow}
-                            </a>
-                          </>
-                        )}
-                      </>
-                    ) : (
-                      <a
-                        href={promo.link}
-                        target="_self"
-                        className="underline hover:no-underline"
-                      >
-                        {headerCopy.promotions[promo.id] ?? promo.text}
-                      </a>
-                    )}
-                  </span>
-                </li>
-              ))}
+                      )}
+                    </span>
+                  </li>
+                ))}
               </ul>
               <button
                 onClick={handleCloseBanner}
@@ -414,11 +401,10 @@ const Header = () => {
                 aria-label="Close promotional banner"
               >
                 <FiX
-                  className={`w-4 h-4 ${
-                    currentPromo.type === "generic"
-                      ? "text-(--color-preto) dark:text-(--color-preto)"
-                      : "text-white dark:text-white"
-                  }`}
+                  className={`w-4 h-4 ${currentPromo.type === "generic"
+                    ? "text-(--color-preto) dark:text-(--color-preto)"
+                    : "text-white dark:text-white"
+                    }`}
                 />
               </button>
             </div>
@@ -429,7 +415,7 @@ const Header = () => {
         <div
           className={`relative ${isScrolled ? "border-b border-gray-300 dark:border-(--color-platinum)" : ""}`}
         >
-          <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 xl:px-10 sticky">
+          <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 xl:px-10 overflow-x-hidden">
             {/* Desktop Layout */}
             <div className="hidden xl:block">
               {/* First Row - Primary Navigation */}
@@ -583,8 +569,8 @@ const Header = () => {
                       const shouldBeGray = activeDrawer !== null && !isActive;
                       let linkClassName = link.className;
                       if (shouldBeGray) {
-                      if (linkClassName.includes("text-preto")) {
-                        linkClassName = linkClassName.replace("text-preto", "text-gray-500");
+                        if (linkClassName.includes("text-preto")) {
+                          linkClassName = linkClassName.replace("text-preto", "text-gray-500");
                         } else if (linkClassName.includes("text-red-600")) {
                           linkClassName = linkClassName.replace(
                             "text-red-600",
@@ -612,8 +598,8 @@ const Header = () => {
                             }, 150);
                           }}
                         >
-                          <Link 
-                            href={link.href} 
+                          <Link
+                            href={link.href}
                             className={linkClassName}
                             onMouseEnter={(e) => {
                               e.stopPropagation();
@@ -692,7 +678,7 @@ const Header = () => {
                   <button
                     type="button"
                     onClick={() => setIsMenuOpen((prev) => !prev)}
-                    className="flex h-10 w-10 items-center justify-center text-gray-700 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:text-preto"
+                    className="flex h-10 w-10 -ml-2 items-center justify-start text-gray-700 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-black dark:text-preto"
                     aria-label={`${isMenuOpen ? "Close" : "Open"} navigation menu`}
                   >
                     {isMenuOpen ? (
@@ -802,11 +788,11 @@ const Header = () => {
                       <ChevronLeft className="h-4 w-4" />
                     </button>
                   )}
-                  
+
                   {/* Scrollable Navigation */}
                   <div
                     ref={mobileNavScrollRef}
-                    className="flex flex-1 items-center gap-4 overflow-x-auto scrollbar-hide text-sm text-(--color-preto) dark:text-(--color-preto) scroll-smooth"
+                    className="flex flex-1 items-center gap-4 overflow-x-auto scrollbar-hide text-sm text-(--color-preto) dark:text-(--color-preto) scroll-smooth px-4"
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                   >
                     {navigationLinks.map((link) => (
@@ -839,7 +825,7 @@ const Header = () => {
 
                 <div className="w-full">
                   <div className="relative h-11 w-full">
-                    <div className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2">
+                    <div className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 xl:left-4">
                       <svg
                         className="w-5 h-5 text-gray-500 dark:text-(--color-hina)"
                         fill="none"
@@ -857,7 +843,7 @@ const Header = () => {
                     <input
                       type="text"
                       placeholder={headerCopy.searchPlaceholder}
-                      className="w-full pl-10 pr-4 py-2 border-b border-(--color-preto) dark:border-(--color-preto) focus:outline-none focus:border-gray-900 dark:focus:border-(--color-preto) text-base dark:text-(--color-preto) dark:bg-transparent cursor-pointer"
+                      className="w-full pl-10 xl:pl-14 pr-4 py-2 border-b border-(--color-preto) dark:border-(--color-preto) focus:outline-none focus:border-gray-900 dark:focus:border-(--color-preto) text-base dark:text-(--color-preto) dark:bg-transparent cursor-pointer"
                       onClick={handleSearchInputClick}
                       readOnly
                     />
@@ -955,14 +941,14 @@ const Header = () => {
                         className="flex items-center gap-2 text-(--color-preto) dark:text-(--color-preto)"
                         onClick={handleMobileLinkClick}
                       >
-                      <div className="relative">
-                        <GoHeart className="h-4 w-4" />
-                        {isMounted && wishlistCount > 0 && (
-                          <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
-                            {wishlistCount}
-                          </span>
-                        )}
-                      </div>
+                        <div className="relative">
+                          <GoHeart className="h-4 w-4" />
+                          {isMounted && wishlistCount > 0 && (
+                            <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 min-w-[16px] h-[16px] px-1 rounded-full bg-black text-[10px] font-semibold flex items-center justify-center" style={{ color: 'var(--theme-badge-text, #ffffff)' }}>
+                              {wishlistCount}
+                            </span>
+                          )}
+                        </div>
                         {headerCopy.tooltips.wishlist}
                       </Link>
                       <Link

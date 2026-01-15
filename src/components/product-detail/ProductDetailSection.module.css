@@ -1,0 +1,79 @@
+/* Product Detail Section - Mobile Alignment Styles */
+/* Align with header and footer on mobile view */
+
+@media (max-width: 767px) {
+  /* Main wrapper - apply same padding as header */
+  .mainWrapper {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Inner flex container (images and product info) - no extra padding */
+  .contentFlex {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Breadcrumb navigation - apply same padding as header */
+  .breadcrumb {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Collapsible sections container - apply same padding as header */
+  .collapsibleContainer {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Collapsible sections inner content - no extra padding */
+  .collapsibleSection {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* SIZE & FIT Section - Make responsive for mobile */
+  /* Stack columns vertically on mobile */
+  .sizeFitContent {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Model Measurements section - full width on mobile */
+  .sizeFitLeft {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+
+  /* Returns Policy section - full width on mobile */
+  .sizeFitRight {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+
+  /* Model Measurements header - adjust layout for mobile */
+  .sizeFitHeader {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Measurement items - better spacing on mobile */
+  .measurementItem {
+    justify-content: space-between !important;
+    gap: 0.5rem !important;
+  }
+
+  /* DELIVERY, RETURNS & SELLER Section - Make responsive for mobile */
+  /* Stack columns vertically on mobile */
+  .deliveryContent {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Delivery columns - full width on mobile */
+  .deliveryColumn {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+}

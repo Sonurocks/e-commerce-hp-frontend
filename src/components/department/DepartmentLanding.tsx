@@ -64,7 +64,7 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
         />
         <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {featuredPromoCardsByDept[department].map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-[280px] md:w-auto">
+            <div key={product.id} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
               <ProductCard product={product} showBadge />
             </div>
           ))}
@@ -93,7 +93,7 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
         />
         <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {newInProductsByDept[department].map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-[280px] md:w-auto">
+            <div key={product.id} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
               <ProductCard
                 product={product}
                 showBadge={!!product.badge}
@@ -117,7 +117,7 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
         />
         <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {partyPlusOnesByDept[department].map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-[280px] md:w-auto">
+            <div key={product.id} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
               <ProductCard
                 product={product}
                 showBadge={!!product.badge}

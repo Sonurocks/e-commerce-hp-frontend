@@ -792,7 +792,7 @@ select option:checked {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
-    overflow-x: hidden !important;
+    /* overflow-x: hidden !important; */
   }
 
   /* First row container - hamburger, logo, icons - prevent wrapping */
@@ -818,15 +818,27 @@ select option:checked {
     max-width: 2.5rem !important;
     flex-shrink: 0 !important;
     flex-grow: 0 !important;
+    padding-left: 0 !important; /* Remove any default padding */
+    margin-left: 0 !important; /* Remove any default margin */
   }
 
-  /* Hamburger button - ensure proper size */
+  /* Hamburger button - ensure proper size and alignment */
   header div[class*="xl:hidden"] > div.flex.w-full > div:first-child button {
     width: 2.5rem !important;
     height: 2.5rem !important;
     flex-shrink: 0 !important;
     min-width: 2.5rem !important;
     max-width: 2.5rem !important;
+    margin-left: -0.5rem !important; /* Match navigation text and search icon offset */
+    padding-left: 0 !important; /* Remove any internal padding */
+    justify-content: flex-start !important; /* Align icon to left */
+  }
+  
+  /* Ensure hamburger button icon aligns to the left edge */
+  header div[class*="xl:hidden"] > div.flex.w-full > div:first-child button svg,
+  header div[class*="xl:hidden"] > div.flex.w-full > div:first-child button > * {
+    margin-left: 0 !important;
+    margin-right: auto !important;
   }
 
   /* Logo container - FLEXIBLE but constrained, override flex-1 */
@@ -963,6 +975,29 @@ select option:checked {
       min-width: 1.5rem !important;
       max-width: 1.5rem !important;
     }
+  }
+
+  /* Align search icon with hamburger menu on mobile - account for hamburger's -ml-2 offset */
+  header div[class*="xl:hidden"] > div.flex.flex-col.gap-4 > div.w-full > div.relative > div.absolute {
+    left: -0.5rem !important; /* -ml-2 equivalent to match hamburger menu button position */
+  }
+
+  header div[class*="xl:hidden"] > div.flex.flex-col.gap-4 > div.w-full {
+    padding-left: 0.75rem !important; /* Match hamburger menu container padding */
+  }
+
+  /* Align scrollable navigation text with hamburger menu on mobile - match exact structure */
+  /* Apply same padding as hamburger row container */
+  header div[class*="xl:hidden"] > div.flex.flex-col.gap-4 {
+    padding-left: 0.75rem !important; /* Match hamburger menu row padding */
+    padding-right: 0.75rem !important;
+  }
+  
+  /* Apply same negative margin as hamburger button to align text */
+  header div[class*="xl:hidden"] > div.flex.flex-col.gap-4 > div.relative.flex.items-center > div.flex.flex-1.items-center.overflow-x-auto {
+    padding-left: 0 !important; /* Remove original px-4 padding */
+    margin-left: -0.5rem !important; /* Match hamburger button -ml-2 offset */
+    padding-right: 1rem !important; /* Keep right padding for scroll spacing */
   }
 
 
@@ -1106,11 +1141,11 @@ select option:checked {
   }
 
   /* Prevent horizontal scrolling */
-  body,
+  /* body,
   html {
     overflow-x: hidden !important;
     max-width: 100vw !important;
-  }
+  } */
 
   /* Ensure all containers respect viewport width */
   .container,
@@ -1169,14 +1204,29 @@ select option:checked {
     row-gap: 2rem !important;
   }
   
-  /* Optimize product image size for mobile */
-  article.group.h-full.flex.flex-col > div.relative.w-full img,
-  article.group > div.relative.w-full img,
-  article[class*="group"] > div[class*="relative"][class*="w-full"] img {
-    max-width: 100% !important;
-    max-height: 200px !important;
-    object-fit: fill !important;
+  /* Product Detail Page - Product Card Images - match department page styling */
+  /* Ensure product cards in product detail page display same as department page */
+  main.container.mx-auto article.group.h-full.flex.flex-col > div.relative.w-full,
+  main.container.mx-auto article.group > div.relative.w-full {
+    height: 300px !important; /* Match department page card height */
   }
+
+  main.container.mx-auto article.group.h-full.flex.flex-col > div.relative.w-full img,
+  main.container.mx-auto article.group > div.relative.w-full img,
+  main.container.mx-auto article[class*="group"] > div[class*="relative"][class*="w-full"] img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important; /* Use contain instead of fill to prevent stretching */
+    object-position: left center !important; /* Match department page alignment */
+  }
+
+  /* Ensure product card containers have proper width on mobile */
+  main.container.mx-auto div.flex.overflow-x-auto > div.flex-shrink-0 {
+    min-width: 280px !important; /* Match department page card width */
+    width: 280px !important;
+  }
+
 }
 
 @media (min-width: 761px) and (max-width: 1024px) {
