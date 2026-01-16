@@ -6,6 +6,8 @@ import { HiRefresh } from "react-icons/hi";
 import Toast from "@/components/profile/Toast";
 import { useMutation } from "@tanstack/react-query";
 import { registerVendorQn, type VendorRegistrationData } from "@/queries/vendor";
+import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 
 const inputClasses =
   "w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-[var(--color-hina)] focus:outline-none border-preto focus:border-preto";
@@ -228,118 +230,106 @@ const VendorPortal = () => {
               description="Enter your details to register as a vendor."
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <label className="block text-xs font-normal text-preto">
-                Name
-                <input
-                  type="text"
-                  value={registerName}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setRegisterName(value);
-                    if (value.trim() && value.trim().length < 2) {
-                      setRegisterNameError("Name must be at least 2 characters");
-                    } else if (!value.trim()) {
-                      setRegisterNameError("Please enter your name");
-                    } else {
-                      setRegisterNameError("");
-                    }
-                  }}
-                  onBlur={() => {
-                    if (!registerName.trim()) {
-                      setRegisterNameError("Please enter your name");
-                    } else if (registerName.trim().length < 2) {
-                      setRegisterNameError("Name must be at least 2 characters");
-                    } else {
-                      setRegisterNameError("");
-                    }
-                  }}
-                  className={`mt-2 ${inputClasses} ${
-                    registerNameError ? "border-(--color-error)" : ""
-                  }`}
-                  placeholder="Enter your name"
-                />
-                {registerNameError && (
-                  <p className="mt-1 text-xs text-(--color-error)">{registerNameError}</p>
-                )}
-              </label>
-              <label className="block text-xs font-normal text-preto">
-                Email Address
-                <input
-                  type="email"
-                  value={registerEmail}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setRegisterEmail(value);
-                    if (value && !validateEmail(value)) {
-                      setRegisterEmailError("Please enter a valid email address");
-                    } else if (!value.trim()) {
-                      setRegisterEmailError("Please enter your email address");
-                    } else {
-                      setRegisterEmailError("");
-                    }
-                  }}
-                  onBlur={() => {
-                    if (!registerEmail.trim()) {
-                      setRegisterEmailError("Please enter your email address");
-                    } else if (!validateEmail(registerEmail)) {
-                      setRegisterEmailError("Please enter a valid email address");
-                    } else {
-                      setRegisterEmailError("");
-                    }
-                  }}
-                  className={`mt-2 ${inputClasses} ${
-                    registerEmailError ? "border-(--color-error)" : ""
-                  }`}
-                  placeholder="name@vendor.com"
-                />
-                {registerEmailError && (
-                  <p className="mt-1 text-xs text-(--color-error)">{registerEmailError}</p>
-                )}
-              </label>
-              <label className="block text-xs font-normal text-preto">
-                Phone Number
-                <input
-                  type="tel"
-                  value={registerPhone}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setRegisterPhone(value);
-                    if (value.trim() && !validatePhone(value)) {
-                      setRegisterPhoneError("Please enter a valid phone number (10 digits)");
-                    } else if (!value.trim()) {
-                      setRegisterPhoneError("Please enter your phone number");
-                    } else {
-                      setRegisterPhoneError("");
-                    }
-                  }}
-                  onBlur={() => {
-                    if (!registerPhone.trim()) {
-                      setRegisterPhoneError("Please enter your phone number");
-                    } else if (!validatePhone(registerPhone)) {
-                      setRegisterPhoneError("Please enter a valid phone number (10 digits)");
-                    } else {
-                      setRegisterPhoneError("");
-                    }
-                  }}
-                  className={`mt-2 ${inputClasses} ${
-                    registerPhoneError ? "border-(--color-error)" : ""
-                  }`}
-                  placeholder="+91 234 567 8900"
-                />
-                {registerPhoneError && (
-                  <p className="mt-1 text-xs text-(--color-error)">{registerPhoneError}</p>
-                )}
-              </label>
-              <label className="block text-xs font-normal text-preto">
-                Organizational name <span className="text-(--color-hina)">(optional)</span>
-                <input
-                  type="text"
-                  value={organizationalName}
-                  onChange={(e) => setOrganizationalName(e.target.value)}
-                  className={`mt-2 ${inputClasses}`}
-                  placeholder="Enter organizational name"
-                />
-              </label>
+              <Input
+                name="registerName"
+                label="Name"
+                type="text"
+                value={registerName}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setRegisterName(value);
+                  if (value.trim() && value.trim().length < 2) {
+                    setRegisterNameError("Name must be at least 2 characters");
+                  } else if (!value.trim()) {
+                    setRegisterNameError("Please enter your name");
+                  } else {
+                    setRegisterNameError("");
+                  }
+                }}
+                onBlur={() => {
+                  if (!registerName.trim()) {
+                    setRegisterNameError("Please enter your name");
+                  } else if (registerName.trim().length < 2) {
+                    setRegisterNameError("Name must be at least 2 characters");
+                  } else {
+                    setRegisterNameError("");
+                  }
+                }}
+                error={registerNameError}
+                placeholder="Enter your name"
+                inputClassName="rounded-xl"
+              />
+              <Input
+                name="registerEmail"
+                label="Email Address"
+                type="email"
+                value={registerEmail}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setRegisterEmail(value);
+                  if (value && !validateEmail(value)) {
+                    setRegisterEmailError("Please enter a valid email address");
+                  } else if (!value.trim()) {
+                    setRegisterEmailError("Please enter your email address");
+                  } else {
+                    setRegisterEmailError("");
+                  }
+                }}
+                onBlur={() => {
+                  if (!registerEmail.trim()) {
+                    setRegisterEmailError("Please enter your email address");
+                  } else if (!validateEmail(registerEmail)) {
+                    setRegisterEmailError("Please enter a valid email address");
+                  } else {
+                    setRegisterEmailError("");
+                  }
+                }}
+                error={registerEmailError}
+                placeholder="name@vendor.com"
+                inputClassName="rounded-xl"
+              />
+              <Input
+                name="registerPhone"
+                label="Phone Number"
+                type="tel"
+                value={registerPhone}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setRegisterPhone(value);
+                  if (value.trim() && !validatePhone(value)) {
+                    setRegisterPhoneError("Please enter a valid phone number (10 digits)");
+                  } else if (!value.trim()) {
+                    setRegisterPhoneError("Please enter your phone number");
+                  } else {
+                    setRegisterPhoneError("");
+                  }
+                }}
+                onBlur={() => {
+                  if (!registerPhone.trim()) {
+                    setRegisterPhoneError("Please enter your phone number");
+                  } else if (!validatePhone(registerPhone)) {
+                    setRegisterPhoneError("Please enter a valid phone number (10 digits)");
+                  } else {
+                    setRegisterPhoneError("");
+                  }
+                }}
+                error={registerPhoneError}
+                placeholder="+91 234 567 8900"
+                inputClassName="rounded-xl"
+              />
+              <Input
+                name="organizationalName"
+                label={
+                  <>
+                    Organizational name <span className="text-(--color-hina)">(optional)</span>
+                  </>
+                }
+                type="text"
+                value={organizationalName}
+                onChange={(e) => setOrganizationalName(e.target.value)}
+                placeholder="Enter organizational name"
+                inputClassName="rounded-xl"
+              />
             </div>
             
             {/* Custom Captcha */}
@@ -376,32 +366,32 @@ const VendorPortal = () => {
                       </span>
                     </div>
                     {/* Refresh Icon Button */}
-                    <button
+                    <Button
                       type="button"
                       onClick={generateCaptcha}
-                      className="p-1 rounded bg-(--color-whiteSmoke) hover:bg-(--color-shell) transition-colors cursor-pointer"
+                      variant="ghost"
+                      size="small"
+                      className="p-1 rounded bg-(--color-whiteSmoke) hover:bg-(--color-shell)"
                       title="Refresh code"
                     >
                       <HiRefresh className="w-3.5 h-3.5 text-preto" />
-                    </button>
+                    </Button>
                   </div>
                   
                   {/* Input Field Inside Box */}
                   <div className="relative z-10">
-                    <input
+                    <Input
+                      name="captchaInput"
                       type="text"
                       value={captchaInput}
                       onChange={(e) => handleCaptchaChange(e.target.value)}
                       onBlur={handleCaptchaBlur}
-                      className={`w-full rounded-xl border px-3 py-1.5 text-sm text-preto placeholder:text-(--color-hina) focus:outline-none border-preto focus:border-preto ${
-                        captchaError ? "border-(--color-error)" : ""
-                      }`}
+                      error={captchaError}
                       placeholder="Enter code"
                       maxLength={5}
+                      size="small"
+                      inputClassName="rounded-xl"
                     />
-                    {captchaError && (
-                      <p className="mt-1 text-xs text-(--color-error)">{captchaError}</p>
-                    )}
                   </div>
                 </div>
               </div>
@@ -414,17 +404,15 @@ const VendorPortal = () => {
               </div>
             )}
             
-            <button
+            <Button
               type="submit"
               disabled={registrationMutation.isPending}
-              className={`w-full md:w-auto px-8 py-3 rounded-lg bg-[#222] text-white font-semibold tracking-wide shadow-lg shadow-black/10 ${
-                registrationMutation.isPending 
-                  ? 'opacity-60 cursor-not-allowed' 
-                  : 'cursor-pointer hover:bg-(--color-emperor) transition-colors'
-              }`}
+              loading={registrationMutation.isPending}
+              variant="primary"
+              className="w-full md:w-auto px-8 py-3 rounded-lg shadow-lg shadow-black/10 hover:bg-(--color-emperor)"
             >
               {registrationMutation.isPending ? 'Submitting...' : 'Register as vendor'}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

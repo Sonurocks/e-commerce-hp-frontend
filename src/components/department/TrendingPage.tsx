@@ -6,6 +6,7 @@ import { useSearchParams, usePathname } from "next/navigation";
 import { FiChevronDown, FiCheck } from "react-icons/fi";
 import { DownloadAppBanner } from "@/components";
 import FilterDrawer from "./FilterDrawer";
+import Dropdown from "../common/Dropdown";
 import ProductCard from "./ProductCard";
 import {
   trendingNowByDept,
@@ -93,25 +94,6 @@ export default function TrendingPage() {
     { value: "sale-high", label: translate("Sale: high to low") || "Sale: high to low" },
   ], [translations]);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        sortDropdownRef.current &&
-        !sortDropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsSortDropdownOpen(false);
-      }
-    };
-
-    if (isSortDropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isSortDropdownOpen]);
 
   // Find the clicked trending item
   const clickedTrendingItem = useMemo((): TrendingItem | null => {
@@ -272,22 +254,12 @@ export default function TrendingPage() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="relative" ref={sortDropdownRef}>
-            <button
-              onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-sm text-gray-700 hover:bg-gray-200 transition-colors"
-            >
-              <span>{translate("Sort by") || "Sort by"}</span>
-              <FiChevronDown
-                className={`w-4 h-4 transition-transform ${
-                  isSortDropdownOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            {/* Dropdown Panel */}
-            {isSortDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+          <div className="relative">
+            <Dropdown
+              isOpen={isSortDropdownOpen}
+              onClose={() => setIsSortDropdownOpen(false)}
+              contentClassName="right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
+              content={
                 <div className="py-2">
                   {sortOptions.map((option) => {
                     const isSelected = sortBy === option.value;
@@ -308,8 +280,20 @@ export default function TrendingPage() {
                     );
                   })}
                 </div>
-              </div>
-            )}
+              }
+            >
+              <button
+                onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-sm text-gray-700 hover:bg-gray-200 transition-colors"
+              >
+                <span>{translate("Sort by") || "Sort by"}</span>
+                <FiChevronDown
+                  className={`w-4 h-4 transition-transform ${
+                    isSortDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+            </Dropdown>
           </div>
         </div>
 

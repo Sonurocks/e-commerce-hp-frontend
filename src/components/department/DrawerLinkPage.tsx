@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation";
 import { FiChevronDown, FiCheck } from "react-icons/fi";
 import { DownloadAppBanner, ProductCard } from "@/components";
 import FilterDrawer from "./FilterDrawer";
+import Dropdown from "../common/Dropdown";
+import PageNotFound from "../not-found/PageNotFound";
 import {
   DepartmentKey,
   Product,
@@ -124,7 +126,6 @@ export default function DrawerLinkPage() {
   const [sortBy, setSortBy] = useState<string>("our-picks");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState<boolean>(false);
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState<boolean>(false);
-  const sortDropdownRef = useRef<HTMLDivElement>(null);
 
   // Determine department from pathname (default to womenswear)
   const department = useMemo((): DepartmentKey => {
@@ -256,18 +257,9 @@ export default function DrawerLinkPage() {
     return getBreadcrumbText(department, translations);
   }, [department, translations]);
 
-  // If no link found, show empty state or redirect
+  // If no link found, show custom 404 page
   if (!currentLink) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Page not found</h1>
-          <Link href="/" className="text-blue-600 hover:underline">
-            Go to Home
-          </Link>
-        </div>
-      </div>
-    );
+    return <PageNotFound />;
   }
 
   return (
@@ -313,22 +305,12 @@ export default function DrawerLinkPage() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="relative" ref={sortDropdownRef}>
-            <button
-              onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-sm text-gray-700 hover:bg-gray-200 transition-colors"
-            >
-              <span>Sort by</span>
-              <FiChevronDown
-                className={`w-4 h-4 transition-transform ${
-                  isSortDropdownOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            {/* Dropdown Panel */}
-            {isSortDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-56 bg-branco rounded-lg shadow-lg border border-gray-200 z-50">
+          <div className="relative">
+            <Dropdown
+              isOpen={isSortDropdownOpen}
+              onClose={() => setIsSortDropdownOpen(false)}
+              contentClassName="right-0 mt-2 w-56 bg-branco rounded-lg shadow-lg border border-gray-200 z-50"
+              content={
                 <div className="py-2">
                   {sortOptions.map((option) => {
                     const isSelected = sortBy === option.value;
@@ -349,8 +331,20 @@ export default function DrawerLinkPage() {
                     );
                   })}
                 </div>
-              </div>
-            )}
+              }
+            >
+              <button
+                onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-sm text-gray-700 hover:bg-gray-200 transition-colors"
+              >
+                <span>Sort by</span>
+                <FiChevronDown
+                  className={`w-4 h-4 transition-transform ${
+                    isSortDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+            </Dropdown>
           </div>
         </div>
 

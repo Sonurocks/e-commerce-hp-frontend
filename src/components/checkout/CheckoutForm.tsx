@@ -7,6 +7,8 @@ import { FiPhone } from "react-icons/fi";
 import { FiCheckCircle } from "react-icons/fi";
 import { useCart } from "@/context/CartContext";
 import { useCheckout } from "@/context/CheckoutContext";
+import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 
 const formatCurrency = (value: number, symbol: string) =>
   `${symbol}${value.toFixed(2)}`;
@@ -155,12 +157,13 @@ export default function CheckoutForm() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-light mb-4">Your cart is empty</h1>
-          <Link
+          <Button
             href="/"
-            className="inline-block bg-black text-white px-6 py-3 rounded-md hover:bg-gray-900 transition"
+            variant="secondary"
+            className="px-6 py-3 rounded-md"
           >
             Continue Shopping
-          </Link>
+          </Button>
         </div>
       </div>
     );
@@ -212,49 +215,38 @@ export default function CheckoutForm() {
                 <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    First name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full border border-preto px-4 py-3 rounded-md focus:outline-none focus:border-black"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Last name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full border border-preto px-4 py-3 rounded-md focus:outline-none focus:border-black"
-                  />
-                </div>
+                <Input
+                  name="firstName"
+                  label="First name"
+                  type="text"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  required
+                  labelClassName="text-sm font-medium"
+                />
+                <Input
+                  name="lastName"
+                  label="Last name"
+                  type="text"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  required
+                  labelClassName="text-sm font-medium"
+                />
               </div>
 
               {/* Email */}
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Email address <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full border bg-gray-100 border-gray-100 px-4 py-3 rounded-md focus:outline-none focus:border-black"
-                  placeholder="admin@example.com"
-                />
-              </div>
+              <Input
+                name="email"
+                label="Email address"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                variant="filled"
+                placeholder="admin@example.com"
+                labelClassName="text-sm font-medium"
+              />
 
               {/* Notifications Checkbox */}
               <div className="flex items-start gap-2">
@@ -312,32 +304,25 @@ export default function CheckoutForm() {
               </div>
 
               {/* Address */}
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Address <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full border border-preto px-4 py-3 rounded-md focus:outline-none focus:border-black"
-                  placeholder="Start typing to search your address"
-                />
-              </div>
+              <Input
+                name="address"
+                label="Address"
+                type="text"
+                value={formData.address}
+                onChange={handleInputChange}
+                required
+                placeholder="Start typing to search your address"
+                labelClassName="text-sm font-medium"
+              />
 
               {showAddressLine2 ? (
-                <div>
-                  <input
-                    type="text"
-                    name="addressLine2"
-                    value={formData.addressLine2}
-                    onChange={handleInputChange}
-                    className="w-full border border-preto px-4 py-3 rounded-md focus:outline-none focus:border-black"
-                    placeholder="Apartment, suite, etc."
-                  />
-                </div>
+                <Input
+                  name="addressLine2"
+                  type="text"
+                  value={formData.addressLine2}
+                  onChange={handleInputChange}
+                  placeholder="Apartment, suite, etc."
+                />
               ) : (
                 <button
                   type="button"
@@ -350,42 +335,32 @@ export default function CheckoutForm() {
 
               {/* City, County, Postal Code */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    City <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full border border-preto px-4 py-3 rounded-md focus:outline-none focus:border-black"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">County</label>
-                  <input
-                    type="text"
-                    name="county"
-                    value={formData.county}
-                    onChange={handleInputChange}
-                    className="w-full border border-preto px-4 py-3 rounded-md focus:outline-none focus:border-black"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Postal or zip code <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="postalCode"
-                    value={formData.postalCode}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full border border-preto px-4 py-3 rounded-md focus:outline-none focus:border-black"
-                  />
-                </div>
+                <Input
+                  name="city"
+                  label="City"
+                  type="text"
+                  value={formData.city}
+                  onChange={handleInputChange}
+                  required
+                  labelClassName="text-sm font-medium"
+                />
+                <Input
+                  name="county"
+                  label="County"
+                  type="text"
+                  value={formData.county}
+                  onChange={handleInputChange}
+                  labelClassName="text-sm font-medium"
+                />
+                <Input
+                  name="postalCode"
+                  label="Postal or zip code"
+                  type="text"
+                  value={formData.postalCode}
+                  onChange={handleInputChange}
+                  required
+                  labelClassName="text-sm font-medium"
+                />
               </div>
 
               {/* Phone */}
@@ -405,13 +380,15 @@ export default function CheckoutForm() {
                     <option value="+44">🇬🇧 +44</option>
                     <option value="+49">🇩🇪 +49</option>
                   </select>
-                  <input
-                    type="tel"
+                  <Input
                     name="phone"
+                    type="tel"
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
-                    className="flex-1 min-w-0 border border-preto px-4 py-3 rounded-md focus:outline-none focus:border-black"
+                    fullWidth={false}
+                    className="flex-1 min-w-0"
+                    inputClassName="flex-1 min-w-0"
                   />
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
@@ -436,12 +413,13 @@ export default function CheckoutForm() {
 
               {/* Submit Button */}
               <div className="flex justify-end">
-                <button
+                <Button
                   type="submit"
-                  className="w-full md:w-[300px] bg-black text-white py-3 px-10 rounded-md text-sm font-semibold tracking-wide hover:bg-gray-900 transition"
+                  variant="secondary"
+                  className="w-full md:w-[300px] py-3 px-10 rounded-md text-sm tracking-wide"
                 >
                   Confirm Delivery Address
-                </button>
+                </Button>
               </div>
                 </form>
 
@@ -596,17 +574,14 @@ export default function CheckoutForm() {
                   </div>
 
                   <div className="flex justify-end">
-                    <button
+                    <Button
                       type="button"
                       disabled={!selectedPaymentMethod}
-                      className={`w-full md:w-[300px] py-3 px-10 rounded-md text-sm font-semibold tracking-wide transition ${
-                        selectedPaymentMethod
-                          ? "bg-black text-white hover:bg-gray-900"
-                          : "bg-black text-white cursor-not-allowed"
-                      }`}
+                      variant="secondary"
+                      className="w-full md:w-[300px] py-3 px-10 rounded-md text-sm tracking-wide"
                     >
                       Confirm Payment Method
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </>
@@ -625,13 +600,14 @@ export default function CheckoutForm() {
                   <p className="text-2xl font-semibold">{totals.total}</p>
                 </div>
               </div>
-              <button
+              <Button
                 type="button"
                 disabled
-                className="w-full bg-gray-100 text-gray-500 py-3 rounded-md text-sm font-semibold tracking-wide cursor-not-allowed"
+                variant="primary"
+                className="w-full bg-gray-100 text-gray-500 py-3 rounded-md text-sm tracking-wide"
               >
                 Place Order
-              </button>
+              </Button>
               <p className="text-xs text-gray-500 mt-2 leading-relaxed">
                 By placing your order a new FARFETCH account will be created and
                 you agree to our{" "}
@@ -756,13 +732,12 @@ export default function CheckoutForm() {
               </div>
 
               <div className="mt">
-                <label className="block text-sm font-medium mb-0">
-                  Promo code
-                </label>
-                <input
+                <Input
+                  label="Promo code"
                   type="text"
                   placeholder="Enter promo code"
-                  className="w-full border border-gray-300 px-4 py-3 rounded-md focus:outline-none focus:border-black"
+                  labelClassName="text-sm font-medium mb-0"
+                  inputClassName="border-gray-300"
                 />
               </div>
 

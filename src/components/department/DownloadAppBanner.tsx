@@ -1,12 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { BsQrCode } from "react-icons/bs";
 import { useLanguage } from "@/context/LanguageContext";
+import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 
 export default function DownloadAppBanner() {
   const { translations } = useLanguage();
   const copy = translations.homepage.downloadApp;
+  const farfetchText = translations.productCopy["FARFETCH"] || translations.header.logoText || "FARFETCH";
+  const [email, setEmail] = useState("");
 
   return (
     <section className="download-app-banner py-16 md:py-20">
@@ -17,7 +21,7 @@ export default function DownloadAppBanner() {
           {/* Left Section: DOWNLOAD THE FARFETCH APP */}
           <div className="w-full lg:w-auto lg:flex-1 flex flex-col items-center text-center lg:items-start lg:text-left">
             <h2 className="text-xl sm:text-2xl font-normal text-preto mb-4 leading-tight uppercase tracking-normal">
-              {copy.heading}
+              {copy.heading.replace("FARFETCH", farfetchText)}
             </h2>
             <p className="text-sm sm:text-base font-normal text-preto mb-4 leading-relaxed max-w-xl">
               {copy.description}{" "}
@@ -40,17 +44,24 @@ export default function DownloadAppBanner() {
             </p>
             {/* Form - Input and Button same height (h-11) */}
             <form className="w-full max-w-xs flex flex-col sm:flex-row gap-3">
-              <input
+              <Input
+                name="email"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder={copy.emailPlaceholder}
-                className="h-11 sm:flex-1 border border-preto rounded-lg px-3 text-sm text-preto placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                fullWidth={false}
+                className="sm:flex-1"
+                inputClassName="h-11 border-preto rounded-lg px-3 text-sm placeholder:text-gray-400 focus:ring-1 focus:ring-black focus:border-black"
               />
-              <button
+              <Button
                 type="button"
-                className="h-11 sm:w-auto bg-[#222] text-white rounded-lg px-6 text-sm font-medium transition-colors hover:bg-[#333] whitespace-nowrap"
+                variant="primary"
+                size="small"
+                className="h-11 sm:w-auto rounded-lg px-6 text-sm whitespace-nowrap"
               >
                 {copy.sendButton}
-              </button>
+              </Button>
             </form>
           </div>
 

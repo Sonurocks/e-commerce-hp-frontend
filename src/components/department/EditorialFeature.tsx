@@ -24,9 +24,9 @@ export default function EditorialFeature({
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center my-8 lg:my-16 px-4 md:px-8">
       {/* Content Side */}
-      <div className="order-2 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left lg:pl-16">
+      <div className="order-2 lg:order-1 flex flex-col items-center text-center">
         <h3
-          className="text-(--color-preto) mb-4 lg:mb-9 font-normal max-w-md lg:max-w-none lg:pl-14"
+          className="text-(--color-preto) mb-4 lg:mb-9 font-normal max-w-md lg:max-w-none"
           style={{
             fontFamily: '"Farfetch Basis", "Helvetica Neue", Arial, sans-serif',
             fontSize: "clamp(1.5rem, 4vw, 2.0rem)", // Responsive font size
@@ -47,7 +47,7 @@ export default function EditorialFeature({
         </p>
         <Link
           href={`/shop?section=editorial&department=${department}`}
-          className="w-full md:w-auto md:inline-block text-sm border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded font-semibold transition-colors text-center md:text-left lg:ml-44"
+          className="w-full md:w-auto md:inline-block text-sm border border-[var(--theme-border)] text-(--color-preto) px-4 py-2 rounded font-semibold transition-colors text-center"
         >
           {ctaLabel ?? "Shop now"}
         </Link>

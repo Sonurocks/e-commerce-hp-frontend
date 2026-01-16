@@ -8,8 +8,9 @@ import SupportNavigation from "@/components/support/SupportNavigation";
 import AccordionSection from "@/components/support/AccordionSection";
 import FeedbackPrompt from "@/components/support/FeedbackPrompt";
 import { SupportNavLink, SupportSection } from "@/types/support";
+import { useLanguage } from "@/context/LanguageContext";
 
-const sections: SupportSection[] = [
+const getSections = (translate: (text: string) => string): SupportSection[] => [
   {
     title: "RETURNS POLICY",
     content: (
@@ -139,7 +140,7 @@ const sections: SupportSection[] = [
               href="mailto:customerservice@farfetch.com"
               className="underline"
             >
-              customerservice@farfetch.com
+              {translate("customerservice@farfetch.com")}
             </Link>{" "}
             quoting your name, address and order reference; or
           </li>
@@ -457,6 +458,8 @@ const typographyStyles: React.CSSProperties = {
 };
 
 const ReturnsAndRefunds = () => {
+  const { translations } = useLanguage();
+  const translate = (text: string) => translations.productCopy[text] ?? text;
   const pathname = usePathname();
   const [openSectionIndex, setOpenSectionIndex] = useState<number | null>(null);
   const [feedbackHelpful, setFeedbackHelpful] = useState<boolean | null>(null);
@@ -469,6 +472,8 @@ const ReturnsAndRefunds = () => {
     setFeedbackHelpful(value);
   }, []);
 
+  const sections = useMemo(() => getSections(translate), [translate]);
+  
   const renderedSections = useMemo(
     () =>
       sections.map((section, sectionIndex) => (

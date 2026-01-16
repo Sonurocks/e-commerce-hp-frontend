@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 import VendorDetailDrawer from "./VendorDetailDrawer";
 import ProductCard from "@/components/department/ProductCard";
+import Dropdown from "../common/Dropdown";
 import { Product } from "@/constants/department";
 import bannerImage from "@/assets/banner.png";
 import { FiChevronDown } from "react-icons/fi";
@@ -24,7 +25,6 @@ export default function StorePage({ product }: { product: ProductDetail }) {
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const bannerRef = useRef<HTMLDivElement>(null);
-  const filterDropdownRef = useRef<HTMLDivElement>(null);
   
   const translate = (text?: string) =>
     text ? translations.productCopy[text] ?? text : text;
@@ -153,25 +153,6 @@ export default function StorePage({ product }: { product: ProductDetail }) {
     }
   };
 
-  // Close filter dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        filterDropdownRef.current &&
-        !filterDropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsFilterDropdownOpen(false);
-      }
-    };
-
-    if (isFilterDropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isFilterDropdownOpen]);
 
   // Update scroll states on mount and scroll
   useEffect(() => {
@@ -261,7 +242,7 @@ export default function StorePage({ product }: { product: ProductDetail }) {
                   </div>
                   <span className="text-sm text-gray-500">(210 {translate("Reviews") || "Reviews"})</span>
                 </div>
-                <p className="text-sm text-gray-600 mt-1">Delhi • Since 2021 • {translate("Verified Vendor") || "Verified Vendor"}</p>
+                <p className="text-sm text-gray-600 mt-1">{translate("Delhi • Since 2021")} • {translate("Verified Vendor") || "Verified Vendor"}</p>
               </div>
             </div>
           </div>
@@ -309,22 +290,12 @@ export default function StorePage({ product }: { product: ProductDetail }) {
             <button className="text-[14px] font-medium text-white hover:text-gray-300 transition-colors">
               {translate("Call Now") || "Call Now"}
             </button>
-            <div className="relative ml-auto" ref={filterDropdownRef}>
-              <button
-                onClick={() => setIsFilterDropdownOpen(!isFilterDropdownOpen)}
-                className="px-4 py-2 text-[15px] font-medium text-white border border-white rounded hover:bg-gray-800 transition-colors flex items-center gap-2"
-              >
-                {translate("Filter") || "Filter"}
-                <FiChevronDown
-                  className={`w-4 h-4 transition-transform ${
-                    isFilterDropdownOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              {/* Filter Dropdown */}
-              {isFilterDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+            <div className="relative ml-auto">
+              <Dropdown
+                isOpen={isFilterDropdownOpen}
+                onClose={() => setIsFilterDropdownOpen(false)}
+                contentClassName="right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
+                content={
                   <div className="py-2">
                     <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                       {translate("CATEGORY") || "CATEGORY"}
@@ -345,8 +316,20 @@ export default function StorePage({ product }: { product: ProductDetail }) {
                       {translate("PROMOTION") || "PROMOTION"}
                     </button>
                   </div>
-                </div>
-              )}
+                }
+              >
+                <button
+                  onClick={() => setIsFilterDropdownOpen(!isFilterDropdownOpen)}
+                  className="px-4 py-2 text-[15px] font-medium text-white border border-white rounded hover:bg-gray-800 transition-colors flex items-center gap-2"
+                >
+                  {translate("Filter") || "Filter"}
+                  <FiChevronDown
+                    className={`w-4 h-4 transition-transform ${
+                      isFilterDropdownOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              </Dropdown>
             </div>
           </nav>
 

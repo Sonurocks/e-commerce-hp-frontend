@@ -6,6 +6,7 @@ import Link from "next/link";
 import { footerYouthImage } from "@/assets";
 import { useRouter } from "next/navigation";
 import { useLogo } from "@/context/LogoContext";
+import Dropdown from "../common/Dropdown";
 
 const YouthDiscount = () => {
   const router = useRouter();
@@ -94,32 +95,12 @@ const YouthDiscount = () => {
             </label>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
               {/* Country Code Dropdown */}
-              <div className="relative w-full sm:w-auto">
-                <button
-                  type="button"
-                  onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                  className="flex items-center justify-between w-full sm:w-32 px-4 py-3 border border-preto rounded-lg text-sm font-normal text-preto bg-white hover:bg-gray-50 transition cursor-pointer min-h-[48px]"
-                >
-                  <span>{countryCode}</span>
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="ml-2"
-                  >
-                    <path
-                      d="M3 4.5L6 7.5L9 4.5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-                {showCountryDropdown && (
-                  <div className="absolute top-full left-0 mt-1 w-full sm:w-32 bg-white border border-preto rounded-lg shadow-lg z-10">
+              <div className="w-full sm:w-auto">
+                <Dropdown
+                  isOpen={showCountryDropdown}
+                  onClose={() => setShowCountryDropdown(false)}
+                  contentClassName="top-full left-0 mt-1 w-full sm:w-32 bg-white border border-preto rounded-lg shadow-lg z-10"
+                  content={
                     <button
                       type="button"
                       onClick={() => {
@@ -130,8 +111,32 @@ const YouthDiscount = () => {
                     >
                       IN (+91)
                     </button>
-                  </div>
-                )}
+                  }
+                >
+                  <button
+                    type="button"
+                    onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                    className="flex items-center justify-between w-full sm:w-32 px-4 py-3 border border-preto rounded-lg text-sm font-normal text-preto bg-white hover:bg-gray-50 transition cursor-pointer min-h-[48px]"
+                  >
+                    <span>{countryCode}</span>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="ml-2"
+                    >
+                      <path
+                        d="M3 4.5L6 7.5L9 4.5"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </Dropdown>
               </div>
 
               {/* Mobile Number Input */}

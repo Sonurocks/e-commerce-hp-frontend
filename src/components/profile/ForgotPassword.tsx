@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
-import { FiX } from "react-icons/fi";
+import React, { useEffect, useState } from "react";
 import VerifyOTP from "./VerifyOTP";
+import Modal from "../common/Modal";
 
 interface ForgotPasswordProps {
   isOpen: boolean;
@@ -10,7 +10,6 @@ interface ForgotPasswordProps {
 }
 
 const ForgotPassword: React.FC<ForgotPasswordProps> = ({ isOpen, onClose }) => {
-  const modalRef = useRef<HTMLDivElement>(null);
   const [email, setEmail] = useState<string>("");
   const [emailError, setEmailError] = useState("");
   const [showOTPModal, setShowOTPModal] = useState(false);
@@ -31,41 +30,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ isOpen, onClose }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
-  // Prevent body scroll when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      // Save current scroll position
-      const scrollY = window.scrollY;
-      const originalOverflow = document.body.style.overflow;
-      const originalPosition = document.body.style.position;
-      const originalTop = document.body.style.top;
-      const originalWidth = document.body.style.width;
-
-      // Prevent scrolling
-      document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
-
-      // Prevent touch scrolling on mobile
-      const preventTouchMove = (e: TouchEvent) => {
-        e.preventDefault();
-      };
-      document.addEventListener("touchmove", preventTouchMove, { passive: false });
-
-      return () => {
-        // Restore original styles
-        document.body.style.overflow = originalOverflow;
-        document.body.style.position = originalPosition;
-        document.body.style.top = originalTop;
-        document.body.style.width = originalWidth;
-        window.scrollTo(0, scrollY);
-        document.removeEventListener("touchmove", preventTouchMove);
-      };
-    }
-  }, [isOpen]);
-
-  // Close on ESC key
+  // Handle ESC key for nested modals
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) {
@@ -86,138 +51,83 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose, showOTPModal]);
 
-  // Close on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        if (!showOTPModal) {
-          onClose();
-        }
-      }
-    };
-
-    if (isOpen && !showOTPModal) {
-      // Small delay to prevent immediate close when opening
-      const timeoutId = setTimeout(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-      }, 100);
-
-      return () => {
-        clearTimeout(timeoutId);
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }
-  }, [isOpen, onClose, showOTPModal]);
-
-  if (!isOpen) return null;
-
   return (
     <>
       {/* Forgot Password Modal - Only show when OTP modal is not open */}
       {!showOTPModal && (
-        <>
-          {/* Dark overlay */}
-          <div className="fixed inset-0 bg-black/50 z-[99]" />
-
-          {/* Forgot Password Modal */}
-          <div
-            ref={modalRef}
-            className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-16 pb-6"
-          >
-        <div
-          className="w-full max-w-[420px] max-h-[90vh] flex flex-col rounded-2xl bg-(--colorWhite) shadow-2xl border border-(--colorGrey) overflow-hidden"
+        <Modal
+          isOpen={isOpen}
+          onClose={onClose}
+          title="Forgot your password?"
+          size="medium"
+          position="top"
+          closeOnBackdropClick={!showOTPModal}
         >
-          {/* Header - Fixed */}
-          <div className="flex-shrink-0 bg-(--colorWhite)">
-            <div className="flex items-start justify-between px-8 pt-8 pb-6">
-              <div>
-                <p className="text-[24px] leading-8 font-normal text-preto">
-                  Forgot your password?
-                </p>
-              </div>
-              <button
-                onClick={onClose}
-                aria-label="Close forgot password modal"
-                className="text-preto hover:text-preto transition rounded-full p-2 hover:bg-(--colorLightGrey)"
-              >
-                <FiX className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Body - Scrollable */}
-          <div className="flex-1 overflow-y-auto">
-            <div className="px-8 py-5 space-y-4">
-              <p className="text-base font-normal text-preto">
-                Enter your email address and we will send you a otp to reset your password
-              </p>
+          <div className="px-8 py-5 space-y-4">
+            <p className="text-base font-normal text-preto">
+              Enter your email address and we will send you a otp to reset your password
+            </p>
+            
+            <form 
+              className="space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!validateEmail(email)) {
+                  setEmailError("Please enter a valid email address");
+                } else {
+                  setEmailError("");
+                  // Open OTP modal
+                  setShowOTPModal(true);
+                }
+              }}
+            >
+              <label className="block text-xs font-normal text-preto">
+                Email address
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (emailError) {
+                      setEmailError("");
+                    }
+                  }}
+                  onBlur={() => {
+                    if (email && !validateEmail(email)) {
+                      setEmailError("Please enter a valid email address");
+                    } else {
+                      setEmailError("");
+                    }
+                  }}
+                  className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
+                    emailError ? "border-red-500" : "border-preto focus:border-(--color-preto)"
+                  }`}
+                  placeholder="you@example.com"
+                />
+                {emailError && (
+                  <p className="mt-1 text-xs text-red-500">{emailError}</p>
+                )}
+              </label>
               
-              <form 
-                className="space-y-4"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (!validateEmail(email)) {
-                    setEmailError("Please enter a valid email address");
-                  } else {
-                    setEmailError("");
-                    // Open OTP modal
-                    setShowOTPModal(true);
-                  }
-                }}
+              <button
+                type="submit"
+                className="w-full rounded-xl bg-(--colorDark) text-white font-semibold py-3 text-base shadow-sm  transition"
               >
-                <label className="block text-xs font-normal text-preto">
-                  Email address
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      if (emailError) {
-                        setEmailError("");
-                      }
-                    }}
-                    onBlur={() => {
-                      if (email && !validateEmail(email)) {
-                        setEmailError("Please enter a valid email address");
-                      } else {
-                        setEmailError("");
-                      }
-                    }}
-                    className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
-                      emailError ? "border-red-500" : "border-preto focus:border-(--color-preto)"
-                    }`}
-                    placeholder="you@example.com"
-                  />
-                  {emailError && (
-                    <p className="mt-1 text-xs text-red-500">{emailError}</p>
-                  )}
-                </label>
-                
+                Get OTP
+              </button>
+              
+              <div className="text-center">
                 <button
-                  type="submit"
-                  className="w-full rounded-xl bg-(--colorDark) text-white font-semibold py-3 text-base shadow-sm  transition"
+                  type="button"
+                  onClick={onClose}
+                  className="text-xs font-thin text-preto underline hover:text-preto underline-offset-2 hover:underline"
                 >
-                  Get OTP
+                  Back To Sign In
                 </button>
-                
-                <div className="text-center">
-                  <button
-                    type="button"
-                    onClick={onClose}
-                    className="text-xs font-thin text-preto underline hover:text-preto underline-offset-2 hover:underline"
-                  >
-                    Back To Sign In
-                  </button>
-                </div>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
-        </div>
-      </div>
-        </>
+        </Modal>
       )}
 
       {/* Verify OTP Modal */}

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
-import { FiX, FiMapPin, FiPhone, FiMail, FiStar } from "react-icons/fi";
+import React from "react";
+import { FiMapPin, FiPhone, FiMail, FiStar } from "react-icons/fi";
 import { useLanguage } from "@/context/LanguageContext";
+import Modal from "../common/Modal";
 
 interface VendorDetailDrawerProps {
   isOpen: boolean;
@@ -19,80 +20,20 @@ export default function VendorDetailDrawer({
   vendorName,
 }: VendorDetailDrawerProps) {
   const { translations } = useLanguage();
-  const modalRef = useRef<HTMLDivElement>(null);
 
   const translate = (text?: string) =>
     text ? translations.productCopy[text] ?? text : text;
 
-  // Prevent body scroll when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
-  // Close on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      const timeoutId = setTimeout(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-      }, 100);
-
-      return () => {
-        clearTimeout(timeoutId);
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
   return (
-    <>
-      {/* Backdrop overlay */}
-      <div 
-        className="fixed inset-0 bg-black/50 z-[99] transition-opacity duration-300"
-        onClick={onClose}
-      />
-      
-      {/* Modal Container - Centered */}
-      <div
-        ref={modalRef}
-        className="fixed inset-0 z-[100] flex items-center justify-center px-4 py-6"
-        style={{ fontFamily: fontStack }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="w-full max-w-4xl max-h-[90vh] bg-(--color-branco) rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col">
-          {/* Header with Close Button */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 flex-shrink-0">
-            <h2 className="text-xl font-semibold text-(--color-preto)">
-              {translate("VENDOR DETAILS") || "VENDOR DETAILS"}
-            </h2>
-            <button
-              onClick={onClose}
-              className="text-(--color-preto) hover:text-(--color-hina) transition p-2 rounded-full hover:bg-gray-100"
-              aria-label="Close modal"
-            >
-              <FiX className="w-6 h-6" />
-            </button>
-          </div>
-
-          {/* Content - Scrollable */}
-          <div className="flex-1 overflow-y-auto px-6 py-6">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={translate("VENDOR DETAILS") || "VENDOR DETAILS"}
+      size="large"
+      position="centered"
+      className="bg-(--color-branco) border-gray-200"
+    >
+      <div className="px-6 py-6">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-32">
               {/* Left Side - Vendor Logo and About Section */}
               <div className="w-full lg:w-[320px] flex-shrink-0">
@@ -200,8 +141,6 @@ export default function VendorDetailDrawer({
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </>
+    </Modal>
   );
 }

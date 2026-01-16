@@ -151,11 +151,13 @@ const convertToCuratedCard = (product: ProductDetail): CuratedProductCardData =>
 const VISIBLE_CURATED_CARDS = 5;
 
 // Helper function to convert CompleteTheLookProduct to Product
-const convertToProduct = (product: CompleteTheLookProduct): Product => {
+const convertToProduct = (product: CompleteTheLookProduct, translateFn: (text?: string) => string | undefined): Product => {
+  const translatedBrand = product.brand ? translateFn(product.brand) || product.brand : "";
+  const translatedProductName = product.productName ? translateFn(product.productName) || product.productName : "";
   const title = product.brand && product.productName 
-    ? `${product.brand} ${product.productName}` 
-    : product.title;
-  const subtitle = product.brand ? product.productName : product.subtitle;
+    ? `${translatedBrand} ${translatedProductName}` 
+    : translateFn(product.title) || product.title;
+  const subtitle = product.brand ? translatedProductName : (product.subtitle ? translateFn(product.subtitle) || product.subtitle : undefined);
   const price = product.discountedPrice || product.price || "";
   
   return {
@@ -170,11 +172,13 @@ const convertToProduct = (product: CompleteTheLookProduct): Product => {
 };
 
 // Helper function to convert CuratedProductCardData to Product
-const convertCuratedToProduct = (card: CuratedProductCardData): Product => {
+const convertCuratedToProduct = (card: CuratedProductCardData, translateFn: (text?: string) => string | undefined): Product => {
+  const translatedBrand = card.brand ? translateFn(card.brand) || card.brand : "";
+  const translatedProductName = card.productName ? translateFn(card.productName) || card.productName : "";
   const title = card.brand && card.productName
-    ? `${card.brand} ${card.productName}`
-    : card.productName;
-  const subtitle = card.brand ? card.productName : undefined;
+    ? `${translatedBrand} ${translatedProductName}`
+    : translatedProductName;
+  const subtitle = card.brand ? translatedProductName : undefined;
   const price = card.price || "";
   
   return {
@@ -358,7 +362,7 @@ export default function ProductDetailAdditionalSection({
         </h2>
         <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {completeTheLookProducts.map((recommendedProduct) => {
-            const product = convertToProduct(recommendedProduct);
+            const product = convertToProduct(recommendedProduct, translate);
             return (
               <div key={product.id} className="flex-shrink-0 w-[280px] md:w-auto">
                 <ProductCard product={product} />
@@ -402,7 +406,7 @@ export default function ProductDetailAdditionalSection({
           )}
           <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {displayedCuratedCards.map((card) => {
-              const product = convertCuratedToProduct(card);
+              const product = convertCuratedToProduct(card, translate);
               return (
                 <div key={`${card.id}-${curatedStartIndex}`} className="flex-shrink-0 w-[280px] md:w-auto">
                   <ProductCard product={product} />
@@ -422,7 +426,7 @@ export default function ProductDetailAdditionalSection({
           </div>
           <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {bestsellerProducts.map((bestseller) => {
-              const product = convertToProduct(bestseller);
+              const product = convertToProduct(bestseller, translate);
               return (
                 <div key={`bestseller-${product.id}`} className="flex-shrink-0 w-[280px] md:w-auto">
                   <ProductCard product={product} />
@@ -442,7 +446,7 @@ export default function ProductDetailAdditionalSection({
           </div>
           <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {featuredProducts.map((featuredProduct) => {
-              const product = convertToProduct(featuredProduct);
+              const product = convertToProduct(featuredProduct, translate);
               return (
                 <div key={`featured-${product.id}`} className="flex-shrink-0 w-[280px] md:w-auto">
                   <ProductCard product={product} />

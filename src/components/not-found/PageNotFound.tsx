@@ -1,7 +1,12 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
 
 const PageNotFound = () => {
+  const { translations } = useLanguage();
+  const translate = (text: string) => translations.productCopy[text] ?? text;
   return (
     <section
       className=" px-4 py-12 text-(--color-preto) sm:py-16 lg:py-20"
@@ -12,7 +17,7 @@ const PageNotFound = () => {
           <div className="space-y-8 ">
             <div className="flex items-center gap-4 text-xs font-semibold  uppercase tracking-[0.45em] text-(--color-hina)">
               <span className="hidden h-px flex-1 bg-(--colorGrey) sm:inline-flex" />
-              <span>404 / page not found</span>
+              <span>{translate("404 / PAGE NOT FOUND")}</span>
               <span className="hidden h-px flex-1 bg-(--colorGrey) sm:inline-flex" />
             </div>
 
@@ -24,11 +29,10 @@ const PageNotFound = () => {
                 id="not-found-heading"
                 className="text-[2.2rem] font-semibold leading-tight md:text-[2.7rem]"
               >
-                This page has gone out of style.
+                {translate("This page has gone out of style.")}
               </h1>
               <p className="max-w-xl text-base text-(--color-hina) md:text-lg">
-                The page doesn&apos;t exist. Maybe double-check the link? Or use the
-                search above to find what you&apos;re looking for.
+                {translate("The page doesn't exist. Maybe double-check the link? Or use the search above to find what you're looking for.")}
               </p>
             </div>
 
@@ -37,41 +41,41 @@ const PageNotFound = () => {
                 href="/"
                 className="inline-flex w-full items-center justify-center gap-3 rounded-full border  border-(--color-hina) px-7 py-3 text-(--color-preto) transition sm:w-auto"
               >
-                Keep browsing
+                {translate("Keep browsing")}
               </Link>
               <Link
                 href="/contact-us"
                 className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-(--color-hina) px-7 py-3 text-(--color-preto) transition hover:border-(--color-preto) sm:w-auto"
               >
-                Contact customer care
+                {translate("Contact customer care")}
               </Link>
             </div>
           </div>
 
           <div className="rounded-4xl border border-(--colorGrey) bg-linear-to-br from-(--colorWhite) to-(--colorLightGrey) p-6 shadow-[0_20px_45px_rgba(0,0,0,0.05)] sm:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-(--color-hina)">
-              quick directions
+              {translate("quick directions")}
             </p>
             <div className="mt-6 space-y-3 text-left text-base text-(--color-preto) sm:space-y-4">
               <Link
                 href="/"
                 className="flex items-center justify-between rounded-xl border border-transparent px-4 py-3 transition hover:border-(--color-preto)"
               >
-                <span>Back to home</span>
+                <span>{translate("Back to home")}</span>
                 <span aria-hidden>&rarr;</span>
               </Link>
               <Link
                 href="/wishlist"
                 className="flex items-center justify-between rounded-xl border border-transparent px-4 py-3 transition hover:border-(--color-preto)"
               >
-                <span>Wishlist</span>
+                <span>{translate("Wishlist")}</span>
                 <span aria-hidden>&rarr;</span>
               </Link>
               <Link
                 href="/customer-care"
                 className="flex items-center justify-between rounded-xl border border-transparent px-4 py-3 transition hover:border-(--color-preto)"
               >
-                <span>Customer care</span>
+                <span>{translate("Customer care")}</span>
                 <span aria-hidden>&rarr;</span>
               </Link>
               
@@ -80,7 +84,7 @@ const PageNotFound = () => {
         </div>
 
         <div className="flex flex-col items-start gap-2 border-t border-(--colorGrey) pt-6 text-xs uppercase tracking-[0.35em] text-(--color-hina) sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:text-sm">
-          <span>Need help? 24/7 </span>
+          <span>{translate("Need help? 24/7")} </span>
        
          
         </div>

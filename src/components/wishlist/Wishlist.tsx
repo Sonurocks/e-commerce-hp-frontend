@@ -6,10 +6,13 @@ import Image from "next/image";
 import DownloadAppBanner from "@/components/department/DownloadAppBanner";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Wishlist = () => {
   const { wishlistItems, wishlistCount, removeFromWishlist } = useWishlist();
   const { addItem } = useCart();
+  const { translations } = useLanguage();
+  const translate = (text: string) => translations.productCopy[text] ?? text;
   const [selectedSizes, setSelectedSizes] = useState<Record<string, string>>(
     {}
   );
@@ -24,12 +27,12 @@ const Wishlist = () => {
   const wishlistHeading = useMemo(() => {
     // During SSR and initial render, always show "Wishlist" to match server
     if (!isMounted || wishlistCount === 0) {
-      return "Wishlist";
+      return translate("Wishlist");
     }
     return wishlistCount === 1
-      ? "Wishlist · 1 item"
-      : `Wishlist · ${wishlistCount} items`;
-  }, [wishlistCount, isMounted]);
+      ? translate("Wishlist · 1 item")
+      : translate("Wishlist · {{count}} items").replace("{{count}}", wishlistCount.toString());
+  }, [wishlistCount, isMounted, translations]);
 
   const handleSizeChange = (productId: string, value: string) => {
     setSelectedSizes((prev) => ({ ...prev, [productId]: value }));
@@ -54,16 +57,16 @@ const Wishlist = () => {
         <div className="container mx-auto px-[48px] py-16 max-w-[1440px]">
           <div className="mb-24 max-w-2xl">
             <h1 className="text-4xl font-base text-(--color-preto) mb-3">
-              Wishlist
+              {translate("Wishlist")}
             </h1>
             <p className="text-base  mb-4 font-base leading-relaxed">
-              Add your favourite items to your wishlist and they&apos;ll appear here
+              {translate("Add your favourite items to your wishlist and they'll appear here")}
             </p>
             <Link
               href="/"
               className="inline-block  bg-[var(--theme-bg)] border border-[var(--theme-border)]  text-[var(--theme-text)]  px-5 py-2.5 rounded-md transition-colors font-normal text-sm"
             >
-              Shop Now
+              {translate("Shop Now")}
             </Link>
           </div>
         </div>
@@ -80,8 +83,7 @@ const Wishlist = () => {
             {wishlistHeading}
           </h1>
           <p className="text-sm text-gray-600">
-            Keep track of your favourite pieces and add them to your bag when
-            you&apos;re ready.
+            {translate("Keep track of your favourite pieces and add them to your bag when you're ready.")}
           </p>
         </div>
 
@@ -143,7 +145,7 @@ const Wishlist = () => {
                   <h3 className="text-[13px] text-preto font-semibold line-clamp-2">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-gray-500">FARFETCH ID: {item.id}</p>
+                  <p className="text-sm text-gray-500">{translate("FARFETCH ID:")} {item.id}</p>
 
                   <div className="flex items-center justify-start gap-3 mt-3">
                     {hasDiscount && (
@@ -163,7 +165,7 @@ const Wishlist = () => {
                       htmlFor={`size-${item.id}`}
                       className="text-[11px] uppercase tracking-wide text-gray-500"
                     >
-                      Select size
+                      {translate("Select size")}
                     </label>
                     <select
                       id={`size-${item.id}`}
@@ -185,7 +187,7 @@ const Wishlist = () => {
                     onClick={() => handleAddToBag(item.id)}
                     className="w-full bg-black text-white py-3 rounded-md text-sm font-semibold tracking-wide hover:bg-gray-900 transition"
                   >
-                    Add To Bag
+                    {translate("Add To Bag")}
                   </button>
                 </div>
               </div>

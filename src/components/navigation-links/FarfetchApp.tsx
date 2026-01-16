@@ -8,8 +8,13 @@ import { PiLeafBold } from "react-icons/pi";
 import { RiPriceTag3Line } from "react-icons/ri";
 import { FaStar } from "react-icons/fa";
 import DownloadAppBanner from "@/components/department/DownloadAppBanner";
+import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
+import { useLanguage } from "@/context/LanguageContext";
 
 const FarfetchApp = () => {
+  const { translations } = useLanguage();
+  const farfetchText = translations.productCopy["FARFETCH"] || translations.header.logoText || "FARFETCH";
   const [activeTab, setActiveTab] = useState<"email" | "qr">("email");
   const [email, setEmail] = useState("");
 
@@ -27,7 +32,7 @@ const FarfetchApp = () => {
           <div className="space-y-4 sm:space-y-6 mx-auto lg:mx-0 lg:ml-30 text-center lg:text-left max-w-lg lg:max-w-none">
             <div className="space-y-2 sm:space-y-3">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-preto">
-                THE<br />FARFETCH APP
+                THE<br />{farfetchText} APP
               </h1>
               <p className="text-sm sm:text-base md:text-xl lg:text-2xl font-serif text-preto leading-relaxed">
                 Our app is available<br className="hidden sm:block"/> on iOS and Android.<br className="hidden sm:block"/> Get access to so much more...
@@ -65,20 +70,24 @@ const FarfetchApp = () => {
                   Enter your email and we will send you a link to <br className="hidden sm:block"/>download the free app.
                 </p>
                 <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full items-stretch">
-                  <input
+                  <Input
+                    name="email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="My email is ..."
-                    className="w-full sm:flex-1 px-4 py-3 border border-platinum rounded-lg focus:outline-none focus:ring-2 focus:ring-preto text-sm sm:text-base text-preto bg-white min-w-0"
                     required
+                    fullWidth={false}
+                    className="w-full sm:flex-1 min-w-0"
+                    inputClassName="border-platinum rounded-lg focus:ring-2 focus:ring-preto text-sm sm:text-base"
                   />
-                  <button
+                  <Button
                     type="submit"
-                    className="w-full sm:w-auto px-6 py-3 bg-[#222] text-white rounded-lg font-medium hover:opacity-90 transition-colors whitespace-nowrap flex-shrink-0 text-sm sm:text-base"
+                    variant="primary"
+                    className="w-full sm:w-auto px-6 py-3 rounded-lg whitespace-nowrap flex-shrink-0 text-sm sm:text-base"
                   >
                     Send
-                  </button>
+                  </Button>
                 </form>
               </div>
             ) : (

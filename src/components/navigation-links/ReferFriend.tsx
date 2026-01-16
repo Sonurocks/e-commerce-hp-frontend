@@ -7,8 +7,11 @@ import { footerReferFriendImage } from "@/assets";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaFacebookF } from "react-icons/fa";
 import ForgotPassword from "../profile/ForgotPassword";
+import { useLanguage } from "@/context/LanguageContext";
 
 const ReferFriend = () => {
+  const { translations } = useLanguage();
+  const translate = (text: string) => translations.productCopy[text] ?? text;
   const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -59,7 +62,7 @@ const ReferFriend = () => {
                         : "text-(--color-hina) hover:text-preto"
                     }`}
                   >
-                    SIGN IN
+                    {translate("SIGN IN")}
                     {activeTab === "signin" && (
                       <span className="absolute left-0 right-0 bottom-0 h-0.5 z-10 bg-(--color-preto)" />
                     )}
@@ -111,7 +114,7 @@ const ReferFriend = () => {
                       }}
                     >
                       <label className="block text-xs font-normal text-preto">
-                        Email address
+                        {translate("Email address")}
                         <input
                           type="email"
                           value={email}
@@ -123,7 +126,7 @@ const ReferFriend = () => {
                           }}
                           onBlur={() => {        
                             if (email && !validateEmail(email)) {
-                              setEmailError("Please enter a valid email address");
+                              setEmailError(translate("Please enter a valid email address"));
                             } else {
                               setEmailError("");
                             }
@@ -131,14 +134,14 @@ const ReferFriend = () => {
                           className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
                             emailError ? "border-(--color-error)" : "border-preto focus:border-(--color-preto)"
                           }`}
-                          placeholder="you@example.com"
+                          placeholder={translate("you@example.com")}
                         />
                         {emailError && (
                           <p className="mt-1 text-xs text-(--color-error)">{emailError}</p>
                         )}
                       </label>
                       <label className="block text-xs font-normal text-preto">
-                        Password
+                        {translate("Password")}
                         <input
                           type="password"
                           value={password}
@@ -150,7 +153,7 @@ const ReferFriend = () => {
                           }}
                           onBlur={() => {
                             if (password && !validatePassword(password)) {
-                              setPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
+                              setPasswordError(translate("Password must be 6-12 characters with 1 uppercase and 1 special character"));
                             } else {
                               setPasswordError("");
                             }
@@ -158,7 +161,7 @@ const ReferFriend = () => {
                           className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
                             passwordError ? "border-(--color-error)" : "border-preto focus:border-(--color-preto)"
                           }`}
-                          placeholder="Enter password"
+                          placeholder={translate("Enter password")}
                         />
                         {passwordError && (
                           <p className="mt-1 text-xs text-(--color-error)">{passwordError}</p>
@@ -170,28 +173,28 @@ const ReferFriend = () => {
                           onClick={() => setShowForgotPassword(true)}
                           className="text-xs font-thin text-preto underline hover:text-preto underline-offset-2 hover:underline cursor-pointer"
                         >
-                          Forgot your password?
+                          {translate("Forgot your password ?")}
                         </button>
                       </div>
                       <button
                         type="submit"
                         className="w-full rounded-xl bg-[#222] text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition cursor-pointer"
                       >
-                        Sign In
+                        {translate("Sign In")}
                       </button>
                       <button
                         type="button"
                         disabled
                         className="w-full rounded-xl bg-(--colorLightGrey) text-(--colorDarkGrey) font-semibold py-3 text-base cursor-not-allowed"
                       >
-                        Continue With One-Time Code
+                        {translate("Continue With One-Time Code")}
                       </button>
                     </form>
 
                     <div className="flex items-center gap-3">
                       <span className="flex-1" />
                       <span className="text-base font-thin text-preto">
-                        OR
+                        {translate("OR")}
                       </span>
                       <span className="flex-1" />
                     </div>
@@ -202,14 +205,14 @@ const ReferFriend = () => {
                         className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                       >
                         <FcGoogle className="text-xl" />
-                        Continue With Google
+                        {translate("Continue With")} {translate("Google")}
                       </button>
                       <button
                         type="button"
                         className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                       >
                         <FaApple className="text-xl text-preto" />
-                        Continue With Apple
+                        {translate("Continue With")} {translate("Apple")}
                       </button>
                       <button
                         type="button"
@@ -218,7 +221,7 @@ const ReferFriend = () => {
                         <FaFacebookF
                           className="text-xl text-(--color-facebook)"
                         />
-                        Continue With Facebook
+                        {translate("Continue With")} {translate("Facebook")}
                       </button>
                     </div>
                   </>
@@ -251,17 +254,17 @@ const ReferFriend = () => {
                       }}
                     >
                       <label className="block text-xs font-normal text-preto">
-                        Name
+                        {translate("Name")}
                         <input
                           type="text"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           className="mt-2 w-full rounded-xl border border-preto px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none focus:border-(--color-preto)"
-                          placeholder="Enter your name"
+                          placeholder={translate("Enter your name")}
                         />
                       </label>
                       <label className="block text-xs font-normal text-preto">
-                        Email address
+                        {translate("Email address")}
                         <input
                           type="email"
                           value={email}
@@ -273,7 +276,7 @@ const ReferFriend = () => {
                           }}
                           onBlur={() => {
                             if (email && !validateEmail(email)) {
-                              setEmailError("Please enter a valid email address");
+                              setEmailError(translate("Please enter a valid email address"));
                             } else {
                               setEmailError("");
                             }
@@ -281,14 +284,14 @@ const ReferFriend = () => {
                           className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
                             emailError ? "border-(--color-error)" : "border-preto focus:border-(--color-preto)"
                           }`}
-                          placeholder="you@example.com"
+                          placeholder={translate("you@example.com")}
                         />
                         {emailError && (
                           <p className="mt-1 text-xs text-(--color-error)">{emailError}</p>
                         )}
                       </label>
                       <label className="block text-xs font-normal text-preto">
-                        Password
+                        {translate("Password")}
                         <input
                           type="password"
                           value={password}
@@ -300,7 +303,7 @@ const ReferFriend = () => {
                           }}
                           onBlur={() => {
                             if (password && !validatePassword(password)) {
-                              setPasswordError("Password must be 6-12 characters with 1 uppercase and 1 special character");
+                              setPasswordError(translate("Password must be 6-12 characters with 1 uppercase and 1 special character"));
                             } else {
                               setPasswordError("");
                             }
@@ -308,28 +311,28 @@ const ReferFriend = () => {
                           className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
                             passwordError ? "border-(--color-error)" : "border-preto focus:border-(--color-preto)"
                           }`}
-                          placeholder="Enter password"
+                          placeholder={translate("Enter password")}
                         />
                         {passwordError && (
                           <p className="mt-1 text-xs text-(--color-error)">{passwordError}</p>
                         )}
                       </label>
                       <p className="text-xs font-normal text-preto">
-                        By registering, you agree to our{" "}
+                        {translate("By registering, you agree to our")}{" "}
                         <Link
                           href="/terms"
                           className="underline hover:text-preto"
                         >
-                          Terms & Conditions
+                          {translate("Terms & Conditions")}
                         </Link>
-                        ,{" "}
+                        {", "}
                         <Link
                           href="/privacy"
                           className="underline hover:text-preto"
                         >
-                          Privacy and Cookie Policy
+                          {translate("Privacy and Cookie Policy")}
                         </Link>
-                        , and to join our loyalty programme.
+                        {translate(", and to join our loyalty programme.")}
                       </p>
                       <div className="flex items-start gap-2">
                         <input
@@ -342,14 +345,12 @@ const ReferFriend = () => {
                           htmlFor="marketing"
                           className="text-xs font-normal text-preto"
                         >
-                          Sign up and never miss out on exclusive member rewards,
-                          tailored new arrivals and new launches. Unsubscribe at
-                          the bottom of our emails.{" "}
+                          {translate("Sign up and never miss out on exclusive member rewards, tailored new arrivals and new launches. Unsubscribe at the bottom of our emails.")}{" "}
                           <Link
                             href="/more-info"
                             className="underline hover:text-preto"
                           >
-                            Find out more
+                            {translate("Find out more")}
                           </Link>
                         </label>
                       </div>
@@ -357,14 +358,14 @@ const ReferFriend = () => {
                         type="submit"
                         className="w-full rounded-xl bg-[#222] text-(--colorWhite) font-semibold py-3 text-base shadow-sm hover:bg-(--colorDark) transition cursor-pointer"
                       >
-                        Register
+                        {translate("Register")}
                       </button>
                     </form>
 
                     <div className="flex items-center gap-3">
                       <span className="flex-1" />
                       <span className="text-base font-thin text-preto">
-                        OR
+                        {translate("OR")}
                       </span>
                       <span className="flex-1" />
                     </div>
@@ -375,14 +376,14 @@ const ReferFriend = () => {
                         className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                       >
                         <FcGoogle className="text-xl" />
-                        Continue With Google
+                        {translate("Continue With")} {translate("Google")}
                       </button>
                       <button
                         type="button"
                         className="w-full rounded-xl border border-preto py-3 text-base font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                       >
                         <FaApple className="text-xl text-preto" />
-                        Continue With Apple
+                        {translate("Continue With")} {translate("Apple")}
                       </button>
                       <button
                         type="button"
@@ -391,7 +392,7 @@ const ReferFriend = () => {
                         <FaFacebookF
                           className="text-xl text-(--color-facebook)"
                         />
-                        Continue With Facebook
+                        {translate("Continue With")} {translate("Facebook")}
                       </button>
                     </div>
                   </>

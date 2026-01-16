@@ -9,6 +9,9 @@ import * as Yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
 import DownloadAppBanner from "@/components/department/DownloadAppBanner";
 import FeedbackPrompt from "@/components/support/FeedbackPrompt";
+import Dropdown from "../common/Dropdown";
+import Input from "../common/Input";
+import Button from "../common/Button";
 import {
   ContactFormOption,
   contactPreferenceOptions,
@@ -59,27 +62,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   className = "",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Close dropdown when clicking outside
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const selectedOption = options.find((opt) => opt.value === value);
   const displayText = selectedOption ? selectedOption.label : placeholder;
@@ -96,7 +79,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   const handleBlur = (e: React.FocusEvent<HTMLButtonElement>) => {
     // Delay to allow option click to register first
     setTimeout(() => {
-      if (!dropdownRef.current?.contains(document.activeElement)) {
+      if (!triggerRef.current?.contains(document.activeElement)) {
         // Create a synthetic event for the hidden select
         const syntheticEvent = {
           target: { name },
@@ -107,51 +90,57 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   };
 
   return (
-    <div className={`relative ${className}`} ref={dropdownRef}>
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        onBlur={handleBlur}
-        className={`w-full px-3 py-2 border ${
-          error && touched ? "border-red-500" : "border-gray-300"
-        } rounded focus:outline-none focus:border-preto text-base  font-normal text-left flex items-center justify-between ${
-          isPlaceholder ? "text-gray-500" : "text-preto"
-        }`}
+    <div className={`relative ${className}`}>
+      <Dropdown
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        contentClassName="z-50 w-full mt-1 border border-gray-300 rounded shadow-lg max-h-60 overflow-auto"
+        content={
+          <>
+            {options.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => handleSelect(option.value)}
+                className={`w-full px-3 py-2 text-left text-base font-normal transition-colors ${
+                  value === option.value
+                    ? "bg-gray-100text-(--color-preto)"
+                    : "bg-whitetext-(--color-preto) hover:bg-gray-100"
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </>
+        }
       >
-        <span>{displayText}</span>
-        <svg
-          className={`w-5 h-5 transition-transform ${isOpen ? "rotate-180" : ""}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+        <button
+          ref={triggerRef}
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          onBlur={handleBlur}
+          className={`w-full px-3 py-2 border ${
+            error && touched ? "border-red-500" : "border-gray-300"
+          } rounded focus:outline-none focus:border-preto text-base  font-normal text-left flex items-center justify-between ${
+            isPlaceholder ? "text-gray-500" : "text-preto"
+          }`}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
-
-      {isOpen && (
-        <div className="absolute z-50 w-full mt-1  border border-gray-300 rounded shadow-lg max-h-60 overflow-auto">
-          {options.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              onClick={() => handleSelect(option.value)}
-              className={`w-full px-3 py-2 text-left text-base font-normal transition-colors ${
-                value === option.value
-                  ? "bg-gray-100text-(--color-preto)"
-                  : "bg-whitetext-(--color-preto) hover:bg-gray-100"
-              }`}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      )}
+          <span>{displayText}</span>
+          <svg
+            className={`w-5 h-5 transition-transform ${isOpen ? "rotate-180" : ""}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </button>
+      </Dropdown>
 
       {/* Hidden select for Formik */}
       <select
@@ -213,7 +202,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="">
+    <div className="w-full max-w-full overflow-hidden">
             <h2 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-2">
         Help & Contact Us
       </h2>
@@ -238,58 +227,39 @@ const ContactForm = () => {
         {({ isSubmitting, errors, touched, values }) => (
           <Form className="space-y-4">
             {/* Name Field */}
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-xs font-thin text-(--color-preto) mb-1"
-              >
-                Name<span className="text-(--color-preto)">*</span>
-              </label>
-              <Field
-                type="text"
-                id="name"
-                name="name"
-                className={`w-full px-3 py-2 border ${
-                  errors.name && touched.name
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded focus:outline-none focus:border-(--color-preto) text-base bg-white font-normal`}
-              />
-              <ErrorMessage
-                name="name"
-                component="div"
-                className="text-red-500 text-sm mt-1"
-              />
-            </div>
+            <Field name="name">
+              {({ field, form }: FieldProps<string>) => (
+                <Input
+                  {...field}
+                  label={
+                    <>
+                      Name<span className="text-(--color-preto)">*</span>
+                    </>
+                  }
+                  type="text"
+                  error={form.errors.name as string}
+                  labelClassName="text-xs font-thin"
+                />
+              )}
+            </Field>
 
             {/* Email Field */}
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-xs font-thin text-(--color-preto) mb-1"
-              >
-                Email<span className="text-(--color-preto)">*</span>
-              </label>
-              <Field
-                type="email"
-                id="email"
-                name="email"
-                className={`w-full px-3 py-2 border ${
-                  errors.email && touched.email
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded focus:outline-none focus:border-(--color-preto) text-base bg-white font-normal`}
-              />
-              <p className="text-xs text-(--color-preto) font-normal mt-1">
-                Please ensure that your email address is correct so that we can
-                respond to your enquiry.
-              </p>
-              <ErrorMessage
-                name="email"
-                component="div"
-                className="text-red-500 text-sm mt-1"
-              />
-            </div>
+            <Field name="email">
+              {({ field, form }: FieldProps<string>) => (
+                <Input
+                  {...field}
+                  label={
+                    <>
+                      Email<span className="text-(--color-preto)">*</span>
+                    </>
+                  }
+                  type="email"
+                  error={form.errors.email as string}
+                  helperText="Please ensure that your email address is correct so that we can respond to your enquiry."
+                  labelClassName="text-xs font-thin"
+                />
+              )}
+            </Field>
 
             {/* Contact Preferences Field */}
             <div>
@@ -380,29 +350,21 @@ const ContactForm = () => {
             </div>
 
             {/* Subject Field */}
-            <div>
-              <label
-                htmlFor="subject"
-                className="block text-xs font-normal text-(--color-preto) mb-1"
-              >
-                Subject<span className="text-(--color-preto)">*</span>
-              </label>
-              <Field
-                type="text"
-                id="subject"
-                name="subject"
-                className={`w-full px-3 py-2 border ${
-                  errors.subject && touched.subject
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded focus:outline-none focus:border-(--color-preto) text-base bg-white font-normal`}
-              />
-              <ErrorMessage
-                name="subject"
-                component="div"
-                className="text-red-500 text-sm mt-1"
-              />
-            </div>
+            <Field name="subject">
+              {({ field, form }: FieldProps<string>) => (
+                <Input
+                  {...field}
+                  label={
+                    <>
+                      Subject<span className="text-(--color-preto)">*</span>
+                    </>
+                  }
+                  type="text"
+                  error={form.errors.subject as string}
+                  labelClassName="text-xs font-normal"
+                />
+              )}
+            </Field>
 
             {/* Message Field */}
             <div>
@@ -481,13 +443,15 @@ const ContactForm = () => {
 
             {/* Submit Button */}
             <div className="pt-4">
-              <button
+              <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto bg-preto text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded text-sm sm:text-base font-normal hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                loading={isSubmitting}
+                variant="secondary"
+                className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded text-sm sm:text-base font-normal"
               >
                 Send
-              </button>
+              </Button>
             </div>
           </Form>
         )}
@@ -738,12 +702,12 @@ const ContactUs = () => {
         </div>
 
         {/* Expandable Sections and Feedback - Positioned to the right of first column, below other 3 sections */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 -mt-8 sm:-mt-16 lg:-mt-29">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 -mt-8 sm:-mt-16 md:-mt-8 lg:-mt-29">
           {/* Empty first column to align with first section - hidden on mobile/tablet */}
           <div className="hidden lg:block"></div>
 
           {/* Content spanning the other 3 columns */}
-          <div className="md:col-span-2 lg:col-span-3 md:ml-4 lg:ml-14">
+          <div className="md:col-span-2 lg:col-span-3 md:ml-0 lg:ml-14 md:max-w-full lg:max-w-none">
             {/* Expandable Sections */}
             <div className="space-y-4 mb-8">
               {/* Step by Step to Cancel or Return Your Order */}

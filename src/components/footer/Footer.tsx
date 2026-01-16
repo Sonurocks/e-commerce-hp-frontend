@@ -7,7 +7,13 @@ import { useLanguage } from "@/context/LanguageContext";
 const Footer = () => {
   const { translations } = useLanguage();
   const footerCopy = translations.footer;
+  const farfetchText = translations.productCopy["FARFETCH"] || translations.header.logoText || "FARFETCH";
   const currentYear = new Date().getFullYear();
+  
+  // Helper function to replace FARFETCH with translated version
+  const translateFarfetch = (text: string) => {
+    return text.replace(/FARFETCH/g, farfetchText);
+  };
 
   const trademarkText = footerCopy.legalDisclaimer.trademark
     .replace(/{{brand}}/g, companyInfo.brandName)
@@ -24,7 +30,7 @@ const Footer = () => {
           {footerSections.map((section, sectionIndex) => (
             <div key={sectionIndex}>
               <h4 className="font-semibold mb-4 text-preto dark:text-white text-footer-heading" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
-                {footerCopy.sectionTitles[section.title] ?? section.title}
+                {translateFarfetch(footerCopy.sectionTitles[section.title] ?? section.title)}
               </h4>
               <ul
                 className={`space-y-2 text-footer-heading ${sectionIndex === 2 ? "mb-8" : ""}`}
@@ -32,7 +38,7 @@ const Footer = () => {
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <a href={link.href} className="text-preto dark:text-white hover:underline transition font-light" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
-                      {footerCopy.linkLabels[link.label] ?? link.label}
+                      {translateFarfetch(footerCopy.linkLabels[link.label] ?? link.label)}
                     </a>
                   </li>
                 ))}

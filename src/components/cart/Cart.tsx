@@ -15,6 +15,9 @@ import DownloadAppBanner from "../department/DownloadAppBanner";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCheckout } from "@/context/CheckoutContext";
+import { useLanguage } from "@/context/LanguageContext";
+import Modal from "../common/Modal";
+import Dropdown from "../common/Dropdown";
 
 const formatCurrency = (value: number, symbol: string) =>
   `${symbol}${value.toFixed(2)}`;
@@ -66,50 +69,57 @@ const getItemPricing = (product: {
   };
 };
 
-const ContactSection = () => (
-  <>
-    <h2 className="text-2xl font-base text-(--color-preto) mb-3">Contact us</h2>
-    <div className="flex flex-col lg:flex-row gap-6">
-      <div className="flex-1  border border-(--theme-border) rounded-md p-4">
-        <div className="mb-2">
-          <FaEnvelope className="w-6 h-6 text-(--color-preto)" />
+const ContactSection = () => {
+  const { translations } = useLanguage();
+  const translate = (text: string) => translations.productCopy[text] ?? text;
+  
+  return (
+    <>
+      <h2 className="text-2xl font-base text-(--color-preto) mb-3">{translate("Contact us")}</h2>
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex-1  border border-(--theme-border) rounded-md p-4">
+          <div className="mb-2">
+            <FaEnvelope className="w-6 h-6 text-(--color-preto)" />
+          </div>
+          <h3 className="text-sm font-base text-(--color-preto) mb-1 uppercase tracking-wide">
+            {translate("EMAIL US")}
+          </h3>
+          <p className="text-base text-(--color-preto) mb-1 font-base">
+            {translate("Get in touch by email")}
+          </p>
+          <a
+            href="mailto:customerservice@farfetch.com"
+            className="text-base text-(--color-preto) font-base hover:underline"
+          >
+            {translate("customerservice@farfetch.com")}
+          </a>
         </div>
-        <h3 className="text-sm font-base text-(--color-preto) mb-1 uppercase tracking-wide">
-          EMAIL US
-        </h3>
-        <p className="text-base text-(--color-preto) mb-1 font-base">
-          Get in touch by email
-        </p>
-        <a
-          href="mailto:customerservice@farfetch.com"
-          className="text-base text-(--color-preto) font-base hover:underline"
-        >
-          customerservice@farfetch.com
-        </a>
-      </div>
-      <div className="flex-1  border border-(--theme-border) rounded-md p-4">
-        <div className="mb-2">
-          <FaPhone className="w-6 h-6 text-(--color-preto)" />
+        <div className="flex-1  border border-(--theme-border) rounded-md p-4">
+          <div className="mb-2">
+            <FaPhone className="w-6 h-6 text-(--color-preto)" />
+          </div>
+          <h3 className="text-sm font-base text-(--color-preto) mb-1 uppercase tracking-wide">
+            {translate("ORDER BY PHONE")}
+          </h3>
+          <p className="text-base text-(--color-preto) mb-1 font-base">
+            {translate("Available Monday to Friday")}
+          </p>
+          <a
+            href="tel:+16467913768"
+            className="text-base text-(--color-preto) font-base hover:underline"
+          >
+            +1 646 791 3768
+          </a>
         </div>
-        <h3 className="text-sm font-base text-(--color-preto) mb-1 uppercase tracking-wide">
-          ORDER BY PHONE
-        </h3>
-        <p className="text-base text-(--color-preto) mb-1 font-base">
-          Available Monday to Friday
-        </p>
-        <a
-          href="tel:+16467913768"
-          className="text-base text-(--color-preto) font-base hover:underline"
-        >
-          +1 646 791 3768
-        </a>
       </div>
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 const EmptyCartState = () => {
   const [email, setEmail] = useState("user@gmail.com");
+  const { translations } = useLanguage();
+  const translate = (text: string) => translations.productCopy[text] ?? text;
 
   const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,7 +130,7 @@ const EmptyCartState = () => {
     <div className="container mx-auto px-[48px] py-16 max-w-[1440px]">
       <div className="mb-24 max-w-2xl">
         <h1 className="text-4xl font-base text-(--color-preto) mb-3">
-          Shopping Bag
+          {translate("Shopping Bag")}
         </h1>
         <p className="text-base text-(--color-preto) mb-4 font-base leading-relaxed">
           There&apos;s nothing in your bag yet...
@@ -194,82 +204,11 @@ const EmptyCartState = () => {
 };
 
 const CheckoutModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const modalRef = useRef<HTMLDivElement>(null);
   const [email, setEmail] = useState("");
   const router = useRouter();
   const { setEmail: setCheckoutEmail } = useCheckout();
-
-  // Prevent body scroll when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      // Save current scroll position
-      const scrollY = window.scrollY;
-      const originalOverflow = document.body.style.overflow;
-      const originalPosition = document.body.style.position;
-      const originalTop = document.body.style.top;
-      const originalWidth = document.body.style.width;
-
-      // Prevent scrolling
-      document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
-
-      // Prevent touch scrolling on mobile
-      const preventTouchMove = (e: TouchEvent) => {
-        e.preventDefault();
-      };
-      document.addEventListener("touchmove", preventTouchMove, { passive: false });
-
-      return () => {
-        // Restore original styles
-        document.body.style.overflow = originalOverflow;
-        document.body.style.position = originalPosition;
-        document.body.style.top = originalTop;
-        document.body.style.width = originalWidth;
-        window.scrollTo(0, scrollY);
-        document.removeEventListener("touchmove", preventTouchMove);
-      };
-    }
-  }, [isOpen]);
-
-  // Close on ESC key
-  useEffect(() => {
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscKey);
-    }
-    return () => {
-      document.removeEventListener("keydown", handleEscKey);
-    };
-  }, [isOpen, onClose]);
-
-  // Close on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      const timeoutId = setTimeout(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-      }, 100);
-      return () => {
-        clearTimeout(timeoutId);
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
+  const { translations } = useLanguage();
+  const translate = (text: string) => translations.productCopy[text] ?? text;
 
   const handleContinue = (e: React.FormEvent) => {
     e.preventDefault();
@@ -281,43 +220,29 @@ const CheckoutModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
   };
 
   return (
-    <>
-      {/* Dark overlay */}
-      <div className="fixed inset-0 bg-preto/50 z-[99]" />
-
-      {/* Modal */}
-      <div
-        ref={modalRef}
-        className="fixed inset-0 z-[100] flex items-center justify-center px-4"
-      >
-        <div className="w-full max-w-[420px] bg-branco rounded-3xl shadow-2xl">
-          {/* Header */}
-          <div className="flex items-start justify-between px-6 pt-6 pb-6">
-            <h2 className="text-2xl font-base text-preto">You&apos;re almost there</h2>
-            <button
-              onClick={onClose}
-              aria-label="Close modal"
-              className="text-preto hover:text-(--color-hina) transition p-2 cursor-pointer"
-            >
-              <FiX className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Body */}
-          <div className="px-6 pb-6">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={translate("You're almost there")}
+      size="medium"
+      position="centered"
+      className="bg-branco rounded-3xl"
+      backdropClassName="bg-preto/50"
+    >
+      <div className="px-6 pb-6">
             <p className="text-base text-preto  mb-6 font-light leading-relaxed">
-              Please enter your email address before continuing. You&apos;ll be able to sign in if you already have a registered account.
+              {translate("Please enter your email address before continuing. You'll be able to sign in if you already have a registered account.")}
             </p>
 
             <form onSubmit={handleContinue} className="space-y-4">
               <label className="block text-xs font-normal text-preto">
-                Email address
+                {translate("Email address")}
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="mt-2 w-full border border-preto px-4 py-3 rounded-lg text-base text-preto placeholder:text-(--color-nimbus) focus:outline-none focus:border-black"
-                  placeholder="Enter your email"
+                  placeholder={translate("Enter your email")}
                   required
                 />
               </label>
@@ -326,13 +251,13 @@ const CheckoutModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 type="submit"
                 className="w-full bg-[#222] text-white py-3 text-sm  rounded-lg font-semibold tracking-wide  transition"
               >
-                Continue To Checkout
+                {translate("Continue To Checkout")}
               </button>
             </form>
 
             <div className="flex items-center gap-3 my-4">
               <span className="flex-1 " />
-              <span className="text-thin font-thin text-preto">OR</span>
+              <span className="text-thin font-thin text-preto">{translate("OR")}</span>
               <span className="flex-1 " />
             </div>
 
@@ -342,36 +267,35 @@ const CheckoutModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 className="w-full border border-preto py-3 rounded-lg text-base font-medium flex items-center justify-center gap-3"
               >
                 <FcGoogle className="text-xl" />
-                Continue With Google
+                {translate("Continue With")} {translate("Google")}
               </button>
               <button
                 type="button"
                 className="w-full border border-preto py-3 rounded-lg  text-base font-medium flex items-center justify-center gap-3 "
               >
                 <FaApple className="text-xl text-preto" />
-                Continue With Apple
+                {translate("Continue With")} {translate("Apple")}
               </button>
               <button
                 type="button"
                 className="w-full border border-preto py-3 rounded-lg text-base font-medium flex items-center justify-center gap-3"
               >
                 <FaFacebookF className="text-xl text-(--color-facebook)" />
-                Continue With Facebook
+                {translate("Continue With")} {translate("Facebook")}
               </button>
             </div>
           </div>
-        </div>
-      </div>
-    </>
+    </Modal>
   );
 };
 
 const Cart = () => {
   const { cartItems, removeItem, updateQuantity, updateSize, summary } = useCart();
   const { addToWishlist, isWishlisted } = useWishlist();
+  const { translations } = useLanguage();
+  const translate = (text: string) => translations.productCopy[text] ?? text;
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, 'size' | 'quantity' | null>>({});
-  const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [mounted, setMounted] = useState(false);
 
   const totals = useMemo(
@@ -425,24 +349,6 @@ const Cart = () => {
     setMounted(true);
   }, []);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      Object.entries(dropdownRefs.current).forEach(([itemKey, ref]) => {
-        if (ref && !ref.contains(event.target as Node)) {
-          closeDropdown(itemKey);
-        }
-      });
-    };
-
-    if (Object.values(openDropdowns).some((val) => val !== null)) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [openDropdowns]);
 
   // Show empty state during SSR and if cart is empty after mount
   if (!mounted || cartItems.length === 0) {
@@ -461,11 +367,11 @@ const Cart = () => {
           <div className="flex-1">
             <div className="mb-8 space-y-3">
               <h1 className="text-4xl font-light tracking-tight text-(--color-preto)">
-                Shopping Bag
+                {translate("Shopping Bag")}
               </h1>
               <div className="flex items-center gap-2 border-y border-(--color-platinum) py-3 text-sm text-(--color-hina)">
                 <HiOutlineInformationCircle className="w-5 h-5" />
-                <span>Import duties are included</span>
+                <span>{translate("Import duties included")}</span>
               </div>
             </div>
 
@@ -507,7 +413,7 @@ const Cart = () => {
                               </p>
                             )}
                             <p className="text-xs text-(--color-hina) mt-2">
-                              FARFETCH ID: {item.product.id}
+                              {translate("FARFETCH ID:")} {item.product.id}
                             </p>
                           </div>
                           <button
@@ -545,15 +451,58 @@ const Cart = () => {
 
                           <div className="space-y-3 text-sm text-(--color-preto) -mt-22">
                             {/* Size Dropdown */}
-                            <div className="relative" ref={(el) => {
-                              const itemKey = `${item.product.id}-${item.size}`;
-                              dropdownRefs.current[`${itemKey}-size`] = el;
-                            }}>
-                              <div className="border-b border-(--color-platinum) pb-2">
-                                <div className="flex-1">
-                                  <p className="text-[11px] uppercase tracking-wide text-(--color-hina) mb-1">
-                                    Size
-                                  </p>
+                            <div className="border-b border-(--color-platinum) pb-2">
+                              <div className="flex-1">
+                                <p className="text-[11px] uppercase tracking-wide text-(--color-hina) mb-1">
+                                  Size
+                                </p>
+                                <Dropdown
+                                  isOpen={openDropdowns[`${item.product.id}-${item.size}-size`] === 'size'}
+                                  onClose={() => closeDropdown(`${item.product.id}-${item.size}-size`)}
+                                  contentClassName="z-10 w-full mt-1 bg-(--color-branco) border border-(--color-silver) rounded-lg shadow-lg"
+                                  content={
+                                    <div className="p-2">
+                                      <div className="flex items-center justify-between mb-2">
+                                        <p className="text-[11px] text-(--color-nimbus)">
+                                          Select size
+                                        </p>
+                                        <button
+                                          type="button"
+                                          onClick={() => closeDropdown(`${item.product.id}-${item.size}-size`)}
+                                          className="text-[11px] text-(--color-preto) underline"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                      <div className="space-y-1">
+                                        {sizeOptions.map((option) => (
+                                          <button
+                                            key={option.size}
+                                            onClick={() => {
+                                              if (option.available && option.size !== item.size) {
+                                                updateSize(item.product.id, item.size, option.size);
+                                                closeDropdown(`${item.product.id}-${item.size}-size`);
+                                              }
+                                            }}
+                                            disabled={!option.available}
+                                            className={`w-full flex items-center justify-between py-1 px-2 text-left ${
+                                              item.size === option.size
+                                                ? "bg-(--color-whiteSmoke) font-semibold"
+                                                : option.available
+                                                ? "hover:bg-(--color-whiteSmoke)"
+                                                : "opacity-50 cursor-not-allowed"
+                                            }`}
+                                          >
+                                            <span className="font-semibold text-[13px]">{option.size}</span>
+                                            {option.price && (
+                                              <span className="text-[13px] text-(--color-preto)">{option.price}</span>
+                                            )}
+                                          </button>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  }
+                                >
                                   <button
                                     type="button"
                                     onClick={() => toggleDropdown(`${item.product.id}-${item.size}-size`, 'size')}
@@ -569,65 +518,57 @@ const Cart = () => {
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                     </svg>
                                   </button>
-                                </div>
+                                </Dropdown>
                               </div>
-
-                              {openDropdowns[`${item.product.id}-${item.size}-size`] === 'size' && (
-                                <div className="absolute z-10 w-full mt-1 bg-(--color-branco) border border-(--color-silver) rounded-lg shadow-lg">
-                                  <div className="p-2">
-                                    <div className="flex items-center justify-between mb-2">
-                                      <p className="text-[11px] text-(--color-nimbus)">
-                                        Select size
-                                      </p>
-                                      <button
-                                        type="button"
-                                        onClick={() => closeDropdown(`${item.product.id}-${item.size}-size`)}
-                                        className="text-[11px] text-(--color-preto) underline"
-                                      >
-                                        Cancel
-                                      </button>
-                                    </div>
-                                    <div className="space-y-1">
-                                      {sizeOptions.map((option) => (
-                                        <button
-                                          key={option.size}
-                                          onClick={() => {
-                                            if (option.available && option.size !== item.size) {
-                                              updateSize(item.product.id, item.size, option.size);
-                                              closeDropdown(`${item.product.id}-${item.size}-size`);
-                                            }
-                                          }}
-                                          disabled={!option.available}
-                                          className={`w-full flex items-center justify-between py-1 px-2 text-left ${
-                                            item.size === option.size
-                                              ? "bg-(--color-whiteSmoke) font-semibold"
-                                              : option.available
-                                              ? "hover:bg-(--color-whiteSmoke)"
-                                              : "opacity-50 cursor-not-allowed"
-                                          }`}
-                                        >
-                                          <span className="font-semibold text-[13px]">{option.size}</span>
-                                          {option.price && (
-                                            <span className="text-[13px] text-(--color-preto)">{option.price}</span>
-                                          )}
-                                        </button>
-                                      ))}
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
                             </div>
 
                             {/* Quantity Dropdown */}
-                            <div className="relative" ref={(el) => {
-                              const itemKey = `${item.product.id}-${item.size}`;
-                              dropdownRefs.current[`${itemKey}-quantity`] = el;
-                            }}>
-                              <div>
-                                <div className="flex-1">
-                                  <p className="text-[11px] uppercase tracking-wide text-(--color-hina) mb-1">
-                                    Quantity
-                                  </p>
+                            <div>
+                              <div className="flex-1">
+                                <p className="text-[11px] uppercase tracking-wide text-(--color-hina) mb-1">
+                                  Quantity
+                                </p>
+                                <Dropdown
+                                  isOpen={openDropdowns[`${item.product.id}-${item.size}-quantity`] === 'quantity'}
+                                  onClose={() => closeDropdown(`${item.product.id}-${item.size}-quantity`)}
+                                  contentClassName="z-10 w-full mt-1 bg-(--color-branco) border border-(--color-silver) rounded-lg shadow-lg"
+                                  content={
+                                    <div className="p-2">
+                                      <div className="flex items-center justify-between mb-2">
+                                        <p className="text-[11px] text-(--color-nimbus)">
+                                          Select quantity
+                                        </p>
+                                        <button
+                                          type="button"
+                                          onClick={() => closeDropdown(`${item.product.id}-${item.size}-quantity`)}
+                                          className="text-[11px] text-(--color-preto) underline"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                      <div className="space-y-1">
+                                        {quantityOptions.map((qty) => (
+                                          <button
+                                            key={qty}
+                                            onClick={() => {
+                                              if (qty !== item.quantity) {
+                                                updateQuantity(item.product.id, item.size, qty);
+                                                closeDropdown(`${item.product.id}-${item.size}-quantity`);
+                                              }
+                                            }}
+                                            className={`w-full flex items-center justify-between py-1 px-2 text-left ${
+                                              item.quantity === qty
+                                                ? "bg-(--color-whiteSmoke) font-semibold"
+                                                : "hover:bg-(--color-whiteSmoke)"
+                                            }`}
+                                          >
+                                            <span className="font-semibold text-[13px]">{qty}</span>
+                                          </button>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  }
+                                >
                                   <button
                                     type="button"
                                     onClick={() => toggleDropdown(`${item.product.id}-${item.size}-quantity`, 'quantity')}
@@ -643,47 +584,8 @@ const Cart = () => {
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                     </svg>
                                   </button>
-                                </div>
+                                </Dropdown>
                               </div>
-
-                              {openDropdowns[`${item.product.id}-${item.size}-quantity`] === 'quantity' && (
-                                <div className="absolute z-10 w-full mt-1 bg-(--color-branco) border border-(--color-silver) rounded-lg shadow-lg">
-                                  <div className="p-2">
-                                    <div className="flex items-center justify-between mb-2">
-                                      <p className="text-[11px] text-(--color-nimbus)">
-                                        Select quantity
-                                      </p>
-                                      <button
-                                        type="button"
-                                        onClick={() => closeDropdown(`${item.product.id}-${item.size}-quantity`)}
-                                        className="text-[11px] text-(--color-preto) underline"
-                                      >
-                                        Cancel
-                                      </button>
-                                    </div>
-                                    <div className="space-y-1">
-                                      {quantityOptions.map((qty) => (
-                                        <button
-                                          key={qty}
-                                          onClick={() => {
-                                            if (qty !== item.quantity) {
-                                              updateQuantity(item.product.id, item.size, qty);
-                                              closeDropdown(`${item.product.id}-${item.size}-quantity`);
-                                            }
-                                          }}
-                                          className={`w-full flex items-center justify-between py-1 px-2 text-left ${
-                                            item.quantity === qty
-                                              ? "bg-(--color-whiteSmoke) font-semibold"
-                                              : "hover:bg-(--color-whiteSmoke)"
-                                          }`}
-                                        >
-                                          <span className="font-semibold text-[13px]">{qty}</span>
-                                        </button>
-                                      ))}
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
                             </div>
 
                             {/* Wishlist Button */}
@@ -702,7 +604,7 @@ const Cart = () => {
                                   }`}
                                   strokeWidth={1.0}
                                 />
-                                {wishlisted ? "In your wishlist" : "Move to wishlist"}
+                                {wishlisted ? translate("In your wishlist") : translate("Move to wishlist")}
                               </button>
                             </div>
                           </div>
@@ -716,29 +618,29 @@ const Cart = () => {
           </div>
 
           <aside className="w-full lg:max-w-sm border border-(--color-platinum) rounded-lg p-6 h-fit sticky top-6">
-            <h2 className="text-2xl font-light text-(--color-preto)">Summary</h2>
+            <h2 className="text-2xl font-light text-(--color-preto)">{translate("Summary")}</h2>
             <dl className="mt-6 space-y-4 text-sm text-(--color-preto)">
               <div className="flex items-center justify-between">
-                <dt>Subtotal</dt>
+                <dt>{translate("Subtotal")}</dt>
                 <dd>{totals.subtotal}</dd>
               </div>
               <div className="flex items-center justify-between">
-                <dt>Delivery</dt>
+                <dt>{translate("Delivery")}</dt>
                 <dd>{totals.delivery}</dd>
               </div>
               <div className="flex items-center justify-between">
-                <dt>Sale</dt>
+                <dt>{translate("Sale")}</dt>
                 <dd>{totals.sale}</dd>
               </div>
               <div className="flex items-center justify-between">
-                <dt>Promotion</dt>
+                <dt>{translate("Promotion")}</dt>
                 <dd>{totals.promotion}</dd>
               </div>
             </dl>
 
             <div className="border-t border-(--color-platinum) mt-6 pt-6">
               <div className="flex items-start justify-between">
-                <p className="text-base font-medium text-(--color-preto)">Total</p>
+                <p className="text-base font-medium text-(--color-preto)">{translate("Total")}</p>
                 <div className="text-right">
                   <p className="text-xs uppercase tracking-wide text-(--color-hina)">
                     {currencyLabel}
@@ -746,7 +648,7 @@ const Cart = () => {
                   <p className="text-2xl font-semibold text-(--color-preto)">
                     {totals.total}
                   </p>
-                  <p className="text-xs text-(--color-hina)">Import duties included</p>
+                  <p className="text-xs text-(--color-hina)">{translate("Import duties included")}</p>
                 </div>
               </div>
 
@@ -754,7 +656,7 @@ const Cart = () => {
                 onClick={() => setIsCheckoutModalOpen(true)}
                 className="w-full bg-[#222] text-white mt-6 py-3 rounded-md text-sm font-semibold tracking-wide  transition"
               >
-                Go To Checkout
+                {translate("Go To Checkout")}
               </button>
             </div>
           </aside>
