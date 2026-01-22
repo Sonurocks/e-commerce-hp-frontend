@@ -173,7 +173,7 @@ const Wishlist = () => {
                       onChange={(e) =>
                         handleSizeChange(item.id, e.target.value)
                       }
-                      className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-(--color-preto)"
+                      className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-(--color-preto)"
                     >
                       {sizeOptions.map((size) => (
                         <option key={size} value={size}>

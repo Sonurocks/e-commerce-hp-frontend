@@ -298,8 +298,8 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
             </div>
           </div>
 
-          {/* Font Section */}
-          <div className="mb-8">
+          {/* Font Section - Commented out for future use */}
+          {/* <div className="mb-8">
             <h3 className="text-base font-semibold text-(--color-preto) dark:text-(--color-preto) mb-2">
               Font
             </h3>
@@ -335,7 +335,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
                 </svg>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

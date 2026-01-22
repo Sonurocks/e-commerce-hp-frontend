@@ -253,7 +253,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
       {/* Drawer Container */}
       <div
         ref={drawerRef}
-        className="fixed lg:absolute top-0 lg:top-full left-0 w-full h-full lg:h-auto bg-(--color-branco) shadow-lg border-t border-gray-200 z-[100] lg:z-[100] drawer-styles overflow-y-auto lg:max-h-[80vh]"
+        className="fixed lg:absolute top-0 lg:top-full left-0 w-full h-screen lg:h-auto bg-(--color-branco) shadow-lg border-t border-gray-200 z-[100] lg:z-[100] drawer-styles overflow-y-auto lg:max-h-[80vh]"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
@@ -273,7 +273,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
           </button>
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 md:px-[72px] py-4 md:py-8 bg-(--color-branco) drawer-styles">
+        <div className="container mx-auto px-4 sm:px-6 md:px-[72px] py-4 md:py-8 pb-8 bg-(--color-branco) drawer-styles min-h-full">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
             {/* Left Sidebar - Categories */}
             <div className={`${getLeftContainerClass()} flex-wrap lg:flex-nowrap w-full`}>

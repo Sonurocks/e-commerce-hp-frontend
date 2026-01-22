@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 import { Formik, Form, Field, ErrorMessage, FieldProps } from "formik";
 import * as Yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -94,7 +95,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       <Dropdown
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        contentClassName="z-50 w-full mt-1 border border-gray-300 rounded shadow-lg max-h-60 overflow-auto"
+        contentClassName="z-50 w-full mt-1 bg-branco border border-gray-300 rounded shadow-lg max-h-60 overflow-auto"
         content={
           <>
             {options.map((option) => (
@@ -102,10 +103,10 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
                 key={option.value}
                 type="button"
                 onClick={() => handleSelect(option.value)}
-                className={`w-full px-3 py-2 text-left text-base font-normal transition-colors ${
+                className={`w-full px-4 py-3 text-left text-base font-normal transition-colors ${
                   value === option.value
-                    ? "bg-gray-100text-(--color-preto)"
-                    : "bg-whitetext-(--color-preto) hover:bg-gray-100"
+                    ? "bg-gray-100 text-preto"
+                    : "bg-branco text-preto hover:bg-gray-100"
                 }`}
               >
                 {option.label}
@@ -119,10 +120,10 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           onBlur={handleBlur}
-          className={`w-full px-3 py-2 border ${
+          className={`w-full px-4 py-3 border ${
             error && touched ? "border-red-500" : "border-gray-300"
-          } rounded focus:outline-none focus:border-preto text-base  font-normal text-left flex items-center justify-between ${
-            isPlaceholder ? "text-gray-500" : "text-preto"
+          } rounded focus:outline-none focus:border-preto text-base font-normal text-left flex items-center justify-between bg-branco ${
+            isPlaceholder ? "text-gray-500 dark:text-gray-400" : "text-preto"
           }`}
         >
           <span>{displayText}</span>
@@ -166,6 +167,18 @@ const ContactForm = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Determine if dark mode is active
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDarkMode =
+    mounted &&
+    (theme === "dark" ||
+      (theme === "system" && systemTheme === "dark"));
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -203,10 +216,10 @@ const ContactForm = () => {
 
   return (
     <div className="w-full max-w-full overflow-hidden">
-            <h2 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-2">
+            <h2 className="text-xl sm:text-2xl font-normal text-preto mb-2">
         Help & Contact Us
       </h2>
-      <p className="text-smtext-(--color-preto) font-normal mb-4 sm:mb-6">
+      <p className="text-sm text-preto font-normal mb-4 sm:mb-6">
         Simply complete the form and click &apos;send&apos; to submit an
         enquiry:
       </p>
@@ -233,12 +246,13 @@ const ContactForm = () => {
                   {...field}
                   label={
                     <>
-                      Name<span className="text-(--color-preto)">*</span>
+                      Name<span className="text-preto">*</span>
                     </>
                   }
                   type="text"
                   error={form.errors.name as string}
                   labelClassName="text-xs font-thin"
+                  inputClassName="bg-branco"
                 />
               )}
             </Field>
@@ -250,13 +264,14 @@ const ContactForm = () => {
                   {...field}
                   label={
                     <>
-                      Email<span className="text-(--color-preto)">*</span>
+                      Email<span className="text-preto">*</span>
                     </>
                   }
                   type="email"
                   error={form.errors.email as string}
                   helperText="Please ensure that your email address is correct so that we can respond to your enquiry."
                   labelClassName="text-xs font-thin"
+                  inputClassName="bg-branco"
                 />
               )}
             </Field>
@@ -265,10 +280,10 @@ const ContactForm = () => {
             <div>
               <label
                 htmlFor="contactPreferences"
-                className="block text-xs font-normal text-(--color-preto) mb-1"
+                className="block text-xs font-normal text-preto mb-1"
               >
                 Contact Preferences
-                <span className="text-(--color-preto)">*</span>
+                <span className="text-preto">*</span>
               </label>
               <Field name="contactPreferences">
                 {({ field, form }: FieldProps<string>) => (
@@ -295,9 +310,9 @@ const ContactForm = () => {
             <div>
               <label
                 htmlFor="countryId"
-                className="block text-xs font-normal text-(--color-preto) mb-1"
+                className="block text-xs font-normal text-preto mb-1"
               >
-                Country Id<span className="text-(--color-preto)">*</span>
+                Country Id<span className="text-preto">*</span>
               </label>
               <Field name="countryId">
                 {({ field, form }: FieldProps<string>) => (
@@ -324,9 +339,9 @@ const ContactForm = () => {
             <div>
               <label
                 htmlFor="queryType"
-                className="block text-sm font-normal text-(--color-preto) mb-1"
+                className="block text-sm font-normal text-preto mb-1"
               >
-                Query Type<span className="text-(--color-preto)">*</span>
+                Query Type<span className="text-preto">*</span>
               </label>
               <Field name="queryType">
                 {({ field, form }: FieldProps<string>) => (
@@ -356,12 +371,13 @@ const ContactForm = () => {
                   {...field}
                   label={
                     <>
-                      Subject<span className="text-(--color-preto)">*</span>
+                      Subject<span className="text-preto">*</span>
                     </>
                   }
                   type="text"
                   error={form.errors.subject as string}
                   labelClassName="text-xs font-normal"
+                  inputClassName="bg-branco"
                 />
               )}
             </Field>
@@ -370,9 +386,9 @@ const ContactForm = () => {
             <div>
               <label
                 htmlFor="message"
-                className="block text-xs font-normaltext-(--color-preto) mb-1"
+                className="block text-xs font-normal text-preto mb-1"
               >
-                Message<span className="text-(--color-preto)">*</span>
+                Message<span className="text-preto">*</span>
               </label>
               <Field
                 as="textarea"
@@ -383,7 +399,7 @@ const ContactForm = () => {
                   errors.message && touched.message
                     ? "border-red-500"
                     : "border-gray-300"
-                } rounded focus:outline-none focus:border-preto text-base bg-white font-normal resize-y`}
+                } rounded focus:outline-none focus:border-preto text-base bg-branco font-normal resize-y text-preto`}
               />
               <ErrorMessage
                 name="message"
@@ -394,7 +410,7 @@ const ContactForm = () => {
 
             {/* Attachments Field */}
             <div>
-              <label className="block text-xs font-normaltext-(--color-preto) mb-1">
+              <label className="block text-xs font-normal text-preto mb-1">
                 Attachments
               </label>
               <div className="flex items-center gap-2">
@@ -407,12 +423,12 @@ const ContactForm = () => {
                 />
                 <label
                   htmlFor="attachments"
-                  className="px-15 py-3 border border-(--color-preto) rounded-lg text-smtext-(--color-preto) font-bold cursor-pointer hover:bg-gray-50 transition-colors"
+                  className="px-15 py-3 border border-preto rounded-lg text-sm text-preto font-bold cursor-pointer hover:bg-gray-50 transition-colors"
                 >
                   Add File
                 </label>
                 {selectedFiles.length > 0 && (
-                  <span className="text-mtext-(--color-preto) font-bold">
+                  <span className="text-m text-preto font-bold">
                     {selectedFiles.length} file(s) selected
                   </span>
                 )}
@@ -421,7 +437,7 @@ const ContactForm = () => {
 
             {/* reCAPTCHA Widget */}
             <div className="py-4">
-              <div className="max-w-xs">
+              <div className={`max-w-xs ${!isDarkMode ? "bg-white p-2 rounded" : ""}`}>
                 <ReCAPTCHA
                   ref={recaptchaRef}
                   sitekey={
@@ -429,7 +445,7 @@ const ContactForm = () => {
                     "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                   }
                   onChange={handleRecaptchaChange}
-                  theme="light"
+                  theme={isDarkMode ? "dark" : "light"}
                 />
                 {recaptchaToken === null && (
                   <ErrorMessage
@@ -443,15 +459,13 @@ const ContactForm = () => {
 
             {/* Submit Button */}
             <div className="pt-4">
-              <Button
+              <button
                 type="submit"
                 disabled={isSubmitting}
-                loading={isSubmitting}
-                variant="secondary"
-                className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded text-sm sm:text-base font-normal"
+                className="px-15 py-3 border border-preto rounded-lg text-sm text-preto font-bold cursor-pointer hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send
-              </Button>
+                {isSubmitting ? "Sending..." : "Send"}
+              </button>
             </div>
           </Form>
         )}
@@ -471,7 +485,7 @@ const ContactLinkLine: React.FC<ContactLinkLineProps> = ({
   href,
   text,
 }) => (
-  <p className="text-sm text-(--color-preto) font-normal">
+  <p className="text-sm text-preto font-normal">
     {label}:{" "}
     <Link href={href} className="underline">
       {text}
@@ -484,12 +498,12 @@ const ParagraphWithOptionalLink: React.FC<{
 }> = ({ paragraph }) => {
   if (paragraph.text) {
     return (
-      <p className="text-sm text-(--color-preto) font-normal">{paragraph.text}</p>
+      <p className="text-sm text-preto font-normal">{paragraph.text}</p>
     );
   }
 
   return (
-    <p className="text-sm text-(--color-preto) font-normal">
+    <p className="text-sm text-preto font-normal">
       {paragraph.textBeforeLink}
       {paragraph.link && (
         <Link href={paragraph.link.href} className="underline">
@@ -505,9 +519,9 @@ const GeneralContactsSection = () => {
   const { customerService, sections } = generalContactsContent;
 
   return (
-    <div className="mt-4 text-sm text-(--color-preto) font-normal space-y-6">
+    <div className="mt-4 text-sm text-preto font-normal space-y-6">
       <section className="space-y-2">
-        <h4 className="text-base font-semibold text-(--color-preto)">
+        <h4 className="text-base font-semibold text-preto">
           {customerService.title}
         </h4>
         <ContactLinkLine
@@ -521,7 +535,7 @@ const GeneralContactsSection = () => {
           text={customerService.phone.text}
         />
         <div className="space-y-1">
-          <p className="text-sm text-(--color-preto) font-semibold">
+          <p className="text-sm text-preto font-semibold">
             For Swiss Customers:
           </p>
           <ul className="space-y-1 pl-4 list-none">
@@ -531,10 +545,10 @@ const GeneralContactsSection = () => {
           </ul>
         </div>
         <div>
-          <p className="text-sm text-(--color-preto) font-semibold">
+          <p className="text-sm text-preto font-semibold">
             For Romanian Customers:
           </p>
-          <p className="text-sm text-(--color-preto) font-normal">
+          <p className="text-sm text-preto font-normal">
             {customerService.romanianNumber}
           </p>
         </div>
@@ -543,7 +557,7 @@ const GeneralContactsSection = () => {
 
       {sections.map((section) => (
         <section key={section.title} className="space-y-2">
-          <h4 className="text-base font-semibold text-(--color-preto)">
+          <h4 className="text-base font-semibold text-preto">
             {section.title}
           </h4>
           {section.email && (
@@ -594,7 +608,7 @@ const ContactUs = () => {
 
   return (
     <div
-      className="min-h-screen bg-white text-(--color-preto) font-normal"
+      className="min-h-screen bg-branco text-preto font-normal"
       style={supportPageStyles}
     >
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-[48px] py-8 sm:py-12 lg:py-16 max-w-[1440px]">
@@ -602,7 +616,7 @@ const ContactUs = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-8 sm:mb-12 lg:mb-16 items-start">
           {/* Column 1 - Information Links */}
           <div>
-            <h3 className="text-normal font-normaltext-(--color-preto) mb-2 underline">
+            <h3 className="text-normal font-normal text-preto mb-2 underline">
               HOLIDAY DATES YOU&apos;LL WANT TO KNOW
             </h3>
             <ul className="space-y-2">
@@ -614,8 +628,8 @@ const ContactUs = () => {
                       href={link.href}
                       className={`block py-1 text-sm underline hover:no-underline transition text-base font-normal ${
                         isActive
-                          ? "font-thin text-(--color-preto)"
-                          : "text-(--color-preto)"
+                          ? "font-thin text-preto"
+                          : "text-preto"
                       }`}
                     >
                       {link.label}
@@ -628,28 +642,28 @@ const ContactUs = () => {
 
           {/* Column 2 - Customer Service */}
           <div className="md:ml-8 lg:ml-16 mt-6 md:mt-0">
-            <h2 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-4 sm:mb-8 lg:mb-13">
+            <h2 className="text-xl sm:text-2xl font-normal text-preto mb-4 sm:mb-8 lg:mb-13">
               Contact us
             </h2>
-            <h3 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-3">
+            <h3 className="text-xl sm:text-2xl font-normal text-preto mb-3">
               Customer Service
             </h3>
             <div className="mb-4">
-              <p className="text-smtext-(--color-preto) font-normal mb-1">
+              <p className="text-sm text-preto font-normal mb-1">
                 <strong>Email service hours:</strong>
               </p>
-              <p className="text-smtext-(--color-preto) font-normal">
+              <p className="text-sm text-preto font-normal">
                 Monday to Friday: 24 hours a day
               </p>
-              <p className="text-smtext-(--color-preto) font-normal">
+              <p className="text-sm text-preto font-normal">
                 Saturday and Sunday: 8am to 3pm EST
               </p>
             </div>
             <div>
-              <p className="text-smtext-(--color-preto) font-normal mb-1">
+              <p className="text-sm text-preto font-normal mb-1">
                 <strong>Phone service hours:</strong>
               </p>
-              <p className="text-smtext-(--color-preto) font-normal">
+              <p className="text-sm text-preto font-normal">
                 Monday to Friday: 8am to 9pm EST
               </p>
             </div>
@@ -657,17 +671,17 @@ const ContactUs = () => {
 
           {/* Column 3 - FAQs */}
           <div className="pt-0 md:pt-8 lg:pt-[81px] md:ml-4 lg:ml-8 mt-6 md:mt-0">
-            <h3 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-4">
+            <h3 className="text-xl sm:text-2xl font-normal text-preto mb-4">
               FAQs
             </h3>
-            <p className="text-smtext-(--color-preto) font-normal mb-2">
+            <p className="text-sm text-preto font-normal mb-2">
               Find the answers you need in our{" "}
               <Link href="#" className="underline">
                 FAQs
               </Link>
             </p>
             <div>
-              <p className="text-base font-normaltext-(--color-preto) mb-0">
+              <p className="text-base font-normal text-preto mb-0">
                 <strong>Quick Actions:</strong>
               </p>
               <ul className="space-y-1">
@@ -675,7 +689,7 @@ const ContactUs = () => {
                   <li key={action.label}>
                     <Link
                       href={action.href}
-                      className="text-smtext-(--color-preto) underline font-normal"
+                      className="text-sm text-preto underline font-normal"
                     >
                       {action.label}
                     </Link>
@@ -687,15 +701,15 @@ const ContactUs = () => {
 
           {/* Column 4 - Response Time Information */}
           <div className="pt-0 md:pt-8 lg:pt-[81px] mt-6 md:mt-0">
-            <h2 className="text-xl sm:text-2xl font-normaltext-(--color-preto) mb-4">
+            <h2 className="text-xl sm:text-2xl font-normal text-preto mb-4">
               We&apos;ll be in touch soon.
             </h2>
-            <p className="text-smtext-(--color-preto) font-normal leading-relaxed mb-4">
+            <p className="text-sm text-preto font-normal leading-relaxed mb-4">
               We aim to respond within 24 hours, but during busy periods like
               holidays, sales and special campaigns, we may take a little longer
               getting back to you.
             </p>
-            <p className="text-smtext-(--color-preto) font-normal leading-relaxed">
+            <p className="text-sm text-preto font-normal leading-relaxed">
               Want to get in touch? Scroll down for more details.
             </p>
           </div>
@@ -716,11 +730,11 @@ const ContactUs = () => {
                   onClick={() => toggleSection("cancelReturn")}
                   className="w-full flex justify-between items-center text-left"
                 >
-                  <h3 className="text-sm sm:text-base lg:text-l font-normaltext-(--color-preto) pr-4">
+                  <h3 className="text-sm sm:text-base lg:text-l font-normal text-preto pr-4">
                     STEP BY STEP TO CANCEL OR RETURN YOUR ORDER
                   </h3>
                   <svg
-                    className={`w-5 h-5text-(--color-preto) transition-transform ${
+                    className={`w-5 h-5 text-preto transition-transform ${
                       expandedSections.cancelReturn ? "rotate-180" : ""
                     }`}
                     fill="none"
@@ -736,29 +750,29 @@ const ContactUs = () => {
                   </svg>
                 </button>
                 {expandedSections.cancelReturn && (
-                  <div className="mt-4 text-basetext-(--color-preto) font-normal space-y-6">
+                  <div className="mt-4 text-base text-preto font-normal space-y-6">
                     {/* To cancel your order */}
                     <div>
-                      <h4 className="text-medium text-(--color-preto) mb-3 font-semibold">
+                      <h4 className="text-medium text-preto mb-3 font-semibold">
                         To cancel your order:
                       </h4>
                       <ol className="list-decimal list-inside space-y-2 ml-4">
-                        <li className="text-sm text-(--color-preto) font-normal">
+                        <li className="text-sm text-preto font-normal">
                           Go to Orders & Returns if you have an account, or if
                           you placed an order as a guest, enter your guest order
                           details <strong>here</strong> - you&apos;ll need to
                           provide your order number and email address
                         </li>
-                        <li className="text-sm text-(--color-preto) font-normal">
+                        <li className="text-sm text-preto font-normal">
                           Select the items you want to cancel and your reason
                           for cancellation
                         </li>
-                        <li className="text-sm text-(--color-preto) font-normal">
+                        <li className="text-sm text-preto font-normal">
                           We&apos;ll send you a confirmation email of your
                           cancelled order
                         </li>
                       </ol>
-                      <p className="text-sm text-(--color-preto) font-normal mt-3">
+                      <p className="text-sm text-preto font-normal mt-3">
                         If you can&apos;t cancel your order as self-service in
                         your account, it means the order has already been
                         prepared and can no longer be cancelled—neither by you
@@ -770,23 +784,23 @@ const ContactUs = () => {
 
                     {/* To return your order */}
                     <div>
-                      <h4 className="text-medium font-semibold text-(--color-preto) mb-3">
+                      <h4 className="text-medium font-semibold text-preto mb-3">
                         To return your order:
                       </h4>
                       <ol className="list-decimal list-inside space-y-2 ml-4">
-                        <li className="text-sm text-(--color-preto) font-normal">
+                        <li className="text-sm text-preto font-normal">
                           Go to Orders & Returns if you have an account. If you
                           placed your order as a guest, enter your guest order
                           details <strong>here</strong>.
                         </li>
-                        <li className="text-sm text-(--color-preto) font-normal">
+                        <li className="text-sm text-preto font-normal">
                           Find the order you want to return and click Return
                           Item(s)
                         </li>
-                        <li className="text-sm text-(--color-preto) font-normal">
+                        <li className="text-sm text-preto font-normal">
                           Select each item and your reason for returning
                         </li>
-                        <li className="text-sm text-(--color-preto) font-normal">
+                        <li className="text-sm text-preto font-normal">
                           There are two ways to return your items. At least one
                           will always be available:
                           <ul className="list-disc list-inside space-y-1 ml-6 mt-2">
@@ -809,19 +823,19 @@ const ContactUs = () => {
 
                     {/* Prepare your return */}
                     <div>
-                      <h4 className="text-medium font-semibold text-(--color-preto) mb-3">
+                      <h4 className="text-medium font-semibold text-preto mb-3">
                         Prepare your return:
                       </h4>
                       <ol className="list-decimal list-inside space-y-2 ml-4">
-                        <li className="text-sm  text-(--color-preto) font-normal">
+                        <li className="text-sm text-preto font-normal">
                           Place the item inside the FARFETCH packaging -
                           don&apos;t forget any brand boxes, dust bags, or cases
                         </li>
-                        <li className="text-sm text-(--color-preto) font-normal">
+                        <li className="text-sm text-preto font-normal">
                           Attach your Return Label to the outside of the
                           FARFETCH packaging.
                         </li>
-                        <li className="text-sm text-(--color-preto) font-normal">
+                        <li className="text-sm text-preto font-normal">
                           If you received a Return Note with your order, attach
                           it to the outside of your package
                         </li>
@@ -829,14 +843,14 @@ const ContactUs = () => {
                     </div>
 
                     {/* Important Tracking Note */}
-                    <p className="text-sm text-(--color-preto)  font-semibold">
+                    <p className="text-sm text-preto font-semibold">
                       When your package is collected or dropped off, make sure
                       you ask the courier to scan the label so you can track
                       your return.
                     </p>
 
                     {/* Final Note on Documents */}
-                    <p className="text-sm text-(--color-preto) font-normal">
+                    <p className="text-sm text-preto font-normal">
                       All the documents you need to return your item should be
                       included in your FARFETCH package. If you need to reprint
                       them, head to Orders & Returns in your account, or if you
@@ -853,11 +867,11 @@ const ContactUs = () => {
                   onClick={() => toggleSection("emailService")}
                   className="w-full flex justify-between items-center text-left"
                 >
-                  <h3 className="text-sm font-normaltext-(--color-preto) uppercase">
+                  <h3 className="text-sm font-normal text-preto uppercase">
                     EMAIL OUR CUSTOMER SERVICE TEAM
                   </h3>
                   <svg
-                    className={`w-5 h-5text-(--color-preto) transition-transform ${
+                    className={`w-5 h-5 text-preto transition-transform ${
                       expandedSections.emailService ? "rotate-180" : ""
                     }`}
                     fill="none"
@@ -885,11 +899,11 @@ const ContactUs = () => {
                   onClick={() => toggleSection("generalContacts")}
                   className="w-full flex justify-between items-center text-left"
                 >
-                  <h3 className="text-sm font-normal text-(--color-preto)">
+                  <h3 className="text-sm font-normal text-preto">
                     GENERAL CONTACTS
                   </h3>
                   <svg
-                    className={`w-5 h-5 text-(--color-preto) transition-transform ${
+                    className={`w-5 h-5 text-preto transition-transform ${
                       expandedSections.generalContacts ? "rotate-180" : ""
                     }`}
                     fill="none"
@@ -915,11 +929,11 @@ const ContactUs = () => {
               helpfulValue={feedbackHelpful}
               onFeedbackChange={handleFeedbackChange}
               containerClassName="pt-8 mt-8"
-              titleClassName="text-sm font-normal text-(--color-preto) mb-2"
-              questionClassName="text-xl sm:text-2xl font-normal text-(--color-preto) mb-4"
-              buttonClassName="px-4 py-2 border border-black rounded-lg text-l font-semibold transition-colors"
-              activeButtonClassName="bg-(--color-preto) text-white"
-              inactiveButtonClassName="text-(--color-preto) hover:bg-gray-100"
+              titleClassName="text-sm font-normal text-preto mb-2"
+              questionClassName="text-xl sm:text-2xl font-normal text-preto mb-4"
+              buttonClassName="px-4 py-2 border border-preto rounded-lg text-l font-semibold transition-colors"
+              activeButtonClassName="bg-preto text-white"
+              inactiveButtonClassName="text-preto hover:bg-gray-100"
             />
           </div>
         </div>

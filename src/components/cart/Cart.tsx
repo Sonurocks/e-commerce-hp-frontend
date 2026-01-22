@@ -485,7 +485,7 @@ const Cart = () => {
                                               }
                                             }}
                                             disabled={!option.available}
-                                            className={`w-full flex items-center justify-between py-1 px-2 text-left ${
+                                            className={`w-full flex items-center justify-between py-3 px-4 text-left ${
                                               item.size === option.size
                                                 ? "bg-(--color-whiteSmoke) font-semibold"
                                                 : option.available
@@ -506,7 +506,7 @@ const Cart = () => {
                                   <button
                                     type="button"
                                     onClick={() => toggleDropdown(`${item.product.id}-${item.size}-size`, 'size')}
-                                    className="w-full px-3 py-2 border border-(--color-silver) rounded-lg focus:outline-none focus:border-(--color-preto) bg-(--color-branco) cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
+                                    className="w-full px-4 py-3 border border-(--color-silver) rounded-lg focus:outline-none focus:border-(--color-preto) bg-(--color-branco) cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
                                   >
                                     <span className="font-semibold">{item.size}</span>
                                     <svg
@@ -556,7 +556,7 @@ const Cart = () => {
                                                 closeDropdown(`${item.product.id}-${item.size}-quantity`);
                                               }
                                             }}
-                                            className={`w-full flex items-center justify-between py-1 px-2 text-left ${
+                                            className={`w-full flex items-center justify-between py-3 px-4 text-left ${
                                               item.quantity === qty
                                                 ? "bg-(--color-whiteSmoke) font-semibold"
                                                 : "hover:bg-(--color-whiteSmoke)"
@@ -572,7 +572,7 @@ const Cart = () => {
                                   <button
                                     type="button"
                                     onClick={() => toggleDropdown(`${item.product.id}-${item.size}-quantity`, 'quantity')}
-                                    className="w-full px-3 py-2 border border-(--color-silver) rounded-lg focus:outline-none focus:border-(--color-preto) bg-(--color-branco) cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
+                                    className="w-full px-4 py-3 border border-(--color-silver) rounded-lg focus:outline-none focus:border-(--color-preto) bg-(--color-branco) cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
                                   >
                                     <span className="font-semibold">{item.quantity}</span>
                                     <svg

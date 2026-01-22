@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { BsQrCode } from "react-icons/bs";
 import { useLanguage } from "@/context/LanguageContext";
 import Input from "@/components/common/Input";
-import Button from "@/components/common/Button";
 
 export default function DownloadAppBanner() {
   const { translations } = useLanguage();
@@ -52,16 +51,14 @@ export default function DownloadAppBanner() {
                 placeholder={copy.emailPlaceholder}
                 fullWidth={false}
                 className="sm:flex-1"
-                inputClassName="h-11 border-preto rounded-lg px-3 text-sm placeholder:text-gray-400 focus:ring-1 focus:ring-black focus:border-black"
+                inputClassName="h-11 border-preto rounded-lg px-3 text-sm text-preto bg-branco placeholder:text-gray-400 focus:ring-1 focus:ring-black focus:border-black"
               />
-              <Button
+              <button
                 type="button"
-                variant="primary"
-                size="small"
-                className="h-11 sm:w-auto rounded-lg px-6 text-sm whitespace-nowrap"
+                className="h-11 sm:w-auto rounded-lg px-6 text-sm whitespace-nowrap border border-preto text-preto font-bold cursor-pointer hover:bg-gray-50 transition-colors"
               >
                 {copy.sendButton}
-              </Button>
+              </button>
             </form>
           </div>
 

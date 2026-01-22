@@ -29,7 +29,7 @@ const sections: SupportSection[] = [
           people, we embrace diversity and we help others to be successful. Our
           approach to the issue of Modern Slavery speaks to this value.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           FARFETCH Marketplace
         </h2>
         <p className="mb-3 text-base">
@@ -44,7 +44,7 @@ const sections: SupportSection[] = [
           to build and nurture relationships with hundreds of brands and
           boutiques from across the world.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Positively FARFETCH
         </h2>
         <p className="mb-3 text-base">
@@ -113,7 +113,7 @@ const sections: SupportSection[] = [
           governance outcomes that foster the wellbeing of FARFETCH employees,
           customers, vendors, partners, shareholders and community.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Partner brands and Boutiques
         </h2>
         <p className="mb-3 text-base">
@@ -188,7 +188,7 @@ const sections: SupportSection[] = [
           to increase the engagement with the tool to at least 300 brand
           partners.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Business Operations and ‘Non-Stock’ Procurement
         </h2>
         <p className="mb-3 text-base">
@@ -205,7 +205,7 @@ const sections: SupportSection[] = [
           total procurement spend was with suppliers with an EcoVadis scorecard,
           this has increased from 65% in 2021.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Company Policies and Codes
         </h2>
         <p className="mb-3 text-base">
@@ -247,7 +247,7 @@ const sections: SupportSection[] = [
           no discrimination, no harsh or inhumane treatment, working hours, rates
           of pay and terms of employment.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Assessing Our Risks
         </h2>
         <p className="mb-3 text-base">
@@ -287,7 +287,7 @@ const sections: SupportSection[] = [
           people, we embrace diversity and we help others to be successful. Our
           approach to the issue of Modern Slavery speaks to this value.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           FARFETCH Marketplace
         </h2>
         <p className="mb-3 text-base">
@@ -302,7 +302,7 @@ const sections: SupportSection[] = [
           to build and nurture relationships with hundreds of brands and
           boutiques from across the world.
         </p>
-        <h2 className="text-xs font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-xs font-semibold text-preto mb-4">
           Positively FARFETCH
         </h2>
         <p className="mb-3 text-base">
@@ -370,7 +370,7 @@ const sections: SupportSection[] = [
           governance outcomes that foster the wellbeing of FARFETCH employees,
           customers, vendors, partners, shareholders and community.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Partner brands and Boutiques
         </h2>
         <p className="mb-3 text-base">
@@ -444,7 +444,7 @@ const sections: SupportSection[] = [
           brands on how to improve their impact - whatever their size or stage of
           their ESG journey. We look forward to launching these tools in 2022.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Business Operations and ‘Non-Stock’ Procurement
         </h2>
         <p className="mb-3 text-base">
@@ -459,7 +459,7 @@ const sections: SupportSection[] = [
           impact (including GHG emissions and additional climate-related issues),
           business ethics, and sustainable procurement
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Company Policies and Codes
         </h2>
         <p className="mb-3 text-base">
@@ -501,7 +501,7 @@ const sections: SupportSection[] = [
           no discrimination, no harsh or inhumane treatment, working hours, rates
           of pay and terms of employment.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Assessing Our Risks
         </h2>
         <p className="mb-3 text-base">
@@ -555,7 +555,7 @@ const sections: SupportSection[] = [
           people, we embrace diversity and we help others to be successful. Our
           approach to the issue of Modern Slavery speaks to this value.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           FARFETCH Marketplace
         </h2>
         <p className="mb-3 text-base">
@@ -570,7 +570,7 @@ const sections: SupportSection[] = [
           to build and nurture relationships with hundreds of brands and
           boutiques from across the world.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Positively FARFETCH
         </h2>
         <p className="mb-3 text-base">
@@ -642,7 +642,7 @@ const sections: SupportSection[] = [
           governance outcomes that foster the wellbeing of FARFETCH employees,
           customers, vendors, partners, shareholders and community.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Partner brands and Boutiques
         </h2>
         <p className="mb-4">
@@ -705,7 +705,7 @@ const sections: SupportSection[] = [
           wider Positively FARFETCH strategy and 2030 goal of selling 100%
           Conscious product on site.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Business Operations and ‘Non-Stock’ Procurement
         </h2>
         <p className="mb-4">
@@ -723,7 +723,7 @@ const sections: SupportSection[] = [
           expertise and online tools that guide partners to more sustainable and
           ethical practices, with a particular focus on Labour & Human Rights.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Company Policies and Codes
         </h2>
         <p className="mb-4">
@@ -762,7 +762,7 @@ const sections: SupportSection[] = [
           no discrimination, no harsh or inhumane treatment, working hours, rates
           of pay and terms of employment.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Assessing Our Risks
         </h2>
         <p className="mb-4">
@@ -805,7 +805,7 @@ const sections: SupportSection[] = [
           people, we embrace diversity and we help others to be successful. Our
           approach to the issue of Modern Slavery speaks to this value.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           FARFETCH Marketplace
         </h2>
         <p className="mb-4">
@@ -842,7 +842,7 @@ const sections: SupportSection[] = [
           conscious collection every 18 months. We are committed to focussing on
           this area over the coming years.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Business Operations and ‘Non-Stock’ Procurement
         </h2>
         <p className="mb-4">
@@ -857,7 +857,7 @@ const sections: SupportSection[] = [
           suppliers as well as begin to establish processes that we can undertake
           at the outset of any new sourcing activity.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Company Policies and Codes
         </h2>
         <p className="mb-4">
@@ -876,7 +876,7 @@ const sections: SupportSection[] = [
           sets forth the behaviours, standards and practices we expect from our
           vendors, their employees and subcontractors.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Assessing Our Risks
         </h2>
         <p className="mb-4">
@@ -923,7 +923,7 @@ const sections: SupportSection[] = [
           people, we embrace diversity and we help others to be successful. Our
           approach to the issue of Modern Slavery speaks to this value.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Farfetch Marketplace
         </h2>
         <p className="mb-4">
@@ -952,7 +952,7 @@ const sections: SupportSection[] = [
           brands and boutiques and this is an area of focus that we have
           identified going forward over the coming years.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Business Operations and ‘Non-Stock’ Procurement
         </h2>
         <p className="mb-4">
@@ -967,7 +967,7 @@ const sections: SupportSection[] = [
           suppliers as well as begin to establish processes that we can undertake
           at the outset of any new sourcing activity.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Company Policies and Codes
         </h2>
         <p className="mb-3 text-base">
@@ -988,7 +988,7 @@ const sections: SupportSection[] = [
           behaviours, standards and practices we expect from our suppliers, their
           employees and sub-contractors.
         </p>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4">
+        <h2 className="text-sm font-semibold text-preto mb-4">
           Assessing Our Risks
         </h2>
         <p className="mb-3 text-base">
@@ -1067,9 +1067,9 @@ const ModernSlavery = () => {
           isOpen={openSectionIndex === sectionIndex}
           onToggle={toggleSection}
           containerClassName="border-b border-gray-200"
-          buttonClassName="w-full py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors "
+          buttonClassName="w-full py-4 flex items-center justify-between text-left  transition-colors "
           contentClassName="pb-4 px-4"
-          titleClassName="font-light text-sm text-(--color-preto) uppercase tracking-wide"
+          titleClassName="font-light text-sm text-preto uppercase tracking-wide"
         />
       )),
     [openSectionIndex, toggleSection],
@@ -1077,7 +1077,7 @@ const ModernSlavery = () => {
 
   return (
     <div
-      className="min-h-screen  text-(--color-preto)"
+      className="min-h-screen text-preto"
       style={modernSlaveryPageStyles}
     >
       <div className="max-w-[137rem] mx-auto px-[1.5rem] py-12">
@@ -1090,7 +1090,7 @@ const ModernSlavery = () => {
           {/* Right Main Content */}
           <main className="flex-1 max-w-4xl lg:ml-12">
             {/* Title */}
-            <h1 className="text-3xl md:text-2xl font-thin mb-8 text-(--color-preto)">
+            <h1 className="text-3xl md:text-2xl font-thin mb-8 text-preto">
               Modern Slavery Statement
             </h1>
 
@@ -1102,10 +1102,10 @@ const ModernSlavery = () => {
               helpfulValue={feedbackHelpful}
               onFeedbackChange={handleFeedbackChange}
               containerClassName="mt-13 pt-8"
-              titleClassName="text-xs font-base text-(--color-preto) mb-2"
-              buttonClassName="px-6 py-2 text-sm font-semibold border border-(--color-preto) transition-colors"
-              activeButtonClassName="bg-(--color-preto) text-white"
-              inactiveButtonClassName="bg-white text-(--color-preto) hover:bg-gray-50"
+              titleClassName="text-xs font-base text-preto mb-2"
+              buttonClassName="px-6 py-2 text-sm font-semibold rounded-lg border border-preto transition-colors"
+              activeButtonClassName="bg-preto text-white"
+              inactiveButtonClassName="  text-preto hover:bg-gray-50 "
             />
           </main>
         </div>

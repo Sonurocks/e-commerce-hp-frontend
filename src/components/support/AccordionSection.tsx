@@ -21,11 +21,11 @@ const AccordionSectionComponent: React.FC<AccordionSectionProps> = ({
   index,
   isOpen,
   onToggle,
-  containerClassName = "border-b border-gray-200",
-  buttonClassName = "w-full py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors",
-  titleClassName = "font-light text-sm text-(--color-preto) uppercase tracking-wide",
-  contentClassName = "pb-4 px-4 text-sm font-thin text-(--color-preto) leading-relaxed",
-  iconClassName = "w-4 h-4 text-(--color-preto)",
+  containerClassName = "border-b border-gray-200 dark:border-gray-700",
+  buttonClassName = "w-full py-4 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors",
+  titleClassName = "font-light text-sm text-preto uppercase tracking-wide",
+  contentClassName = "pb-4 px-4 text-sm font-thin text-preto leading-relaxed",
+  iconClassName = "w-4 h-4 text-preto",
 }) => {
   const handleToggle = useCallback(() => {
     onToggle(index);

@@ -27,8 +27,8 @@ const SupportNavigationComponent: React.FC<SupportNavigationProps> = ({
               href={link.href}
               className={`block py-1 text-sm underline hover:no-underline transition ${linkClassName} ${
                 isActive
-                  ? "font-thin text-(--color-preto)"
-                  : "text-(--color-preto)"
+                  ? "font-thin text-preto"
+                  : "text-preto"
               }`}
             >
               {link.label}

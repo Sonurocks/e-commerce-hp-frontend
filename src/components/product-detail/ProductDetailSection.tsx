@@ -311,7 +311,7 @@ export default function ProductDetailSection({
                         }
                       }}
                       disabled={!option.available}
-                      className={`w-full flex items-center justify-between py-1 px-2 text-left ${
+                      className={`w-full flex items-center justify-between py-3 px-4 text-left ${
                         selectedSize === option.size
                           ? "bg-gray-100 font-semibold"
                           : option.available
@@ -339,7 +339,7 @@ export default function ProductDetailSection({
           >
             <button
               onClick={() => setIsSizeDropdownOpen(!isSizeDropdownOpen)}
-              className="w-full px-3 py-2 border border-[#ccc] rounded-lg focus:outline-none focus:border-[#222] bg-white cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
+              className="w-full px-4 py-3 border border-[#ccc] rounded-lg focus:outline-none focus:border-[#222] bg-white cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
             >
               <span className={selectedSize ? "font-semibold" : "text-gray-400"}>
                 {selectedSize || translate("Select size")}

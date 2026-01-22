@@ -265,8 +265,8 @@ const PromotionsTermsAndConditions = () => {
           isOpen={openIndex === index}
           onToggle={toggleSection}
           containerClassName="border-b border-gray-200"
-          buttonClassName="w-full py-5 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
-          contentClassName="pb-6 px-4 text-sm font-thin text-(--color-preto) leading-relaxed space-y-2"
+          buttonClassName="w-full py-5 flex items-center justify-between text-left  transition-colors"
+          contentClassName="pb-6 px-4 text-sm font-thin text-preto leading-relaxed space-y-2"
         />
       )),
     [openIndex, toggleSection],
@@ -274,7 +274,7 @@ const PromotionsTermsAndConditions = () => {
 
   return (
     <div
-      className="min-h-screen  text-(--color-preto)"
+      className="min-h-screen  text-preto"
       style={supportPageStyles}
     >
       <div className="max-w-[137rem] mx-auto px-[1.5rem] py-12">
@@ -284,7 +284,7 @@ const PromotionsTermsAndConditions = () => {
           </aside>
 
           <main className="flex-1 max-w-4xl lg:ml-12">
-            <h1 className="text-3xl md:text-2xl font-thin mb-15 text-(--color-preto)">
+            <h1 className="text-3xl md:text-2xl font-thin mb-15 text-preto">
               Promotions terms and conditions
             </h1>
 
@@ -294,9 +294,9 @@ const PromotionsTermsAndConditions = () => {
               helpfulValue={feedbackHelpful}
               onFeedbackChange={handleFeedbackChange}
               containerClassName="mt-12 pt-8"
-              buttonClassName="px-6 py-2 text-sm font-semibold rounded-lg border border-(--color-preto) transition-colors"
-              activeButtonClassName="bg-(--color-preto) text-white"
-              inactiveButtonClassName="bg-white text-(--color-preto) hover:bg-gray-50"
+              buttonClassName="px-6 py-2 text-sm font-semibold rounded-lg border border-preto transition-colors"
+              activeButtonClassName="bg-preto text-white"
+              inactiveButtonClassName="text-preto hover:bg-gray-50"
             />
           </main>
         </div>

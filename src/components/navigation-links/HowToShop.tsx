@@ -94,7 +94,7 @@ const HowToShop = () => {
           containerClassName="border-b border-gray-200"
           buttonClassName="w-full py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
           contentClassName="pb-4 px-4"
-          titleClassName="font-light text-sm text-(--color-preto) uppercase tracking-wide"
+          titleClassName="font-light text-sm text-preto uppercase tracking-wide"
         />
       )),
     [openSections, handleToggle],
@@ -102,7 +102,7 @@ const HowToShop = () => {
 
   return (
     <div
-      className="min-h-screen text-(--color-preto)"
+      className="min-h-screen text-preto"
       style={supportPageStyles}
     >
       <div className="max-w-548 mx-auto px-[1.5rem] py-12">
@@ -116,8 +116,8 @@ const HowToShop = () => {
                       href={link.href}
                       className={`block py-1 text-sm font-thin underline hover:no-underline transition ${
                         pathname === link.href
-                          ? "font-thin text-(--color-preto)"
-                          : "text-(--color-preto)"
+                          ? "font-thin text-preto"
+                          : "text-preto"
                       }`}
                     >
                       {link.label}
@@ -130,7 +130,7 @@ const HowToShop = () => {
 
           <main className="flex-1 max-w-4xl lg:ml-12">
             {/* Title */}
-            <h1 className="text-3xl font-normal mb-8 text-(--color-preto)">
+            <h1 className="text-3xl font-normal mb-8 text-preto">
               How to shop
             </h1>
 
@@ -142,10 +142,10 @@ const HowToShop = () => {
               helpfulValue={feedbackHelpful}
               onFeedbackChange={handleFeedbackChange}
               containerClassName="mt-13 pt-8"
-              titleClassName="text-xs font-base text-(--color-preto) mb-2"
-              buttonClassName="px-6 py-2 text-sm font-semibold border border-(--color-preto) transition-colors rounded-lg"
-              activeButtonClassName="bg-(--color-preto) text-white"
-              inactiveButtonClassName="bg-white text-(--color-preto) hover:bg-gray-50"
+              titleClassName="text-xs font-base text-preto mb-2"
+              buttonClassName="px-6 py-2 text-sm font-semibold border border-preto transition-colors rounded-lg"
+              activeButtonClassName="bg-preto text-white"
+              inactiveButtonClassName=" text-preto hover:bg-gray-50"
             />
           </main>
         </div>

@@ -59,12 +59,12 @@ const ReferFriend = () => {
                     className={`pb-3 relative transition cursor-pointer ${
                       activeTab === "signin" 
                         ? "text-preto" 
-                        : "text-(--color-hina) hover:text-preto"
+                        : "text-gray-500 dark:text-gray-400 hover:text-preto"
                     }`}
                   >
                     {translate("SIGN IN")}
                     {activeTab === "signin" && (
-                      <span className="absolute left-0 right-0 bottom-0 h-0.5 z-10 bg-(--color-preto)" />
+                      <span className="absolute left-0 right-0 bottom-0 h-0.5 z-10 bg-preto dark:bg-white" />
                     )}
                   </button>
                   <button 
@@ -72,12 +72,12 @@ const ReferFriend = () => {
                     className={`ml-6 pb-3 relative transition cursor-pointer ${
                       activeTab === "signup" 
                         ? "text-preto" 
-                        : "text-(--color-hina) hover:text-preto"
+                        : "text-gray-500 dark:text-gray-400 hover:text-preto"
                     }`}
                   >
                     I AM NEW HERE
                     {activeTab === "signup" && (
-                      <span className="absolute left-0 right-0 bottom-0 h-0.5 z-10 bg-(--color-preto)" />
+                      <span className="absolute left-0 right-0 bottom-0 h-0.5 z-10 bg-preto dark:bg-white" />
                     )}
                   </button>
                 </div>
@@ -131,13 +131,13 @@ const ReferFriend = () => {
                               setEmailError("");
                             }
                           }}
-                          className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
-                            emailError ? "border-(--color-error)" : "border-preto focus:border-(--color-preto)"
+                          className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none ${
+                            emailError ? "border-red-500 dark:border-red-400" : "border-preto focus:border-preto dark:focus:border-white"
                           }`}
                           placeholder={translate("you@example.com")}
                         />
                         {emailError && (
-                          <p className="mt-1 text-xs text-(--color-error)">{emailError}</p>
+                          <p className="mt-1 text-xs text-red-500 dark:text-red-400">{emailError}</p>
                         )}
                       </label>
                       <label className="block text-xs font-normal text-preto">
@@ -158,13 +158,13 @@ const ReferFriend = () => {
                               setPasswordError("");
                             }
                           }}
-                          className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
-                            passwordError ? "border-(--color-error)" : "border-preto focus:border-(--color-preto)"
+                          className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none ${
+                            passwordError ? "border-red-500 dark:border-red-400" : "border-preto focus:border-preto dark:focus:border-white"
                           }`}
                           placeholder={translate("Enter password")}
                         />
                         {passwordError && (
-                          <p className="mt-1 text-xs text-(--color-error)">{passwordError}</p>
+                          <p className="mt-1 text-xs text-red-500 dark:text-red-400">{passwordError}</p>
                         )}
                       </label>
                       <div className="text-left">
@@ -259,7 +259,7 @@ const ReferFriend = () => {
                           type="text"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          className="mt-2 w-full rounded-xl border border-preto px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none focus:border-(--color-preto)"
+                          className="mt-2 w-full rounded-xl border border-preto px-4 py-3 text-base text-preto placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:border-preto dark:focus:border-white"
                           placeholder={translate("Enter your name")}
                         />
                       </label>
@@ -281,13 +281,13 @@ const ReferFriend = () => {
                               setEmailError("");
                             }
                           }}
-                          className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
-                            emailError ? "border-(--color-error)" : "border-preto focus:border-(--color-preto)"
+                          className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none ${
+                            emailError ? "border-red-500 dark:border-red-400" : "border-preto focus:border-preto dark:focus:border-white"
                           }`}
                           placeholder={translate("you@example.com")}
                         />
                         {emailError && (
-                          <p className="mt-1 text-xs text-(--color-error)">{emailError}</p>
+                          <p className="mt-1 text-xs text-red-500 dark:text-red-400">{emailError}</p>
                         )}
                       </label>
                       <label className="block text-xs font-normal text-preto">
@@ -308,13 +308,13 @@ const ReferFriend = () => {
                               setPasswordError("");
                             }
                           }}
-                          className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-(--color-hina) focus:outline-none ${
-                            passwordError ? "border-(--color-error)" : "border-preto focus:border-(--color-preto)"
+                          className={`mt-2 w-full rounded-xl border px-4 py-3 text-base text-preto placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none ${
+                            passwordError ? "border-red-500 dark:border-red-400" : "border-preto focus:border-preto dark:focus:border-white"
                           }`}
                           placeholder={translate("Enter password")}
                         />
                         {passwordError && (
-                          <p className="mt-1 text-xs text-(--color-error)">{passwordError}</p>
+                          <p className="mt-1 text-xs text-red-500 dark:text-red-400">{passwordError}</p>
                         )}
                       </label>
                       <p className="text-xs font-normal text-preto">

@@ -776,7 +776,7 @@ const Header = () => {
               </div>
 
               {/* Secondary Navigation and Search */}
-              <div className="flex flex-col gap-4 border-t border-gray-200 py-4 dark:border-(--color-platinum)">
+              <div className="hidden md:flex flex-col gap-4 border-t border-gray-200 py-4 dark:border-(--color-platinum)">
                 <div className="relative flex items-center gap-2">
                   {/* Previous Button */}
                   {canScrollLeft && (

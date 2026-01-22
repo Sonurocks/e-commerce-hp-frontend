@@ -1037,10 +1037,10 @@ const faqSections: SupportSection[] = faqCategories.map((category) => ({
           key={`${category.title}-${questionIndex}`}
           className="mb-6 last:mb-0"
         >
-          <h3 className="font-semibold text-sm text-(--color-preto) mb-3">
+          <h3 className="font-semibold text-sm text-preto mb-3">
             {item.question}
           </h3>
-          <div className="text-sm font-thin text-(--color-preto) leading-relaxed space-y-2">
+          <div className="text-sm font-thin text-preto leading-relaxed space-y-2">
             {typeof item.answer === "string" ? (
               <p>{item.answer}</p>
             ) : (
@@ -1078,8 +1078,8 @@ const FAQ = () => {
           isOpen={openCategoryIndex === index}
           onToggle={toggleCategory}
           containerClassName="border-b border-gray-200"
-          buttonClassName="w-full py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
-          contentClassName="pb-4 px-4"
+          buttonClassName="w-full py-4 flex items-center justify-between text-left transition-colors"
+          contentClassName="pb-4 px-6"
         />
       )),
     [openCategoryIndex, toggleCategory],
@@ -1087,7 +1087,7 @@ const FAQ = () => {
 
   return (
     <div
-      className="min-h-screen  text-(--color-preto)"
+      className="min-h-screen text-preto"
       style={supportPageStyles}
     >
       <div className="max-w-[137rem] mx-auto px-[1.5rem] py-12">
@@ -1100,7 +1100,7 @@ const FAQ = () => {
           {/* Right Main Content */}
           <main className="flex-1 max-w-4xl lg:ml-12">
             {/* Title */}
-            <h1 className="text-3xl md:text-2xl font-thin mb-8 text-(--color-preto)">
+            <h1 className="text-3xl md:text-2xl font-thin mb-8 text-preto">
               FAQs
             </h1>
 
@@ -1111,10 +1111,10 @@ const FAQ = () => {
               helpfulValue={feedbackHelpful}
               onFeedbackChange={handleFeedbackChange}
               containerClassName="mt-13 pt-8"
-              titleClassName="text-xs font-base text-(--color-preto) mb-2"
-              buttonClassName="px-6 py-2 text-sm font-semibold border border-preto transition-colors"
+              titleClassName="text-xs font-base text-preto mb-2"
+              buttonClassName="px-6 py-2 text-sm font-semibold rounded-lg border border-preto transition-colors"
               activeButtonClassName="bg-preto text-white"
-              inactiveButtonClassName="bg-whitetext-(--color-preto) hover:bg-gray-50"
+              inactiveButtonClassName=" text-preto hover:bg-gray-50"
             />
           </main>
         </div>

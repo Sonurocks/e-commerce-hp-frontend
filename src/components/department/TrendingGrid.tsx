@@ -19,17 +19,17 @@ export default function TrendingGrid({ items }: { items: Product[] }) {
         {items.map((t) => (
           <div key={t.id} className="flex flex-col">
             <Link href={`/trending?id=${t.id}`} className="block group">
-              <div className="relative w-full h-[300px] sm:h-[400px] flex items-center justify-start overflow-hidden">
+              <div className="relative w-full h-[300px] min-[750px]:h-[300px] flex items-center justify-start overflow-hidden">
                 <Image 
                   src={t.image.src} 
                   alt={translateTitle(t.title) ?? t.title} 
                   fill
                   sizes="(min-width: 768px) 25vw, 50vw"
-                  className="object-contain object-left" 
+                  className="object-contain object-left object-bottom" 
                 />
               </div>
             </Link>
-            <div className="mt-2 md:mt-4 text-left" style={{ display: 'block', visibility: 'visible', opacity: 1, position: 'static', zIndex: 1 }}>
+            <div className="mt-2 md:mt-1 text-left" style={{ display: 'block', visibility: 'visible', opacity: 1, position: 'static', zIndex: 1 }}>
               <p className="text-sm font-normal text-preto block" style={{ color: '#000', display: 'block', visibility: 'visible', opacity: 1 }}>
                 {translateTitle(t.title)}
               </p>

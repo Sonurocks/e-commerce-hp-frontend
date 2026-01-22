@@ -55,10 +55,10 @@ export default function WhyFarfetchSection() {
           >
             <Icon className="w-4 h-4 text-(--color-preto)" aria-hidden="true" />
             <div>
-              <p className="text-[11px] font-normal tracking-wide text-(--color-preto)">
+              <p className="text-[11px] font-semibold tracking-wide text-(--color-preto)">
                 {translate(eyebrow)}
               </p>
-              <p className="text-[13px] font-normal text-(--color-preto) mt-0">
+              <p className="text-[13px] font-medium text-(--color-preto) mt-0">
                 {translate(title)}
               </p>
             </div>

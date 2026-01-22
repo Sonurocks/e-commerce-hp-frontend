@@ -72,7 +72,7 @@ const sections: SupportSection[] = [
           <li>Republic of Korea: KRW W280000</li>
           <li>Macau SAR: USD $150</li>
         </ul>
-        <h2 className="text-sm font-semibold text-(--color-preto) mb-4 mt-6">
+        <h2 className="text-sm font-semibold text-preto mb-4 mt-6">
           Delivery times
         </h2>
         <p className="mb-4 font-medium">
@@ -336,9 +336,9 @@ const OrdersAndDelivery = () => {
           isOpen={openSectionIndex === sectionIndex}
           onToggle={toggleSection}
           containerClassName="border-b border-gray-200"
-          buttonClassName="w-full py-4 flex items-center rounded-lg justify-between text-left hover:bg-gray-50 transition-colors "
+          buttonClassName="w-full py-4 flex items-center rounded-lg justify-between text-left transition-colors "
           contentClassName="pb-4 px-4"
-          titleClassName="font-light text-sm text-(--color-preto) uppercase tracking-wide"
+          titleClassName="font-light text-sm text-preto uppercase tracking-wide"
         />
       )),
     [openSectionIndex, toggleSection],
@@ -346,7 +346,7 @@ const OrdersAndDelivery = () => {
 
   return (
     <div
-      className="min-h-screen  text-(--color-preto)"
+      className="min-h-screen  text-preto"
       style={supportPageStyles}
     >
       <div className="max-w-[137rem] mx-auto px-[1.5rem] py-12">
@@ -359,7 +359,7 @@ const OrdersAndDelivery = () => {
           {/* Right Main Content */}
           <main className="flex-1 max-w-4xl lg:ml-12">
             {/* Title */}
-            <h1 className="text-3xl md:text-2xl font-thin mb-8 text-(--color-preto)">
+            <h1 className="text-3xl md:text-2xl font-thin mb-8 text-preto">
               Orders and delivery
             </h1>
 
@@ -371,10 +371,10 @@ const OrdersAndDelivery = () => {
               helpfulValue={feedbackHelpful}
               onFeedbackChange={handleFeedbackChange}
               containerClassName="mt-13 pt-8"
-              titleClassName="text-xs font-base text-(--color-preto) mb-2"
-              buttonClassName="px-6 py-2 text-sm font-semibold border border-(--color-preto) transition-colors"
-              activeButtonClassName="bg-(--color-preto) text-white"
-              inactiveButtonClassName="bg-white text-(--color-preto) hover:bg-gray-50"
+              titleClassName="text-xs font-base text-preto mb-2"
+              buttonClassName="px-6 py-2 text-sm font-semibold rounded-lg border border-preto transition-colors"
+              activeButtonClassName="bg-preto text-white"
+              inactiveButtonClassName=" text-preto hover:bg-gray-50"
             />
           </main>
         </div>

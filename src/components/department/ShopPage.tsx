@@ -230,7 +230,7 @@ export default function ShopPage() {
                           setSortBy(option.value);
                           setIsSortDropdownOpen(false);
                         }}
-                        className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="w-full flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                       >
                         <span>{option.label}</span>
                         {isSelected && (

@@ -142,7 +142,7 @@ const cryptoTopics: SupportSection[] = [
     title: "HOW TO PAY WITH CRYPTOCURRENCY",
     content: (
       <>
-        <p className="font-medium text-sm text-(--color-preto)">
+        <p className="font-medium text-sm text-preto">
           Here&apos;s how you&apos;ll be able to place an order:
         </p>
         <ol className="list-decimal list-inside space-y-1 ml-4 mt-2">
@@ -237,7 +237,7 @@ const cryptoTopics: SupportSection[] = [
           , will email you to claim your refund. For more information, view the
           refunds in cryptocurrency section below.
         </p>
-        <p className="mt-6 font-medium text-sm text-(--color-preto)">
+        <p className="mt-6 font-medium text-sm text-preto">
           <strong>
             Sending cryptocurrency to the wrong address or network
           </strong>
@@ -328,7 +328,7 @@ const cryptoTopics: SupportSection[] = [
           should return to your wallet within the same business day, depending
           on how congested the blockchain is.
         </p>
-        <p className="mt-4 font-medium text-sm text-(--color-preto)">
+        <p className="mt-4 font-medium text-sm text-preto">
           <strong>Sending the incorrect amount in cryptocurrency</strong>
         </p>
         <p className="mt-2">
@@ -406,7 +406,7 @@ const cryptoTopics: SupportSection[] = [
           gives our customers the opportunity to shop using blockchain
           technology and cryptocurrency solutions.
         </p>
-        <p className="mt-4 font-medium text-sm text-(--color-preto)">
+        <p className="mt-4 font-medium text-sm text-preto">
           <strong>Triple-A/Tether promotion details:</strong>
         </p>
         <ul className="list-disc list-outside space-y-1 ml-6 mt-2">
@@ -450,8 +450,8 @@ const Cryptocurrency = () => {
           isOpen={openIndex === index}
           onToggle={toggleTopic}
           containerClassName="border-b border-gray-200"
-          buttonClassName="w-full py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
-          contentClassName="pb-6 px-4 text-sm font-thin text-(--color-preto) leading-relaxed space-y-2"
+          buttonClassName="w-full py-4 flex items-center justify-between text-left  transition-colors"
+          contentClassName="pb-6 px-4 text-sm font-thin text-preto leading-relaxed space-y-2"
         />
       )),
     [openIndex, toggleTopic],
@@ -469,7 +469,7 @@ const Cryptocurrency = () => {
           </aside>
 
           <main className="flex-1 max-w-4xl lg:ml-12">
-            <h1 className="text-3xl md:text-2xl font-thin mb-8 text-(--color-preto)">
+            <h1 className="text-3xl md:text-2xl font-thin mb-8 text-preto">
               Cryptocurrency payments
             </h1>
 
@@ -479,9 +479,9 @@ const Cryptocurrency = () => {
               helpfulValue={feedbackHelpful}
               onFeedbackChange={handleFeedbackChange}
               containerClassName="mt-13 pt-8"
-              buttonClassName="px-6 py-2 text-sm font-semibold rounded-lg border border-(--color-preto) transition-colors"
-              activeButtonClassName="bg-(--color-preto) text-white"
-              inactiveButtonClassName="bg-white text-(--color-preto) hover:bg-gray-50"
+              buttonClassName="px-6 py-2 text-sm font-semibold rounded-lg border border-preto transition-colors"
+              activeButtonClassName="bg-preto text-white"
+              inactiveButtonClassName=" text-preto "
             />
           </main>
         </div>

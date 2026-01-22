@@ -11,7 +11,7 @@ const Accessibility = () => {
   const [feedbackHelpful, setFeedbackHelpful] = useState<boolean | null>(null);
 
   return (
-    <div className="min-h-screen  text-(--color-preto)">
+    <div className="min-h-screen  text-preto">
       <div className="max-w-[137rem] mx-auto px-[1.5rem] py-12">
         <div className="flex flex-col lg:flex-row gap-12 lg:pl-16">
           <aside className="lg:w-72 flex-shrink-0">
@@ -23,8 +23,8 @@ const Accessibility = () => {
                       href={link.href}
                       className={`block py-1 text-sm font-thin underline hover:no-underline transition ${
                         pathname === link.href
-                          ? "font-thin text-(--color-preto)"
-                          : "text-(--color-preto)"
+                          ? "font-thin text-preto"
+                          : "text-preto"
                       }`}
                     >
                       {link.label}
@@ -36,11 +36,11 @@ const Accessibility = () => {
           </aside>
 
           <main className="flex-1 max-w-4xl lg:ml-12">
-            <h1 className="text-3xl font-normal mb-8 text-(--color-preto)">
+            <h1 className="text-3xl font-normal mb-8 text-preto">
               Accessibility
             </h1>
 
-            <div className="space-y-4 text-sm font-normal leading-relaxed text-(--color-preto)">
+            <div className="space-y-4 text-sm font-normal leading-relaxed text-preto">
               <p>
                 At FARFETCH, we want to ensure the products and services offered
                 on our website and apps are accessible to everyone. Our goal is
@@ -69,30 +69,30 @@ const Accessibility = () => {
 
             <div className="mt-12 pt-8">
               <div className="mb-4">
-                <p className="text-xs text-(--color-preto) mb-2">
+                <p className="text-xs text-preto mb-2">
                   Tell us what you think
                 </p>
-                <p className="text-2xl font-thin text-(--color-preto) mb-4">
+                <p className="text-2xl font-thin text-preto mb-4">
                   Was this content helpful?
                 </p>
               </div>
               <div className="flex gap-3">
                 <button
                   onClick={() => setFeedbackHelpful(true)}
-                  className={`px-6 py-2 text-sm font-semibold rounded-lg border border-(--color-preto) transition-colors ${
+                  className={`px-6 py-2 text-sm font-semibold rounded-lg border border-preto transition-colors ${
                     feedbackHelpful === true
-                      ? "bg-(--color-preto) text-white"
-                      : "bg-white text-(--color-preto) hover:bg-gray-50"
+                      ? "bg-preto text-white"
+                      : " text-preto hover:bg-gray-50"
                   }`}
                 >
                   Yes
                 </button>
                 <button
                   onClick={() => setFeedbackHelpful(false)}
-                  className={`px-6 py-2 text-sm font-semibold rounded-lg border border-(--color-preto) transition-colors ${
+                  className={`px-6 py-2 text-sm font-semibold rounded-lg border border-preto transition-colors ${
                     feedbackHelpful === false
-                      ? "bg-(--color-preto) text-white"
-                      : "bg-white text-(--color-preto) hover:bg-gray-50"
+                      ? "bg-preto text-white"
+                      : " text-preto hover:bg-gray-50"
                   }`}
                 >
                   Not really

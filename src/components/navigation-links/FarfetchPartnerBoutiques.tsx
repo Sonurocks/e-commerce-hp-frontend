@@ -194,28 +194,28 @@ const BoutiqueSection = ({ boutique, isFirst = false, isLast = false }: Boutique
       )}
       
       <div className={isLast ? "mb-2" : ""}>
-        <h3 className={`${isFirst ? "text-lg font-light tracking-[0.08em]" : "text-[1.05rem] tracking-[0.18em] font-normal"} text-(--color-preto)`}>
+        <h3 className={`${isFirst ? "text-lg font-light tracking-[0.08em]" : "text-[1.05rem] tracking-[0.18em] font-normal"} text-preto`}>
           {boutique.name}
         </h3>
-        <p className={`text-sm text-(--color-preto) ${isFirst ? "text-[0.72rem] tracking-[0.3em] uppercase mt-0" : ""}`}>
+        <p className={`text-sm text-preto ${isFirst ? "text-[0.72rem] tracking-[0.3em] uppercase mt-0" : ""}`}>
           {boutique.location}
         </p>
       </div>
 
       <div className={isLast ? "mb-2" : ""}>
-        <h4 className="text-sm font-semibold text-(--color-preto)">
+        <h4 className="text-sm font-semibold text-preto">
           {isFirst ? "Brands to look out for" : "Brands to look out for:"}
         </h4>
-        <p className={`text-sm text-(--color-preto) ${isFirst ? "leading-6" : ""}`}>
+        <p className={`text-sm text-preto ${isFirst ? "leading-6" : ""}`}>
           {brandsText}
         </p>
       </div>
 
       <div>
-        <h4 className={`text-sm font-semibold text-(--color-preto) ${isFirst ? "tracking-wide" : ""}`}>
+        <h4 className={`text-sm font-semibold text-preto ${isFirst ? "tracking-wide" : ""}`}>
           {isFirst ? "About the store" : "About the store:"}
         </h4>
-        <p className={`text-sm text-(--color-preto) leading-relaxed ${isFirst ? "mt-1" : ""}`}>
+        <p className={`text-sm text-preto leading-relaxed ${isFirst ? "mt-1" : ""}`}>
           {boutique.about}
         </p>
       </div>
@@ -231,13 +231,13 @@ const FarfetchPartnerBoutiques = () => {
   }, []);
 
   return (
-    <div className="min-h-screen  font-normal text-(--color-preto)">
+    <div className="min-h-screen font-normal  text-preto">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-2 py-12">
         <header className="mb-10">
-          <h1 className="text-2xl leading-tight tracking-tight font-normal mb-3 text-(--color-preto)">
+          <h1 className="text-2xl leading-tight tracking-tight font-normal mb-3 text-preto">
             Farfetch Partners
           </h1>
-          <p className="text-sm text-(--color-preto)">
+          <p className="text-sm text-preto">
             Shop from the world&apos;s best luxury boutiques through Farfetch
           </p>
         </header>
@@ -266,7 +266,7 @@ const FarfetchPartnerBoutiques = () => {
                         region.showChevron === false ? "cursor-default" : "hover:opacity-70"
                       }`}
                     >
-                      <p className="text-xs font-thin text-(--color-preto) uppercase">
+                      <p className="text-xs font-thin text-preto uppercase">
                         {region.title}
                       </p>
                       {region.showChevron !== false && (
@@ -302,7 +302,7 @@ const FarfetchPartnerBoutiques = () => {
           <main className="flex-1">
             <section className="mb-3">
               <div className="flex items-center justify-between mb-1">
-                <h2 className="text-xl font-light text-(--color-preto)">All boutiques</h2>
+                <h2 className="text-xl font-light text-preto">All boutiques</h2>
               </div>
               <div
                 className="w-full h-64 md:h-60 lg:h-[16rem] border border-(--colorGrey) rounded-sm bg-cover bg-center"
@@ -325,7 +325,7 @@ const FarfetchPartnerBoutiques = () => {
             ))}
 
             {/* Previous/Next Navigation */}
-            <div className="flex items-center justify-between mt-12 mb-8 text-sm text-(--color-preto)">
+            <div className="flex items-center justify-between mt-12 mb-8 text-sm text-preto">
               <button className="flex items-center gap-2 hover:opacity-70 transition-opacity">
                 <HiOutlineChevronLeft className="text-lg" />
                 <span>Previous</span>

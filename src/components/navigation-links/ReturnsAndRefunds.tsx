@@ -473,7 +473,7 @@ const ReturnsAndRefunds = () => {
   }, []);
 
   const sections = useMemo(() => getSections(translate), [translate]);
-  
+
   const renderedSections = useMemo(
     () =>
       sections.map((section, sectionIndex) => (
@@ -484,9 +484,9 @@ const ReturnsAndRefunds = () => {
           isOpen={openSectionIndex === sectionIndex}
           onToggle={toggleSection}
           containerClassName="border-b border-gray-200"
-          buttonClassName="w-full py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+          buttonClassName="w-full py-4 flex items-center justify-between text-left  transition-colors"
           contentClassName="pb-4 px-4"
-          titleClassName="font-light text-sm text-(--color-preto) uppercase tracking-wide"
+          titleClassName="font-light text-sm text-preto uppercase tracking-wide"
         />
       )),
     [openSectionIndex, toggleSection],
@@ -507,7 +507,7 @@ const ReturnsAndRefunds = () => {
           {/* Right Main Content */}
           <main className="flex-1 max-w-4xl lg:ml-12">
             {/* Title */}
-            <h1 className="text-3xl md:text-2xl font-thin mb-8 text-(--color-preto)">
+            <h1 className="text-3xl md:text-2xl font-thin mb-8 text-preto">
               Returns and refunds
             </h1>
 
@@ -519,10 +519,10 @@ const ReturnsAndRefunds = () => {
               helpfulValue={feedbackHelpful}
               onFeedbackChange={handleFeedbackChange}
               containerClassName="mt-13 pt-8"
-              titleClassName="text-xs font-base text-(--color-preto) mb-2"
-              buttonClassName="px-6 py-2 text-sm font-semibold border border-(--color-preto) transition-colors"
-              activeButtonClassName="bg-(--color-preto) text-white"
-              inactiveButtonClassName="bg-white text-(--color-preto) hover:bg-gray-50"
+              titleClassName="text-xs font-base text-preto mb-2"
+              buttonClassName="px-6 py-2 text-sm font-semibold rounded-lg border border-preto transition-colors"
+              activeButtonClassName="bg-preto text-white"
+              inactiveButtonClassName=" text-preto hover:bg-gray-50"
             />
           </main>
         </div>

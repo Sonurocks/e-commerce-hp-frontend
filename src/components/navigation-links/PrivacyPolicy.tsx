@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
   const [feedbackHelpful, setFeedbackHelpful] = useState<boolean | null>(null);
 
   return (
-    <div className="min-h-screen  text-(--color-preto)">
+    <div className="min-h-screen  text-preto">
       <div className="max-w-548 mx-auto px-[1.5rem] py-12">
         <div className="flex flex-col lg:flex-row gap-12 lg:pl-16">
           <aside className="lg:w-72 shrink-0">
@@ -23,8 +23,8 @@ const PrivacyPolicy = () => {
                       href={link.href}
                       className={`block py-1 text-sm font-thin underline hover:no-underline transition ${
                         pathname === link.href
-                          ? "font-thin text-(--color-preto)"
-                          : "text-(--color-preto)"
+                          ? "font-thin text-preto"
+                          : "text-preto"
                       }`}
                     >
                       {link.label}
@@ -36,13 +36,13 @@ const PrivacyPolicy = () => {
           </aside>
 
           <main className="flex-1 max-w-4xl lg:ml-12">
-            <h1 className="text-3xl font-normal mb-8 text-(--color-preto)">
+            <h1 className="text-3xl font-normal mb-8 text-preto">
               Privacy Policy
             </h1>
 
-            <div className="space-y-4 text-sm font-normal leading-relaxed text-(--color-preto)">
+            <div className="space-y-4 text-sm font-normal leading-relaxed text-preto">
               <section className="space-y-2">
-                <h2 className="text-xl font-normal text-(--color-preto)">
+                <h2 className="text-xl font-normal text-preto">
                   Introduction
                 </h2>
                 <p>
@@ -54,7 +54,7 @@ const PrivacyPolicy = () => {
               </section>
 
               <section className="space-y-2">
-                <h2 className="text-xl font-normal text-(--color-preto)">
+                <h2 className="text-xl font-normal text-preto">
                   Information We Collect
                 </h2>
                 <p>
@@ -73,7 +73,7 @@ const PrivacyPolicy = () => {
               </section>
 
               <section className="space-y-2">
-                <h2 className="text-xl font-normal text-(--color-preto)">
+                <h2 className="text-xl font-normal text-preto">
                   How We Use Your Information
                 </h2>
                 <p>We use the information we collect to:</p>
@@ -88,7 +88,7 @@ const PrivacyPolicy = () => {
               </section>
 
               <section className="space-y-2">
-                <h2 className="text-xl font-normal text-(--color-preto)">
+                <h2 className="text-xl font-normal text-preto">
                   Information Sharing and Disclosure
                 </h2>
                 <p>
@@ -103,7 +103,7 @@ const PrivacyPolicy = () => {
               </section>
 
               <section className="space-y-2">
-                <h2 className="text-xl font-normal text-(--color-preto)">
+                <h2 className="text-xl font-normal text-preto">
                   Your Rights
                 </h2>
                 <p>You have the right to:</p>
@@ -117,7 +117,7 @@ const PrivacyPolicy = () => {
               </section>
 
               <section className="space-y-2">
-                <h2 className="text-xl font-normal text-(--color-preto)">
+                <h2 className="text-xl font-normal text-preto">
                   Data Security
                 </h2>
                 <p>
@@ -126,7 +126,7 @@ const PrivacyPolicy = () => {
               </section>
 
               <section className="space-y-2">
-                <h2 className="text-xl font-normal text-(--color-preto)">
+                <h2 className="text-xl font-normal text-preto">
                   Cookies and Tracking Technologies
                 </h2>
                 <p>
@@ -135,7 +135,7 @@ const PrivacyPolicy = () => {
               </section>
 
               <section className="space-y-2">
-                <h2 className="text-xl font-normal text-(--color-preto)">
+                <h2 className="text-xl font-normal text-preto">
                   Contact Us
                 </h2>
                 <p>
