@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   DownloadAppBanner,
@@ -11,6 +11,7 @@ import {
   SectionHeader,
   TrendingGrid,
 } from "@/components";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 import {
   DepartmentKey,
   editorialFeatureByDept,
@@ -30,6 +31,16 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
   const { translations } = useLanguage();
   const homeCopy = translations.homepage;
   const departmentCopy = homeCopy.departments[department];
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Simulate loading on mount/refresh
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500); // Brief delay to show skeleton
+    return () => clearTimeout(timer);
+  }, [department]);
 
   if (!departmentCopy) {
     return null;
@@ -63,11 +74,21 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
           title={departmentCopy.featured.title}
         />
         <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {featuredPromoCardsByDept[department].map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
-              <ProductCard product={product} showBadge />
-            </div>
-          ))}
+          {isLoading ? (
+            // Show skeleton loaders
+            Array.from({ length: 4 }).map((_, index) => (
+              <div key={`skeleton-featured-${index}`} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
+                <ProductCardSkeleton />
+              </div>
+            ))
+          ) : (
+            // Show actual products
+            featuredPromoCardsByDept[department].map((product) => (
+              <div key={product.id} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
+                <ProductCard product={product} showBadge />
+              </div>
+            ))
+          )}
         </div>
         <div className="flex justify-center mt-6">
           <Link
@@ -92,14 +113,24 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
           title={departmentCopy.newIn.title}
         />
         <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {newInProductsByDept[department].map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
-              <ProductCard
-                product={product}
-                showBadge={!!product.badge}
-              />
-            </div>
-          ))}
+          {isLoading ? (
+            // Show skeleton loaders
+            Array.from({ length: 4 }).map((_, index) => (
+              <div key={`skeleton-newin-${index}`} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
+                <ProductCardSkeleton />
+              </div>
+            ))
+          ) : (
+            // Show actual products
+            newInProductsByDept[department].map((product) => (
+              <div key={product.id} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
+                <ProductCard
+                  product={product}
+                  showBadge={!!product.badge}
+                />
+              </div>
+            ))
+          )}
         </div>
         <div className="flex justify-center mt-6">
           <Link
@@ -116,14 +147,24 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
           title={departmentCopy.party.title}
         />
         <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {partyPlusOnesByDept[department].map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
-              <ProductCard
-                product={product}
-                showBadge={!!product.badge}
-              />
-            </div>
-          ))}
+          {isLoading ? (
+            // Show skeleton loaders
+            Array.from({ length: 4 }).map((_, index) => (
+              <div key={`skeleton-party-${index}`} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
+                <ProductCardSkeleton />
+              </div>
+            ))
+          ) : (
+            // Show actual products
+            partyPlusOnesByDept[department].map((product) => (
+              <div key={product.id} className="flex-shrink-0 w-[280px] min-w-[280px] md:w-auto md:min-w-0">
+                <ProductCard
+                  product={product}
+                  showBadge={!!product.badge}
+                />
+              </div>
+            ))
+          )}
         </div>
         <div className="flex justify-center mt-6">
           <Link

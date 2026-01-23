@@ -708,9 +708,9 @@ const arabicBundle: TranslationBundle = {
     "leopard-print hoodie": "هودي بطبعة فهد",
     "leopard long-sleeve top": "بلوزة طويلة الأكمام بطبعة فهد",
     "Delhi • Since 2021": "دلهي • منذ 2021",
-    "Wishlist": "قائمة الأمنيات",
+  
     "Add your favourite items to your wishlist and they'll appear here": "أضف العناصر المفضلة لديك إلى قائمة الأمنيات وستظهر هنا",
-    "Shop Now": "تسوق الآن",
+   
     "Wishlist · 1 item": "قائمة الأمنيات · عنصر واحد",
     "Wishlist · {{count}} items": "قائمة الأمنيات · {{count}} عناصر",
     "Keep track of your favourite pieces and add them to your bag when you're ready.": "تتبع القطع المفضلة لديك وأضفها إلى حقيبتك عندما تكون جاهزاً.",
@@ -727,10 +727,7 @@ const arabicBundle: TranslationBundle = {
     "Promotion": "عروض ترويجية",
     "Total": "الإجمالي",
     "Go To Checkout": "الانتقال إلى الدفع",
-    "Contact us": "اتصل بنا",
-    "EMAIL US": "راسلينا عبر البريد الإلكتروني",
-    "Get in touch by email": "تواصلي معنا عبر البريد الإلكتروني",
-    "ORDER BY PHONE": "اطلبي عبر الهاتف",
+   
     "Available Monday to Friday": "متاح من الاثنين إلى الجمعة",
     "You're almost there": "أنت على وشك الوصول",
     "Please enter your email address before continuing. You'll be able to sign in if you already have a registered account.": "يرجى إدخال عنوان بريدك الإلكتروني قبل المتابعة. ستتمكن من تسجيل الدخول إذا كان لديك حساب مسجل بالفعل.",

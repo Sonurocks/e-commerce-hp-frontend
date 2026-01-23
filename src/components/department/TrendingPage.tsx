@@ -8,6 +8,7 @@ import { DownloadAppBanner } from "@/components";
 import FilterDrawer from "./FilterDrawer";
 import Dropdown from "../common/Dropdown";
 import ProductCard from "./ProductCard";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 import {
   trendingNowByDept,
   DepartmentKey,
@@ -82,6 +83,16 @@ export default function TrendingPage() {
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState<boolean>(false);
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState<boolean>(false);
   const sortDropdownRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Simulate loading on mount/refresh
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500); // Brief delay to show skeleton
+    return () => clearTimeout(timer);
+  }, [trendingId, currentDepartment]);
 
   const translate = (text?: string) =>
     text ? translations.productCopy[text] ?? text : text;
@@ -299,13 +310,21 @@ export default function TrendingPage() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6 mb-12">
-          {sortedProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              showBadge={!!product.badge}
-            />
-          ))}
+          {isLoading ? (
+            // Show skeleton loaders
+            Array.from({ length: 8 }).map((_, index) => (
+              <ProductCardSkeleton key={`skeleton-${index}`} />
+            ))
+          ) : (
+            // Show actual products
+            sortedProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                showBadge={!!product.badge}
+              />
+            ))
+          )}
         </div>
       </div>
       <DownloadAppBanner />

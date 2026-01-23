@@ -717,9 +717,9 @@ const hindiBundle: TranslationBundle = {
     "leopard-print hoodie": "तेंदुए-प्रिंट हुडी",
     "leopard long-sleeve top": "तेंदुए लॉन्ग-स्लीव टॉप",
     "Delhi • Since 2021": "दिल्ली • 2021 से",
-    "Wishlist": "विशलिस्ट",
+   
     "Add your favourite items to your wishlist and they'll appear here": "अपनी पसंदीदा वस्तुओं को अपनी विशलिस्ट में जोड़ें और वे यहाँ दिखाई देंगी",
-    "Shop Now": "अभी खरीदें",
+   
     "Wishlist · 1 item": "विशलिस्ट · 1 आइटम",
     "Wishlist · {{count}} items": "विशलिस्ट · {{count}} आइटम",
     "Keep track of your favourite pieces and add them to your bag when you're ready.": "अपने पसंदीदा टुकड़ों पर नज़र रखें और जब आप तैयार हों तो उन्हें अपने बैग में जोड़ें।",
@@ -736,10 +736,7 @@ const hindiBundle: TranslationBundle = {
     "Promotion": "प्रमोशन",
     "Total": "कुल",
     "Go To Checkout": "चेकआउट पर जाएं",
-    "Contact us": "संपर्क करें",
-    "EMAIL US": "हमें ईमेल करें",
-    "Get in touch by email": "ईमेल द्वारा संपर्क करें",
-    "ORDER BY PHONE": "फोन से ऑर्डर करें",
+  
     "Available Monday to Friday": "सोमवार से शुक्रवार तक उपलब्ध",
     "You're almost there": "आप लगभग पहुंच गए हैं",
     "Please enter your email address before continuing. You'll be able to sign in if you already have a registered account.": "जारी रखने से पहले कृपया अपना ईमेल पता दर्ज करें। यदि आपके पास पहले से एक पंजीकृत खाता है तो आप साइन इन कर सकेंगे।",

@@ -709,9 +709,9 @@ const urduBundle: TranslationBundle = {
     "leopard-print hoodie": "چیتے کی پرنٹ ہوڈی",
     "leopard long-sleeve top": "چیتے لانگ-سلیو ٹاپ",
     "Delhi • Since 2021": "دہلی • 2021 سے",
-    "Wishlist": "وسلسٹ",
+  
     "Add your favourite items to your wishlist and they'll appear here": "اپنی پسندیدہ اشیاء کو اپنی وسلسٹ میں شامل کریں اور وہ یہاں ظاہر ہوں گی",
-    "Shop Now": "ابھی خریدیں",
+  
     "Wishlist · 1 item": "وسلسٹ · 1 آئٹم",
     "Wishlist · {{count}} items": "وسلسٹ · {{count}} آئٹمز",
     "Keep track of your favourite pieces and add them to your bag when you're ready.": "اپنے پسندیدہ ٹکڑوں پر نظر رکھیں اور جب آپ تیار ہوں تو انہیں اپنے بیگ میں شامل کریں۔",
@@ -728,10 +728,7 @@ const urduBundle: TranslationBundle = {
     "Promotion": "پروモーション",
     "Total": "کل",
     "Go To Checkout": "چیک آؤٹ پر جائیں",
-    "Contact us": "ہم سے رابطہ کریں",
-    "EMAIL US": "ہمیں ای میل کریں",
-    "Get in touch by email": "ای میل کے ذریعے رابطہ کریں",
-    "ORDER BY PHONE": "فون پر آرڈر کریں",
+    
     "Available Monday to Friday": "پیر سے جمعہ تک دستیاب",
     "You're almost there": "آپ تقریباً پہنچ گئے ہیں",
     "Please enter your email address before continuing. You'll be able to sign in if you already have a registered account.": "براہ کرم جاری رکھنے سے پہلے اپنا ای میل پتہ درج کریں۔ اگر آپ کے پاس پہلے سے ایک رجسٹرڈ اکاؤنٹ ہے تو آپ سائن ان کر سکیں گے۔",

@@ -712,9 +712,9 @@ const frenchBundle: TranslationBundle = {
     "leopard-print hoodie": "Sweat à capuche imprimé léopard",
     "leopard long-sleeve top": "Haut manches longues imprimé léopard",
     "Delhi • Since 2021": "Delhi • Depuis 2021",
-    "Wishlist": "Liste d'envies",
+   
     "Add your favourite items to your wishlist and they'll appear here": "Ajoutez vos articles préférés à votre liste d'envies et ils apparaîtront ici",
-    "Shop Now": "Acheter maintenant",
+   
     "Wishlist · 1 item": "Liste d'envies · 1 article",
     "Wishlist · {{count}} items": "Liste d'envies · {{count}} articles",
     "Keep track of your favourite pieces and add them to your bag when you're ready.": "Suivez vos pièces préférées et ajoutez-les à votre panier quand vous êtes prêt.",
@@ -731,10 +731,7 @@ const frenchBundle: TranslationBundle = {
     "Promotion": "Promotion",
     "Total": "Total",
     "Go To Checkout": "Passer à la caisse",
-    "Contact us": "Contactez-nous",
-    "EMAIL US": "ÉCRIVEZ-NOUS",
-    "Get in touch by email": "Contactez-nous par e-mail",
-    "ORDER BY PHONE": "Commander par téléphone",
+   
     "Available Monday to Friday": "Disponible du lundi au vendredi",
     "You're almost there": "Vous y êtes presque",
     "Please enter your email address before continuing. You'll be able to sign in if you already have a registered account.": "Veuillez entrer votre adresse e-mail avant de continuer. Vous pourrez vous connecter si vous avez déjà un compte enregistré.",

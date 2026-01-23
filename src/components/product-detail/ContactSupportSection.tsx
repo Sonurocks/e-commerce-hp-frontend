@@ -8,13 +8,13 @@ import styles from "./ContactSupportSection.module.css";
 const fontStack =
   "var(--fontNormal, 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif)";
 
-const contactMethods = (translate: (text: string) => string) => [
+const contactMethods = (translate: (text?: string) => string | undefined) => [
   {
     id: "email",
     Icon: FiMail,
     label: "EMAIL US",
     description: "Get in touch by email",
-    actionLabel: translate("customerservice@farfetch.com"),
+    actionLabel: translate("customerservice@farfetch.com") || "customerservice@farfetch.com",
     actionHref: "mailto:customerservice@farfetch.com",
   },
   {

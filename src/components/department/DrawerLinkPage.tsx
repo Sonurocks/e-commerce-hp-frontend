@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiChevronDown, FiCheck } from "react-icons/fi";
 import { DownloadAppBanner, ProductCard } from "@/components";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 import FilterDrawer from "./FilterDrawer";
 import Dropdown from "../common/Dropdown";
 import PageNotFound from "../not-found/PageNotFound";
@@ -126,6 +127,17 @@ export default function DrawerLinkPage() {
   const [sortBy, setSortBy] = useState<string>("our-picks");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState<boolean>(false);
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState<boolean>(false);
+  const sortDropdownRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Simulate loading on mount/refresh
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500); // Brief delay to show skeleton
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   // Determine department from pathname (default to womenswear)
   const department = useMemo((): DepartmentKey => {
@@ -305,7 +317,7 @@ export default function DrawerLinkPage() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="relative">
+          <div className="relative" ref={sortDropdownRef}>
             <Dropdown
               isOpen={isSortDropdownOpen}
               onClose={() => setIsSortDropdownOpen(false)}
@@ -350,13 +362,21 @@ export default function DrawerLinkPage() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 min-[480px]:grid-cols-2 min-[750px]:grid-cols-4 gap-6 mb-12">
-          {sortedProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              showBadge={!!product.badge}
-            />
-          ))}
+          {isLoading ? (
+            // Show skeleton loaders
+            Array.from({ length: 8 }).map((_, index) => (
+              <ProductCardSkeleton key={`skeleton-${index}`} />
+            ))
+          ) : (
+            // Show actual products
+            sortedProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                showBadge={!!product.badge}
+              />
+            ))
+          )}
         </div>
       </div>
       <DownloadAppBanner />
