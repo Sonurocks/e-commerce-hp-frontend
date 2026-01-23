@@ -25,7 +25,7 @@ export default function TrendingGrid({ items }: { items: Product[] }) {
                   alt={translateTitle(t.title) ?? t.title} 
                   fill
                   sizes="(min-width: 768px) 25vw, 50vw"
-                  className="object-contain object-left object-bottom" 
+                  className="object-contain object-left object-bottom min-[750px]:object-cover min-[750px]:object-center" 
                 />
               </div>
             </Link>

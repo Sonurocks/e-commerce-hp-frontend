@@ -52,7 +52,16 @@ export default function ProductCard({
           </button>
           {showBadge && isImageBadge && localizedBadge && (
             <div className="absolute top-0 left-0 z-10">
-              <div className="bg-red-600 px-4 py-1.5 flex items-center justify-center">
+              <div 
+                className="bg-red-600 px-4 py-1.5 flex items-center justify-center"
+                style={{
+                  borderTopLeftRadius: '0px',
+                  borderTopRightRadius: '0',
+                  borderBottomLeftRadius: '0',
+                  borderBottomRightRadius: '20px',
+                  clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%)'
+                }}
+              >
                 <p className="text-xs text-white font-bold">
                   - {localizedBadge.replace(/[^0-9]/g, '')}%
                 </p>
