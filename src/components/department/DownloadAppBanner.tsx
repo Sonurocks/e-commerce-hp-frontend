@@ -13,7 +13,7 @@ export default function DownloadAppBanner() {
 
   return (
     <section className="download-app-banner py-16 md:py-20">
-      <div className="container mx-auto px-6 lg:px-12 max-w-[1440px]">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] max-w-[1440px]">
         {/* Mobile: Stacked vertically and center-aligned */}
         {/* Tablet/Desktop: 3-column split (Heading/Description | Email Form | QR Code) */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-y-8 gap-x-12">

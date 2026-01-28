@@ -611,7 +611,7 @@ const ContactUs = () => {
       className="min-h-screen bg-branco text-preto font-normal"
       style={supportPageStyles}
     >
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-[48px] py-8 sm:py-12 lg:py-16 max-w-[1440px]">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-8 sm:py-12 lg:py-16 max-w-[1440px]">
         {/* Four Column Horizontal Layout - All sections aligned horizontally */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-8 sm:mb-12 lg:mb-16 items-start">
           {/* Column 1 - Information Links */}

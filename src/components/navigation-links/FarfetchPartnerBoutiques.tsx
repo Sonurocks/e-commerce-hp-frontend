@@ -232,7 +232,7 @@ const FarfetchPartnerBoutiques = () => {
 
   return (
     <div className="min-h-screen font-normal  text-preto">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-2 py-12">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-12 max-w-[1440px]">
         <header className="mb-10">
           <h1 className="text-2xl leading-tight tracking-tight font-normal mb-3 text-preto">
             Farfetch Partners

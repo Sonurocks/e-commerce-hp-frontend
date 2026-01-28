@@ -68,7 +68,7 @@ const DepartmentLanding: React.FC<DepartmentLandingProps> = ({ department }) => 
     );
 
   return (
-    <main className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-[110px] py-10 max-w-full overflow-x-hidden">
+    <main className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-10 max-w-[1440px] overflow-x-hidden">
       <section className="my-6">
         <SectionHeader
           title={departmentCopy.featured.title}

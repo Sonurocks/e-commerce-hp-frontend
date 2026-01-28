@@ -349,7 +349,7 @@ const OrdersAndDelivery = () => {
       className="min-h-screen  text-preto"
       style={supportPageStyles}
     >
-      <div className="max-w-[137rem] mx-auto px-[1.5rem] py-12">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-12 max-w-[1440px]">
         <div className="flex flex-col lg:flex-row gap-12 lg:pl-16">
           {/* Left Navigation Menu */}
           <aside className="lg:w-78 flex-shrink-0">

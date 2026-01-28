@@ -54,7 +54,7 @@ const Wishlist = () => {
   if (showEmptyState) {
     return (
       <div className="min-h-screen">
-        <div className="container mx-auto px-[48px] py-16 max-w-[1440px]">
+        <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-16 max-w-[1440px]">
           <div className="mb-24 max-w-2xl">
             <h1 className="text-4xl font-base text-(--color-preto) mb-3">
               {translate("Wishlist")}
@@ -77,7 +77,7 @@ const Wishlist = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-[48px] py-16 max-w-[1440px]">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-16 max-w-[1440px]">
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-light text-(--color-preto) mb-2">
             {wishlistHeading}

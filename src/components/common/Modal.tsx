@@ -47,10 +47,10 @@ const Modal: React.FC<ModalProps> = ({
   const [modalPosition, setModalPosition] = useState({ top: 0, right: 0 });
   const [isMobile, setIsMobile] = useState(false);
 
-  // Check if mobile
+  // Check if mobile (below 768px for bottom sheet, above 768px for centered)
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+      setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -75,7 +75,7 @@ const Modal: React.FC<ModalProps> = ({
       // For relative positioned modals on desktop (like LanguageModal), 
       // only apply scroll lock on mobile where backdrop is shown
       // Check window width directly to avoid dependency array issues
-      const isCurrentlyMobile = window.innerWidth < 1024;
+      const isCurrentlyMobile = window.innerWidth < 768;
       const shouldLockScroll = position !== "relative" || isCurrentlyMobile;
       
       if (shouldLockScroll) {
@@ -187,23 +187,35 @@ const Modal: React.FC<ModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Size classes
+  // Size classes - mobile uses full width, desktop keeps original sizes
   const sizeClasses = {
-    small: "w-full max-w-[360px]",
-    medium: "w-full max-w-[420px]",
-    large: "w-full max-w-4xl",
+    small: "w-full md:w-full md:max-w-[360px]",
+    medium: "w-full md:w-full md:max-w-[420px]",
+    large: "w-full md:w-full md:max-w-4xl",
     fullscreen: "w-full h-full max-w-full max-h-full",
   };
 
   // Position styles
   const getPositionStyle = () => {
-    if (position === "relative" && !isMobile) {
+    // Check current screen size for positioning
+    const isCurrentlyMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    
+    if (position === "relative" && !isCurrentlyMobile) {
       return {
         top: `${modalPosition.top}px`,
         right: `${modalPosition.right}px`,
       };
     }
     if (position === "top") {
+      // On mobile (< 768px), treat "top" position as bottom sheet
+      if (isCurrentlyMobile) {
+        return {
+          bottom: "0",
+          left: "0",
+          transform: "none",
+        };
+      }
+      // Desktop/Tablet (>= 768px): position at top, centered
       return {
         top: "0",
         left: "50%",
@@ -212,7 +224,15 @@ const Modal: React.FC<ModalProps> = ({
         paddingBottom: "1.5rem",
       };
     }
-    // Default centered
+    // On mobile (< 768px), position at bottom with full width
+    if (isCurrentlyMobile) {
+      return {
+        bottom: "0",
+        left: "0",
+        transform: "none",
+      };
+    }
+    // Default centered on desktop/tablet (>= 768px)
     return {
       top: "50%",
       left: "50%",
@@ -222,13 +242,20 @@ const Modal: React.FC<ModalProps> = ({
 
   // Container classes based on position
   const getContainerClasses = () => {
-    if (position === "relative" && !isMobile) {
+    // Check current screen size for positioning
+    const isCurrentlyMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    
+    if (position === "relative" && !isCurrentlyMobile) {
       return "fixed";
     }
     if (position === "top") {
-      return "fixed inset-0 flex items-start justify-center px-4";
+      // On mobile (< 768px), treat "top" position as bottom sheet
+      // On tablet/desktop (>= 768px), position at top, centered
+      return "fixed inset-0 flex items-end md:items-start justify-start md:justify-center px-0 md:px-4 pb-0";
     }
-    return "fixed inset-0 flex items-center justify-center px-4 py-6";
+    // On mobile (< 768px), align to bottom (bottom sheet) with no horizontal padding
+    // On tablet/desktop (>= 768px), center with padding
+    return "fixed inset-0 flex items-end md:items-center justify-start md:justify-center px-0 md:px-4 pb-0 md:pb-6 md:py-6";
   };
 
   return (
@@ -251,14 +278,14 @@ const Modal: React.FC<ModalProps> = ({
       >
         <div
           className={`${sizeClasses[size]} ${
-            size !== "fullscreen" ? "max-h-[90vh]" : "h-full"
-          } flex flex-col rounded-2xl bg-(--colorWhite) shadow-2xl border border-(--colorGrey) overflow-hidden ${className}`}
+            size !== "fullscreen" ? (typeof window !== 'undefined' && window.innerWidth < 768 ? "max-h-[92vh]" : "max-h-[90vh]") : "h-full"
+          } flex flex-col rounded-t-[32px] md:rounded-2xl bg-(--colorWhite) shadow-2xl border border-(--colorGrey) overflow-hidden ${className}`}
         >
           {/* Header */}
           {(title || headerContent || showCloseButton) && (
             <div className="flex-shrink-0 bg-(--colorWhite)">
               {headerContent ? (
-                <div className="px-8 pt-8 pb-6">
+                <div className="px-4 md:px-8 pt-6 md:pt-8 pb-4 md:pb-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">{headerContent}</div>
                     {showCloseButton && (
@@ -273,10 +300,10 @@ const Modal: React.FC<ModalProps> = ({
                   </div>
                 </div>
               ) : (
-                <div className="flex items-start justify-between px-8 pt-8 pb-6">
+                <div className="flex items-start justify-between px-4 md:px-8 pt-6 md:pt-8 pb-4 md:pb-6">
                   <div className="flex-1">
                     {title && (
-                      <p className="text-[24px] leading-8 font-normal text-preto">
+                      <p className="text-lg md:text-[24px] leading-6 md:leading-8 font-normal text-preto">
                         {title}
                       </p>
                     )}
@@ -296,7 +323,7 @@ const Modal: React.FC<ModalProps> = ({
           )}
 
           {/* Body - Scrollable */}
-          <div className="flex-1 overflow-y-auto">{children}</div>
+          <div className="flex-1 overflow-y-auto min-h-0">{children}</div>
 
           {/* Footer */}
           {footerContent && (

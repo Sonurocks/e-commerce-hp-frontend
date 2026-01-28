@@ -7,7 +7,7 @@ const TermsAndConditions = () => {
 
   return (
     <div className="min-h-screen text-preto font-normal" style={{ fontFamily: 'var(--fontNormal, "Farfetch Basis", "Helvetica Neue", Arial, sans-serif)' }}>
-      <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-8 md:py-12 max-w-[1440px]">
         {/* Main Content */}
         <div className="border border-gray-200 rounded-lg p-6 md:p-8 shadow-sm">
           <h1 className="text-3xl md:text-3xl font-normal text-preto mb-8">

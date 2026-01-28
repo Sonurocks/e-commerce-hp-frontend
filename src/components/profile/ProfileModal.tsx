@@ -141,7 +141,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
           headerContent={headerContent}
           closeOnBackdropClick={!showForgotPassword}
         >
-          <div className="px-8 py-5 space-y-4">
+          <div className="px-4 md:px-8 py-4 md:py-5 space-y-3 md:space-y-4">
               {activeTab === "signin" ? (
                 <>
                   <form 

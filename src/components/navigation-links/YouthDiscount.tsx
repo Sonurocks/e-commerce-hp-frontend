@@ -17,7 +17,7 @@ const YouthDiscount = () => {
 
   return (
     <div className="min-h-screen  text-preto font-normal">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-6 sm:py-8 max-w-[1440px]">
         {/* Back Button */}
         <button
           onClick={() => router.back()}

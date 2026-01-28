@@ -1070,6 +1070,13 @@ select option:checked {
     padding-right: 0.75rem !important;
   }
   
+  /* Target div containers with padding on mobile - align with main containers */
+  div.container.mx-auto[class*="px-6"],
+  div.container.mx-auto[class*="px-"] {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  
   /* Ensure header and main sections align on mobile */
   header .mx-auto.max-w-screen-2xl,
   header > div > div.mx-auto {
@@ -1398,8 +1405,15 @@ main.container.mx-auto {
   main.container.mx-auto[class*="px-"],
   main.container.mx-auto {
     max-width: 100% !important;
-    padding-left: 0.275rem!important;
-    padding-right: 0.275rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* Target div containers on trending page and shop pages - match main container padding */
+  div.container.mx-auto[class*="px-6"],
+  div.container.mx-auto[class*="px-"] {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
   }
 }
 
@@ -1428,11 +1442,31 @@ main.container.mx-auto {
 @media (max-width: 760px) {
   .container.mx-auto.px-4,
   .container.mx-auto.px-8,
-  .container.mx-auto[class*="px-"] {
+  .container.mx-auto[class*="px-"],
+  div.container.mx-auto.px-6,
+  div.container.mx-auto[class*="px-6"][class*="lg:px-12"],
+  .container.mx-auto.px-6,
+  div.min-h-screen > div.container.mx-auto.px-6 {
     max-width: 100% !important;
-    padding-left: 0.275rem !important;
-    padding-right: 0.275rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
+  
+  /* Override Tailwind px-6 class specifically for shop and trending pages */
+  div.min-h-screen > div.container.mx-auto.px-6.lg\:px-12.xl\:px-\[48px\] {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Filter Drawer - increase padding on mobile */
+  div.fixed.left-0.top-0[class*="z-100"] > div.px-6,
+  div.fixed.left-0.top-0[class*="z-100"] div.px-6,
+  div[class*="fixed"][class*="left-0"][class*="z-100"] > div.px-6,
+  div[class*="fixed"][class*="left-0"][class*="z-100"] div.px-6 {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  
 }
 
 /* Footer columns and content */

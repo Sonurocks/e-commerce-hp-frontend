@@ -42,7 +42,7 @@ const ReferFriend = () => {
 
   return (
     <div className="min-h-screen text-preto font-normal">
-      <div className="max-w-7xl mx-auto px-4 py-12 md:py-16">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-12 md:py-16 max-w-[1440px]">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-stretch">
           {/* Left Section - Login Form */}
           <div className="space-y-6 lg:col-span-2 max-w-sm">

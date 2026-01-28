@@ -26,7 +26,7 @@ const FarfetchApp = () => {
 
   return (
     <div className="min-h-screen  text-preto font-normal">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-12 md:py-16">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-8 sm:py-12 md:py-16 max-w-[1440px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
           {/* Left Section - Text and Form */}
           <div className="space-y-4 sm:space-y-6 mx-auto lg:mx-0 lg:ml-30 text-center lg:text-left max-w-lg lg:max-w-none">

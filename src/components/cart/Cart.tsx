@@ -127,7 +127,7 @@ const EmptyCartState = () => {
   };
 
   return (
-    <div className="container mx-auto px-[48px] py-16 max-w-[1440px]">
+        <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-16 max-w-[1440px]">
       <div className="mb-24 max-w-2xl">
         <h1 className="text-4xl font-base text-(--color-preto) mb-3">
           {translate("Shopping Bag")}
@@ -229,19 +229,19 @@ const CheckoutModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
       className="bg-branco rounded-3xl"
       backdropClassName="bg-preto/50"
     >
-      <div className="px-6 pb-6">
-            <p className="text-base text-preto  mb-6 font-light leading-relaxed">
+      <div className="px-4 md:px-6 pb-4 md:pb-6">
+            <p className="text-sm md:text-base text-preto mb-4 md:mb-6 font-light leading-relaxed">
               {translate("Please enter your email address before continuing. You'll be able to sign in if you already have a registered account.")}
             </p>
 
-            <form onSubmit={handleContinue} className="space-y-4">
+            <form onSubmit={handleContinue} className="space-y-3 md:space-y-4">
               <label className="block text-xs font-normal text-preto">
                 {translate("Email address")}
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-2 w-full border border-preto px-4 py-3 rounded-lg text-base text-preto placeholder:text-(--color-nimbus) focus:outline-none focus:border-black"
+                  className="mt-2 w-full border border-preto px-3 md:px-4 py-2.5 md:py-3 rounded-lg text-sm md:text-base text-preto placeholder:text-(--color-nimbus) focus:outline-none focus:border-black"
                   placeholder={translate("Enter your email")}
                   required
                 />
@@ -249,38 +249,38 @@ const CheckoutModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
               <button
                 type="submit"
-                className="w-full bg-[#222] text-white py-3 text-sm  rounded-lg font-semibold tracking-wide  transition"
+                className="w-full bg-[#222] text-white py-2.5 md:py-3 text-xs md:text-sm rounded-lg font-semibold tracking-wide transition"
               >
                 {translate("Continue To Checkout")}
               </button>
             </form>
 
-            <div className="flex items-center gap-3 my-4">
+            <div className="flex items-center gap-3 my-3 md:my-4">
               <span className="flex-1 " />
-              <span className="text-thin font-thin text-preto">{translate("OR")}</span>
+              <span className="text-thin font-thin text-preto text-xs md:text-sm">{translate("OR")}</span>
               <span className="flex-1 " />
             </div>
 
             <div className="space-y-2">
               <button
                 type="button"
-                className="w-full border border-preto py-3 rounded-lg text-base font-medium flex items-center justify-center gap-3"
+                className="w-full border border-preto py-2.5 md:py-3 rounded-lg text-sm md:text-base font-medium flex items-center justify-center gap-2 md:gap-3"
               >
-                <FcGoogle className="text-xl" />
+                <FcGoogle className="text-lg md:text-xl" />
                 {translate("Continue With")} {translate("Google")}
               </button>
               <button
                 type="button"
-                className="w-full border border-preto py-3 rounded-lg  text-base font-medium flex items-center justify-center gap-3 "
+                className="w-full border border-preto py-2.5 md:py-3 rounded-lg text-sm md:text-base font-medium flex items-center justify-center gap-2 md:gap-3"
               >
-                <FaApple className="text-xl text-preto" />
+                <FaApple className="text-lg md:text-xl text-preto" />
                 {translate("Continue With")} {translate("Apple")}
               </button>
               <button
                 type="button"
-                className="w-full border border-preto py-3 rounded-lg text-base font-medium flex items-center justify-center gap-3"
+                className="w-full border border-preto py-2.5 md:py-3 rounded-lg text-sm md:text-base font-medium flex items-center justify-center gap-2 md:gap-3"
               >
-                <FaFacebookF className="text-xl text-(--color-facebook)" />
+                <FaFacebookF className="text-lg md:text-xl text-(--color-facebook)" />
                 {translate("Continue With")} {translate("Facebook")}
               </button>
             </div>
@@ -362,7 +362,7 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-6 lg:px-12 py-14 max-w-[1440px]">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-14 max-w-[1440px]">
         <div className="flex flex-col lg:flex-row gap-10">
           <div className="flex-1">
             <div className="mb-8 space-y-3">
@@ -418,7 +418,7 @@ const Cart = () => {
                           </div>
                           <button
                             onClick={() => removeItem(item.product.id, item.size)}
-                            className="text-2xl leading-none text-(--color-hina) hover:text-(--color-preto)"
+                            className="text-2xl leading-none text-(--color-hina) hover:text-(--color-preto) -mt-2"
                             aria-label="Remove item"
                             type="button"
                           >
@@ -427,7 +427,7 @@ const Cart = () => {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-                          <div className="space-y-1 text-sm text-(--color-hina)">
+                          <div className="space-y-2 md:space-y-1 text-sm text-(--color-hina)">
                             {originalValue > 0 && (
                               <p className="line-through text-(--color-hina)">
                                 {formatCurrency(originalValue, currencySymbol)}
@@ -441,15 +441,15 @@ const Cart = () => {
                                 </span>
                               </p>
                             )}
-                            <p className="text-2xl font-semibold text-(--color-red)">
+                            <p className="text-2xl font-semibold text-(--color-red) mt-2 md:mt-0">
                               {formatCurrency(effectiveValue, currencySymbol)}
                             </p>
-                            <p className="text-xs text-(--color-hina)">
+                            <p className="text-xs text-(--color-hina) mb-4 md:mb-0">
                               Import duties included
                             </p>
                           </div>
 
-                          <div className="space-y-3 text-sm text-(--color-preto) -mt-22">
+                          <div className="space-y-3 text-sm text-(--color-preto) md:-mt-22">
                             {/* Size Dropdown */}
                             <div className="border-b border-(--color-platinum) pb-2">
                               <div className="flex-1">

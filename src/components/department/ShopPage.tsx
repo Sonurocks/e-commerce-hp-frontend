@@ -184,7 +184,7 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-[48px] py-10 max-w-[1440px]">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-10 max-w-[1440px]">
         {/* Breadcrumbs */}
         <nav className="mb-4 text-[13px] text-[#666]">
           <Link href={getHomeLink()} className="hover:text-preto">

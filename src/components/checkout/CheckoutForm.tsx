@@ -173,7 +173,7 @@ export default function CheckoutForm() {
     <div className="min-h-screen ">
       {/* Header */}
       <div className="border-b border-gray-200">
-        <div className="container mx-auto px-6 lg:px-12 py-4 max-w-[1440px]">
+        <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-4 max-w-[1440px]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <svg
@@ -202,7 +202,7 @@ export default function CheckoutForm() {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 lg:px-12 py-8 max-w-[1440px]">
+      <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-8 max-w-[1440px]">
         <div className="flex flex-col lg:flex-row gap-5">
           {/* Left Column - Delivery Address Form or Confirmed View */}
           <div className="flex-1  max-w-full">
