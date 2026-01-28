@@ -200,9 +200,9 @@ export default function ShopPage() {
         </h1>
 
         {/* Filters and Sort */}
-        <div className="flex flex-wrap items-center gap-4 mb-8 pb-4 border-b border-gray-200">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8 pb-4 border-b border-gray-200">
           {/* Filter Buttons */}
-          <div className="flex flex-wrap items-center gap-3 flex-1 overflow-x-auto">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 flex-1 min-w-0">
             {filterButtons.map((filter) => (
               <button
                 key={filter}
@@ -213,7 +213,7 @@ export default function ShopPage() {
                     setSelectedFilter(filter.toLowerCase());
                   }
                 }}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap border ${
+                className={`px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors whitespace-nowrap border flex-shrink-0 ${
                   selectedFilter === filter.toLowerCase() || filter === "All Filters"
                     ? " text-branco border-preto"
                     : "border-gray-300 text-preto hover:bg-gray-50"
@@ -225,7 +225,7 @@ export default function ShopPage() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="relative">
+          <div className="relative flex-shrink-0">
             <Dropdown
               isOpen={isSortDropdownOpen}
               onClose={() => setIsSortDropdownOpen(false)}
@@ -255,7 +255,7 @@ export default function ShopPage() {
             >
               <button
                 onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-sm text-gray-700 hover:bg-gray-200 transition-colors"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gray-100 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-gray-200 transition-colors w-full sm:w-auto"
               >
                 <span>Sort by</span>
                 <FiChevronDown

@@ -325,7 +325,7 @@ const Header = () => {
     <>
       <header
         className={`bg-white dark:bg-[var(--colorWhite)]
-  sticky top-0 z-50
+  sticky top-0 z-[100]
   font-normal
   transition-transform duration-300
   ${isSearchDrawerOpen ? "hidden" : ""}
@@ -360,13 +360,13 @@ const Header = () => {
                     >
                       {promo.type === "promotion" && promo.showCountdown ? (
                         <>
-                          <a
+                          <Link
                             href={promo.link}
                             target="_self"
                             className="underline hover:no-underline"
                           >
                             {headerCopy.promotions[promo.id] ?? promo.text}
-                          </a>
+                          </Link>
                           <span>|</span>
                           <span>{headerCopy.countdown.endsIn}</span>
                           <span data-testid="countdown" className="font-semibold">
@@ -376,20 +376,20 @@ const Header = () => {
                           {promo.showShopNow && (
                             <>
                               <span>|</span>
-                              <a href={promo.link} target="_self">
+                              <Link href={promo.link} target="_self">
                                 {headerCopy.countdown.shopNow}
-                              </a>
+                              </Link>
                             </>
                           )}
                         </>
                       ) : (
-                        <a
+                        <Link
                           href={promo.link}
                           target="_self"
                           className="underline hover:no-underline"
                         >
                           {headerCopy.promotions[promo.id] ?? promo.text}
-                        </a>
+                        </Link>
                       )}
                     </span>
                   </li>

@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { SiSnapchat } from "react-icons/si";
 import { FaPinterestP } from "react-icons/fa";
 import { footerSections, socialMediaLinks, legalLinks, companyInfo } from "../../constants";
@@ -37,9 +38,9 @@ const Footer = () => {
               >
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
-                    <a href={link.href} className="text-preto dark:text-white hover:underline transition font-light" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
+                    <Link href={link.href} className="text-preto dark:text-white hover:underline transition font-light" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
                       {translateFarfetch(footerCopy.linkLabels[link.label] ?? link.label)}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -50,7 +51,7 @@ const Footer = () => {
                   </h4>
                   <div className="flex space-x-4">
                     {socialMediaLinks.map((social, index) => (
-                      <a
+                      <Link
                         key={index}
                         href={social.href}
                         className="text-preto dark:text-white hover:text-gray-900 dark:hover:text-white transition"
@@ -99,7 +100,7 @@ const Footer = () => {
                             <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                           </svg>
                         )}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -113,9 +114,9 @@ const Footer = () => {
           <div className="flex flex-col space-y-4">
             <div className="flex flex-wrap gap-6 text-footer-heading">
               {legalLinks.map((link, index) => (
-                <a key={index} href={link.href} className="underline transition text-preto dark:text-white" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
+                <Link key={index} href={link.href} className="underline transition text-preto dark:text-white" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
                   {footerCopy.legalLinks[link.label] ?? link.label}
-                </a>
+                </Link>
               ))}
             </div>
             <div className="text-preto dark:text-white text-footer-text" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>

@@ -330,9 +330,9 @@ export default function ProductDetailSection({
                   <p className="text-[11px] text-(--color-preto)">
                     {template("Different to {{price}}? Find out why", { price: "£232" })}
                   </p>
-                  <a href="#" className="text-[14px] text-(--color-preto) underline block">
+                  <Link href="#" className="text-[14px] text-(--color-preto) underline block">
                     {translate("Size missing?")}
-                  </a>
+                  </Link>
                 </div>
               </div>
             }
@@ -405,15 +405,15 @@ export default function ProductDetailSection({
         {/* Breadcrumb Navigation */}
         <div className="mb-6">
           <nav className={`text-[13px] text-[#666] ${styles.breadcrumb}`}>
-            <a href="#" className="hover:text-(--color-preto)">
+            <Link href="#" className="hover:text-(--color-preto)">
               {translate("Women Home")}
-            </a>
+            </Link>
             <span className="mx-2">{">"}</span>
-            <a href="#" className="hover:text-(--color-preto)">{product.title}</a>
+            <Link href="#" className="hover:text-(--color-preto)">{product.title}</Link>
             <span className="mx-2">{">"}</span>
-            <a href="#" className="hover:text-(--color-preto)">
+            <Link href="#" className="hover:text-(--color-preto)">
               {translate("Clothing")}
-            </a>
+            </Link>
             <span className="mx-2">{">"}</span>
             <span className="hover:text-(--color-preto)">{translate("Polo Tops")}</span>
           </nav>
@@ -542,9 +542,9 @@ export default function ProductDetailSection({
                 </p>
                 <p className="text-[13px]">
                   {translate("Still need help?")}{" "}
-                  <a href="#" className="underline">
+                  <Link href="#" className="underline">
                     {translate("Try our size guide")}
-                  </a>
+                  </Link>
                 </p>
               </div>
 
@@ -564,9 +564,9 @@ export default function ProductDetailSection({
                           "The perfect fit is just a try-on away. We offer 30-day free international returns and at-home collection."
                         )}
                       </p>
-                      <a href="#" className="text-[13px] underline">
+                      <Link href="#" className="text-[13px] underline">
                         {translate("Know More")}
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -630,12 +630,12 @@ export default function ProductDetailSection({
                   </p>
                 </div>
                 <div>
-                  <a href="#" className="underline">{translate("Seller details")}</a>
+                  <Link href="#" className="underline">{translate("Seller details")}</Link>
                 </div>
                 <div>
-                  <a href="#" className="underline">
+                  <Link href="#" className="underline">
                     {translate("Manufacturer details")}
-                  </a>
+                  </Link>
                 </div>
               </div>
               
@@ -647,19 +647,19 @@ export default function ProductDetailSection({
                   </p>
                   <ul className="space-y-1">
                     <li>
-                      <a href="#" className="underline">
+                      <Link href="#" className="underline">
                         {translate("Orders & delivery")}
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="#" className="underline">
+                      <Link href="#" className="underline">
                         {translate("Returns & refunds")}
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="#" className="underline">
+                      <Link href="#" className="underline">
                         {translate("Duties & taxes")}
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>

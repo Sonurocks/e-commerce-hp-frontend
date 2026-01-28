@@ -29,12 +29,12 @@ const AboutFooter = () => {
           <div>
             <p className="mb-3 text-xs font-semibold text-gray-300">Suppliers &amp; Tax</p>
             <div className="flex flex-col gap-2 text-base font-light capitalize tracking-normal">
-              <a className="hover:underline" href="https://www.farfetch.com">
+              <Link className="hover:underline" href="https://www.farfetch.com">
                 Farfetch Suppliers
-              </a>
-              <a className="hover:underline" href="https://www.farfetch.com/uk/aboutus/tax-strategy">
+              </Link>
+              <Link className="hover:underline" href="https://www.farfetch.com/uk/aboutus/tax-strategy">
                 Farfetch Tax Strategy
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -42,7 +42,7 @@ const AboutFooter = () => {
             <p className="mb-3 text-xs font-semibold text-gray-300">Follow us</p>
             <div className="flex items-center gap-4 text-2xl">
               {socialLinks.map((social) => (
-                <a
+                <Link
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
@@ -51,7 +51,7 @@ const AboutFooter = () => {
                   rel="noreferrer"
                 >
                   {social.icon}
-                </a>
+                </Link>
               ))}
             </div>
           </div>

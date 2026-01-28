@@ -87,12 +87,12 @@ const ContactSection = () => {
           <p className="text-base text-(--color-preto) mb-1 font-base">
             {translate("Get in touch by email")}
           </p>
-          <a
+          <Link
             href="mailto:customerservice@farfetch.com"
             className="text-base text-(--color-preto) font-base hover:underline"
           >
             {translate("customerservice@farfetch.com")}
-          </a>
+          </Link>
         </div>
         <div className="flex-1  border border-(--theme-border) rounded-md p-4">
           <div className="mb-2">
@@ -104,12 +104,12 @@ const ContactSection = () => {
           <p className="text-base text-(--color-preto) mb-1 font-base">
             {translate("Available Monday to Friday")}
           </p>
-          <a
+          <Link
             href="tel:+16467913768"
             className="text-base text-(--color-preto) font-base hover:underline"
           >
             +1 646 791 3768
-          </a>
+          </Link>
         </div>
       </div>
     </>

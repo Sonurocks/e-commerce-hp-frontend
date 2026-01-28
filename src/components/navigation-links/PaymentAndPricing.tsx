@@ -9,6 +9,7 @@ import AccordionSection from "@/components/support/AccordionSection";
 import FeedbackPrompt from "@/components/support/FeedbackPrompt";
 import { SupportNavLink, SupportSection } from "@/types/support";
 import { supportPageStyles } from "@/constants/supportPageStyles";
+import { useLanguage } from "@/context/LanguageContext";
 
 const navigationLinks: SupportNavLink[] = [
   { href: "#", label: " HOLIDAY DATES YOU WANT TO KNOW ABOUT" },
@@ -397,6 +398,10 @@ const PaymentAndPricing = () => {
   const pathname = usePathname();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [feedbackHelpful, setFeedbackHelpful] = useState<boolean | null>(null);
+  const { translations } = useLanguage();
+  const t = translations.productCopy;
+  const translate = (text: string): string =>
+    (t[text] as string | undefined) ?? text;
 
   const toggleTopic = useCallback((index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));
@@ -411,7 +416,10 @@ const PaymentAndPricing = () => {
       paymentTopics.map((topic, index) => (
         <AccordionSection
           key={topic.title}
-          section={topic}
+          section={{
+            ...topic,
+            title: translate(topic.title),
+          }}
           index={index}
           isOpen={openIndex === index}
           onToggle={toggleTopic}
@@ -420,7 +428,7 @@ const PaymentAndPricing = () => {
           contentClassName="pb-6 px-4 text-sm font-thin text-preto leading-relaxed space-y-2"
         />
       )),
-    [openIndex, toggleTopic],
+    [openIndex, toggleTopic, t],
   );
 
   return (
@@ -431,12 +439,18 @@ const PaymentAndPricing = () => {
       <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-12 max-w-[1440px]">
         <div className="flex flex-col lg:flex-row gap-12 lg:pl-16">
           <aside className="lg:w-74 flex-shrink-0">
-            <SupportNavigation links={navigationLinks} activePath={pathname} />
+            <SupportNavigation
+              links={navigationLinks.map((link) => ({
+                ...link,
+                label: translate(link.label),
+              }))}
+              activePath={pathname}
+            />
           </aside>
 
           <main className="flex-1 max-w-4xl lg:ml-12">
             <h1 className="text-3xl md:text-2xl font-thin mb-8 text-preto">
-              Payment and pricing
+              {translate("Payment and pricing")}
             </h1>
 
             <div className="border-t border-gray-200">{renderedTopics}</div>
@@ -444,6 +458,10 @@ const PaymentAndPricing = () => {
             <FeedbackPrompt
               helpfulValue={feedbackHelpful}
               onFeedbackChange={handleFeedbackChange}
+              title={translate("Tell us what you think")}
+              question={translate("Was this content helpful?")}
+              positiveLabel={translate("Yes")}
+              negativeLabel={translate("Not really")}
               containerClassName="mt-13 pt-8"
               buttonClassName="px-6 py-2 text-sm font-semibold rounded-lg border border-preto transition-colors"
               activeButtonClassName="bg-preto text-white"

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import {
   languageMetadata,
@@ -27,6 +27,18 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
   const languages: LanguageDefinition[] = supportedLanguages.map(
     (code) => languageMetadata[code],
   );
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+
+  // Check screen size for responsive behavior
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
+    };
+    
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   const handleLanguageSelect = (selectedLanguage: LanguageDefinition) => {
     setLanguage(selectedLanguage.code);
@@ -51,17 +63,17 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
       </div>
     </>
   );
-
+  
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       size="small"
-      position="relative"
-      buttonRef={buttonRef}
+      position={isLargeScreen ? "relative" : "centered"}
+      buttonRef={isLargeScreen ? buttonRef : undefined}
       headerContent={headerContent}
       className="w-[90vw] lg:w-[360px] max-h-[80vh] lg:max-h-[600px]"
-      backdropClassName="lg:hidden"
+      backdropClassName={isLargeScreen ? "lg:hidden" : ""}
     >
       <div className="px-8 py-4">
         <div className="space-y-0">

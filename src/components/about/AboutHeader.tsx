@@ -73,9 +73,7 @@ const AboutHeader = () => {
       <header style={styles.wrapper}>
         <div style={styles.topRow}>
           <div style={styles.logo}>FARFETCH</div>
-          <button style={styles.cartButton} aria-label="Cart">
-            <HiOutlineShoppingBag size={22} color="#111" />
-          </button>
+         
         </div>
         <nav style={styles.nav}>
           {navItems.map((item) => (

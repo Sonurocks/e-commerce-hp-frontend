@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { HiOutlineChevronDown, HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
+import {
+  HiOutlineChevronDown,
+  HiOutlineChevronLeft,
+  HiOutlineChevronRight,
+  HiOutlineMenu,
+  HiOutlineX,
+} from "react-icons/hi";
 import {
   footer400m2Image,
   footer58mImage,
@@ -15,6 +21,7 @@ import {
   footerFlowerImage,
 } from "@/assets";
 import DownloadAppBanner from "@/components/department/DownloadAppBanner";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface BoutiqueRegion {
   title: string;
@@ -175,9 +182,10 @@ interface BoutiqueSectionProps {
   boutique: Boutique;
   isFirst?: boolean;
   isLast?: boolean;
+  translate: (text: string) => string;
 }
 
-const BoutiqueSection = ({ boutique, isFirst = false, isLast = false }: BoutiqueSectionProps) => {
+const BoutiqueSection = ({ boutique, isFirst = false, isLast = false, translate }: BoutiqueSectionProps) => {
   const brandsText = Array.isArray(boutique.brands) 
     ? boutique.brands.join(", ") 
     : boutique.brands;
@@ -204,7 +212,9 @@ const BoutiqueSection = ({ boutique, isFirst = false, isLast = false }: Boutique
 
       <div className={isLast ? "mb-2" : ""}>
         <h4 className="text-sm font-semibold text-preto">
-          {isFirst ? "Brands to look out for" : "Brands to look out for:"}
+          {isFirst
+            ? translate("Brands to look out for")
+            : translate("Brands to look out for:")}
         </h4>
         <p className={`text-sm text-preto ${isFirst ? "leading-6" : ""}`}>
           {brandsText}
@@ -213,10 +223,10 @@ const BoutiqueSection = ({ boutique, isFirst = false, isLast = false }: Boutique
 
       <div>
         <h4 className={`text-sm font-semibold text-preto ${isFirst ? "tracking-wide" : ""}`}>
-          {isFirst ? "About the store" : "About the store:"}
+          {isFirst ? translate("About the store") : translate("About the store:")}
         </h4>
         <p className={`text-sm text-preto leading-relaxed ${isFirst ? "mt-1" : ""}`}>
-          {boutique.about}
+          {translate(boutique.about)}
         </p>
       </div>
     </section>
@@ -225,26 +235,64 @@ const BoutiqueSection = ({ boutique, isFirst = false, isLast = false }: Boutique
 
 const FarfetchPartnerBoutiques = () => {
   const [openRegion, setOpenRegion] = useState<string | null>(null);
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const { translations } = useLanguage();
+  const t = translations.productCopy;
+  const translate = (text: string): string =>
+    (t[text] as string | undefined) ?? text;
 
   const handleRegionToggle = useCallback((regionTitle: string) => {
     setOpenRegion((prev) => (prev === regionTitle ? null : regionTitle));
   }, []);
 
+  const toggleNav = useCallback(() => {
+    setIsNavOpen((prev) => !prev);
+  }, []);
+
+  const closeNav = useCallback(() => {
+    setIsNavOpen(false);
+  }, []);
+
   return (
-    <div className="min-h-screen font-normal  text-preto">
+    <div className="min-h-screen relative  font-normal  text-preto">
       <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-12 max-w-[1440px]">
-        <header className="mb-10">
+        <header className="mb-10 ">
           <h1 className="text-2xl leading-tight tracking-tight font-normal mb-3 text-preto">
-            Farfetch Partners
+            {translate("Farfetch Partners")}
           </h1>
           <p className="text-sm text-preto">
-            Shop from the world&apos;s best luxury boutiques through Farfetch
+            {translate(
+              "Shop from the world's best luxury boutiques through Farfetch",
+            )}
           </p>
         </header>
 
-        <div className="flex flex-col lg:flex-row gap-12">
+        <div className="flex flex-col relative  h-screen overflow-y-auto lg:flex-row gap-12">
+          {/* Mobile toggle button for boutiques navigation */}
+          <div className="mb-4 flex items-center justify-between lg:hidden  top-0 z-30 bg-white pb-2 pt-2">
+            <h2 className="text-lg font-light text-preto">
+              {translate("All boutiques")}
+            </h2>
+            <button
+              type="button"
+              onClick={toggleNav}
+              className="p-2 rounded-full border border-(--colorGrey) text-preto flex items-center justify-center"
+              aria-label={isNavOpen ? "Close boutiques menu" : "Open boutiques menu"}
+            >
+              {isNavOpen ? (
+                <HiOutlineX className="h-5 w-5" />
+              ) : (
+                <HiOutlineMenu className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+
           {/* Left rail */}
-          <aside className="lg:w-[18rem] flex-shrink-0 border-t border-(--colorGrey) pt-4 lg:sticky lg:top-28 lg:self-start lg:max-h-screen lg:overflow-y-auto">
+          <aside
+            className={`w-full max-w-[22rem] md:max-w-[44rem] lg:w-[18rem] flex-shrink-0 border-t border-(--colorGrey) pt-4 lg:sticky self-start lg:self-start h-74 lg:top-0 bg-white ${
+              isNavOpen ? "block z-40" : "hidden lg:block"
+            }`}
+          >
             <div className="space-y-0">
               {boutiqueRegions.map((region) => {
                 const isOpen = openRegion === region.title;
@@ -267,7 +315,7 @@ const FarfetchPartnerBoutiques = () => {
                       }`}
                     >
                       <p className="text-xs font-thin text-preto uppercase">
-                        {region.title}
+                        {translate(region.title)}
                       </p>
                       {region.showChevron !== false && (
                         <HiOutlineChevronDown
@@ -282,14 +330,14 @@ const FarfetchPartnerBoutiques = () => {
                             key={country}
                             className="py-2 border-b border-(--colorGrey) last:border-b-0 cursor-pointer text-xs font-thin text-(--colorDarkerGrey) hover:underline transition-all"
                           >
-                            {country}
+                            {translate(country)}
                           </li>
                         ))}
                       </ul>
                     )}
                     {region.subtitle && isOpen && !region.countries && (
                       <p className="text-[0.78rem] leading-relaxed text-(--colorDarkerGrey) pb-3 pr-4">
-                        {region.subtitle}
+                        {translate(region.subtitle)}
                       </p>
                     )}
                   </div>
@@ -302,7 +350,9 @@ const FarfetchPartnerBoutiques = () => {
           <main className="flex-1">
             <section className="mb-3">
               <div className="flex items-center justify-between mb-1">
-                <h2 className="text-xl font-light text-preto">All boutiques</h2>
+                <h2 className="text-xl font-light text-preto">
+                  {translate("All boutiques")}
+                </h2>
               </div>
               <div
                 className="w-full h-64 md:h-60 lg:h-[16rem] border border-(--colorGrey) rounded-sm bg-cover bg-center"
@@ -310,16 +360,21 @@ const FarfetchPartnerBoutiques = () => {
                   backgroundImage: `url(${footerFlowerImage.src})`,
                 }}
                 role="img"
-                aria-label="Farfetch partner boutiques collage"
+                aria-label={translate("Farfetch partner boutiques collage")}
               />
             </section>
 
-            <BoutiqueSection boutique={highlightedBoutique} isFirst />
+            <BoutiqueSection
+              boutique={highlightedBoutique}
+              isFirst
+              translate={translate}
+            />
 
             {otherBoutiques.map((boutique, index) => (
               <BoutiqueSection
                 key={boutique.name}
                 boutique={boutique}
+                translate={translate}
                 isLast={index === otherBoutiques.length - 1}
               />
             ))}
@@ -328,11 +383,13 @@ const FarfetchPartnerBoutiques = () => {
             <div className="flex items-center justify-between mt-12 mb-8 text-sm text-preto">
               <button className="flex items-center gap-2 hover:opacity-70 transition-opacity">
                 <HiOutlineChevronLeft className="text-lg" />
-                <span>Previous</span>
+                <span>{translate("Previous")}</span>
               </button>
-              <span className="text-(--colorDarkerGrey)">1 of 49</span>
+              <span className="text-(--colorDarkerGrey)">
+                {translate("1 of 49")}
+              </span>
               <button className="flex items-center gap-2 hover:opacity-70 transition-opacity">
-                <span>Next</span>
+                <span>{translate("Next")}</span>
                 <HiOutlineChevronRight className="text-lg" />
               </button>
             </div>

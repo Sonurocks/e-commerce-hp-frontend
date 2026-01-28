@@ -194,9 +194,9 @@ export default function CheckoutForm() {
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <FiPhone className="w-4 h-4" />
               <span>Need help?</span>
-              <a href="tel:+16467913768" className="hover:underline">
+              <Link href="tel:+16467913768" className="hover:underline">
                 +1 646 791 3768
-              </a>
+              </Link>
             </div>
           </div>
         </div>

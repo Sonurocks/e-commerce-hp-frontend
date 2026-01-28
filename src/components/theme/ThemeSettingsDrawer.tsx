@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { useThemeSettings } from "./ThemeContext";
 import { ColorTheme, FontTheme } from "@/types/theme";
 import { X } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ThemeSettingsDrawerProps {
   isOpen: boolean;
@@ -18,6 +19,10 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
   const { theme, setTheme } = useTheme();
   const { colorTheme, fontTheme, setColorTheme, setBgTheme, setFontTheme } =
     useThemeSettings();
+  const { translations } = useLanguage();
+  const t = translations.productCopy;
+  const translate = (text: string): string =>
+    (t[text] as string | undefined) ?? text;
 
   const colorThemes: {
     name: string;
@@ -134,7 +139,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semiboldtext-(--color-preto) dark:text-(--color-preto)">
-              Theme Settings
+              {translate("Theme Settings")}
             </h2>
             <button
               onClick={onClose}
@@ -147,11 +152,12 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
           {/* Color Mode Section */}
           <div className="mb-8">
             <h3 className="text-base font-semiboldtext-(--color-preto) dark:text-(--color-preto) mb-2">
-              Color Mode
+              {translate("Color Mode")}
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Choose if the appearance should be light or dark, or follow your
-              computer&apos;s settings.
+              {translate(
+                "Choose if the appearance should be light or dark, or follow your computer's settings.",
+              )}
             </p>
             <div className="flex gap-3">
               <button
@@ -176,7 +182,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
                   />
                 </svg>
                 <span className="text-sm font-mediumtext-(--color-preto) dark:text-(--color-preto)">
-                  Light
+                  {translate("Light")}
                 </span>
               </button>
 
@@ -209,7 +215,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
                   />
                 </svg>
                 <span className="text-sm font-mediumtext-(--color-preto) dark:text-(--color-preto)">
-                  Dark
+                  {translate("Dark")}
                 </span>
               </button>
 
@@ -243,7 +249,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
                   />
                 </svg>
                 <span className="text-sm font-medium text-(--color-preto) dark:text-(--color-preto)">
-                  System
+                  {translate("System")}
                 </span>
               </button>
             </div>
@@ -253,11 +259,11 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-4">
               <button className="text-sm font-semibold text-(--color-preto) dark:text-white border-b-2 border-(--color-preto) dark:border-white pb-1">
-                Color Themes
+                {translate("Color Themes")}
               </button>
             </div>
             <h4 className="text-sm font-mediumtext-(--color-preto) dark:text-(--color-preto) mb-3">
-              Single color
+              {translate("Single color")}
             </h4>
             <div className="grid grid-cols-3 gap-3">
               <button
@@ -270,7 +276,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
               >
                 <div className="w-12 h-12 rounded-full mb-2 bg-(--color-preto)" />
                 <span className="text-xs font-medium text-(--color-preto) dark:text-(--color-preto)">
-                  Default
+                  {translate("Default")}
                 </span>
               </button>
               {colorThemes.map((color) => (
@@ -291,7 +297,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
                     style={{ backgroundColor: color.color }}
                   />
                   <span className="text-xs font-medium text-(--color-preto) dark:text-(--color-preto)">
-                    {color.name}
+                    {translate(color.name)}
                   </span>
                 </button>
               ))}

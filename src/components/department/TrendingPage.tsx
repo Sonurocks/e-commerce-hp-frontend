@@ -94,6 +94,9 @@ export default function TrendingPage() {
     return () => clearTimeout(timer);
   }, [trendingId, currentDepartment]);
 
+  // // Close sort dropdown when the user scrolls the page
+  
+
   const translate = (text?: string) =>
     text ? translations.productCopy[text] ?? text : text;
 
@@ -236,12 +239,12 @@ export default function TrendingPage() {
         </h1>
 
         {/* Filters and Sort */}
-        <div className="flex flex-wrap items-center gap-4 mb-8 pb-4 border-b border-gray-200">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8 pb-4 border-b border-gray-200">
           {/* Filter Buttons */}
-          <div className="flex flex-wrap items-center gap-3 flex-1 overflow-x-auto">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 flex-1 min-w-0">
             <button
               onClick={() => setIsFilterDrawerOpen(true)}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
+              className={`px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                 selectedFilter === "all"
                   ? "bg-[#222] text-white"
                   : " border border-gray-300 text-(--color-preto) hover:bg-gray-50"
@@ -253,7 +256,7 @@ export default function TrendingPage() {
               <button
                 key={filter}
                 onClick={() => setSelectedFilter(filter)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
+                className={`px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                   selectedFilter === filter
                     ? "bg-black text-white"
                     : " border border-gray-300 text-(--color-preto) hover:bg-gray-50"
@@ -265,7 +268,7 @@ export default function TrendingPage() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="relative">
+          <div className="relative flex-shrink-0">
             <Dropdown
               isOpen={isSortDropdownOpen}
               onClose={() => setIsSortDropdownOpen(false)}
@@ -295,7 +298,7 @@ export default function TrendingPage() {
             >
               <button
                 onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-sm text-gray-700 hover:bg-gray-200 transition-colors"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gray-100 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-gray-200 transition-colors w-full sm:w-auto"
               >
                 <span>{translate("Sort by") || "Sort by"}</span>
                 <FiChevronDown

@@ -7,6 +7,7 @@ import { footerYouthImage } from "@/assets";
 import { useRouter } from "next/navigation";
 import { useLogo } from "@/context/LogoContext";
 import Dropdown from "../common/Dropdown";
+import { useLanguage } from "@/context/LanguageContext";
 
 const YouthDiscount = () => {
   const router = useRouter();
@@ -14,33 +15,14 @@ const YouthDiscount = () => {
   const [countryCode, setCountryCode] = useState("IN (+91)");
   const [mobileNumber, setMobileNumber] = useState("");
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  const { translations } = useLanguage();
+  const t = translations.productCopy;
+  const translate = (text?: string) =>
+    text ? t[text] ?? text : text;
 
   return (
     <div className="min-h-screen  text-preto font-normal">
       <div className="container mx-auto px-6 lg:px-12 xl:px-[48px] py-6 sm:py-8 max-w-[1440px]">
-        {/* Back Button */}
-        <button
-          onClick={() => router.back()}
-          className="mb-4 sm:mb-6 flex items-center text-sm sm:text-base text-preto hover:opacity-70 transition cursor-pointer"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="mr-2"
-          >
-            <path
-              d="M15 18L9 12L15 6"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-
         {/* Main Content Card */}
         <div className=" border border-gray-200 rounded-lg overflow-hidden shadow-sm">
           {/* Banner Image */}
@@ -69,159 +51,169 @@ const YouthDiscount = () => {
             </div>
 
             {/* Title */}
-          <h1 className="text-xl sm:text-2xl md:text-2xl font-semibold text-preto mb-3 sm:mb-4">
-            18-25 YOUTH DISCOUNT  
-          </h1>
+            <h1 className="text-xl sm:text-2xl md:text-2xl font-semibold text-preto mb-3 sm:mb-4">
+              {translate("18-25 YOUTH DISCOUNT")}
+            </h1>
 
-          {/* Offer Text */}
-          <p className="text-base sm:text-lg md:text-xl font-semibold text-preto mb-2">
-            10% off for Under 26s at FARFETCH
-          </p>
+            {/* Offer Text */}
+            <p className="text-base sm:text-lg md:text-xl font-semibold text-preto mb-2">
+              {translate("10% off for Under 26s at FARFETCH")}
+            </p>
 
-          {/* Brands */}
-          <p className="text-xs sm:text-sm font-thin text-preto mb-1 sm:mb-0">
-            Versace, Off-White, Saint Laurent and more.
-          </p>
+            {/* Brands */}
+            <p className="text-xs sm:text-sm font-thin text-preto mb-1 sm:mb-0">
+              {translate("Versace, Off-White, Saint Laurent and more.")}
+            </p>
 
-          {/* Instruction */}
-          <p className="text-xs sm:text-sm font-thin text-preto mb-3 sm:mb-4">
-            To access this discount verify your age.
-          </p>
+            {/* Instruction */}
+            <p className="text-xs sm:text-sm font-thin text-preto mb-3 sm:mb-4">
+              {translate("To access this discount verify your age.")}
+            </p>
 
-          {/* Mobile Number Section */}
-          <div className="mb-4 sm:mb-6">
-            <label className="block text-xs sm:text-sm font-normal text-preto mb-2 sm:mb-3">
-              Mobile Number
-            </label>
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
-              {/* Country Code Dropdown */}
-              <div className="w-full sm:w-auto">
-                <Dropdown
-                  isOpen={showCountryDropdown}
-                  onClose={() => setShowCountryDropdown(false)}
-                  contentClassName="top-full left-0 mt-1 w-full sm:w-32 bg-white border border-preto rounded-lg shadow-lg z-10"
-                  content={
+            {/* Mobile Number Section */}
+            <div className="mb-4 sm:mb-6">
+              <label className="block text-xs sm:text-sm font-normal text-preto mb-2 sm:mb-3">
+                {translate("Mobile Number")}
+              </label>
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
+                {/* Country Code Dropdown */}
+                <div className="w-full sm:w-auto">
+                  <Dropdown
+                    isOpen={showCountryDropdown}
+                    onClose={() => setShowCountryDropdown(false)}
+                    contentClassName="top-full left-0 mt-1 w-full sm:w-32 bg-white border border-preto rounded-lg shadow-lg z-10"
+                    content={
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCountryCode("IN (+91)");
+                          setShowCountryDropdown(false);
+                        }}
+                        className="w-full text-left px-4 py-3 text-sm font-normal text-preto hover:bg-gray-50 transition cursor-pointer min-h-[44px]"
+                      >
+                        IN (+91)
+                      </button>
+                    }
+                  >
                     <button
                       type="button"
-                      onClick={() => {
-                        setCountryCode("IN (+91)");
-                        setShowCountryDropdown(false);
-                      }}
-                      className="w-full text-left px-4 py-3 text-sm font-normal text-preto hover:bg-gray-50 transition cursor-pointer min-h-[44px]"
+                      onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                      className="flex items-center justify-between w-full sm:w-32 px-4 py-3 border border-preto rounded-lg text-sm font-normal text-preto bg-white hover:bg-gray-50 transition cursor-pointer min-h-[48px]"
                     >
-                      IN (+91)
+                      <span>{countryCode}</span>
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="ml-2"
+                      >
+                        <path
+                          d="M3 4.5L6 7.5L9 4.5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </button>
-                  }
-                >
-                  <button
-                    type="button"
-                    onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                    className="flex items-center justify-between w-full sm:w-32 px-4 py-3 border border-preto rounded-lg text-sm font-normal text-preto bg-white hover:bg-gray-50 transition cursor-pointer min-h-[48px]"
-                  >
-                    <span>{countryCode}</span>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 12 12"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="ml-2"
-                    >
-                      <path
-                        d="M3 4.5L6 7.5L9 4.5"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                </Dropdown>
+                  </Dropdown>
+                </div>
+
+                {/* Mobile Number Input */}
+                <input
+                  type="tel"
+                  value={mobileNumber}
+                  onChange={(e) => setMobileNumber(e.target.value)}
+                  placeholder={translate("Enter mobile number") || "Enter mobile number"}
+                  className="w-full sm:flex-1 px-4 py-3 border border-preto rounded-lg text-sm sm:text-base text-preto placeholder:text-gray-400 focus:outline-none focus:border-preto min-h-[48px]"
+                />
               </div>
 
-              {/* Mobile Number Input */}
-              <input
-                type="tel"
-                value={mobileNumber}
-                onChange={(e) => setMobileNumber(e.target.value)}
-                placeholder="Enter mobile number"
-                className="w-full sm:flex-1 px-4 py-3 border border-preto rounded-lg text-sm sm:text-base text-preto placeholder:text-gray-400 focus:outline-none focus:border-preto min-h-[48px]"
-              />
+              {/* Why do we need this link */}
+              <div className="mt-2 text-right">
+                <Link
+                  href="#"
+                  className="text-xs font-normal text-preto underline hover:text-preto cursor-pointer"
+                >
+                  {translate("Why do we need this?")}
+                </Link>
+              </div>
             </div>
 
-            {/* Why do we need this link */}
-            <div className="mt-2 text-right">
+            {/* Continue Button */}
+            <button
+              type="button"
+              className="w-full bg-[#222] text-white font-normal py-3 sm:py-3.5 text-sm sm:text-base rounded-lg hover:bg-gray-800 transition cursor-pointer mb-3 sm:mb-4 min-h-[48px]"
+            >
+              {translate("Continue") || "Continue"}
+            </button>
+
+            {/* Terms and Conditions */}
+            <p className="text-xs font-normal text-gray-600 text-center mb-3 sm:mb-4 leading-relaxed px-2">
+              {translate("By tapping above you agree to the") ||
+                "By tapping above you agree to the"}{" "}
               <Link
                 href="#"
-                className="text-xs font-normal text-preto underline hover:text-preto cursor-pointer"
+                className="underline hover:text-preto cursor-pointer"
               >
-                Why do we need this?
+                {translate("Gocertify Terms & Conditions") ||
+                  "Gocertify Terms & Conditions"}
+              </Link>
+              {translate(". All data is processed inline with our") ||
+                ". All data is processed inline with our"}{" "}
+              <Link
+                href="#"
+                className="underline hover:text-preto cursor-pointer"
+              >
+                {translate("privacy notice") || "privacy notice"}
+              </Link>
+              .
+            </p>
+
+            {/* Footer Links */}
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-xs font-normal text-preto mb-4 sm:mb-6">
+              <Link
+                href="#"
+                className="underline hover:text-preto cursor-pointer"
+              >
+                {translate("Offer Terms") || "Offer Terms"}
+              </Link>
+              <Link
+                href="#"
+                className="underline hover:text-preto cursor-pointer"
+              >
+                {translate("FAQs") || "FAQs"}
+              </Link>
+              <Link
+                href="#"
+                className="underline hover:text-preto cursor-pointer"
+              >
+                {translate("Support") || "Support"}
               </Link>
             </div>
-          </div>
 
-          {/* Continue Button */}
-          <button
-            type="button"
-            className="w-full bg-[#222] text-white font-normal py-3 sm:py-3.5 text-sm sm:text-base rounded-lg hover:bg-gray-800 transition cursor-pointer mb-3 sm:mb-4 min-h-[48px]"
-          >
-            Continue
-          </button>
-
-          {/* Terms and Conditions */}
-          <p className="text-xs font-normal text-gray-600 text-center mb-3 sm:mb-4 leading-relaxed px-2">
-            By tapping above you agree to the{" "}
-            <Link href="#" className="underline hover:text-preto cursor-pointer">
-              Gocertify Terms & Conditions
-            </Link>
-            . All data is processed inline with our{" "}
-            <Link href="#" className="underline hover:text-preto cursor-pointer">
-              privacy notice
-            </Link>
-            .
-          </p>
-
-          {/* Footer Links */}
-          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-xs font-normal text-preto mb-4 sm:mb-6">
-            <Link
-              href="#"
-              className="underline hover:text-preto cursor-pointer"
-            >
-              Offer Terms
-            </Link>
-            <Link
-              href="#"
-              className="underline hover:text-preto cursor-pointer"
-            >
-              FAQs
-            </Link>
-            <Link
-              href="#"
-              className="underline hover:text-preto cursor-pointer"
-            >
-              Support
-            </Link>
-          </div>
-
-          {/* Gocertify Footer */}
-          <div className="text-center">
-            <p className="text-xs font-normal text-gray-600">
-              Instant verification by{" "}
-              <span className="inline-flex items-center">
-                <svg
-                  width="10"
-                  height="10"
-                  viewBox="0 0 12 12"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mx-1 sm:w-3 sm:h-3"
-                >
-                  <path d="M6 0L7.5 4.5L12 6L7.5 7.5L6 12L4.5 7.5L0 6L4.5 4.5L6 0Z" />
-                </svg>
-                Gocertify
-              </span>
-            </p>
-          </div>
+            {/* Gocertify Footer */}
+            <div className="text-center">
+              <p className="text-xs font-normal text-gray-600">
+                {translate("Instant verification by") ||
+                  "Instant verification by"}{" "}
+                <span className="inline-flex items-center">
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 12 12"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="mx-1 sm:w-3 sm:h-3"
+                  >
+                    <path d="M6 0L7.5 4.5L12 6L7.5 7.5L6 12L4.5 7.5L0 6L4.5 4.5L6 0Z" />
+                  </svg>
+                  {translate("Gocertify") || "Gocertify"}
+                </span>
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -47,26 +47,43 @@ const Modal: React.FC<ModalProps> = ({
   const [modalPosition, setModalPosition] = useState({ top: 0, right: 0 });
   const [isMobile, setIsMobile] = useState(false);
 
-  // Check if mobile (below 768px for bottom sheet, above 768px for centered)
+  // Check if mobile (below 768px) - initialize on mount
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth < 768);
+      }
     };
+    // Set initial value immediately
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Calculate position relative to button
+  // Calculate position relative to button - only on desktop when not mobile
   useEffect(() => {
-    if (isOpen && position === "relative" && buttonRef?.current && !isMobile) {
-      const button = buttonRef.current;
-      const buttonRect = button.getBoundingClientRect();
-      setModalPosition({
-        top: buttonRect.bottom + 16,
-        right: window.innerWidth - buttonRect.right,
-      });
+    if (!isOpen || position !== "relative" || isMobile) {
+      return;
     }
+    
+    // Use requestAnimationFrame to ensure DOM is ready and avoid race conditions
+    const calculatePosition = () => {
+      if (buttonRef?.current) {
+        const button = buttonRef.current;
+        const buttonRect = button.getBoundingClientRect();
+        setModalPosition({
+          top: buttonRect.bottom + 16,
+          right: window.innerWidth - buttonRect.right,
+        });
+      }
+    };
+    
+    // Small delay to ensure button ref is stable
+    const timeoutId = setTimeout(() => {
+      requestAnimationFrame(calculatePosition);
+    }, 0);
+    
+    return () => clearTimeout(timeoutId);
   }, [isOpen, position, buttonRef, isMobile]);
 
   // Prevent body scroll when modal is open
@@ -74,9 +91,7 @@ const Modal: React.FC<ModalProps> = ({
     if (isOpen) {
       // For relative positioned modals on desktop (like LanguageModal), 
       // only apply scroll lock on mobile where backdrop is shown
-      // Check window width directly to avoid dependency array issues
-      const isCurrentlyMobile = window.innerWidth < 768;
-      const shouldLockScroll = position !== "relative" || isCurrentlyMobile;
+      const shouldLockScroll = position !== "relative" || isMobile;
       
       if (shouldLockScroll) {
         const scrollY = window.scrollY;
@@ -135,7 +150,7 @@ const Modal: React.FC<ModalProps> = ({
       document.body.style.top = "";
       document.body.style.width = "";
     }
-  }, [isOpen, position]);
+  }, [isOpen, position, isMobile]);
 
   // Close on ESC key
   useEffect(() => {
@@ -187,75 +202,59 @@ const Modal: React.FC<ModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Size classes - mobile uses full width, desktop keeps original sizes
+  // Size classes - mobile uses 90% width with max-w, desktop keeps original sizes
   const sizeClasses = {
-    small: "w-full md:w-full md:max-w-[360px]",
-    medium: "w-full md:w-full md:max-w-[420px]",
-    large: "w-full md:w-full md:max-w-4xl",
+    small: isMobile ? "w-[90%] max-w-[360px]" : "w-full md:w-full md:max-w-[360px]",
+    medium: isMobile ? "w-[90%] max-w-[420px]" : "w-full md:w-full md:max-w-[420px]",
+    large: isMobile ? "w-[90%] max-w-[420px]" : "w-full md:w-full md:max-w-4xl",
     fullscreen: "w-full h-full max-w-full max-h-full",
   };
 
-  // Position styles
+  // Position styles - use isMobile state for consistency
   const getPositionStyle = () => {
-    // Check current screen size for positioning
-    const isCurrentlyMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    // On mobile, always center regardless of position prop
+    if (isMobile) {
+      return {};
+    }
     
-    if (position === "relative" && !isCurrentlyMobile) {
+    // Desktop/Tablet behavior
+    if (position === "relative") {
       return {
         top: `${modalPosition.top}px`,
         right: `${modalPosition.right}px`,
       };
     }
+    
     if (position === "top") {
-      // On mobile (< 768px), treat "top" position as bottom sheet
-      if (isCurrentlyMobile) {
-        return {
-          bottom: "0",
-          left: "0",
-          transform: "none",
-        };
-      }
-      // Desktop/Tablet (>= 768px): position at top, centered
       return {
         top: "0",
-        left: "50%",
-        transform: "translateX(-50%)",
         paddingTop: "4rem",
         paddingBottom: "1.5rem",
       };
     }
-    // On mobile (< 768px), position at bottom with full width
-    if (isCurrentlyMobile) {
-      return {
-        bottom: "0",
-        left: "0",
-        transform: "none",
-      };
-    }
-    // Default centered on desktop/tablet (>= 768px)
-    return {
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-    };
+    
+    // Default centered (position === "centered")
+    return {};
   };
 
-  // Container classes based on position
+  // Container classes based on position - use isMobile state for consistency
   const getContainerClasses = () => {
-    // Check current screen size for positioning
-    const isCurrentlyMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    // On mobile, always center regardless of position prop
+    if (isMobile) {
+      return "fixed inset-0 flex items-center justify-center px-4 py-6";
+    }
     
-    if (position === "relative" && !isCurrentlyMobile) {
+    // Desktop/Tablet behavior
+    if (position === "relative") {
       return "fixed";
     }
+    
     if (position === "top") {
-      // On mobile (< 768px), treat "top" position as bottom sheet
-      // On tablet/desktop (>= 768px), position at top, centered
-      return "fixed inset-0 flex items-end md:items-start justify-start md:justify-center px-0 md:px-4 pb-0";
+      return "fixed inset-0 flex items-start justify-center px-4 pb-0 pt-16";
     }
-    // On mobile (< 768px), align to bottom (bottom sheet) with no horizontal padding
-    // On tablet/desktop (>= 768px), center with padding
-    return "fixed inset-0 flex items-end md:items-center justify-start md:justify-center px-0 md:px-4 pb-0 md:pb-6 md:py-6";
+    
+    // Default centered (position === "centered")
+    return "fixed inset-0 flex items-center justify-center px-4 py-6";
   };
 
   return (
@@ -278,8 +277,8 @@ const Modal: React.FC<ModalProps> = ({
       >
         <div
           className={`${sizeClasses[size]} ${
-            size !== "fullscreen" ? (typeof window !== 'undefined' && window.innerWidth < 768 ? "max-h-[92vh]" : "max-h-[90vh]") : "h-full"
-          } flex flex-col rounded-t-[32px] md:rounded-2xl bg-(--colorWhite) shadow-2xl border border-(--colorGrey) overflow-hidden ${className}`}
+            size !== "fullscreen" ? (isMobile ? "max-h-[92vh]" : "max-h-[90vh]") : "h-full"
+          } flex flex-col rounded-2xl bg-(--colorWhite) shadow-2xl border border-(--colorGrey) overflow-hidden ${className}`}
         >
           {/* Header */}
           {(title || headerContent || showCloseButton) && (

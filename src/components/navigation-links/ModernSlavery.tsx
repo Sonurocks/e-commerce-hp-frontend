@@ -9,6 +9,7 @@ import AccordionSection from "@/components/support/AccordionSection";
 import FeedbackPrompt from "@/components/support/FeedbackPrompt";
 import { SupportNavLink, SupportSection } from "@/types/support";
 import { supportPageStyles } from "@/constants/supportPageStyles";
+import { useLanguage } from "@/context/LanguageContext";
 
 const sections: SupportSection[] = [
   {
@@ -1020,7 +1021,7 @@ const sections: SupportSection[] = [
 ];
 
 const navigationLinks: SupportNavLink[] = [
-  { href: "#", label: " HOLIDAY DATES YOU WANT TO KNOW ABOUT" },
+  { href: "#", label: "HOLIDAY DATES YOU WANT TO KNOW ABOUT" },
   { href: "/contact-us", label: "Contact us" },
   { href: "#", label: "How to shop" },
   { href: "/orders-and-delivery", label: "Orders and delivery" },
@@ -1048,6 +1049,10 @@ const ModernSlavery = () => {
   const pathname = usePathname();
   const [openSectionIndex, setOpenSectionIndex] = useState<number | null>(null);
   const [feedbackHelpful, setFeedbackHelpful] = useState<boolean | null>(null);
+  const { translations } = useLanguage();
+  const t = translations.productCopy;
+  const translate = (text: string): string =>
+    (t[text] as string | undefined) ?? text;
 
   const toggleSection = useCallback((index: number) => {
     setOpenSectionIndex((prev) => (prev === index ? null : index));
@@ -1059,20 +1064,23 @@ const ModernSlavery = () => {
 
   const renderedSections = useMemo(
     () =>
-      sections.map((section, sectionIndex) => (
-        <AccordionSection
-          key={section.title}
-          section={section}
-          index={sectionIndex}
-          isOpen={openSectionIndex === sectionIndex}
-          onToggle={toggleSection}
-          containerClassName="border-b border-gray-200"
-          buttonClassName="w-full py-4 flex items-center justify-between text-left  transition-colors "
-          contentClassName="pb-4 px-4"
-          titleClassName="font-light text-sm text-preto uppercase tracking-wide"
-        />
-      )),
-    [openSectionIndex, toggleSection],
+      sections.map((section, sectionIndex) => {
+        const translatedTitle = translate(section.title);
+        return (
+          <AccordionSection
+            key={section.title}
+            section={{ ...section, title: translatedTitle }}
+            index={sectionIndex}
+            isOpen={openSectionIndex === sectionIndex}
+            onToggle={toggleSection}
+            containerClassName="border-b border-gray-200"
+            buttonClassName="w-full py-4 flex items-center justify-between text-left  transition-colors "
+            contentClassName="pb-4 px-4"
+            titleClassName="font-light text-sm text-preto uppercase tracking-wide"
+          />
+        );
+      }),
+    [openSectionIndex, toggleSection, t],
   );
 
   return (
@@ -1084,14 +1092,20 @@ const ModernSlavery = () => {
         <div className="flex flex-col lg:flex-row gap-12 lg:pl-16">
           {/* Left Navigation Menu */}
           <aside className="lg:w-78 flex-shrink-0">
-            <SupportNavigation links={navigationLinks} activePath={pathname} />
+            <SupportNavigation
+              links={navigationLinks.map((link) => ({
+                ...link,
+                label: translate(link.label),
+              }))}
+              activePath={pathname}
+            />
           </aside>
 
           {/* Right Main Content */}
           <main className="flex-1 max-w-4xl lg:ml-12">
             {/* Title */}
             <h1 className="text-3xl md:text-2xl font-thin mb-8 text-preto">
-              Modern Slavery Statement
+              {translate("Modern Slavery Statement")}
             </h1>
 
             {/* Expandable Sections */}
@@ -1101,6 +1115,10 @@ const ModernSlavery = () => {
             <FeedbackPrompt
               helpfulValue={feedbackHelpful}
               onFeedbackChange={handleFeedbackChange}
+            title={translate("Tell us what you think")}
+            question={translate("Was this content helpful?")}
+            positiveLabel={translate("Yes")}
+            negativeLabel={translate("Not really")}
               containerClassName="mt-13 pt-8"
               titleClassName="text-xs font-base text-preto mb-2"
               buttonClassName="px-6 py-2 text-sm font-semibold rounded-lg border border-preto transition-colors"

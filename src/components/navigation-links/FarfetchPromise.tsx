@@ -8,8 +8,14 @@ import { BiLockAlt } from "react-icons/bi";
 import { MdAssignmentReturn } from "react-icons/md";
 import { MdOutlineContactPage } from "react-icons/md";
 import { HiArrowUp } from "react-icons/hi";
+import { useLanguage } from "@/context/LanguageContext";
 
 const FarfetchPromise = () => {
+  const { translations } = useLanguage();
+  const t = translations.productCopy;
+  const translate = (text?: string) =>
+    text ? ((t[text] as string | undefined) ?? text) : text;
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -25,7 +31,7 @@ const FarfetchPromise = () => {
           {/* Top Section: Why Farfetch? */}
           <div className="text-center space-y-4 sm:space-y-6 mb-12 sm:mb-14 md:mb-16">
             <h1 className="text-lg sm:text-xl font-normal text-preto">
-              Why Farfetch?
+              {translate("Why Farfetch?")}
             </h1>
             
             {/* Price Tag Icon */}
@@ -35,15 +41,17 @@ const FarfetchPromise = () => {
             
             {/* Headline */}
             <h2 className="text-xl sm:text-2xl md:text-3xl font-normal text-preto">
-              Shop over 100,000 styles.
+              {translate("Shop over 100,000 styles.")}
             </h2>
             
             {/* Paragraph */}
             <div className="max-w-3xl mx-auto px-2 sm:px-0">
               <p className="text-sm sm:text-base text-preto leading-relaxed">
-                We are committed to our customer promise all year round, however during busy periods like holidays, sales and special campaigns you might experience higher waiting times from our Customer Service team. Your deliveries may take longer than usual to get to you, but do not worry — you will receive a confirmation email as soon as it is shipped. For more information, visit the{" "}
+                {translate(
+                  "We are committed to our customer promise all year round, however during busy periods like holidays, sales and special campaigns you might experience higher waiting times from our Customer Service team. Your deliveries may take longer than usual to get to you, but do not worry — you will receive a confirmation email as soon as it is shipped. For more information, visit the",
+                )}{" "}
                 <Link href="/faq" className="underline hover:opacity-70 transition">
-                  FAQs
+                  {translate("FAQs")}
                 </Link>
                 .
               </p>
@@ -55,7 +63,7 @@ const FarfetchPromise = () => {
                 href="#" 
                 className="text-sm sm:text-base md:text-lg text-preto underline hover:opacity-70 transition"
               >
-                See all designers
+                {translate("See all designers")}
               </Link>
             </div>
           </div>
@@ -68,13 +76,13 @@ const FarfetchPromise = () => {
                 <HiTruck className="w-10 h-10 sm:w-12 sm:h-12 text-preto" />
               </div>
               <h3 className="text-sm sm:text-base md:text-lg font-bold text-preto">
-                Speedy delivery
+                {translate("Speedy delivery")}
               </h3>
               <p className="text-xs sm:text-sm md:text-base text-preto leading-relaxed max-w-md mx-auto">
-                In a hurry? We offer Express Delivery to most destinations.
+                {translate("In a hurry? We offer Express Delivery to most destinations.")}
               </p>
               <Link href="/orders-and-delivery" className="text-preto underline hover:opacity-70 transition inline-block">
-                Learn more
+                {translate("Learn more")}
               </Link>
             </div>
 
@@ -84,13 +92,15 @@ const FarfetchPromise = () => {
                 <MdAssignmentReturn className="w-10 h-10 sm:w-12 sm:h-12 text-preto" />
               </div>
               <h3 className="text-sm sm:text-base md:text-lg font-bold text-preto">
-                Free global returns and pick up
+                {translate("Free global returns and pick up")}
               </h3>
               <p className="text-xs sm:text-sm md:text-base text-preto leading-relaxed max-w-md mx-auto">
-                Changed your mind? No problem. You can return an order up to 30 days from receiving it.
+                {translate(
+                  "Changed your mind? No problem. You can return an order up to 30 days from receiving it.",
+                )}
               </p>
               <Link href="/returns-and-refunds" className="text-preto underline hover:opacity-70 transition inline-block">
-                Learn more
+                {translate("Learn more")}
               </Link>
             </div>
 
@@ -100,13 +110,13 @@ const FarfetchPromise = () => {
                 <MdOutlineContactPage className="w-10 h-10 sm:w-12 sm:h-12 text-preto" />
               </div>
               <h3 className="text-sm sm:text-base md:text-lg font-bold text-preto">
-                Quick response
+                {translate("Quick response")}
               </h3>
               <p className="text-xs sm:text-sm md:text-base text-preto leading-relaxed max-w-md mx-auto">
-                We will answer any questions within 1 working day.
+                {translate("We will answer any questions within 1 working day.")}
               </p>
               <Link href="/contact-us" className="text-preto underline hover:opacity-70 transition inline-block">
-                Contact us
+                {translate("Contact us")}
               </Link>
             </div>
 
@@ -116,13 +126,13 @@ const FarfetchPromise = () => {
                 <BiLockAlt className="w-10 h-10 sm:w-12 sm:h-12 text-preto" />
               </div>
               <h3 className="text-sm sm:text-base md:text-lg font-bold text-preto">
-                Safe & secure shopping
+                {translate("Safe & secure shopping")}
               </h3>
               <p className="text-xs sm:text-sm md:text-base text-preto leading-relaxed max-w-md mx-auto">
-                You are in safe hands. We accept all the major payment methods.
+                {translate("You are in safe hands. We accept all the major payment methods.")}
               </p>
               <Link href="/payment-and-pricing" className="text-preto underline hover:opacity-70 transition inline-block">
-                Learn more
+                {translate("Learn more")}
               </Link>
             </div>
           </div>
@@ -131,10 +141,12 @@ const FarfetchPromise = () => {
           <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-platinum">
             <div className="p-4 sm:p-6 md:p-8 lg:p-10">
               <p className="text-sm sm:text-base text-preto leading-relaxed mb-3 sm:mb-4">
-                I ordered a bunch of other items online from other companies the day I ordered this bag, and these things were coming from companies within the US. The bag I ordered from Farfetch came all the way from Italy and got here - before I even received shipping info/confirmation for the other items. Amazing!!!
+                {translate(
+                  "I ordered a bunch of other items online from other companies the day I ordered this bag, and these things were coming from companies within the US. The bag I ordered from Farfetch came all the way from Italy and got here - before I even received shipping info/confirmation for the other items. Amazing!!!",
+                )}
               </p>
               <p className="text-sm md:text-base text-[--color-hina] text-right">
-                Janell M.
+                {translate("Janell M.")}
               </p>
             </div>
           </div>
@@ -143,24 +155,32 @@ const FarfetchPromise = () => {
           <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-platinum">
             <div className="space-y-4 sm:space-y-6">
               <h2 className="text-xl sm:text-2xl font-semibold text-preto text-center">
-                Who are we?
+                {translate("Who are we?")}
               </h2>
               
               <div className="space-y-3 sm:space-y-4">
                 <p className="text-sm sm:text-base text-preto leading-relaxed">
-                  Farfetch lets you shop the pieces you want, when you want, from anywhere around the world. We are for fashion lovers everywhere - fetching diverse fashion from afar to inspire your individuality.
+                  {translate(
+                    "Farfetch lets you shop the pieces you want, when you want, from anywhere around the world. We are for fashion lovers everywhere - fetching diverse fashion from afar to inspire your individuality.",
+                  )}
                 </p>
                 
                 <p className="text-sm sm:text-base text-preto leading-relaxed">
-                  Our customers are at the heart of everything we do - that why when you shop with us you will find an unrivalled selection of styles that no one else can offer. From established powerhouse designers to emerging brands and boutiques, we only partner with the best to ensure you get the styles that matter to you.
+                  {translate(
+                    "Our customers are at the heart of everything we do - that why when you shop with us you will find an unrivalled selection of styles that no one else can offer. From established powerhouse designers to emerging brands and boutiques, we only partner with the best to ensure you get the styles that matter to you.",
+                  )}
                 </p>
                 
                 <p className="text-sm sm:text-base text-preto leading-relaxed">
-                  Our pricing is unique from everyone else. Depending on your shipping address and the price being set by our partner, the same piece may vary in price across different sizes. Although we do not have any control over price differences, you can always count on us to offer you the best price available to your destination at the time you place an order.
+                  {translate(
+                    "Our pricing is unique from everyone else. Depending on your shipping address and the price being set by our partner, the same piece may vary in price across different sizes. Although we do not have any control over price differences, you can always count on us to offer you the best price available to your destination at the time you place an order.",
+                  )}
                 </p>
                 
                 <p className="text-sm sm:text-base text-preto leading-relaxed">
-                  Once you have made a decision, we will then take care of the legwork. We ship from our partners to over 190 countries worldwide, so you will receive your order in no time.
+                  {translate(
+                    "Once you have made a decision, we will then take care of the legwork. We ship from our partners to over 190 countries worldwide, so you will receive your order in no time.",
+                  )}
                 </p>
               </div>
             </div>
@@ -170,16 +190,19 @@ const FarfetchPromise = () => {
           <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-platinum">
             <div className="text-center space-y-3 sm:space-y-4 py-6 sm:py-8">
               <h2 className="text-xl sm:text-2xl md:text-xl font-semibold text-preto">
-                Got a burning question?
+                {translate("Got a burning question?")}
               </h2>
               <p className="text-sm sm:text-base text-preto leading-relaxed">
-                Our friendly Customer Service team is always ready to help by{" "}
+                {translate(
+                  "Our friendly Customer Service team is always ready to help by",
+                )}{" "}
                 <Link href="/contact-us" className="underline hover:opacity-70 transition">
-                  phone
+                  {translate("phone")}
                 </Link>
-                {" "}or{" "}
+                {" "}
+                {translate("or")}{" "}
                 <Link href="/contact-us" className="underline hover:opacity-70 transition">
-                  email
+                  {translate("email")}
                 </Link>
                 .
               </p>
@@ -196,7 +219,7 @@ const FarfetchPromise = () => {
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center">
               <HiArrowUp className="w-4 h-4 sm:w-5 sm:h-5 text-preto" />
             </div>
-            <span>Back to Top</span>
+            <span>{translate("Back to Top")}</span>
           </button>
         </div>
       </div>
