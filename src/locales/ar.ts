@@ -20,6 +20,7 @@ const arabicBundle: TranslationBundle = {
       signIn: "تسجيل الدخول",
       wishlist: "قائمة الرغبات",
       bag: "الحقيبة",
+      theme: "المظهر",
     },
     navigation: {
       primary: {

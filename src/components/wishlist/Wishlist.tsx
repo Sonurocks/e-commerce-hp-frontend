@@ -163,29 +163,36 @@ const Wishlist = () => {
                   <div className="text-left">
                     <label
                       htmlFor={`size-${item.id}`}
-                      className="text-[11px] uppercase tracking-wide text-gray-500"
+                      className="text-[11px] uppercase tracking-wide text-preto"
                     >
                       {translate("Select size")}
                     </label>
-                    <select
-                      id={`size-${item.id}`}
-                      value={selectedSize}
-                      onChange={(e) =>
-                        handleSizeChange(item.id, e.target.value)
-                      }
-                      className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-(--color-preto)"
-                    >
-                      {sizeOptions.map((size) => (
-                        <option key={size} value={size}>
-                          {size}
-                        </option>
-                      ))}
-                    </select>
+                    <div className="relative mt-1">
+                      <select
+                        id={`size-${item.id}`}
+                        value={selectedSize}
+                        onChange={(e) =>
+                          handleSizeChange(item.id, e.target.value)
+                        }
+                        className="w-full border border-gray-300 text-preto rounded-md pl-3 pr-10 py-3 mx-0.5 text-sm focus:outline-none focus:border-(--color-preto) appearance-none bg-transparent"
+                      >
+                        {sizeOptions.map((size) => (
+                          <option key={size} value={size}>
+                            {size}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-preto" aria-hidden>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </span>
+                    </div>
                   </div>
                   <button
                     type="button"
                     onClick={() => handleAddToBag(item.id)}
-                    className="w-full bg-black text-white py-3 rounded-md text-sm font-semibold tracking-wide hover:bg-gray-900 transition"
+                    className="w-full bg-black text-white py-3 rounded-md text-sm font-semibold tracking-wide transition"
                   >
                     {translate("Add To Bag")}
                   </button>

@@ -55,7 +55,7 @@ export default function DownloadAppBanner() {
               />
               <button
                 type="button"
-                className="h-11 sm:w-auto rounded-lg px-6 text-sm whitespace-nowrap border border-preto text-preto font-bold cursor-pointer hover:bg-gray-50 transition-colors"
+                className="h-11 sm:w-auto rounded-lg px-6 text-sm whitespace-nowrap border border-preto text-preto font-bold cursor-pointer  transition-colors"
               >
                 {copy.sendButton}
               </button>

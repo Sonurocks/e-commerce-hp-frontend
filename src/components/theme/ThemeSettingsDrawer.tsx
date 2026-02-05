@@ -127,10 +127,10 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
+      <div className="fixed inset-0 bg-black/50 z-50" onClick={onClose} />
       {/* Drawer */}
       <div
-        className="fixed right-0 top-0 h-full w-96 shadow-xl z-50 transform transition-transform overflow-y-auto"
+        className="fixed right-0 top-0 h-full w-96 shadow-xl z-100 transform transition-transform overflow-y-auto"
         style={{
           backgroundColor: colorTheme !== "default" ? "#ffffff" : (theme === "dark" ? "#111827" : "#ffffff"),
         }}

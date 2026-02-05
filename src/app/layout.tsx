@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Lato, Inter, Roboto } from "next/font/google";
 import "./globals.css";
+import favicon from "@/assets/Farfetch--Streamline-Simple-Icons.png";
 import { ThemeProvider } from "next-themes";
 import {
   ConditionalFooter,
@@ -45,6 +46,9 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "ShopHub - Your Online Store",
   description: "Quality products at affordable prices",
+  icons: {
+    icon: favicon.src,
+  },
 };
 
 export default function RootLayout({

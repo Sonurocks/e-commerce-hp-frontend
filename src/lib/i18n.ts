@@ -37,6 +37,7 @@ export interface HeaderTranslations {
     signIn: string;
     wishlist: string;
     bag: string;
+    theme: string;
   };
   navigation: Record<NavigationSection, Record<string, string>>;
 }

@@ -21,6 +21,7 @@ const frenchBundle: TranslationBundle = {
       signIn: "Se connecter",
       wishlist: "Liste d'envies",
       bag: "Panier",
+      theme: "Thème",
     },
     navigation: {
       primary: {

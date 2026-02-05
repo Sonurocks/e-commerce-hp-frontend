@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useRef, useEffect, useState, ReactNode } from "react";
+import React, { useRef, useEffect, useLayoutEffect, useState, ReactNode } from "react";
+import { createPortal } from "react-dom";
 
 export interface DropdownProps {
   isOpen: boolean;
@@ -16,7 +17,11 @@ export interface DropdownProps {
   closeOnClickOutside?: boolean;
   closeOnEscape?: boolean;
   zIndex?: number;
+  /** When true, render dropdown in a portal with fixed positioning so it is not clipped on tablet/small viewports */
+  usePortal?: boolean;
 }
+
+const DROPDOWN_PORTAL_WIDTH = 224; // w-56 = 14rem
 
 const Dropdown: React.FC<DropdownProps> = ({
   isOpen,
@@ -32,10 +37,43 @@ const Dropdown: React.FC<DropdownProps> = ({
   closeOnClickOutside = true,
   closeOnEscape = true,
   zIndex = 50,
+  usePortal = false,
 }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const ignoreNextClickRef = useRef(false);
+  const [portalPosition, setPortalPosition] = useState<{ top: number; left: number } | null>(null);
+
+  // Compute fixed position for portal when open (so dropdown is not clipped on tablet)
+  const updatePortalPosition = () => {
+    if (!wrapperRef.current || typeof document === "undefined") return;
+    const rect = wrapperRef.current.getBoundingClientRect();
+    const padding = 8;
+    let left = rect.right - DROPDOWN_PORTAL_WIDTH;
+    if (left < padding) left = padding;
+    if (left + DROPDOWN_PORTAL_WIDTH > window.innerWidth - padding) {
+      left = window.innerWidth - DROPDOWN_PORTAL_WIDTH - padding;
+    }
+    setPortalPosition({
+      top: rect.bottom + offset,
+      left,
+    });
+  };
+
+  useLayoutEffect(() => {
+    if (!isOpen || !usePortal) {
+      setPortalPosition(null);
+      return;
+    }
+    updatePortalPosition();
+    const handleScrollOrResize = () => updatePortalPosition();
+    window.addEventListener("scroll", handleScrollOrResize, true);
+    window.addEventListener("resize", handleScrollOrResize);
+    return () => {
+      window.removeEventListener("scroll", handleScrollOrResize, true);
+      window.removeEventListener("resize", handleScrollOrResize);
+    };
+  }, [isOpen, usePortal, offset]);
 
   // Close on ESC key
   useEffect(() => {
@@ -111,10 +149,32 @@ const Dropdown: React.FC<DropdownProps> = ({
       })
     : children;
 
+  // When usePortal, strip positioning classes from contentClassName and use inline fixed position
+  const contentClassWhenPortal = contentClassName
+    .replace(/\b(absolute|fixed|right-0|left-0|mt-2|top-0|bottom-0)\b/g, "")
+    .trim();
+
   return (
     <div ref={wrapperRef} className={`relative ${className}`}>
       {childrenWithClickHandler}
-      {isOpen && (
+      {isOpen && usePortal && portalPosition && typeof document !== "undefined" && createPortal(
+        <div
+          ref={dropdownRef}
+          className={contentClassWhenPortal}
+          style={{
+            position: "fixed",
+            zIndex,
+            top: portalPosition.top,
+            left: portalPosition.left,
+            width: DROPDOWN_PORTAL_WIDTH,
+            minWidth: DROPDOWN_PORTAL_WIDTH,
+          }}
+        >
+          {content}
+        </div>,
+        document.body
+      )}
+      {isOpen && !usePortal && (
         <div
           ref={dropdownRef}
           className={`absolute ${contentClassName}`}

@@ -486,7 +486,7 @@ const Header = () => {
                   >
                     <SlidersHorizontal className="w-6 h-6" />
                     <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
-                      Theme
+                      {headerCopy.tooltips.theme}
                     </span>
                   </button>
 
@@ -878,7 +878,7 @@ const Header = () => {
                         className="flex items-center gap-2 text-(--color-preto) dark:text-(--color-preto) font-normal text-base"
                       >
                         <SlidersHorizontal className="h-5 w-5" />
-                        Theme
+                        {headerCopy.tooltips.theme}
                       </button>
                     </div>
                     <div className="grid grid-cols-2 gap-3 text-sm">

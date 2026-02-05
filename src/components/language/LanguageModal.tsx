@@ -27,15 +27,21 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
   const languages: LanguageDefinition[] = supportedLanguages.map(
     (code) => languageMetadata[code],
   );
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
+  // Initialize isLargeScreen synchronously to prevent flickering on first render
+  // Use > 1024 so at exactly 1024px, modal opens centered
+  const [isLargeScreen, setIsLargeScreen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth > 1024;
+    }
+    return false;
+  });
 
-  // Check screen size for responsive behavior
+  // Check screen size for responsive behavior on resize
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsLargeScreen(window.innerWidth >= 1024);
+      setIsLargeScreen(window.innerWidth > 1024);
     };
     
-    checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
@@ -73,7 +79,6 @@ const LanguageModal: React.FC<LanguageModalProps> = ({
       buttonRef={isLargeScreen ? buttonRef : undefined}
       headerContent={headerContent}
       className="w-[90vw] lg:w-[360px] max-h-[80vh] lg:max-h-[600px]"
-      backdropClassName={isLargeScreen ? "lg:hidden" : ""}
     >
       <div className="px-8 py-4">
         <div className="space-y-0">

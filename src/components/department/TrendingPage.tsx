@@ -268,10 +268,11 @@ export default function TrendingPage() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="relative flex-shrink-0">
+          <div className="relative flex-shrink-0 self-end sm:self-auto">
             <Dropdown
               isOpen={isSortDropdownOpen}
               onClose={() => setIsSortDropdownOpen(false)}
+              usePortal
               contentClassName="right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
               content={
                 <div className="py-2">
@@ -298,7 +299,7 @@ export default function TrendingPage() {
             >
               <button
                 onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gray-100 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-gray-200 transition-colors w-full sm:w-auto"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gray-100 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-gray-200 transition-colors w-auto"
               >
                 <span>{translate("Sort by") || "Sort by"}</span>
                 <FiChevronDown

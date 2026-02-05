@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { FiTag, FiStar, FiRefreshCw } from "react-icons/fi";
 import { useLanguage } from "@/context/LanguageContext";
 import styles from "./WhyFarfetchSection.module.css";
@@ -62,12 +63,12 @@ export default function WhyFarfetchSection() {
                 {translate(title)}
               </p>
             </div>
-            <a
+            <Link
               href={link}
               className="text-[11px] text-(--color-preto) underline font-normal"
             >
               {translate(ctaLabel)}
-            </a>
+            </Link>
           </article>
         ))}
       </div>

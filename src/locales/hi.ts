@@ -20,6 +20,7 @@ const hindiBundle: TranslationBundle = {
       signIn: "साइन इन करें",
       wishlist: "विशलिस्ट",
       bag: "बैग",
+      theme: "थीम",
     },
     navigation: {
       primary: {

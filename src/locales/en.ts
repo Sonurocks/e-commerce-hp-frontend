@@ -20,6 +20,7 @@ const englishBundle: TranslationBundle = {
       signIn: "Sign in",
       wishlist: "Wishlist",
       bag: "Bag",
+      theme: "Theme",
     },
     navigation: {
       primary: {
@@ -510,6 +511,7 @@ const englishBundle: TranslationBundle = {
     "Light": "Light",
     "Dark": "Dark",
     "System": "System",
+    "theme": "theme",
     "Color Themes": "Color Themes",
     "Single color": "Single color",
     "Default": "Default",

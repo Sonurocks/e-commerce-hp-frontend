@@ -293,13 +293,13 @@ export default function ProductDetailSection({
           <Dropdown
             isOpen={isSizeDropdownOpen}
             onClose={() => setIsSizeDropdownOpen(false)}
-            contentClassName="z-10 w-full mt-1 bg-(--color-branco) border border-[#ccc] rounded-lg shadow-lg"
+            contentClassName="z-10 w-full  bg-(--color-branco) border border-[#ccc] rounded-lg shadow-lg"
             content={
-              <div className="p-2">
-                <p className="text-[11px] text-gray-400 mb-2">
+              <div className="p-3">
+                <p className="text-[11px] text-gray-400 mb-0">
                   {translate("Select size")}
                 </p>
-                <div className="space-y-1">
+                <div className="space-y-0">
                   {sizeOptions.map((option) => (
                     <button
                       key={option.size}
@@ -311,7 +311,7 @@ export default function ProductDetailSection({
                         }
                       }}
                       disabled={!option.available}
-                      className={`w-full flex items-center justify-between py-3 px-4 text-left ${
+                      className={`w-full flex items-center justify-between py-1 px-3 text-left ${
                         selectedSize === option.size
                           ? "bg-gray-100 font-semibold"
                           : option.available
@@ -339,7 +339,7 @@ export default function ProductDetailSection({
           >
             <button
               onClick={() => setIsSizeDropdownOpen(!isSizeDropdownOpen)}
-              className="w-full px-4 py-3 border border-[#ccc] rounded-lg focus:outline-none focus:border-[#222] bg-white cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
+              className="w-full px-4 py-3 border border-[#ccc] rounded-lg focus:outline-none focus:border-[#222]  cursor-pointer text-[13px] text-(--color-preto) flex items-center justify-between"
             >
               <span className={selectedSize ? "font-semibold" : "text-gray-400"}>
                 {selectedSize || translate("Select size")}
@@ -381,7 +381,7 @@ export default function ProductDetailSection({
                   <GoHeart className="w-5 h-5 text-preto" strokeWidth={1.0} />
                 )
               }
-              className="flex-[1] py-2 px-4 text-[15px]"
+              className="flex-[1] py-2 px-4 text-[15px] hover:bg-transparent focus:bg-transparent"
             >
               {translate("Wishlist")}
             </Button>

@@ -20,6 +20,7 @@ const urduBundle: TranslationBundle = {
       signIn: "سائن ان",
       wishlist: "خواہشات کی فہرست",
       bag: "بیگ",
+      theme: "تھیم",
     },
     navigation: {
       primary: {

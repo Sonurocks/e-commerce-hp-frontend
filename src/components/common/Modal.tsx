@@ -68,12 +68,57 @@ const Modal: React.FC<ModalProps> = ({
     
     // Use requestAnimationFrame to ensure DOM is ready and avoid race conditions
     const calculatePosition = () => {
-      if (buttonRef?.current) {
+      if (buttonRef?.current && modalRef.current) {
         const button = buttonRef.current;
         const buttonRect = button.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const viewportWidth = window.innerWidth;
+        
+        // Estimate modal height (use max-h from className or default to 600px)
+        // We'll use a reasonable estimate since we can't measure before render
+        const estimatedModalHeight = 600; // max-h-[600px] from LanguageModal
+        const padding = 16;
+        const minPaddingFromEdge = 16;
+        
+        // Calculate available space below and above button
+        const spaceBelow = viewportHeight - buttonRect.bottom - padding;
+        const spaceAbove = buttonRect.top - padding;
+        
+        let calculatedTop: number;
+        let calculatedRight: number;
+        
+        // Determine if modal should be positioned above or below button
+        const shouldPositionAbove = spaceBelow < estimatedModalHeight && spaceAbove > spaceBelow;
+        
+        if (shouldPositionAbove) {
+          // Position above the button
+          calculatedTop = buttonRect.top - estimatedModalHeight - padding;
+          // Ensure modal doesn't go above viewport
+          calculatedTop = Math.max(minPaddingFromEdge, calculatedTop);
+        } else {
+          // Position below the button (default)
+          calculatedTop = buttonRect.bottom + padding;
+          // Ensure modal doesn't go below viewport
+          const maxTop = viewportHeight - estimatedModalHeight - minPaddingFromEdge;
+          calculatedTop = Math.min(calculatedTop, maxTop);
+          // If modal is taller than viewport, position at top with padding
+          if (calculatedTop < minPaddingFromEdge) {
+            calculatedTop = minPaddingFromEdge;
+          }
+        }
+        
+        // Calculate right position (align with button's right edge)
+        calculatedRight = viewportWidth - buttonRect.right;
+        // Ensure modal doesn't go off-screen to the left
+        // Modal width is max 360px for small size, so ensure right edge doesn't exceed viewport
+        const modalWidth = 360; // max-w-[360px] for small size
+        const minRight = viewportWidth - modalWidth - minPaddingFromEdge;
+        calculatedRight = Math.max(calculatedRight, minPaddingFromEdge);
+        calculatedRight = Math.min(calculatedRight, minRight);
+        
         setModalPosition({
-          top: buttonRect.bottom + 16,
-          right: window.innerWidth - buttonRect.right,
+          top: calculatedTop,
+          right: calculatedRight,
         });
       }
     };
