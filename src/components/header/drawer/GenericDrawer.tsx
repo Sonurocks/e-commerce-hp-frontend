@@ -222,6 +222,15 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
         document.body.style.width = "100%";
 
         const preventTouchMove = (e: TouchEvent) => {
+          const target = e.target as HTMLElement;
+          const drawerElement =
+            (drawerRef as React.RefObject<HTMLDivElement | null>)?.current ??
+            null;
+
+          // Allow scrolling inside the drawer; block it elsewhere
+          if (drawerElement && drawerElement.contains(target)) {
+            return;
+          }
           e.preventDefault();
         };
         document.addEventListener("touchmove", preventTouchMove, { passive: false });
@@ -258,7 +267,7 @@ const GenericDrawer: React.FC<GenericDrawerProps> = ({
         onMouseLeave={onMouseLeave}
       >
         {/* Mobile Close Button */}
-        <div className="lg:hidden flex items-center justify-between px-4 py-3 border-b border-gray-200 sticky top-0 bg-(--color-branco) z-10">
+        <div className="lg:hidden flex items-center justify-between px-4 py-3 border-b border-gray-200 sticky top-0 bg-(--color-branco) drawer-styles z-10">
           <h2 className="text-lg font-semibold text-(--color-preto)">{translate(sections[0]?.title || drawerType)}</h2>
           <button
             onClick={() => {

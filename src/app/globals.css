@@ -144,6 +144,12 @@ html[data-color-theme] {
   --color-preto: var(--theme-primary);
 }
 
+/* When custom theme is applied, gray backgrounds (e.g. 404 page, Unidays, cards) use theme colors */
+html[data-color-theme]:not([data-color-theme="default"]) {
+  --colorGrey: var(--theme-hover);
+  --colorLightGrey: var(--theme-bg-light);
+}
+
 /* Apply theme colors to body and main containers */
 html[data-color-theme]:not([data-color-theme="default"]) body {
   background-color: var(--theme-bg);
@@ -165,6 +171,11 @@ html[data-color-theme]:not([data-color-theme="default"])
 html[data-color-theme]:not([data-color-theme="default"]) label {
   color: var(--theme-text);
   transition: color 0.3s ease;
+}
+
+/* Custom theme: button text must inherit from button (so primary=white, outline=preto) not theme-text */
+html[data-color-theme]:not([data-color-theme="default"]) button span {
+  color: inherit !important;
 }
 
 /* Headings can use primary color for emphasis */
@@ -210,6 +221,20 @@ html[data-color-theme]:not([data-color-theme="default"])
   button.bg-\[var\(--color-preto\)\].hover\:bg-gray-800:hover {
   background-color: var(--theme-button-hover) !important;
   border-color: var(--theme-button-hover) !important;
+}
+
+/* Custom theme: dark/solid buttons always get white text (theme-button-text can be #222 on gray/banana/lagoon/clementine) */
+html[data-color-theme]:not([data-color-theme="default"]) button[class*="colorDark"],
+html[data-color-theme]:not([data-color-theme="default"]) button[class*="colorDark"] span,
+html[data-color-theme]:not([data-color-theme="default"]) button[class*="bg-[#222]"],
+html[data-color-theme]:not([data-color-theme="default"]) button[class*="bg-[#222]"] span,
+html[data-color-theme]:not([data-color-theme="default"]) button[class*="text-white"],
+html[data-color-theme]:not([data-color-theme="default"]) button[class*="text-white"] span {
+  color: #ffffff !important;
+}
+html[data-color-theme]:not([data-color-theme="default"]) button[class*="colorLightGrey"],
+html[data-color-theme]:not([data-color-theme="default"]) button[class*="colorLightGrey"] span {
+  color: var(--theme-primary) !important;
 }
 
 /* Theme colors for buttons with border */
@@ -281,8 +306,10 @@ html[data-color-theme]:not([data-color-theme="default"])
   background-color: var(--theme-hover) !important;
 }
 
-/* Theme colors for active/selected states */
-html[data-color-theme]:not([data-color-theme="default"]) .bg-gray-100 {
+/* Theme colors for active/selected states and gray backgrounds (404, Unidays, etc.) */
+html[data-color-theme]:not([data-color-theme="default"]) .bg-gray-100,
+html[data-color-theme]:not([data-color-theme="default"]) .bg-gray-50,
+html[data-color-theme]:not([data-color-theme="default"]) .bg-gray-200 {
   background-color: var(--theme-bg-light) !important;
 }
 
@@ -297,6 +324,12 @@ html[data-color-theme]:not([data-color-theme="default"])
   button:hover {
   background-color: var(--theme-hover) !important;
   color: var(--theme-text) !important;
+}
+
+/* Dropdown panels (Select size, etc.): white/branco bg follows custom theme only */
+html[data-color-theme]:not([data-color-theme="default"]) div.dropdown-panel {
+  background-color: var(--theme-bg) !important;
+  border-color: var(--theme-border) !important;
 }
 
 /* Theme colors for cards and containers */
@@ -440,6 +473,12 @@ html[data-color-theme]:not([data-color-theme="default"]) .site-footer a {
 
 html[data-color-theme]:not([data-color-theme="default"]) .site-footer a:hover {
   color: var(--theme-link-hover) !important;
+}
+
+/* Footer trademark and copyright use theme primary in custom theme */
+html[data-color-theme]:not([data-color-theme="default"]) footer.site-footer p.footer-trademark,
+html[data-color-theme]:not([data-color-theme="default"]) footer.site-footer p.footer-copyright {
+  color: var(--theme-primary) !important;
 }
 
 html[data-color-theme]:not([data-color-theme="default"]) .site-footer .border-t {
@@ -739,6 +778,27 @@ select option:checked {
 .dark .drawer-styles {
   background-color: #1a1a1a !important;
   color: #f5f5f5 !important;
+}
+
+/* Custom theme: only change drawer background (nav drawer + search drawer), nothing else */
+html[data-color-theme]:not([data-color-theme="default"]) .drawer-styles {
+  background-color: var(--theme-bg) !important;
+}
+
+/* Filter drawer: theme background and reduced overlay opacity in custom theme */
+html[data-color-theme]:not([data-color-theme="default"]) .filter-drawer-panel,
+html[data-color-theme]:not([data-color-theme="default"]) .filter-drawer-panel .filter-drawer-header,
+html[data-color-theme]:not([data-color-theme="default"]) .filter-drawer-panel .filter-drawer-footer,
+html[data-color-theme]:not([data-color-theme="default"]) .filter-drawer-panel [class*="bg-branco"] {
+  background-color: var(--theme-bg) !important;
+}
+html[data-color-theme]:not([data-color-theme="default"]) .filter-drawer-backdrop {
+  opacity: 0.3 !important;
+}
+
+/* Theme Settings drawer panel: use theme background in custom theme (overrides inline white) */
+html[data-color-theme]:not([data-color-theme="default"]) .theme-settings-drawer-panel {
+  background-color: var(--theme-bg) !important;
 }
 
 /* About page drawer animation */

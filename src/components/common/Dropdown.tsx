@@ -160,7 +160,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       {isOpen && usePortal && portalPosition && typeof document !== "undefined" && createPortal(
         <div
           ref={dropdownRef}
-          className={contentClassWhenPortal}
+          className={`dropdown-panel ${contentClassWhenPortal}`}
           style={{
             position: "fixed",
             zIndex,
@@ -177,7 +177,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       {isOpen && !usePortal && (
         <div
           ref={dropdownRef}
-          className={`absolute ${contentClassName}`}
+          className={`dropdown-panel absolute ${contentClassName}`}
           style={{ zIndex }}
         >
           {content}

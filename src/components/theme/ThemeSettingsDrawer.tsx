@@ -99,7 +99,7 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
       const originalWidth = document.body.style.width;
 
       // Prevent scrolling
-      document.body.style.overflow = "hidden";
+      // document.body.style.overflow = "hidden";
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = "100%";
@@ -130,9 +130,9 @@ const ThemeSettingsDrawer: React.FC<ThemeSettingsDrawerProps> = ({
       <div className="fixed inset-0 bg-black/50 z-50" onClick={onClose} />
       {/* Drawer */}
       <div
-        className="fixed right-0 top-0 h-full w-96 shadow-xl z-100 transform transition-transform overflow-y-auto"
+        className="theme-settings-drawer-panel fixed right-0 top-0 h-full w-96 shadow-xl z-100 transform transition-transform overflow-y-auto"
         style={{
-          backgroundColor: colorTheme !== "default" ? "#ffffff" : (theme === "dark" ? "#111827" : "#ffffff"),
+          backgroundColor: colorTheme !== "default" ? "var(--theme-bg)" : (theme === "dark" ? "#111827" : "#ffffff"),
         }}
       >
         <div className="p-6">

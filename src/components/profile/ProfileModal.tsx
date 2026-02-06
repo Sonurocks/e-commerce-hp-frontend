@@ -445,8 +445,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                       type="button"
                       variant="social"
                       fullWidth
-                      leftIcon={<FcGoogle className="text-xl" />}
-                      className="rounded-xl py-3 text-base"
+                      leftIcon={<FcGoogle className="text-xl" />}                     className="w-full rounded-xl border border-preto py-3 text-base !font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                     >
                       {translate("Continue With")} {translate("Google")}
                     </Button>
@@ -455,7 +454,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                       variant="social"
                       fullWidth
                       leftIcon={<FaApple className="text-xl text-preto" />}
-                      className="rounded-xl py-3 text-base"
+                      className="w-full rounded-xl border border-preto py-3 text-base !font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                     >
                       {translate("Continue With")} {translate("Apple")}
                     </Button>
@@ -464,7 +463,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                       variant="social"
                       fullWidth
                       leftIcon={<FaFacebookF className="text-xl text-(--color-facebook)" />}
-                      className="rounded-xl py-3 text-base"
+                      className="w-full rounded-xl border border-preto py-3 text-base !font-medium flex items-center justify-center gap-3 hover:bg-(--colorLightGrey) transition cursor-pointer"
                     >
                       {translate("Continue With")} {translate("Facebook")}
                     </Button>

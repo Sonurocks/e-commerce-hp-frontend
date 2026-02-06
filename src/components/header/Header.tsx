@@ -28,7 +28,6 @@ import ProfileModal from "../profile/ProfileModal";
 import LanguageModal from "../language/LanguageModal";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
-
 const Header = () => {
   const pathname = usePathname();
   const isKidswearPage = pathname?.startsWith("/kidswear");
@@ -79,7 +78,6 @@ const Header = () => {
   const { cartItems } = useCart();
   const { wishlistCount } = useWishlist();
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
   // Prevent hydration mismatch by only showing counts after mount
   useEffect(() => {
     setIsMounted(true);
@@ -264,6 +262,42 @@ const Header = () => {
     fallback: string,
   ) => headerCopy.navigation[section]?.[linkId] ?? fallback;
 
+  // Prevent background page scroll on mobile when the main menu is open
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const isMobile = window.innerWidth < 1024; // Align with lg breakpoint
+    if (!isMobile) {
+      return;
+    }
+
+    const scrollY = window.scrollY;
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    const originalPosition = document.body.style.position;
+    const originalTop = document.body.style.top;
+    const originalWidth = document.body.style.width;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+
+    return () => {
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.body.style.position = originalPosition;
+      document.body.style.top = originalTop;
+      document.body.style.width = originalWidth;
+      window.scrollTo(0, scrollY);
+    };
+  }, [isMenuOpen]);
+
   // Get current promotion for background color
   const currentPromo = promotions[currentPromoIndex];
 
@@ -331,7 +365,7 @@ const Header = () => {
   ${isSearchDrawerOpen ? "hidden" : ""}
   ${!isHeaderVisible ? "-translate-y-full" : "translate-y-0"}
 `}
-        style={{ position: 'sticky', top: 0 }}
+        style={{ position: "sticky", top: 0 }}
       >
         {/* Top Promotional Bar */}
         {!isBannerClosed && (
@@ -853,8 +887,8 @@ const Header = () => {
 
               {/* Mobile Menu Drawer */}
               {isMenuOpen && (
-                <div className="border-t border-gray-200 py-4 dark:border-(--color-platinum)">
-                  <div className="space-y-6">
+                <div className="border-t border-gray-200 py-4 dark:border-(--color-platinum) max-h-[calc(100vh-80px)] overflow-y-auto overflow-x-hidden overscroll-contain">
+                  <div className="space-y-6 pb-24">
                     <div className="flex flex-col gap-3 text-base font-medium">
                       {primaryNavigationLinks.map((link) => {
                         const isActive = link.id === currentDepartment;

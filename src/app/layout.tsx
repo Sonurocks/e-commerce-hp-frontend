@@ -13,6 +13,7 @@ import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { CheckoutProvider } from "@/context/CheckoutContext";
 import { LogoProvider } from "@/context/LogoContext";
+import { ModalOpenProvider } from "@/context/ModalOpenContext";
 import { ReactQueryProvider } from "@/lib/react-query-provider";
 
 const geistSans = Geist({
@@ -72,12 +73,13 @@ export default function RootLayout({
                       defaultTheme="system"
                       enableSystem
                     >
-                      <ThemeSettingsProvider>
-                        <ConditionalHeader />
-                        
-                        <main className="min-h-screen overflow-x-hidden">{children}</main>
-                        <ConditionalFooter />
-                      </ThemeSettingsProvider>
+                      <ModalOpenProvider>
+                        <ThemeSettingsProvider>
+                          <ConditionalHeader />
+                          <main className="min-h-screen overflow-x-hidden">{children}</main>
+                          <ConditionalFooter />
+                        </ThemeSettingsProvider>
+                      </ModalOpenProvider>
                     </ThemeProvider>
                   </CheckoutProvider>
                 </WishlistProvider>

@@ -313,15 +313,15 @@ export default function ProductDetailSection({
                       disabled={!option.available}
                       className={`w-full flex items-center justify-between py-1 px-3 text-left ${
                         selectedSize === option.size
-                          ? "bg-gray-100 font-semibold"
-                          : option.available
-                          ? "hover:bg-gray-50"
-                          : "opacity-50 cursor-not-allowed"
+                          ? "bg-gray-100 font-semibold text-gray-900"
+                          : !option.available
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
                       }`}
                     >
-                      <span className="font-semibold text-[13px]">{option.size}</span>
+                      <span className={`font-semibold text-[13px] ${selectedSize === option.size ? "text-gray-900" : ""}`}>{option.size}</span>
                       {option.price && (
-                        <span className="text-[13px] text-(--color-preto)">{option.price}</span>
+                        <span className={`text-[13px] ${selectedSize === option.size ? "text-gray-900" : "text-(--color-preto)"}`}>{option.price}</span>
                       )}
                     </button>
                   ))}

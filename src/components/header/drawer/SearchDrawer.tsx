@@ -209,6 +209,15 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
 
       // Prevent touch scrolling on mobile
       const preventTouchMove = (e: TouchEvent) => {
+        const target = e.target as HTMLElement;
+        const drawerElement =
+          (drawerRef as React.RefObject<HTMLDivElement | null>)?.current ??
+          null;
+
+        // Allow scrolling inside the drawer; block it elsewhere
+        if (drawerElement && drawerElement.contains(target)) {
+          return;
+        }
         e.preventDefault();
       };
       document.addEventListener("touchmove", preventTouchMove, { passive: false });
@@ -230,7 +239,7 @@ const SearchDrawer: React.FC<SearchDrawerProps> = ({
       {/* Search Drawer */}
       <div
         ref={drawerRef}
-        className={`fixed top-0 left-0 right-0 bg-(--color-branco) z-[100] transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 bg-(--color-branco) drawer-styles z-[100] transition-transform duration-300 ease-in-out ${
           isDrawerOpen ? "translate-y-0" : "-translate-y-full"
         } shadow-lg max-h-screen overflow-y-auto`}
       >

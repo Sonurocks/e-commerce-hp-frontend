@@ -120,8 +120,8 @@ const Footer = () => {
               ))}
             </div>
             <div className="text-preto dark:text-white text-footer-text" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
-              <p className="mb-2">{trademarkText}</p>
-              <p className="text-preto text-xs">{copyrightText}</p>
+              <p className="footer-trademark mb-2">{trademarkText}</p>
+              <p className="footer-copyright text-xs">{copyrightText}</p>
             </div>
           </div>
         </div>

@@ -266,7 +266,7 @@ export default function FilterDrawer({
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-99 transition-opacity duration-300 bg-(--color-preto)/50"
+          className="filter-drawer-backdrop fixed inset-0 z-99 transition-opacity duration-300 bg-(--color-preto)/50"
           onClick={onClose}
         />
       )}
@@ -274,12 +274,12 @@ export default function FilterDrawer({
       {/* Filter Drawer */} 
       <div
         ref={drawerRef}
-        className={`fixed left-0 top-0 h-full w-[400px] bg-branco shadow-xl z-100 transform transition-transform duration-300 ease-in-out overflow-y-auto ${
+        className={`filter-drawer-panel fixed left-0 top-0 h-full w-[400px] bg-branco shadow-xl z-100 transform transition-transform duration-300 ease-in-out overflow-y-auto ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Header */}
-        <div className="px-6 py-4 flex items-center justify-between sticky top-0 z-10 bg-branco">
+        <div className="px-6 py-4 flex items-center justify-between sticky top-0 z-10 bg-branco filter-drawer-header">
           <h2 className="text-xl font-medium text-preto ">
             {translate("All Filters") || "All Filters"}
           </h2>
@@ -604,7 +604,7 @@ export default function FilterDrawer({
         </div>
 
         {/* Bottom Button */}
-        <div className="sticky bottom-0 bg-branco px-6 pt-10 pb-4 border-t border-(--color-platinum) flex justify-end">
+        <div className="filter-drawer-footer sticky bottom-0 bg-branco px-6 pt-10 pb-4 border-t border-(--color-platinum) flex justify-end">
           <button
             onClick={onClose}
             className="py-3 px-6 rounded-lg text-sm font-normal transition-colors bg-(--color-preto) text-(--color-whiteSmoke) hover:bg-(--color-emperor)"

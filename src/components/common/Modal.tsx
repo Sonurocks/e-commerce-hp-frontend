@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState, ReactNode } from "react";
 import { FiX } from "react-icons/fi";
+import { useModalOpen } from "@/context/ModalOpenContext";
 
 export interface ModalProps {
   isOpen: boolean;
@@ -40,12 +41,21 @@ const Modal: React.FC<ModalProps> = ({
   headerContent,
   footerContent,
   backdropClassName = "",
-  zIndex = { backdrop: 99, modal: 100 },
+  zIndex = { backdrop: 101, modal: 102 },
   onOpenChange,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [modalPosition, setModalPosition] = useState({ top: 0, right: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const { registerModalOpen, registerModalClose } = useModalOpen();
+
+  // Notify context when this modal is open so header can stay visible on top
+  useEffect(() => {
+    if (isOpen) {
+      registerModalOpen();
+      return () => registerModalClose();
+    }
+  }, [isOpen, registerModalOpen, registerModalClose]);
 
   // Check if mobile (below 768px) - initialize on mount
   useEffect(() => {
@@ -87,6 +97,9 @@ const Modal: React.FC<ModalProps> = ({
         let calculatedTop: number;
         let calculatedRight: number;
         
+        // Minimum top so modal never goes behind the fixed header (both header rows)
+        const minTopBelowHeader = 160;
+
         // Determine if modal should be positioned above or below button
         const shouldPositionAbove = spaceBelow < estimatedModalHeight && spaceAbove > spaceBelow;
         
@@ -98,6 +111,8 @@ const Modal: React.FC<ModalProps> = ({
         } else {
           // Position below the button (default)
           calculatedTop = buttonRect.bottom + padding;
+          // Ensure modal never goes behind the fixed header
+          calculatedTop = Math.max(calculatedTop, minTopBelowHeader);
           // Ensure modal doesn't go below viewport
           const maxTop = viewportHeight - estimatedModalHeight - minPaddingFromEdge;
           calculatedTop = Math.min(calculatedTop, maxTop);
@@ -116,8 +131,11 @@ const Modal: React.FC<ModalProps> = ({
         calculatedRight = Math.max(calculatedRight, minPaddingFromEdge);
         calculatedRight = Math.min(calculatedRight, minRight);
         
+        // Ensure modal top is never behind the fixed header (all cases)
+        const finalTop = Math.max(calculatedTop, minTopBelowHeader);
+        
         setModalPosition({
-          top: calculatedTop,
+          top: finalTop,
           right: calculatedRight,
         });
       }
@@ -131,69 +149,36 @@ const Modal: React.FC<ModalProps> = ({
     return () => clearTimeout(timeoutId);
   }, [isOpen, position, buttonRef, isMobile]);
 
-  // Prevent body scroll when modal is open
+  // Prevent body scroll when modal is open (overflow only – no body shift, so header stays visible)
   useEffect(() => {
     if (isOpen) {
-      // For relative positioned modals on desktop (like LanguageModal), 
-      // only apply scroll lock on mobile where backdrop is shown
-      const shouldLockScroll = position !== "relative" || isMobile;
-      
-      if (shouldLockScroll) {
-        const scrollY = window.scrollY;
-        const originalOverflow = document.body.style.overflow;
-        const originalPosition = document.body.style.position;
-        const originalTop = document.body.style.top;
-        const originalWidth = document.body.style.width;
+      const originalOverflow = document.body.style.overflow;
+      const html = document.documentElement;
+      const originalHtmlOverflow = html.style.overflow;
 
-        // Prevent scrolling
-        document.body.style.overflow = "hidden";
-        document.body.style.position = "fixed";
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.width = "100%";
+      // document.body.style.overflow = "hidden";
+      // html.style.overflow = "hidden";
 
-        // Prevent touch scrolling on mobile
-        const preventTouchMove = (e: TouchEvent) => {
-          const target = e.target as HTMLElement;
-          if (modalRef.current && modalRef.current.contains(target)) {
-            return;
-          }
-          e.preventDefault();
-        };
-        document.addEventListener("touchmove", preventTouchMove, {
-          passive: false,
-        });
+      // Prevent touch scrolling on mobile (only on backdrop, not inside modal)
+      const preventTouchMove = (e: TouchEvent) => {
+        const target = e.target as HTMLElement;
+        if (modalRef.current && modalRef.current.contains(target)) {
+          return;
+        }
+        e.preventDefault();
+      };
+      document.addEventListener("touchmove", preventTouchMove, {
+        passive: false,
+      });
 
-        return () => {
-          // Restore original styles - ensure all styles are cleared
-          document.body.style.overflow = originalOverflow || "";
-          document.body.style.position = originalPosition || "";
-          document.body.style.top = originalTop || "";
-          document.body.style.width = originalWidth || "";
-
-          // Restore scroll position - use requestAnimationFrame to ensure DOM is ready
-          requestAnimationFrame(() => {
-            window.scrollTo(0, scrollY);
-          });
-          
-          document.removeEventListener("touchmove", preventTouchMove);
-        };
-      } else {
-        // For relative positioned modals on desktop, just prevent overflow
-        // without fixing position to avoid visual shift
-        const originalOverflow = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
-
-        return () => {
-          document.body.style.overflow = originalOverflow || "";
-        };
-      }
+      return () => {
+        document.body.style.overflow = originalOverflow || "";
+        html.style.overflow = originalHtmlOverflow || "";
+        document.removeEventListener("touchmove", preventTouchMove);
+      };
     } else {
-      // When modal closes, ensure body styles are reset
-      // This handles edge cases where cleanup might not run
       document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
+      document.documentElement.style.overflow = "";
     }
   }, [isOpen, position, isMobile]);
 
@@ -282,29 +267,22 @@ const Modal: React.FC<ModalProps> = ({
     return {};
   };
 
-  // Container classes based on position - use isMobile state for consistency
+  // Full-screen overlay so entire page including header is dimmed
   const getContainerClasses = () => {
-    // On mobile, always center regardless of position prop
     if (isMobile) {
       return "fixed inset-0 flex items-center justify-center px-4 py-6";
     }
-    
-    // Desktop/Tablet behavior
     if (position === "relative") {
       return "fixed";
     }
-    
     if (position === "top") {
-      return "fixed inset-0 flex items-start justify-center px-4 pb-0 pt-16";
+      return "fixed inset-0 flex items-start justify-center px-4 pb-0 pt-32";
     }
-    
-    // Default centered (position === "centered")
     return "fixed inset-0 flex items-center justify-center px-4 py-6";
   };
 
   return (
     <>
-      {/* Backdrop overlay */}
       {backdropClassName !== "hidden" && (
         <div
           className={`fixed inset-0 bg-black/50 ${backdropClassName}`}
@@ -312,13 +290,16 @@ const Modal: React.FC<ModalProps> = ({
           onClick={closeOnBackdropClick ? onClose : undefined}
         />
       )}
-
-      {/* Modal Container */}
       <div
         ref={modalRef}
         className={getContainerClasses()}
         style={{ zIndex: zIndex.modal, ...getPositionStyle() }}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (closeOnBackdropClick && e.target === e.currentTarget) {
+            onClose();
+          }
+        }}
       >
         <div
           className={`${sizeClasses[size]} ${
