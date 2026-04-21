@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { FaInstagram, FaPinterestP, FaTiktok } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaPinterestP } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { BiLockAlt } from "react-icons/bi";
 import { FiStar } from "react-icons/fi";
@@ -67,7 +67,7 @@ const trustPoints = [
 
 const socialLinks = [
   { label: "Instagram", icon: FaInstagram, href: "https://instagram.com" },
-  { label: "TikTok", icon: FaTiktok, href: "https://tiktok.com" },
+  { label: "Facebook", icon: FaFacebookF, href: "https://facebook.com" },
   { label: "Pinterest", icon: FaPinterestP, href: "https://pinterest.com" },
   { label: "X", icon: FaXTwitter, href: "https://x.com" },
 ];
