@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { GoHeart } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { FiMenu, FiX } from "react-icons/fi";
+import { FiHeadphones, FiMenu, FiX } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa";
 import { SlidersHorizontal, ChevronLeft, ChevronRight } from "lucide-react";
 import {
@@ -535,6 +535,17 @@ const Header = () => {
                     </span>
                   </button>
 
+                  {/* Internal Support */}
+                  <Link
+                    href="/internal/support"
+                    className="text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
+                  >
+                    <FiHeadphones className="w-6 h-6" />
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
+                      Internal Support
+                    </span>
+                  </Link>
+
                   {/* Wishlist */}
                   <Link
                     href="/wishlist"
@@ -765,6 +776,15 @@ const Header = () => {
                       </svg>
                     </div>
                   </button>
+                  <Link
+                    href="/internal/support"
+                    className="flex items-center justify-center w-8 h-8 text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey)"
+                  >
+                    <FiHeadphones className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <span className="absolute left-full top-full ml-2 mt-1 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-xs border border-gray-400 dark:border-(--color-platinum) whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10" style={{ color: 'var(--theme-tooltip-text, #ffffff)' }}>
+                      Internal Support
+                    </span>
+                  </Link>
                   <button
                     onClick={() => setIsProfileModalOpen(true)}
                     className="flex items-center justify-center w-8 h-8 text-(--color-preto) dark:text-(--color-preto) hover:text-(--color-preto) dark:hover:text-(--color-preto) transition relative group rounded hover:bg-gray-100 dark:hover:bg-(--colorGrey) cursor-pointer"

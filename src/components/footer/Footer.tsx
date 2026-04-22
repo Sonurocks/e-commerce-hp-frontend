@@ -118,6 +118,13 @@ const Footer = () => {
                   {footerCopy.legalLinks[link.label] ?? link.label}
                 </Link>
               ))}
+              <Link
+                href="/internal/support"
+                className="underline transition text-preto dark:text-white"
+                style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}
+              >
+                Internal Support
+              </Link>
             </div>
             <div className="text-preto dark:text-white text-footer-text" style={{ color: 'var(--theme-text, var(--color-preto, #222))' }}>
               <p className="footer-trademark mb-2">{trademarkText}</p>
